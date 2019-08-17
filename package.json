@@ -6,6 +6,8 @@
     "electron-is-dev": "^1.1.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1"
   },
   "main": "public/electron.js",
@@ -14,10 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "cross-env concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "postinstall": "electron-builder install-app-deps",
-    "preelectron-pack": "yarn build",
-    "electron-pack": "build -mw"
+    "electron-dev": "cross-env concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,20 +45,5 @@
     "name": "Your Name",
     "email": "your.email@domain.com",
     "url": "https://your-website.com"
-  },
-  "build": {
-    "appId": "com.my-website.my-app",
-    "productName": "MyApp",
-    "copyright": "Copyright © 2019 ${author}",
-    "mac": {
-      "category": "public.app-category.utilities"
-    },
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    }
   }
 }

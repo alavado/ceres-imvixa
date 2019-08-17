@@ -4,7 +4,7 @@ import './BarraLateral.css'
 const BarraLateral = () => {
   return (
     <div id="barra-lateral">
-      barra
+      <h1>CERES BCA</h1>
     </div>
   );
 };
