@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css'
 import Contenedor from '../Contenedor';
+import { BrowserRouter } from 'react-router-dom'
+import './App.css'
 
 const App = ()  => {
   return (
     <div id="fondo">
-      <Contenedor />
+      <BrowserRouter>
+        <Contenedor />
+      </BrowserRouter> 
     </div>
   );
 }

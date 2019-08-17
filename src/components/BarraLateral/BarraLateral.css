@@ -8,9 +8,7 @@
   border-radius: 8px 0 0 0;
   background-color: #0072CE;
   color: rgb(219, 239, 255);
-  text-transform: uppercase;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 1.1em;
+  font-size: 1em;
   height: 50px;
   display: flex;
   align-items: center;

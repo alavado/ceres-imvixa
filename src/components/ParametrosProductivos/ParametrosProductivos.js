@@ -1,16 +1,15 @@
 import React from 'react';
-import './Inicio.css'
 
-const Inicio = () => {
+const ParametrosProductivos = () => {
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
-          inicio
+          Parámetros productivos
         </div>
       </div>
     </div>
   );
 };
 
-export default Inicio;
+export default ParametrosProductivos;
