@@ -1,6 +1,6 @@
 #contenedor {
-  background: rgba(255, 255, 255, 0.8);
+  display: flex;
   flex: 1;
+  flex-direction: row;
   margin: 32px;
-  border-radius: 8px;
 }
