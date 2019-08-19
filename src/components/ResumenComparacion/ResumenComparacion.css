@@ -1,0 +1,42 @@
+#barra-superior-resumen {
+  height: 50px;
+  width: 100%;
+  background-color: #BF360C;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 8px;
+  color: white;
+}
+
+#barra-superior-resumen h1 {
+  margin-left: 24px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#fondo-resumen {
+  background: white;
+  flex: 1;
+  border-bottom-right-radius: 8px;
+}
+
+#contenido-resumen {
+  display: flex;
+  flex-direction: row;
+}
+
+div[id^="fondo-estrategia"] {
+  flex: 1;
+  margin: 24px;
+  padding: 56px 24px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+#fondo-estrategia-a {
+  background-color: #eee;
+}
+
+#fondo-estrategia-b {
+  background-color: #eee;
+}

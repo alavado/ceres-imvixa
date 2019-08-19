@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ParametrosProductivos = () => {
+const Produccion = () => {
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
@@ -12,4 +12,4 @@ const ParametrosProductivos = () => {
   );
 };
 
-export default ParametrosProductivos;
+export default Produccion;
