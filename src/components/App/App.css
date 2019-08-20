@@ -32,3 +32,23 @@ a {
   font-size: 1em;
   margin-left: 24px;
 }
+
+.contenido-contenido {
+  padding: 32px;
+}
+
+.contenido-contenido label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: .85em;
+}
+
+.contenido-contenido input {
+  padding: 8px;
+  margin-bottom: 16px;
+  font-size: 1.1em;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bdbdbd;
+}

@@ -8,6 +8,9 @@ const Cosecha = () => {
           Parámetros de cosecha
         </div>
       </div>
+      <div className="contenido-contenido">
+        
+      </div>
     </div>
   );
 };
