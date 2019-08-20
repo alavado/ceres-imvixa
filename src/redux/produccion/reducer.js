@@ -1,25 +1,19 @@
-import asistenciaActions from './actions'
+import produccionActions from './actions'
 
 const initialState = {
-  clases: [],
-  alumnos: []
+  numeroSmolts: 1000000
 }
 
-const asistenciaReducer = (state = initialState, action) => {
+const produccionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case asistenciaActions.FIJAR_CLASES:
+    case produccionActions.FIJAR_NUMERO_SMOLTS:
       return {
         ...state,
-        clases: action.payload
+        numeroSmolts: action.payload
       }
-      case asistenciaActions.FIJAR_ALUMNOS:
-        return {
-          ...state,
-          alumnos: action.payload
-        }
     default:
       return state
   }
 }
 
-export default asistenciaReducer
+export default produccionReducer

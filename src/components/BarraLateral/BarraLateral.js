@@ -9,7 +9,7 @@ const BarraLateral = () => {
     <div id="barra-lateral">
       <Link to="/"><h1>Ev. Imvixa Elanco</h1></Link>
       <div id="lista-secciones">
-        <Link to="/produccion">
+        <Link to="/entorno">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faWater} />
             Entorno
@@ -21,31 +21,31 @@ const BarraLateral = () => {
             Producción
           </div>
         </Link>
-        <Link to="/parametros-productivos">
+        <Link to="/cosecha">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faFish} />
             Cosecha
           </div>
         </Link>
-        <Link to="/parametros-productivos">
+        <Link to="/transporte">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faTruckMoving} />
             Transporte
           </div>
         </Link>
-        <Link to="/parametros-productivos">
+        <Link to="/ventas">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faDollarSign} />
             Ventas
           </div>
         </Link>
-        <Link to="/parametros-productivos">
+        <Link to="/tratamientos">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faSyringe} />
             Tratamientos
           </div>
         </Link>
-        <Link to="/parametros-productivos">
+        <Link to="/otros">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faChartBar} />
             Otros

@@ -27,16 +27,19 @@
 
 div[id^="fondo-estrategia"] {
   flex: 1;
-  margin: 24px;
   padding: 56px 24px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
+  margin-top: 24px;
 }
 
 #fondo-estrategia-a {
   background-color: #eee;
+  margin-left: 24px;
+  margin-right: 12px;
 }
 
 #fondo-estrategia-b {
   background-color: #eee;
+  margin-left: 12px;
+  margin-right: 24px;
 }

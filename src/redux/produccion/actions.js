@@ -1,16 +1,11 @@
-const asistenciaActions = {
-  FIJAR_CLASES: 'FIJAR_CLASES',
-  FIJAR_ALUMNOS: 'FIJAR_ALUMNOS',
+const produccionActions = {
+  FIJAR_NUMERO_SMOLTS: 'FIJAR_NUMERO_SMOLTS',
 
-  fijarClases: clases => ({
-    type: asistenciaActions.FIJAR_CLASES,
-    payload: clases
-  }),
-
-  fijarAlumnos: alumnos => ({
-    type: asistenciaActions.FIJAR_ALUMNOS,
-    payload: alumnos
+  fijarNumeroSmolts: n => ({
+    type: produccionActions.FIJAR_NUMERO_SMOLTS,
+    payload: n
   })
+  
 }
 
-export default asistenciaActions
+export default produccionActions
