@@ -6,7 +6,7 @@ const Inicio = () => {
     <div className="contenido">
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
-          inicio
+          Acerca de
         </div>
       </div>
     </div>

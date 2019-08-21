@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faIndustry, faTruckMoving, faFish, faTemperatureLow, faDollarSign, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
+import { faShip, faTruckMoving, faFish, faTemperatureLow, faDollarSign, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
 
 const BarraLateral = () => {
   return (
     <div id="barra-lateral">
-      <Link to="/"><h1>Ev. Imvixa Elanco</h1></Link>
+      <Link to="/"><h1>Modelo Ceres BCA</h1></Link>
       <div id="lista-secciones">
         <Link to="/entorno">
           <div className="link-seccion">
@@ -17,7 +17,7 @@ const BarraLateral = () => {
         </Link>
         <Link to="/produccion">
           <div className="link-seccion">
-            <FontAwesomeIcon icon={faIndustry} size="lg" />
+            <FontAwesomeIcon icon={faShip} size="lg" />
             Producción
           </div>
         </Link>
