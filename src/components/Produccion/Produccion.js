@@ -18,7 +18,7 @@ const Produccion = props => {
           id="fecha-inicio"
           name="fecha-inicio"
           type="date"
-          value={datos.fechaInicio}
+          defaultValue={datos.fechaInicio}
           onChange={e => props.fijarFechaInicio(e.target.value)}
         />
         <label htmlFor="numero-smolts">Número smolts al ingreso</label>
@@ -26,7 +26,7 @@ const Produccion = props => {
           id="numero-smolts"
           name="numero-smolts"
           type="number" min="50000" step="50000"
-          value={datos.numeroSmolts}
+          defaultValue={datos.numeroSmolts}
           onChange={e => props.fijarNumeroSmolts(e.target.value)}
         />
         <label htmlFor="peso-smolt">Peso medio smolt al ingreso (g)</label>
@@ -34,7 +34,7 @@ const Produccion = props => {
           id="peso-smolt"
           name="peso-smolt"
           type="number" min="5" step="5"
-          value={datos.pesoSmolt}
+          defaultValue={datos.pesoSmolt}
           onChange={e => props.fijarPesoSmolt(e.target.value)}
         />
         <label htmlFor="costo-smolt">Costo smolt (USD)</label>
@@ -42,7 +42,7 @@ const Produccion = props => {
           id="costo-smolt"
           name="costo-smolt"
           type="number" min="0" step="0.01"
-          value={datos.costoSmolt}
+          defaultValue={datos.costoSmolt}
           onChange={e => props.fijarCostoSmolt(e.target.value)}
         />
         <label htmlFor="costo-alimento">Costo alimento (USD/kg)</label>
@@ -50,15 +50,15 @@ const Produccion = props => {
           id="costo-alimento"
           name="costo-alimento"
           type="number" min="0" step="0.01"
-          value={datos.costoAlimento}
+          defaultValue={datos.costoAlimento}
           onChange={e => props.fijarCostoAlimento(e.target.value)}
         />
         <label htmlFor="peso-objetivo">Peso objetivo (g)</label>
         <input
           id="peso-objetivo"
           name="peso-objetivo"
-          type="number" min="0" step="50"
-          value={datos.pesoObjetivo}
+          type="number" min="500" step="50"
+          defaultValue={datos.pesoObjetivo}
           onChange={e => props.fijarPesoObjetivo(e.target.value)}
         />
         <label htmlFor="mortalidad">Mortalidad sin considerar piojo (%)</label>
@@ -66,7 +66,7 @@ const Produccion = props => {
           id="mortalidad"
           name="mortalidad"
           type="number" min="0" step="1"
-          value={Math.round(100 * datos.mortalidad)}
+          defaultValue={Math.round(100 * datos.mortalidad)}
           onChange={e => props.fijarMortalidad(e.target.value)}
         />
       </div>
@@ -95,7 +95,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarMortalidad(Number(tasa) / 100))
   },
   fijarPesoObjetivo: g => {
-    dispatch(produccionActions.fijarPesoObjetivo(Number(g)))
+    dispatch(produccionActions.fijarPesoObjetivo(Math.max(Number(g), 500)))
   },
   fijarAjusteCrecimiento: tasa => {
     dispatch(produccionActions.fijarAjusteCrecimiento(Number(tasa)))

@@ -27,7 +27,7 @@ const GraficoCrecimiento = ({curvasCrecimiento, pesoObjetivo}) => {
         },
         animation: {
           startup: true,
-          easing: 'linear',
+          easing: 'inAndOut',
           duration: 1000,
         },
       }}

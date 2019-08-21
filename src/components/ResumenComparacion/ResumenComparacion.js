@@ -6,7 +6,7 @@ import GraficoCrecimiento from './GraficoCrecimiento';
 
 const ResumenComparacion = props => {
 
-  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, {})
+  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, props.tratamientos)
   const { pesoObjetivo } = props.produccion
 
   return (
@@ -44,7 +44,8 @@ const ResumenComparacion = props => {
 
 const mapStateToProps = state => ({
   produccion: state.produccion,
-  entorno: state.entorno
+  entorno: state.entorno,
+  tratamientos: state.tratamientos
 })
 
 export default connect(mapStateToProps)(ResumenComparacion);
