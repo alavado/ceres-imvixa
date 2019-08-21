@@ -1,0 +1,11 @@
+#contenedor-temperaturas {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 400px;
+  justify-content: flex-start;
+}
+
+#contenedor-temperaturas input[type="number"] {
+  width: 100px;
+}

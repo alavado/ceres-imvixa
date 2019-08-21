@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './ResumenComparacion.css'
 import { obtenerCurvasDeCrecimiento } from '../../helpers/modelo'
-import { Chart } from 'react-google-charts'
+import GraficoCrecimiento from './GraficoCrecimiento';
 
-const ResumenComparacion = ({parametrosProductivos}) => {
+const ResumenComparacion = props => {
 
-  const curvasCrecimiento = obtenerCurvasDeCrecimiento({}, parametrosProductivos, {})
+  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, {})
 
   return (
     <div id="fondo-resumen">
@@ -15,43 +15,20 @@ const ResumenComparacion = ({parametrosProductivos}) => {
       </div>
       <div id="contenido-resumen">
         <div id="grafico-crecimiento">
-          <Chart
-            width={'640px'}
-            height={'320px'}
-            chartType="LineChart"
-            loader={<div>Loading Chart</div>}
-            data={curvasCrecimiento}
-            options={{
-              hAxis: {
-                title: 'Días',
-              },
-              vAxis: {
-                title: 'Peso promedio salmón (g)',
-              },
-              series: {
-                0: { curveType: 'function', color: '#E65100' },
-                1: { curveType: 'function', color: '#0097A7' },
-              },
-              animation: {
-                startup: true,
-                easing: 'linear',
-                duration: 1000,
-              },
-            }}
-          />
+          <GraficoCrecimiento curvasCrecimiento={curvasCrecimiento} />
         </div>
         <div id="cuadros-estrategias">
           <div id="fondo-estrategia-a">
             <h1>Estrategia A</h1>
             <div className="resultados-estrategia">
-              <h2>{curvasCrecimiento.find(v => v[1] > parametrosProductivos.pesoObjetivo)[0]}</h2>
+              <h2>{curvasCrecimiento.find(v => v[1] > props.produccion.pesoObjetivo)[0]}</h2>
               <p>días para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia B</h1>
             <div className="resultados-estrategia">
-              <h2>{curvasCrecimiento.find(v => v[2] > parametrosProductivos.pesoObjetivo)[0]}</h2>
+              <h2>{curvasCrecimiento.find(v => v[2] > props.produccion.pesoObjetivo)[0]}</h2>
               <p>días para alcanzar el peso objetivo</p>
             </div>
           </div>
@@ -62,7 +39,8 @@ const ResumenComparacion = ({parametrosProductivos}) => {
 };
 
 const mapStateToProps = state => ({
-  parametrosProductivos: state.produccion
+  produccion: state.produccion,
+  entorno: state.entorno
 })
 
 export default connect(mapStateToProps)(ResumenComparacion);

@@ -1,6 +1,6 @@
 const entornoActions = {
   FIJAR_TEMPERATURA: 'FIJAR_TEMPERATURA',
-  fijarFechaInicio: (mes, grados) => ({
+  fijarTemperatura: (mes, grados) => ({
     type: entornoActions.FIJAR_TEMPERATURA,
     payload: { mes, grados }
   }),

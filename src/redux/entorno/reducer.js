@@ -2,18 +2,18 @@ import entornoActions from './actions'
 
 const initialState = {
   temperaturas: [
-    { mes: 1, temperatura: 13.5 },
-    { mes: 2, temperatura: 13.5 },
-    { mes: 3, temperatura: 13.5 },
-    { mes: 4, temperatura: 13.5 },
-    { mes: 5, temperatura: 13.5 },
-    { mes: 6, temperatura: 13.5 },
-    { mes: 7, temperatura: 13.5 },
-    { mes: 8, temperatura: 13.5 },
-    { mes: 9, temperatura: 13.5 },
-    { mes: 10, temperatura: 13.5 },
-    { mes: 11, temperatura: 13.5 },
-    { mes: 12, temperatura: 13.5 },
+    { mes: 1, nombreMes: 'enero', temperatura: 13.5 },
+    { mes: 2, nombreMes: 'febrero', temperatura: 13.5 },
+    { mes: 3, nombreMes: 'marzo', temperatura: 13.5 },
+    { mes: 4, nombreMes: 'abril', temperatura: 13.5 },
+    { mes: 5, nombreMes: 'mayo', temperatura: 13.5 },
+    { mes: 6, nombreMes: 'junio', temperatura: 13.5 },
+    { mes: 7, nombreMes: 'julio', temperatura: 13.5 },
+    { mes: 8, nombreMes: 'agosto', temperatura: 13.5 },
+    { mes: 9, nombreMes: 'septiembre', temperatura: 13.5 },
+    { mes: 10, nombreMes: 'octubre', temperatura: 13.5 },
+    { mes: 11, nombreMes: 'noviembre', temperatura: 13.5 },
+    { mes: 12, nombreMes: 'diciembre', temperatura: 13.5 },
   ]
 }
 
