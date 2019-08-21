@@ -7,6 +7,7 @@ import GraficoCrecimiento from './GraficoCrecimiento';
 const ResumenComparacion = props => {
 
   const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, {})
+  const { pesoObjetivo } = props.produccion
 
   return (
     <div id="fondo-resumen">
@@ -15,20 +16,23 @@ const ResumenComparacion = props => {
       </div>
       <div id="contenido-resumen">
         <div id="grafico-crecimiento">
-          <GraficoCrecimiento curvasCrecimiento={curvasCrecimiento} />
+          <GraficoCrecimiento
+            curvasCrecimiento={curvasCrecimiento}
+            pesoObjetivo={pesoObjetivo}
+          />
         </div>
         <div id="cuadros-estrategias">
           <div id="fondo-estrategia-a">
             <h1>Estrategia A</h1>
             <div className="resultados-estrategia">
-              <h2>{curvasCrecimiento.find(v => v[1] > props.produccion.pesoObjetivo)[0]}</h2>
+              <h2>{curvasCrecimiento.find(v => v[1] > pesoObjetivo)[0]}</h2>
               <p>días para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia B</h1>
             <div className="resultados-estrategia">
-              <h2>{curvasCrecimiento.find(v => v[2] > props.produccion.pesoObjetivo)[0]}</h2>
+              <h2>{curvasCrecimiento.find(v => v[2] > pesoObjetivo)[0]}</h2>
               <p>días para alcanzar el peso objetivo</p>
             </div>
           </div>

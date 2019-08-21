@@ -6,7 +6,7 @@ export const obtenerCurvasDeCrecimiento = (entorno, produccion, tratamientos) =>
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
   let curva = [['x', 'Estr. A', 'Estr. B']]
-  for (let dia = 1; pesoA < pesoObjetivo || pesoB < pesoObjetivo; dia++) {
+  for (let dia = 1; pesoA < pesoObjetivo * 1.05 || pesoB < pesoObjetivo * 1.05; dia++) {
     pesoA += Math.exp(Math.random()) * 3
     pesoB += Math.exp(Math.random()) * 3
     curva.push([dia, pesoA, pesoB])
