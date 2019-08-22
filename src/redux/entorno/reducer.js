@@ -21,11 +21,12 @@ const entornoReducer = (state = initialState, action) => {
   switch (action.type) {
     case entornoActions.FIJAR_TEMPERATURA: {
       const { mes, temperatura } = action.payload
+      const nombreMes = state.temperaturas[mes].nombreMes
       return {
         ...state,
-        temperaturas: [...state.temperaturas.filter((t, k)=> k !== mes), {
-          [mes]: {temperatura, nombreMes: 'asda'}
-        }]
+        temperaturas: {...state.temperaturas,
+          [mes]: {temperatura, nombreMes}
+        }
       }
     }
     default:

@@ -14,7 +14,7 @@ const Entorno = props => {
       </div>
       <div className="contenido-contenido">
         <div id="contenedor-temperaturas">
-          {datos.temperaturas.map(mes => (
+          {Object.keys(datos.temperaturas).map(mes => (
             <div className="input-temperatura" key={`input-mes-${mes}`}>
               <label htmlFor="mortalidad">T° media {datos.temperaturas[mes].nombreMes}</label>
               <input

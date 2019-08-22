@@ -7,7 +7,7 @@ import { faShip, faTruckMoving, faFish, faTemperatureLow, faDollarSign, faSyring
 const BarraLateral = () => {
   return (
     <div id="barra-lateral">
-      <Link to="/"><h1>Modelo Ceres BCA</h1></Link>
+      <Link to="/"><h1>Simulador Ceres BCA</h1></Link>
       <div id="lista-secciones">
         <Link to="/entorno">
           <div className="link-seccion">
