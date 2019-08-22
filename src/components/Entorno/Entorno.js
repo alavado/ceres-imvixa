@@ -14,15 +14,15 @@ const Entorno = props => {
       </div>
       <div className="contenido-contenido">
         <div id="contenedor-temperaturas">
-          {datos.temperaturas.map((mes, i) => (
-            <div className="input-temperatura" key={`input-mes-${i}`}>
-              <label htmlFor="mortalidad">T° media {mes.nombreMes}</label>
+          {datos.temperaturas.map(mes => (
+            <div className="input-temperatura" key={`input-mes-${mes}`}>
+              <label htmlFor="mortalidad">T° media {datos.temperaturas[mes].nombreMes}</label>
               <input
                 id="mortalidad"
                 name="mortalidad"
                 type="number" min="-10" step="0.1"
-                value={datos.temperaturas[i].temperatura}
-                onChange={e => props.fijarTemperatura(mes.mes, e.target.value)}
+                value={datos.temperaturas[mes].temperatura}
+                onChange={e => props.fijarTemperatura(mes, e.target.value)}
               />
             </div>
           ))}
