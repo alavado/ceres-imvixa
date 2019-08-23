@@ -15,7 +15,7 @@ const crecimientoConComida = (peso, temperatura, dia, escalaDeCrecimiento) => {
   peso += peso * factorDeCrecimiento * coefAlimentoComido * pcd / bFCR
   return peso
 }
-
+// 1 a 2 semanas entre sin imbixa y con imvixa, 250 g mas o menos de diferencia al mismo corte
 export const obtenerCurvasDeCrecimiento = (entorno, produccion, tratamientos) => {
   const { temperaturas } = entorno
   const { fechaInicio, pesoSmolt, pesoObjetivo } = produccion
