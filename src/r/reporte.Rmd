@@ -1,0 +1,125 @@
+---
+title: "Análisis regresivo para predecir FCR biológica"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(caret)
+setwd("~/Desktop/electron/ceres-imvixa/src/r")
+datos <- readxl::read_excel("datos.xlsx")
+names(datos) <- str_replace_all(names(datos), c(" " = ".", "," = ""))
+datos <- datos[complete.cases(datos$FCB.mes),]
+datosCentros <- datos %>% group_by(Hoja) %>% mutate(counter = row_number())
+datosCentros <- datosCentros[datosCentros$FCB.mes < 1.75 & datosCentros$FCB.mes > 1, ]
+```
+
+## Introducción
+
+Aquí aparecen los distintos ajustes que probamos para el FCR (food conversion rate) biológico, de acuerdo a los datos que nos entregó Pablo.
+
+## Selección de variables predictoras
+
+El siguiente gráfico muestra que la temperatura no parece tener una incidencia significativa en el poder predictivo de los modelos. Queda demostrar esto ajustando modelos multivariados, que también consideren otras variables, como el precio del alimento. Adicionalmente, en el trabajo futuro está ver si el ajuste mejora si creamos distintos modelos dependiendo del mes de siembra.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(datosCentros, aes(counter, FCB.mes, color=`T°`)) +
+  geom_point() +
+  scale_color_gradient(low="blue", high="red") +
+  stat_smooth() +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
+
+## Regresión lineal
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+training.samples <- datosCentros$FCB.mes %>% createDataPartition(p = 0.75, list = FALSE)
+train.data  <- datosCentros[training.samples, ]
+test.data <- datosCentros[-training.samples, ]
+model <- lm(FCB.mes ~ counter, data = train.data)
+model %>% summary
+predictions <- model %>% predict(test.data)
+data.frame(
+  RMSE = RMSE(predictions, test.data$FCB.mes),
+  R2 = R2(predictions, test.data$FCB.mes)
+)
+ggplot(train.data, aes(counter, FCB.mes)) +
+  geom_point() +
+  stat_smooth(method = lm, formula = y ~ x) +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
+
+## Regresión polinomial de grado 4
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+model <- lm(FCB.mes ~ poly(counter, 4, raw = TRUE), data = train.data)
+model %>% summary
+predictions <- model %>% predict(test.data)
+data.frame(
+  RMSE = RMSE(predictions, test.data$FCB.mes),
+  R2 = R2(predictions, test.data$FCB.mes)
+)
+ggplot(train.data, aes(counter, FCB.mes) ) +
+  geom_point() +
+  stat_smooth(method = lm, formula = y ~ poly(x, 4, raw = TRUE)) +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
+
+## Regresión logarítmica
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+model <- lm(FCB.mes ~ log(counter), data = train.data)
+model %>% summary
+predictions <- model %>% predict(test.data)
+data.frame(
+  RMSE = RMSE(predictions, test.data$FCB.mes),
+  R2 = R2(predictions, test.data$FCB.mes)
+)
+ggplot(train.data, aes(counter, FCB.mes) ) +
+  geom_point() +
+  stat_smooth(method = lm, formula = y ~ log(x)) +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
+
+## Regresión con splines
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(splines)
+knots <- quantile(train.data$counter, p = c(0.25, 0.5, 0.75))
+model <- lm (FCB.mes ~ bs(counter, knots = knots), data = train.data)
+model %>% summary
+predictions <- model %>% predict(test.data)
+data.frame(
+  RMSE = RMSE(predictions, test.data$FCB.mes),
+  R2 = R2(predictions, test.data$FCB.mes)
+)
+ggplot(train.data, aes(counter, FCB.mes) ) +
+  geom_point() +
+  stat_smooth(method = lm, formula = y ~ splines::bs(x, df = 3)) +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
+
+## Modelo aditivo generalizado
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(mgcv)
+model <- gam(FCB.mes ~ s(counter), data = train.data)
+model %>% summary
+predictions <- model %>% predict(test.data)
+data.frame(
+  RMSE = RMSE(predictions, test.data$FCB.mes),
+  R2 = R2(predictions, test.data$FCB.mes)
+)
+ggplot(train.data, aes(counter, FCB.mes) ) +
+  geom_point() +
+  stat_smooth(method = gam, formula = y ~ s(x)) +
+  xlab('Mes del ciclo') +
+  ylab('FCR biológica')
+```
