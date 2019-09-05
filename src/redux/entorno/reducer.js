@@ -1,6 +1,13 @@
 import entornoActions from './actions'
 
 const initialState = {
+  barrios: [
+    { nombre: 'ACS 2' },
+    { nombre: 'ACS 9B' },
+    { nombre: 'ACS 10A' },
+    { nombre: 'ACS 10B' },
+  ],
+  barrioSeleccionado: { nombre: 'ACS 2' },
   temperaturas: {
     1: {nombreMes: 'enero', temperatura: 13.5 },
     2: {nombreMes: 'febrero', temperatura: 13.8 },
@@ -27,6 +34,13 @@ const entornoReducer = (state = initialState, action) => {
         temperaturas: {...state.temperaturas,
           [mes]: {temperatura, nombreMes}
         }
+      }
+    }
+    case entornoActions.FIJAR_BARRIO: {
+      const { nombre } = action.payload
+      return {
+        ...state,
+        barrioSeleccionado: state.barrios.find(barrio => barrio.nombre === nombre)
       }
     }
     default:

@@ -13,10 +13,17 @@ const Entorno = props => {
         </div>
       </div>
       <div className="contenido-contenido">
+        <div id="contenedor-barrio">
+          <label htmlFor="barrio">Barrio</label>
+          <select id="barrio" onChange={e => props.fijarBarrio(e.target.value)}>
+            {datos.barrios.map(barrio => <option value={barrio.nombre}>{barrio.nombre}</option>)}
+          </select>
+        </div>
+        <h2 id="titulo-temperaturas">Temperaturas medias</h2>
         <div id="contenedor-temperaturas">
           {Object.keys(datos.temperaturas).map(mes => (
             <div className="input-temperatura" key={`input-mes-${mes}`}>
-              <label htmlFor="mortalidad">T° media {datos.temperaturas[mes].nombreMes}</label>
+              <label htmlFor="mortalidad">{datos.temperaturas[mes].nombreMes}</label>
               <input
                 id="mortalidad"
                 name="mortalidad"
@@ -37,7 +44,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fijarTemperatura: (mes, grados) => dispatch(entornoActions.fijarTemperatura(mes, grados))
+  fijarTemperatura: (mes, grados) => dispatch(entornoActions.fijarTemperatura(mes, grados)),
+  fijarBarrio: nombre => dispatch(entornoActions.fijarBarrio(nombre)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Entorno);
