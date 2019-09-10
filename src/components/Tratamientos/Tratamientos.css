@@ -1,7 +1,59 @@
-#tabla-tratamientos td {
-  font-size: .8em;
-  padding: 4px 0;
+#contenedor-semanas {
+  display: flex;
+  flex-direction: column;
 }
 
-#tabla-tratamientos {
+div[id^="semanas-estrategia"] {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div[id^="semanas-estrategia"] > div {
+  width: 22px;
+  height: 22px;
+  font-size: 0.6em;
+  border: 1px solid #cecece;
+  padding: 2px;
+  background-color: white;
+  transition: all .25s ease-in-out;
+}
+
+.contenedor-tratamientos-estrategia {
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.contenedor-tratamientos-estrategia:first-child {
+  background-color: #E65100;
+}
+
+.contenedor-tratamientos-estrategia:nth-child(2) {
+  margin-top: 24px;
+  background-color: #0097A7;
+}
+
+.contenedor-tratamientos-estrategia > h2 {
+  margin-bottom: 8px;
+  font-size: 0.8em;
+  color: white;
+}
+
+div[id^="semanas-estrategia"] > div > span {
+  pointer-events: none;
+}
+
+div[id^="semanas-estrategia"] > div:hover {
+  background-color: #efefef;
+  border-color: #767676;
+}
+
+#popup-semana {
+  position: absolute;
+  display: none;
+  font-size: 0.8em;
+  pointer-events: none;
+  background-color: #fffdda;
+  padding: 2px 4px;
+  border-radius: 4px;
 }

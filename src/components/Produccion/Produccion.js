@@ -37,7 +37,7 @@ const Produccion = props => {
           defaultValue={datos.pesoSmolt}
           onChange={e => props.fijarPesoSmolt(e.target.value)}
         />
-        <label htmlFor="costo-smolt">Costo smolt (USD)</label>
+        {/*<label htmlFor="costo-smolt">Costo smolt (USD)</label>
         <input
           id="costo-smolt"
           name="costo-smolt"
@@ -52,7 +52,7 @@ const Produccion = props => {
           type="number" min="0" step="0.01"
           defaultValue={datos.costoAlimento}
           onChange={e => props.fijarCostoAlimento(e.target.value)}
-        />
+        />*/}
         <label htmlFor="peso-objetivo">Peso objetivo (g)</label>
         <input
           id="peso-objetivo"
@@ -61,7 +61,7 @@ const Produccion = props => {
           defaultValue={datos.pesoObjetivo}
           onChange={e => props.fijarPesoObjetivo(e.target.value)}
         />
-        <label htmlFor="mortalidad">Mortalidad sin considerar piojo (%)</label>
+        <label htmlFor="mortalidad">Mortalidad (%)</label>
         <input
           id="mortalidad"
           name="mortalidad"

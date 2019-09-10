@@ -15,36 +15,36 @@ const BarraLateral = () => {
             Entorno
           </div>
         </Link>
+        <Link to="/produccion">
+          <div className="link-seccion">
+            <FontAwesomeIcon icon={faFish} size="lg" />
+            Producción
+          </div>
+        </Link>
         <Link to="/tratamientos">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faSyringe} size="lg" />
             Tratamientos
           </div>
         </Link>
-        <Link to="/produccion">
-          <div className="link-seccion">
-            <FontAwesomeIcon icon={faShip} size="lg" />
-            Producción
-          </div>
-        </Link>
         <Link to="/cosecha">
           <div className="link-seccion">
-            <FontAwesomeIcon icon={faFish} size="lg" />
+            <FontAwesomeIcon icon={faShip} size="lg" />
             Cosecha
           </div>
         </Link>
-        <Link to="/transporte">
+        {/*<Link to="/transporte">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faTruckMoving} size="lg" />
             Transporte
           </div>
-        </Link>
-        <Link to="/ventas">
+        </Link>*/}
+        {/*<Link to="/ventas">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faDollarSign} size="lg" />
             Ventas
           </div>
-        </Link>
+        </Link>*/}
         <Link to="/otros">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faChartBar} size="lg" />
