@@ -46,6 +46,7 @@ div[id^="semanas-estrategia"] > div > span {
 div[id^="semanas-estrategia"] > div:hover {
   background-color: #efefef;
   border-color: #767676;
+  cursor: pointer;
 }
 
 #popup-semana {
@@ -56,4 +57,12 @@ div[id^="semanas-estrategia"] > div:hover {
   background-color: #fffdda;
   padding: 2px 4px;
   border-radius: 4px;
+}
+
+#popup-tratamiento {
+  position: absolute;
+  padding: 2px 4px;
+  background-color: #fffdda;
+  border-radius: 4px;
+  display: none;
 }
