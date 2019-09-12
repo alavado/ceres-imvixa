@@ -30,11 +30,33 @@ export const obtenerCurvasDeCrecimiento = (entorno, produccion, tratamientos) =>
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
   let semana = inicio.week()
+  const modelo = entorno.barrios[entorno.indiceBarrioSeleccionado].modeloCrecimiento
+  let pausaA = 0
+  let pausasA = 0
+  let tratamientosAplicadosA = {}
+  let pausaB = 0
+  let pausasB = 0
+  let tratamientosAplicadosB = {}
   for (let dia = 1; pesoA < pesoObjetivo || pesoB < pesoObjetivo; dia++) {
-    let mes = inicio.add(1, 'days').month() + 1
     semana += 1 / 7.0
-    pesoA = evaluarModelo(entorno.barrios[entorno.indiceBarrioSeleccionado].modeloCrecimiento, dia, semana, pesoSmolt)
-    pesoB = evaluarModelo(entorno.barrios[entorno.indiceBarrioSeleccionado].modeloCrecimiento, dia, semana, pesoSmolt)
+    if (`${Math.ceil(semana)}` in tratamientosA && !(`${Math.ceil(semana)}` in tratamientosAplicadosA)) {
+      pausaA = 3
+      pausasA += 3
+      tratamientosAplicadosA[`${Math.ceil(semana)}`] = 1
+    }
+    if (pausaA <= 0) {
+      pesoA = evaluarModelo(modelo, dia - pausasA, semana, pesoSmolt)
+    }
+    if (`${Math.ceil(semana)}` in tratamientosB && !(`${Math.ceil(semana)}` in tratamientosAplicadosB)) {
+      pausaB = 3
+      pausasB += 3
+      tratamientosAplicadosB[`${Math.ceil(semana)}`] = 1
+    }
+    if (pausaB <= 0) {
+      pesoB = evaluarModelo(modelo, dia - pausasB, semana, pesoSmolt)
+    }
+    pausaA--
+    pausaB--
     curva.push([dia, pesoA, pesoB])
   }
   return curva
