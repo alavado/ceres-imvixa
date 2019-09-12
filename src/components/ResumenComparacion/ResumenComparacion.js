@@ -9,6 +9,13 @@ const ResumenComparacion = props => {
   const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, props.tratamientos)
   const { pesoObjetivo } = props.produccion
 
+  const objetivoA = curvasCrecimiento.find(v => v[1] > pesoObjetivo)
+  const objetivoB = curvasCrecimiento.find(v => v[2] > pesoObjetivo)
+
+  if (!objetivoA || !objetivoB) {
+    return null
+  }
+
   return (
     <div id="fondo-resumen">
       <div id="barra-superior-resumen">
@@ -25,14 +32,14 @@ const ResumenComparacion = props => {
           <div id="fondo-estrategia-a">
             <h1>Estrategia A</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[1] > pesoObjetivo)[0] / 30.0) / 10.0}</h2>
+              <h2>{Math.round(10 * objetivoA[0] / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia B</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[2] > pesoObjetivo)[0] / 30.0) / 10.0}</h2>
+              <h2>{Math.round(10 * objetivoB[0] / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
