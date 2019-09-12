@@ -9,17 +9,29 @@ const Entorno = props => {
     <div className="contenido">
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
-          Parámetros del entorno
+          Parámetros del centro
         </div>
       </div>
       <div className="contenido-contenido">
         <div id="contenedor-barrio">
+          <label htmlFor="nombre-empresa">Empresa</label>
+          <input id="nombre-empresa" />
+          <label htmlFor="nombre-centro">Centro</label>
+          <input id="nombre-centro" />
           <label htmlFor="barrio">Barrio</label>
           <select id="barrio" onChange={e => props.fijarBarrio(e.target.value)}>
-            {datos.barrios.map(barrio => <option value={barrio.nombre}>{barrio.nombre}</option>)}
+            {datos.barrios.map(barrio => (
+              <option
+                key={`option-barrio-${barrio.nombre}`}
+                value={barrio.nombre}
+                onChange={e => props.fijarBarrio(e.target.value)}
+              >
+                {barrio.nombre}
+              </option>
+            ))}
           </select>
         </div>
-        <h2 id="titulo-temperaturas">Temperaturas medias</h2>
+        {/*<h2 id="titulo-temperaturas">Temperaturas medias</h2>
         <div id="contenedor-temperaturas">
           {Object.keys(datos.temperaturas).map(mes => (
             <div className="input-temperatura" key={`input-mes-${mes}`}>
@@ -33,7 +45,7 @@ const Entorno = props => {
               />
             </div>
           ))}
-        </div>
+          </div>*/}
       </div>
     </div>
   );

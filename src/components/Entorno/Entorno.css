@@ -24,12 +24,11 @@
   margin-bottom: 24px;
 }
 
-#contenedor-barrio label {
-  font-size: 1em;
-}
-
 #contenedor-barrio select, #contenedor-barrio option {
-  font-size: .8em;
   padding: 8px;
   border-radius: 4px;
+}
+
+#contenedor-barrio option {
+  font-size: 1em;
 }

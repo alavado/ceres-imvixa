@@ -1,13 +1,13 @@
 const tratamientosActions = {
   AGREGAR_TRATAMIENTO: 'AGREGAR_TRATAMIENTO',
-  BORRAR_TRATAMIENTO: 'BORRAR_TRATAMIENTO',
-  agregarTratamiento: (tratamiento, estrategia) => ({
+  ELIMINAR_TRATAMIENTO: 'ELIMINAR_TRATAMIENTO',
+  agregarTratamiento: (id, semana, estrategia) => ({
     type: tratamientosActions.AGREGAR_TRATAMIENTO,
-    payload: { tratamiento, estrategia }
+    payload: { id, semana, estrategia }
   }),
-  borrarTratamiento: (tratamiento, estrategia) => ({
-    type: tratamientosActions.BORRAR_TRATAMIENTO,
-    payload: { tratamiento, estrategia }
+  eliminarTratamiento: (semana, estrategia) => ({
+    type: tratamientosActions.ELIMINAR_TRATAMIENTO,
+    payload: { semana, estrategia }
   }),
 }
 

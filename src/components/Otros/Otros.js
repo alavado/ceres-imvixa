@@ -12,4 +12,5 @@ const Otros = () => {
   );
 };
 
+// certificacion parametro disp a pagar
 export default Otros;

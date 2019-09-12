@@ -15,45 +15,25 @@ const crecimientoConComida = (peso, temperatura, dia, escalaDeCrecimiento) => {
   peso += peso * factorDeCrecimiento * coefAlimentoComido * pcd / bFCR
   return peso
 }
+
+const evaluarModelo = (modelo, a, b, c) => {
+  const x = [1, a, b, c, a*a, a*b, a*c, b*b, b*c, c*c, a**3, a*a*b, a*a*c, a*b*b, a*b*c, a*c*c, b**3, b*b*c, b*c*c, c**3]
+  return Math.round(modelo.coef.reduce((sum, v, i) => sum + x[i] * v, 0) + modelo.intercepto)
+}
+
 // 1 a 2 semanas entre sin imbixa y con imvixa, 250 g mas o menos de diferencia al mismo corte
 export const obtenerCurvasDeCrecimiento = (entorno, produccion, tratamientos) => {
-  const { temperaturas } = entorno
   const { fechaInicio, pesoSmolt, pesoObjetivo } = produccion
-  const { tratamientosA, tratamientosB } = tratamientos
-  const perdidaPorAyuno = 0.03, bFCR = 1.15, coefAlimentoComido = 0.7, escalaDeCrecimiento = 1.0, numdays = 365 * 2
-
+  let inicio = moment(fechaInicio, 'YYYY-MM-DD')
+  let curva = [['x', 'Estr. A', 'Estr. B']]
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
-  let curva = [['x', 'Estr. A', 'Estr. B']]
-  let inicio = moment(fechaInicio, 'YYYY-MM-DD')
-
-  let diasAyunoA = 0
-  let diasAyunoB = 0
-  for (let dia = 1; pesoA < pesoObjetivo * 1 || pesoB < pesoObjetivo * 1; dia++) {
-    let mes = inicio.add(dia, 'd').month() + 1
-    let temperatura = temperaturas[mes].temperatura
-    // crecimiento tratamiento B
-    if (tratamientosA[dia] || diasAyunoA > 0) {
-      if (tratamientosA[dia]) {
-        diasAyunoA = tratamientosA[dia].diasAyuno
-      }
-      diasAyunoA--
-      pesoA = crecimientoConAyuno(pesoA, perdidaPorAyuno)
-    }
-    else {
-      pesoA = crecimientoConComida(pesoA, temperatura, dia, escalaDeCrecimiento)
-    }
-    // crecimiento tratamiento B
-    if (tratamientosB[dia] || diasAyunoB > 0) {
-      if (tratamientosB[dia]) {
-        diasAyunoB = tratamientosB[dia].diasAyuno
-      }
-      diasAyunoB--
-      pesoB = crecimientoConAyuno(pesoB, perdidaPorAyuno)
-    }
-    else {
-      pesoB = crecimientoConComida(pesoB, temperatura, dia, escalaDeCrecimiento)
-    }
+  let semana = inicio.week()
+  for (let dia = 1; pesoA < pesoObjetivo || pesoB < pesoObjetivo; dia++) {
+    let mes = inicio.add(1, 'days').month() + 1
+    semana += 1 / 7.0
+    pesoA = evaluarModelo(entorno.barrios[entorno.indiceBarrioSeleccionado].modeloCrecimiento, dia, semana, pesoSmolt)
+    pesoB = evaluarModelo(entorno.barrios[entorno.indiceBarrioSeleccionado].modeloCrecimiento, dia, semana, pesoSmolt)
     curva.push([dia, pesoA, pesoB])
   }
   return curva

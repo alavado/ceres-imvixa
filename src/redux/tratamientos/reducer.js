@@ -1,45 +1,38 @@
 import tratamientosActions from './actions'
 
 const initialState = {
-  tratamientosA: {
-    [30*7]: { diasAyuno: 3, mortalidad: 0.001 },
-    [34*7]: { diasAyuno: 3, mortalidad: 0.001 },
-    [38*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [41*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [45*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [49*7]: { diasAyuno: 3, mortalidad: 0.002 },
-  },
-  tratamientosB : {
-    [7*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [11*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [15*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [19*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [23*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [27*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [31*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [35*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [39*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [42*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [46*7]: { diasAyuno: 3, mortalidad: 0.002 },
-    [49*7]: { diasAyuno: 3, mortalidad: 0.002 }
-  }
+  tratamientos: [
+    { id: 2, nombre: 'Tratamiento 2', color: '#ff0000' },
+    { id: 3, nombre: 'Tratamiento 3', color: '#ff0000'  },
+    { id: 4, nombre: 'Tratamiento 4', color: '#ff0000'  },
+    { id: 5, nombre: 'Tratamiento 5', color: '#ff0000'  },
+    { id: 1, nombre: 'Imvixa', color: '#ff0000'  },
+  ],
+  tratamientosA: {},
+  tratamientosB : {}
 }
 
 const tratamientosReducer = (state = initialState, action) => {
   switch (action.type) {
     case tratamientosActions.AGREGAR_TRATAMIENTO: {
-      const { tratamiento, estrategia } = action.payload
-      if (estrategia === 'a') {
-        return {
-          ...state,
-          tratamientosA: [...state.tratamientosA, tratamiento]
-        }
+      const { id, semana, estrategia } = action.payload
+      return {
+        ...state,
+        [`tratamientos${estrategia}`]: {...state[`tratamientos${estrategia}`], [semana]: id}
       }
-      else {
-        return {
-          ...state,
-          tratamientosB: [...state.tratamientosB, tratamiento]
-        }
+    }
+    case tratamientosActions.ELIMINAR_TRATAMIENTO: {
+      const { semana, estrategia } = action.payload
+      const claveTratamientos = `tratamientos${estrategia}`
+      return {
+        ...state,
+        [claveTratamientos]: Object.keys(state[claveTratamientos])
+          .reduce((object, key) => {
+            if (Number(key) !== semana) {
+              object[key] = state[claveTratamientos][key]
+            }
+            return object
+        }, {})
       }
     }
     default:

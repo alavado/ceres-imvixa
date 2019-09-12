@@ -10,13 +10,21 @@ div[id^="semanas-estrategia"] {
 }
 
 div[id^="semanas-estrategia"] > div {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   font-size: 0.6em;
   border: 1px solid #cecece;
   padding: 2px;
   background-color: white;
   transition: all .25s ease-in-out;
+}
+
+div[id^="semanas-estrategia"] > div.tratamiento-activo {
+  background-color: #A5D6A7;
+}
+
+div[id^="semanas-estrategia"] > div.tratamiento-activo:hover {
+  background-color: #66BB6A;
 }
 
 .contenedor-tratamientos-estrategia {
@@ -61,8 +69,22 @@ div[id^="semanas-estrategia"] > div:hover {
 
 #popup-tratamiento {
   position: absolute;
-  padding: 2px 4px;
-  background-color: #fffdda;
-  border-radius: 4px;
+  padding: 8px 8px;
+  background-color: #607D8B;
   display: none;
+  z-index: 10;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+#popup-tratamiento label {
+  font-size: .7em;
+  color: white;
+}
+
+#popup-tratamiento select {
+  margin-bottom: 8px;
+}
+
+#popup-tratamiento button {
+  cursor: pointer;
 }

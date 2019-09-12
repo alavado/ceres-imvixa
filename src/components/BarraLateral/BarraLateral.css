@@ -6,13 +6,18 @@
 
 #barra-lateral h1 {
   border-radius: 8px 0 0 0;
-  background-color: #FFB74D;
+  background-color: #CFD8DC;
   color: black;
   font-size: 0.8em;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#titulo-barra-lateral a {
+  color: black;
+  text-align: left;
 }
 
 #lista-secciones {

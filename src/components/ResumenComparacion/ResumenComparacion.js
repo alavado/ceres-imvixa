@@ -25,15 +25,15 @@ const ResumenComparacion = props => {
           <div id="fondo-estrategia-a">
             <h1>Estrategia A</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[1] > pesoObjetivo)[0] / 7.0) / 10.0}</h2>
-              <p>semanas para alcanzar el peso objetivo</p>
+              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[1] > pesoObjetivo)[0] / 30.0) / 10.0}</h2>
+              <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia B</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[2] > pesoObjetivo)[0] / 7.0) / 10.0}</h2>
-              <p>semanas para alcanzar el peso objetivo</p>
+              <h2>{Math.round(10 * curvasCrecimiento.find(v => v[2] > pesoObjetivo)[0] / 30.0) / 10.0}</h2>
+              <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
         </div>
