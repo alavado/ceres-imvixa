@@ -17,7 +17,7 @@
 
 #titulo-barra-lateral a {
   color: black;
-  text-align: left;
+  
 }
 
 #lista-secciones {
@@ -41,6 +41,11 @@
 }
 
 #lista-secciones .link-seccion:hover {
+  color: #FFF;
+  background-color: #455A64;
+}
+
+#lista-secciones .seccion-seleccionada {
   color: #FFF;
   background-color: #455A64;
 }

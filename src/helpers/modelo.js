@@ -24,6 +24,7 @@ const evaluarModelo = (modelo, a, b, c) => {
 // 1 a 2 semanas entre sin imbixa y con imvixa, 250 g mas o menos de diferencia al mismo corte
 export const obtenerCurvasDeCrecimiento = (entorno, produccion, tratamientos) => {
   const { fechaInicio, pesoSmolt, pesoObjetivo } = produccion
+  const { tratamientosA, tratamientosB } = tratamientos
   let inicio = moment(fechaInicio, 'YYYY-MM-DD')
   let curva = [['x', 'Estr. A', 'Estr. B']]
   let pesoA = pesoSmolt

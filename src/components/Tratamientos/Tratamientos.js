@@ -11,7 +11,9 @@ const Tratamientos = props => {
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     id: 0,
     estrategia: 'A',
-    semana: 1
+    semana: 1,
+    dia: 'Lunes',
+    duracion: 3
   })
 
   let semanas = []
@@ -19,12 +21,17 @@ const Tratamientos = props => {
     semanas.push(i)
   }
 
-  const moverPopup = (e, semana) => {
+  const moverPopup = (e, semana, estrategia) => {
     var rect = document.getElementById('contenedor-semanas').getBoundingClientRect();
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     var popup = document.getElementById('popup-semana')
-    popup.innerHTML = `Semana ${semana}`
+    if (props[`tratamientos${estrategia}`][semana]) {
+      popup.innerHTML = `Semana ${semana}<br />${props.tratamientos.find(t => t.id === props[`tratamientos${estrategia}`][semana].id).nombre}`
+    }
+    else {
+      popup.innerHTML = `Semana ${semana}`
+    }
     popup.style.marginLeft = `${x + 5}px`
     popup.style.marginTop = `${y - 18}px`
     popup.style.display = 'block'
@@ -62,6 +69,25 @@ const Tratamientos = props => {
     }
   }
 
+  const replicarTratamientos = () => {
+    const tratamientosEstrategia = `tratamientos${nuevoTratamiento.estrategia}`
+    const semanasTratamientosPrevios = Object
+      .keys(props[tratamientosEstrategia])
+      .filter(key => props[tratamientosEstrategia][key].id !== props.tratamientos.find(t => t.nombre.toLowerCase() === 'imvixa').id)
+      .sort()
+    let diferenciaEntreCiclos = nuevoTratamiento.semana - semanasTratamientosPrevios[0]
+    for (let ciclo = 0; nuevoTratamiento.semana + diferenciaEntreCiclos * ciclo <= 70; ciclo++) {
+      semanasTratamientosPrevios.forEach(semana => {
+        let semanaAplicacion = nuevoTratamiento.semana + Number(semana) + diferenciaEntreCiclos * ciclo - semanasTratamientosPrevios[0]
+        props.agregarTratamiento({
+          ...props[tratamientosEstrategia][semana],
+          semana: semanaAplicacion,
+          estrategia: nuevoTratamiento.estrategia
+        })
+      })
+    }
+  }
+
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
@@ -78,7 +104,7 @@ const Tratamientos = props => {
                 {semanas.map(s => (
                   <div
                     onClick={e => mostrarPopupNuevoTratamiento(e, s, estrategia)}
-                    onMouseMove={e => moverPopup(e, s)}
+                    onMouseMove={e => moverPopup(e, s, estrategia)}
                     onMouseLeave={esconderPopup}
                     className={props[`tratamientos${estrategia}`][s] ? 'tratamiento-activo' : 'tratamiento-inactivo'}
                   >
@@ -88,10 +114,11 @@ const Tratamientos = props => {
               </div>
             </div>
           ))}
+
           <div id="popup-semana">Semana 1</div>
           <div id="popup-tratamiento">
             <label
-              for="nombre-nuevo-tratamiento"
+              htmlFor="nombre-nuevo-tratamiento"
               id="titulo-popup-tratamiento"
             >
               Tratamiento semana
@@ -103,12 +130,23 @@ const Tratamientos = props => {
               <option value={0}>Ninguno</option>
               {props.tratamientos.map(t => <option value={t.id}>{t.nombre}</option>)}
             </select>
-            <label for="dia-nuevo-tratamiento">Día de aplicación</label>
-            <select id="dia-nuevo-tratamiento">
-              {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map(dia => <option>{dia}</option>)}
+            <label htmlFor="dia-nuevo-tratamiento">Día de aplicación</label>
+            <select
+              id="dia-nuevo-tratamiento"
+              onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
+            >
+              {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map(dia => <option value={dia}>{dia}</option>)}
             </select>
+            <label htmlFor="dia-nuevo-tratamiento">Duración (semanas)</label>
+            <input
+              type="number"
+              min={1}
+              onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
+              defaultValue={3} />
             <br />
             <button onClick={agregarTratamiento}>Aplicar</button>
+            <button onClick={replicarTratamientos}>!!!</button>
+            <button onClick={esconderPopupNuevoTratamiento}>X</button>
           </div>
         </div>
       </div>
@@ -124,8 +162,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   agregarTratamiento: tratamiento => {
-    const { id, semana, estrategia } = tratamiento
-    dispatch(tratamientosActions.agregarTratamiento(id, semana, estrategia))
+    const { id, semana, estrategia, dia, duracion } = tratamiento
+    dispatch(tratamientosActions.agregarTratamiento(id, semana, dia, estrategia, duracion))
   },
   eliminarTratamiento: tratamiento => {
     const { semana, estrategia } = tratamiento

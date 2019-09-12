@@ -1,33 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { NavLink as Link } from 'react-router-dom'
 import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShip, faFish, faWarehouse, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
 
 const BarraLateral = () => {
+  console.log(window.location.href);
   return (
     <div id="barra-lateral">
-      <h1 id="titulo-barra-lateral"><Link to="/">Parámetros</Link></h1>
+      <h1 id="titulo-barra-lateral"><Link to="/">Parámetros simulación</Link></h1>
       <div id="lista-secciones">
-        <Link to="/entorno">
-          <div className="link-seccion">
+        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/entorno">
+          <div>
             <FontAwesomeIcon icon={faWarehouse} size="lg" />
             Centro
           </div>
         </Link>
-        <Link to="/produccion">
-          <div className="link-seccion">
+        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/produccion">
+          <div>
             <FontAwesomeIcon icon={faFish} size="lg" />
             Producción
           </div>
         </Link>
-        <Link to="/tratamientos">
-          <div className="link-seccion">
+        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/tratamientos">
+          <div>
             <FontAwesomeIcon icon={faSyringe} size="lg" />
             Tratamientos
           </div>
         </Link>
-        <Link to="/cosecha">
+        {/*<Link to="/cosecha">
           <div className="link-seccion">
             <FontAwesomeIcon icon={faShip} size="lg" />
             Cosecha
@@ -45,8 +46,8 @@ const BarraLateral = () => {
             Ventas
           </div>
         </Link>*/}
-        <Link to="/otros">
-          <div className="link-seccion">
+        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/otros">
+          <div>
             <FontAwesomeIcon icon={faChartBar} size="lg" />
             Otros
           </div>

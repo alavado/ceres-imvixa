@@ -88,3 +88,9 @@ div[id^="semanas-estrategia"] > div:hover {
 #popup-tratamiento button {
   cursor: pointer;
 }
+
+#popup-tratamiento input {
+  font-size: .8em;
+  padding: 4px;
+  width: 30px;
+}
