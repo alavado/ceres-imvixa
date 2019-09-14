@@ -1,4 +1,4 @@
-import entornoActions from './actions'
+import centroActions from './actions'
 import barrios from './barrios'
 
 const initialState = {
@@ -20,9 +20,9 @@ const initialState = {
   }
 }
 
-const entornoReducer = (state = initialState, action) => {
+const centroReducer = (state = initialState, action) => {
   switch (action.type) {
-    case entornoActions.FIJAR_TEMPERATURA: {
+    case centroActions.FIJAR_TEMPERATURA: {
       const { mes, temperatura } = action.payload
       const nombreMes = state.temperaturas[mes].nombreMes
       return {
@@ -32,7 +32,7 @@ const entornoReducer = (state = initialState, action) => {
         }
       }
     }
-    case entornoActions.FIJAR_BARRIO: {
+    case centroActions.FIJAR_BARRIO: {
       const { nombre } = action.payload
       return {
         ...state,
@@ -44,4 +44,4 @@ const entornoReducer = (state = initialState, action) => {
   }
 }
 
-export default entornoReducer
+export default centroReducer

@@ -1,14 +1,14 @@
-const entornoActions = {
+const centroActions = {
   FIJAR_TEMPERATURA: 'FIJAR_TEMPERATURA',
   FIJAR_BARRIO: 'FIJAR_BARRIO',
   fijarTemperatura: (mes, grados) => ({
-    type: entornoActions.FIJAR_TEMPERATURA,
+    type: centroActions.FIJAR_TEMPERATURA,
     payload: { mes, grados }
   }),
   fijarBarrio: nombre => ({
-    type: entornoActions.FIJAR_BARRIO,
+    type: centroActions.FIJAR_BARRIO,
     payload: { nombre }
   }),
 }
 
-export default entornoActions
+export default centroActions

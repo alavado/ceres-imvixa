@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import entornoActions from '../../redux/entorno/actions'
-import './Entorno.css'
+import centroActions from '../../redux/centro/actions'
+import './Centro.css'
 
-const Entorno = props => {
+const Centro = props => {
   const { datos } = props
   return (
     <div className="contenido">
@@ -52,12 +52,12 @@ const Entorno = props => {
 };
 
 const mapStateToProps = state => ({
-  datos: state.entorno
+  datos: state.centro
 })
 
 const mapDispatchToProps = dispatch => ({
-  fijarTemperatura: (mes, grados) => dispatch(entornoActions.fijarTemperatura(mes, grados)),
-  fijarBarrio: nombre => dispatch(entornoActions.fijarBarrio(nombre)),
+  fijarTemperatura: (mes, grados) => dispatch(centroActions.fijarTemperatura(mes, grados)),
+  fijarBarrio: nombre => dispatch(centroActions.fijarBarrio(nombre)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Entorno);
+export default connect(mapStateToProps, mapDispatchToProps)(Centro);

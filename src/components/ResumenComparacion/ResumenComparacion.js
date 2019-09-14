@@ -6,7 +6,7 @@ import GraficoCrecimiento from './GraficoCrecimiento';
 
 const ResumenComparacion = props => {
 
-  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.entorno, props.produccion, props.tratamientos)
+  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.centro, props.produccion, props.tratamientos)
   const { pesoObjetivo } = props.produccion
 
   const objetivoA = curvasCrecimiento.find(v => v[1] > pesoObjetivo)
@@ -51,7 +51,7 @@ const ResumenComparacion = props => {
 
 const mapStateToProps = state => ({
   produccion: state.produccion,
-  entorno: state.entorno,
+  centro: state.centro,
   tratamientos: state.tratamientos
 })
 

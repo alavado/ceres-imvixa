@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
+import {dias} from '../../helpers/constantes'
+import ResumenComparacion from '../ResumenComparacion';
 
 // Costo de tratamiento de imvixa depende del peso debe poder especificarse la duracion del tratamiento
 // que aparezca una pantalla grande
@@ -89,68 +91,71 @@ const Tratamientos = props => {
   }
 
   return (
-    <div className="contenido">
-      <div className="barra-superior-contenido">
-        <div className="titulo-contenido">
-          Calendarios de tratamientos
+    <>
+      <div className="contenido">
+        <div className="barra-superior-contenido">
+          <div className="titulo-contenido">
+            Calendarios de tratamientos
+          </div>
         </div>
-      </div>
-      <div className="contenido-contenido">
-        <div id="contenedor-semanas">
-          {['A', 'B'].map(estrategia => (
-            <div className="contenedor-tratamientos-estrategia">
-              <h2>Semanas estrategia {estrategia}</h2>
-              <div id={`semanas-estrategia-${estrategia.toLowerCase()}`}>
-                {semanas.map(s => (
-                  <div
-                    onClick={e => mostrarPopupNuevoTratamiento(e, s, estrategia)}
-                    onMouseMove={e => moverPopup(e, s, estrategia)}
-                    onMouseLeave={esconderPopup}
-                    className={props[`tratamientos${estrategia}`][s] ? 'tratamiento-activo' : 'tratamiento-inactivo'}
-                  >
-                    <span>{s}</span>
-                  </div>
-                ))}
+        <div className="contenido-contenido">
+          <div id="contenedor-semanas">
+            {['A', 'B'].map(estrategia => (
+              <div className="contenedor-tratamientos-estrategia">
+                <h2>Semanas estrategia {estrategia}</h2>
+                <div id={`semanas-estrategia-${estrategia.toLowerCase()}`}>
+                  {semanas.map(s => (
+                    <div
+                      onClick={e => mostrarPopupNuevoTratamiento(e, s, estrategia)}
+                      onMouseMove={e => moverPopup(e, s, estrategia)}
+                      onMouseLeave={esconderPopup}
+                      className={props[`tratamientos${estrategia}`][s] ? 'tratamiento-activo' : 'tratamiento-inactivo'}
+                    >
+                      <span>{s}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          <div id="popup-semana">Semana 1</div>
-          <div id="popup-tratamiento">
-            <label
-              htmlFor="nombre-nuevo-tratamiento"
-              id="titulo-popup-tratamiento"
-            >
-              Tratamiento semana
-            </label>
-            <select
-              id="nombre-nuevo-tratamiento"
-              onChange={e => setNuevoTratamiento({...nuevoTratamiento, id: Number(e.target.value)})}
-            >
-              <option value={0}>Ninguno</option>
-              {props.tratamientos.map(t => <option value={t.id}>{t.nombre}</option>)}
-            </select>
-            <label htmlFor="dia-nuevo-tratamiento">Día de aplicación</label>
-            <select
-              id="dia-nuevo-tratamiento"
-              onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
-            >
-              {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map(dia => <option value={dia}>{dia}</option>)}
-            </select>
-            <label htmlFor="dia-nuevo-tratamiento">Duración (semanas)</label>
-            <input
-              type="number"
-              min={1}
-              onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
-              defaultValue={3} />
-            <br />
-            <button onClick={agregarTratamiento}>Aplicar</button>
-            <button onClick={replicarTratamientos}>!!!</button>
-            <button onClick={esconderPopupNuevoTratamiento}>X</button>
+            <div id="popup-semana">Semana 1</div>
+            <div id="popup-tratamiento">
+              <label
+                htmlFor="nombre-nuevo-tratamiento"
+                id="titulo-popup-tratamiento"
+              >
+                Tratamiento semana
+              </label>
+              <select
+                id="nombre-nuevo-tratamiento"
+                onChange={e => setNuevoTratamiento({...nuevoTratamiento, id: Number(e.target.value)})}
+              >
+                <option value={0}>Ninguno</option>
+                {props.tratamientos.map(t => <option value={t.id}>{t.nombre}</option>)}
+              </select>
+              <label htmlFor="dia-nuevo-tratamiento">Día de aplicación</label>
+              <select
+                id="dia-nuevo-tratamiento"
+                onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
+              >
+                {dias.map(dia => <option value={dia}>{dia}</option>)}
+              </select>
+              <label htmlFor="dia-nuevo-tratamiento">Duración (semanas)</label>
+              <input
+                type="number"
+                min={1}
+                onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
+                defaultValue={3} />
+              <br />
+              <button onClick={agregarTratamiento}>Aplicar</button>
+              <button onClick={replicarTratamientos}>!!!</button>
+              <button onClick={esconderPopupNuevoTratamiento}>X</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <ResumenComparacion />
+    </>
   );
 };
 

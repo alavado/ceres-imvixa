@@ -2,15 +2,15 @@ import React from 'react';
 import { NavLink as Link } from 'react-router-dom'
 import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShip, faFish, faWarehouse, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
+import { faFish, faWarehouse, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
 
 const BarraLateral = () => {
   console.log(window.location.href);
   return (
     <div id="barra-lateral">
-      <h1 id="titulo-barra-lateral"><Link to="/">Parámetros simulación</Link></h1>
+      <h1 id="titulo-barra-lateral"><Link to="/"></Link></h1>
       <div id="lista-secciones">
-        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/entorno">
+        <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/centro">
           <div>
             <FontAwesomeIcon icon={faWarehouse} size="lg" />
             Centro
