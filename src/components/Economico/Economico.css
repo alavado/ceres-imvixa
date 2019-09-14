@@ -1,0 +1,34 @@
+#contenedor-temperaturas {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 400px;
+  justify-content: flex-start;
+  margin-left: 4px;
+}
+
+#contenedor-temperaturas input[type="number"] {
+  width: 100px;
+}
+
+#contenedor-temperaturas label {
+  text-transform: capitalize;
+}
+
+#titulo-temperaturas {
+  font-size: 1em;
+  margin-bottom: 16px;
+}
+
+#contenedor-barrio {
+  margin-bottom: 24px;
+}
+
+#contenedor-barrio select, #contenedor-barrio option {
+  padding: 8px;
+  border-radius: 4px;
+}
+
+#contenedor-barrio option {
+  font-size: 1em;
+}

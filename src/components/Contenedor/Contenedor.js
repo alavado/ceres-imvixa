@@ -10,6 +10,7 @@ import Transporte from '../Transporte';
 import Ventas from '../Ventas';
 import Tratamientos from '../Tratamientos';
 import Otros from '../Otros';
+import Economico from '../Economico';
 
 const Contenedor = () => {
   return (
@@ -24,6 +25,7 @@ const Contenedor = () => {
         <Route path="/ventas" exact component={Ventas} />
         <Route path="/tratamientos" exact component={Tratamientos} />
         <Route path="/otros" exact component={Otros} />
+        <Route path="/economico" exact component={Economico} />
       </Switch>
     </div>
   );

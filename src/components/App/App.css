@@ -52,3 +52,26 @@ a {
   border-width: 1px;
   border-color: #bdbdbd;
 }
+
+.contenido-secundario {
+  background: white;
+  flex: 2;
+  border-bottom-right-radius: 8px;
+  transition: all .5s ease-in-out;
+}
+
+.titulo-contenido-secundario {
+  height: 50px;
+  width: 100%;
+  background-color: #546E7A;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 8px;
+  color: white;
+}
+
+.titulo-contenido-secundario h1 {
+  margin-left: 24px;
+  font-size: 1em;
+  font-weight: bold;
+}
