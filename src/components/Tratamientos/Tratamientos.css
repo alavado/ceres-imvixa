@@ -22,8 +22,13 @@ div[id^="semanas-estrategia"] > div {
   border-bottom: 1px solid #546E7A;
 }
 
-div[id^="semanas-estrategia"] > div.tratamiento-aplicado {
-  background-color: #388E3C;
+#semanas-estrategia-a > div.tratamiento-aplicado {
+  background-color: #EF6C00;
+  color: white;
+}
+
+#semanas-estrategia-b > div.tratamiento-aplicado {
+  background-color: #0097A7;
   color: white;
 }
 
@@ -31,8 +36,12 @@ div[id^="semanas-estrategia"] > div.tratamiento-aplicado:hover {
   background-color: #43A047;
 }
 
-div[id^="semanas-estrategia"] > div.tratamiento-activo {
-  background-color: #C8E6C9;
+#semanas-estrategia-a > div.tratamiento-activo {
+  background-color: #FFCC80;
+}
+
+#semanas-estrategia-b > div.tratamiento-activo {
+  background-color: #80DEEA;
 }
 
 div[id^="semanas-estrategia"] > div.tratamiento-activo:hover {
@@ -40,7 +49,7 @@ div[id^="semanas-estrategia"] > div.tratamiento-activo:hover {
 }
 
 div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
-  background-color: #EF9A9A;
+  background-color: lightgray;
 }
 
 .contenedor-tratamientos-estrategia {
@@ -49,18 +58,20 @@ div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
 }
 
 .contenedor-tratamientos-estrategia:first-child {
-  background-color: #EF6C00;
+  background-color: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .contenedor-tratamientos-estrategia:nth-child(2) {
   margin-top: 24px;
-  background-color: #0097A7;
+  background-color: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .contenedor-tratamientos-estrategia > h2 {
   margin-bottom: 8px;
   font-size: 0.8em;
-  color: white;
+  color: black;
 }
 
 div[id^="semanas-estrategia"] > div > span {
