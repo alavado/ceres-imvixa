@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Economico.css'
-import economicoActions  from '../../redux/cosecha/actions'
+import economicoActions  from '../../redux/economico/actions'
 
 const Economico = props => {
   const { datos } = props
@@ -46,7 +46,7 @@ const Economico = props => {
 };
 
 const mapStateToProps = state => ({
-  datos : state.economico
+  datos: state.economico
 })
 
 const mapDispatchToProps = dispatch => ({

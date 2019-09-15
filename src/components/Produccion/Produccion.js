@@ -62,7 +62,7 @@ const Produccion = props => {
             defaultValue={datos.pesoObjetivo}
             onChange={e => props.fijarPesoObjetivo(e.target.value)}
           />
-          <label htmlFor="mortalidad">Mortalidad (%)</label>
+          <label htmlFor="mortalidad">Mortalidad ciclo (%)</label>
           <input
             id="mortalidad"
             name="mortalidad"
