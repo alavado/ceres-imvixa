@@ -102,7 +102,7 @@ const Tratamientos = props => {
           <div id="contenedor-semanas">
             {['A', 'B'].map(estrategia => (
               <div className="contenedor-tratamientos-estrategia">
-                <h2>Semanas estrategia {estrategia}</h2>
+                <h2>Semanas estrategia {estrategia === 'A' ? 'Imvixa' : 'tradicional'}</h2>
                 <div id={`semanas-estrategia-${estrategia.toLowerCase()}`}>
                   {semanas.map(s => (
                     <div
@@ -131,7 +131,11 @@ const Tratamientos = props => {
                 onChange={e => setNuevoTratamiento({...nuevoTratamiento, id: Number(e.target.value)})}
               >
                 <option value={0}>Ninguno</option>
-                {props.tratamientos.map(t => <option value={t.id}>{t.nombre}</option>)}
+                {props
+                  .tratamientos
+                  .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
+                  .map(t => <option value={t.id}>{t.nombre}</option>)
+                }
               </select>
               <label htmlFor="dia-nuevo-tratamiento">Día de aplicación</label>
               <select

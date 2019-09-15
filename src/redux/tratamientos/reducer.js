@@ -2,11 +2,13 @@ import tratamientosActions from './actions'
 
 const initialState = {
   tratamientos: [
-    { id: 1, nombre: 'Azametifos', color: '#ff0000' },
-    { id: 2, nombre: 'Benzoato de emamectina', color: '#ff0000' },
-    { id: 3, nombre: 'Deltametrina', color: '#ff0000'  },
-    { id: 4, nombre: 'Peróxido de hidrógeno', color: '#ff0000'  },
-    { id: 5, nombre: 'Imvixa', color: '#ff0000'  },
+    { id: 1, nombre: 'Azametifos' },
+    { id: 2, nombre: 'Emamectina' },
+    { id: 3, nombre: 'Deltametrina'  },
+    { id: 4, nombre: 'Peróxido de hidrógeno' },
+    { id: 5, nombre: 'Cipermetrina' },
+    { id: 6, nombre: 'Imvixa' },
+    { id: 7, nombre: 'Alpha Flux' },
   ],
   tratamientosA: {},
   tratamientosB : {}

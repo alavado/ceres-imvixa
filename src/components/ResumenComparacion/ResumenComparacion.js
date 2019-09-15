@@ -30,14 +30,14 @@ const ResumenComparacion = props => {
         </div>
         <div id="cuadros-estrategias">
           <div id="fondo-estrategia-a">
-            <h1>Estrategia A</h1>
+            <h1>Estrategia Imvixa</h1>
             <div className="resultados-estrategia">
               <h2>{Math.round(10 * objetivoA[0] / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
-            <h1>Estrategia B</h1>
+            <h1>Estrategia tradicional</h1>
             <div className="resultados-estrategia">
               <h2>{Math.round(10 * objetivoB[0] / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
