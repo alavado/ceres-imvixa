@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Otros = () => {
+const Ajustes = () => {
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
-          Otros parámetros
+          Ajustes
         </div>
       </div>
     </div>
@@ -13,4 +13,4 @@ const Otros = () => {
 };
 
 // certificacion parametro disp a pagar
-export default Otros;
+export default Ajustes;

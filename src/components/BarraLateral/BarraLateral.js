@@ -37,7 +37,7 @@ const BarraLateral = () => {
           </Link>
         </div>
         <div>
-          <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/otros">
+          <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/ajustes">
             <div>
               <FontAwesomeIcon icon={faCog} size="lg" />
               Ajustes

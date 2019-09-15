@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import Centro from '../Centro';
 import Produccion from '../Produccion';
 import Tratamientos from '../Tratamientos';
-import Otros from '../Otros';
+import Ajustes from '../Ajustes';
 import Economico from '../Economico';
 
 const Contenedor = () => {
@@ -18,7 +18,7 @@ const Contenedor = () => {
         <Route path="/centro" exact component={Centro} />
         <Route path="/produccion" exact component={Produccion} />
         <Route path="/tratamientos" exact component={Tratamientos} />
-        <Route path="/otros" exact component={Otros} />
+        <Route path="/ajustes" exact component={Ajustes} />
         <Route path="/economico" exact component={Economico} />
       </Switch>
     </div>
