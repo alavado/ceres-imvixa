@@ -10,7 +10,12 @@ const initialState = {
     { id: 6, nombre: 'Imvixa' },
     { id: 7, nombre: 'Alpha Flux' },
   ],
-  tratamientosA: {},
+  tratamientosA: {
+    1: {
+      id: 6,
+      duracion: 32
+    }
+  },
   tratamientosB : {}
 }
 

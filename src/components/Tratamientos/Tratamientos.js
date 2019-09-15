@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
 import {dias} from '../../helpers/constantes'
-import ResumenComparacion from '../ResumenComparacion';
+import ResumenComparacion from './ResumenComparacion/';
 
 // Costo de tratamiento de imvixa depende del peso debe poder especificarse la duracion del tratamiento
 // que aparezca una pantalla grande
@@ -17,11 +17,6 @@ const Tratamientos = props => {
     dia: 'Lunes',
     duracion: 3
   })
-
-  let semanas = []
-  for (let i = 1; i <= 70; i++) {
-    semanas.push(i)
-  }
 
   const moverPopup = (e, semana, estrategia) => {
     var rect = document.getElementById('contenedor-semanas').getBoundingClientRect();
@@ -90,6 +85,30 @@ const Tratamientos = props => {
     }
   }
 
+  const construirCalendario = (estrategia) => {
+    let semanas = []
+    let diasTratamientoVigente = 0
+    for (let semana = 1; semana <= 70; semana++) {
+      let classSemana =  'tratamiento-inactivo'
+      if (props[`tratamientos${estrategia}`][semana]) {
+        classSemana = 'tratamiento-aplicado'
+        diasTratamientoVigente = props[`tratamientos${estrategia}`][semana].duracion - 1
+      }
+      else if (diasTratamientoVigente-- > 0) {
+        classSemana = 'tratamiento-activo'
+      }
+      semanas.push(<div
+        onClick={e => mostrarPopupNuevoTratamiento(e, semana, estrategia)}
+        onMouseMove={e => moverPopup(e, semana, estrategia)}
+        onMouseLeave={esconderPopup}
+        className={classSemana}
+      >
+        <span>{semana}</span>
+      </div>)
+    }
+    return semanas
+  }
+
   return (
     <>
       <div className="contenido">
@@ -104,16 +123,7 @@ const Tratamientos = props => {
               <div className="contenedor-tratamientos-estrategia">
                 <h2>Semanas estrategia {estrategia === 'A' ? 'Imvixa' : 'tradicional'}</h2>
                 <div id={`semanas-estrategia-${estrategia.toLowerCase()}`}>
-                  {semanas.map(s => (
-                    <div
-                      onClick={e => mostrarPopupNuevoTratamiento(e, s, estrategia)}
-                      onMouseMove={e => moverPopup(e, s, estrategia)}
-                      onMouseLeave={esconderPopup}
-                      className={props[`tratamientos${estrategia}`][s] ? 'tratamiento-activo' : 'tratamiento-inactivo'}
-                    >
-                      <span>{s}</span>
-                    </div>
-                  ))}
+                  {construirCalendario(estrategia)}
                 </div>
               </div>
             ))}

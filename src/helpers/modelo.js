@@ -26,7 +26,7 @@ export const obtenerCurvasDeCrecimiento = (centro, produccion, tratamientos) => 
   const { fechaInicio, pesoSmolt, pesoObjetivo } = produccion
   const { tratamientosA, tratamientosB } = tratamientos
   let inicio = moment(fechaInicio, 'YYYY-MM-DD')
-  let curva = [['x', 'Estr. A', 'Estr. B']]
+  let curva = [['x', 'Imvixa', 'Tradic.']]
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
   let semana = inicio.week()
