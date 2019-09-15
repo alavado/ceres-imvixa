@@ -7,7 +7,7 @@ import './Centro.css'
 const Centro = props => {
   const { datos } = props
   const position = {
-    lat: -42.6921753,
+    lat: -42.4521753,
     lng: -72.9928245,
     zoom: 8,
   }
