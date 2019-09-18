@@ -23,7 +23,7 @@ const Produccion = props => {
             onChange={e => props.fijarFechaInicio(e.target.value)}
             style={{width: 130}}
           />
-          <label htmlFor="numero-smolts">Número smolts al ingreso</label>
+          <label htmlFor="numero-smolts">N° smolts al ingreso</label>
           <input
             id="numero-smolts"
             name="numero-smolts"
@@ -32,33 +32,49 @@ const Produccion = props => {
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
           />
-          <label htmlFor="peso-smolt">Peso medio smolt al ingreso (g)</label>
-          <input
-            id="peso-smolt"
-            name="peso-smolt"
-            type="number" min="5" step="5"
-            defaultValue={datos.pesoSmolt}
-            onChange={e => props.fijarPesoSmolt(e.target.value)}
-            style={{width: 46}}
-          />
-          <label htmlFor="peso-objetivo">Peso objetivo (g)</label>
+          <label htmlFor="peso-objetivo">Peso objetivo</label>
           <input
             id="peso-objetivo"
             name="peso-objetivo"
             type="number" min="500" step="50"
             defaultValue={datos.pesoObjetivo}
             onChange={e => props.fijarPesoObjetivo(e.target.value)}
-            style={{width: 56}}
-          />
-          <label htmlFor="mortalidad">Mortalidad ciclo (%)</label>
+            style={{width: 50}}
+          /> g
+          <label htmlFor="mortalidad">Mortalidad ciclo</label>
           <input
             id="mortalidad"
             name="mortalidad"
             type="number" min="0" step=".5"
             defaultValue={datos.mortalidad}
             onChange={e => props.fijarMortalidad(e.target.value)}
-            style={{width: 50}}
-          />
+            style={{width: 45}}
+          /> %
+          <h1 style={{marginBottom: 12, marginTop: 8}}>Pesos medios de ingreso</h1>
+          <div style={{display: 'flex'}}>
+            <div>
+              <label htmlFor="peso-smolt">Estrategia Imvixa</label>
+              <input
+                id="peso-smolt"
+                name="peso-smolt"
+                type="number" min="5" step="5"
+                defaultValue={datos.pesosSmolt.imvixa}
+                onChange={e => props.fijarPesoSmoltEstrategiaImvixa(e.target.value)}
+                style={{width: 46}}
+              /> g
+            </div>
+            <div style={{marginLeft: 32}}>
+              <label htmlFor="peso-smolt">Estrategia tradicional</label>
+              <input
+                id="peso-smolt"
+                name="peso-smolt"
+                type="number" min="5" step="5"
+                defaultValue={datos.pesosSmolt.tradicional}
+                onChange={e => props.fijarPesoSmoltEstrategiaTradicional(e.target.value)}
+                style={{width: 46}}
+              /> g
+            </div>
+          </div>
         </div>
       </div>
       <div className="contenido-secundario">
@@ -84,8 +100,11 @@ const mapDispatchToProps = dispatch => ({
   fijarNumeroSmolts: n => {
     dispatch(produccionActions.fijarNumeroSmolts(Number(n)))
   },
-  fijarPesoSmolt: g => {
-    dispatch(produccionActions.fijarPesoSmolt(Number(g)))
+  fijarPesoSmoltEstrategiaImvixa: peso => {
+    dispatch(produccionActions.fijarPesoSmolt('imvixa', Number(peso)))
+  },
+  fijarPesoSmoltEstrategiaTradicional: peso => {
+    dispatch(produccionActions.fijarPesoSmolt('tradicional', Number(peso)))
   },
   fijarCostoSmolt: usd => {
     dispatch(produccionActions.fijarCostoSmolt(Number(usd)))

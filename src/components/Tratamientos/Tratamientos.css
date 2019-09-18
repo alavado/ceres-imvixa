@@ -26,30 +26,22 @@ div[id^="semanas-estrategia"] > div {
   border-bottom: 1px solid #546E7A;
 }
 
-#semanas-estrategia-a > div.tratamiento-aplicado {
-  background-color: #EF6C00;
-  color: white;
-}
-
-#semanas-estrategia-b > div.tratamiento-aplicado {
+.contenedor-tratamientos-estrategia .tratamiento-aplicado {
   background-color: #0097A7;
   color: white;
 }
 
-div[id^="semanas-estrategia"] > div.tratamiento-aplicado:hover {
-  background-color: #43A047;
+.contenedor-tratamientos-estrategia:first-child .tratamiento-aplicado {
+  background-color: #EF6C00;
+  color: white;
 }
 
-#semanas-estrategia-a > div.tratamiento-activo {
-  background-color: #FFCC80;
-}
-
-#semanas-estrategia-b > div.tratamiento-activo {
+.contenedor-tratamientos-estrategia .tratamiento-activo {
   background-color: #80DEEA;
 }
 
-div[id^="semanas-estrategia"] > div.tratamiento-activo:hover {
-  background-color: #A5D6A7;
+.contenedor-tratamientos-estrategia:first-child .tratamiento-activo {
+  background-color: #FFCC80;
 }
 
 div[id^="semanas-estrategia"] > div.tratamiento-inactivo {

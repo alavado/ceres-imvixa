@@ -5,13 +5,10 @@ import tratamientosActions from '../../redux/tratamientos/actions';
 import {dias} from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
 
-// Costo de tratamiento de imvixa depende del peso debe poder especificarse la duracion del tratamiento
-// que aparezca una pantalla grande
-
 const Tratamientos = props => {
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
-    id: 0,
+    idMedicamento: 0,
     estrategia: 'A',
     semana: 1,
     dia: 'Lunes',
@@ -23,8 +20,8 @@ const Tratamientos = props => {
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     var popup = document.getElementById('popup-semana')
-    if (props[`tratamientos${estrategia}`][semana]) {
-      popup.innerHTML = `Semana ${semana}<br />${props.tratamientos.find(t => t.id === props[`tratamientos${estrategia}`][semana].id).nombre}`
+    if (props.tratamientos[estrategia][semana]) {
+      popup.innerHTML = `Semana ${semana}<br />${props.medicamentos.find(t => t.id === props.tratamientos[estrategia][semana].idMedicamento).nombre}`
     }
     else {
       popup.innerHTML = `Semana ${semana}`
@@ -66,18 +63,17 @@ const Tratamientos = props => {
     }
   }
 
-  const replicarTratamientos = () => {
-    const tratamientosEstrategia = `tratamientos${nuevoTratamiento.estrategia}`
+  const replicarTratamientos = estrategia => {
     const semanasTratamientosPrevios = Object
-      .keys(props[tratamientosEstrategia])
-      .filter(key => props[tratamientosEstrategia][key].id !== props.tratamientos.find(t => t.nombre.toLowerCase() === 'imvixa').id)
+      .keys(props.tratamientos[estrategia])
+      .filter(key => props.tratamientos[estrategia][key].id !== props.tratamientos[estrategia].find(t => t.nombre.toLowerCase() === 'imvixa').id)
       .sort()
     let diferenciaEntreCiclos = nuevoTratamiento.semana - semanasTratamientosPrevios[0]
     for (let ciclo = 0; nuevoTratamiento.semana + diferenciaEntreCiclos * ciclo <= 70; ciclo++) {
       semanasTratamientosPrevios.forEach(semana => {
         let semanaAplicacion = nuevoTratamiento.semana + Number(semana) + diferenciaEntreCiclos * ciclo - semanasTratamientosPrevios[0]
         props.agregarTratamiento({
-          ...props[tratamientosEstrategia][semana],
+          ...props.tratamientos[estrategia][semana],
           semana: semanaAplicacion,
           estrategia: nuevoTratamiento.estrategia
         })
@@ -85,14 +81,14 @@ const Tratamientos = props => {
     }
   }
 
-  const construirCalendario = (estrategia) => {
+  const construirCalendario = estrategia => {
     let semanas = []
     let diasTratamientoVigente = 0
     for (let semana = 1; semana <= 70; semana++) {
       let classSemana =  'tratamiento-inactivo'
-      if (props[`tratamientos${estrategia}`][semana]) {
+      if (props.tratamientos[estrategia][semana]) {
         classSemana = 'tratamiento-aplicado'
-        diasTratamientoVigente = props[`tratamientos${estrategia}`][semana].duracion - 1
+        diasTratamientoVigente = props.tratamientos[estrategia][semana].duracion - 1
       }
       else if (diasTratamientoVigente-- > 0) {
         classSemana = 'tratamiento-activo'
@@ -119,15 +115,14 @@ const Tratamientos = props => {
         </div>
         <div className="contenido-contenido">
           <div id="contenedor-semanas">
-            {['A', 'B'].map(estrategia => (
+            {Object.keys(props.tratamientos).map(estrategia => (
               <div className="contenedor-tratamientos-estrategia">
-                <h2>Semanas estrategia {estrategia === 'A' ? 'Imvixa' : 'tradicional'}</h2>
-                <div id={`semanas-estrategia-${estrategia.toLowerCase()}`}>
+                <h2>Semanas estrategia {estrategia}</h2>
+                <div id={`semanas-estrategia-${estrategia}`}>
                   {construirCalendario(estrategia)}
                 </div>
               </div>
             ))}
-
             <div id="popup-semana">Semana 1</div>
             <div id="popup-tratamiento">
               <label
@@ -138,11 +133,11 @@ const Tratamientos = props => {
               </label>
               <select
                 id="nombre-nuevo-tratamiento"
-                onChange={e => setNuevoTratamiento({...nuevoTratamiento, id: Number(e.target.value)})}
+                onChange={e => setNuevoTratamiento({...nuevoTratamiento, idMedicamento: Number(e.target.value)})}
               >
                 <option value={0}>Ninguno</option>
                 {props
-                  .tratamientos
+                  .medicamentos
                   .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
                   .map(t => <option value={t.id}>{t.nombre}</option>)
                 }
@@ -175,14 +170,13 @@ const Tratamientos = props => {
 
 const mapStateToProps = state => ({
   tratamientos: state.tratamientos.tratamientos,
-  tratamientosA: state.tratamientos.tratamientosA,
-  tratamientosB: state.tratamientos.tratamientosB
+  medicamentos: state.tratamientos.medicamentos
 })
 
 const mapDispatchToProps = dispatch => ({
   agregarTratamiento: tratamiento => {
-    const { id, semana, estrategia, dia, duracion } = tratamiento
-    dispatch(tratamientosActions.agregarTratamiento(id, semana, dia, estrategia, duracion))
+    const { idMedicamento, semana, estrategia, dia, duracion } = tratamiento
+    dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, dia, estrategia, duracion))
   },
   eliminarTratamiento: tratamiento => {
     const { semana, estrategia } = tratamiento

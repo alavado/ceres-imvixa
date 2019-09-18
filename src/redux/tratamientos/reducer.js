@@ -1,7 +1,7 @@
 import tratamientosActions from './actions'
 
 const initialState = {
-  tratamientos: [
+  medicamentos: [
     { id: 1, nombre: 'Azametifos' },
     { id: 2, nombre: 'Emamectina' },
     { id: 3, nombre: 'Deltametrina'  },
@@ -10,31 +10,39 @@ const initialState = {
     { id: 6, nombre: 'Imvixa' },
     { id: 7, nombre: 'Alpha Flux' },
   ],
-  tratamientosA: {
-    1: {
-      id: 6,
-      duracion: 32
-    }
-  },
-  tratamientosB : {}
+  tratamientos: {
+    imvixa: {
+      1: {
+        idMedicamento: 6,
+        duracion: 34
+      }
+    },
+    tradicional: {}
+  }
 }
 
 const tratamientosReducer = (state = initialState, action) => {
   switch (action.type) {
     case tratamientosActions.AGREGAR_TRATAMIENTO: {
-      const { id, semana, dia, estrategia, duracion } = action.payload
+      const { idMedicamento, semana, dia, estrategia, duracion } = action.payload
       return {
         ...state,
-        [`tratamientos${estrategia}`]:{...state[`tratamientos${estrategia}`], [semana]: {
-          id,
-          dia,
-          duracion
-        }}
+        tratamientos: {
+          ...state.tratamientos,
+          [estrategia]: {
+            ...state.tratamientos[estrategia],
+            [semana]: {
+              idMedicamento,
+              dia,
+              duracion
+            }
+          }
+        }
       }
     }
     case tratamientosActions.ELIMINAR_TRATAMIENTO: {
       const { semana, estrategia } = action.payload
-      const claveTratamientos = `tratamientos${estrategia}`
+      const claveTratamientos = 1
       return {
         ...state,
         [claveTratamientos]: Object.keys(state[claveTratamientos])

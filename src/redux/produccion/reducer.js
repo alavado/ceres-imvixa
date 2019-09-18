@@ -3,7 +3,7 @@ import produccionActions from './actions'
 const initialState = {
   fechaInicio: '2019-01-01',
   numeroSmolts: 1E6,
-  pesoSmolt: 170,
+  pesosSmolt: { imvixa: 170, tradicional: 170 },
   costoSmolt: 1.8,
   mortalidad: 0,
   pesoObjetivo: 5000,
@@ -24,11 +24,13 @@ const produccionReducer = (state = initialState, action) => {
         ...state,
         numeroSmolts: action.payload
       }
-    case produccionActions.FIJAR_PESO_SMOLT:
+    case produccionActions.FIJAR_PESO_SMOLT: {
+      const { peso, estrategia } = action.payload
       return {
         ...state,
-        pesoSmolt: action.payload
+        pesosSmolt: {...state.pesosSmolt, [estrategia]: peso}
       }
+    }
     case produccionActions.FIJAR_COSTO_SMOLT:
       return {
         ...state,
