@@ -106,7 +106,6 @@ const Produccion = props => {
               scales: {
                 yAxes: [{
                   ticks: {
-                    stepSize: 30,
                     min: 0
                   }
                 }],

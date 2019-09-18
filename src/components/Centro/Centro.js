@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import centroActions from '../../redux/centro/actions'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Centro.css'
 
 const Centro = props => {
-  const { datos } = props
-  const position = {
+  const [ posicion, setPosicion ] = useState({
     lat: -42.4521753,
     lng: -72.9928245,
     zoom: 8,
-  }
+  })
   return (
     <>
       <div className="contenido">
@@ -23,20 +22,26 @@ const Centro = props => {
           <div id="contenedor-barrio">
             <label htmlFor="nombre-empresa">Empresa</label>
             <input id="nombre-empresa" />
-            <label htmlFor="nombre-centro">Centro</label>
-            <input id="nombre-centro" />
             <label htmlFor="barrio">Barrio</label>
-            <select id="barrio" onChange={e => props.fijarBarrio(e.target.value)}>
-              {datos.barrios.map(barrio => (
+            <select id="barrio" onChange={e => {
+              const indiceBarrio = e.target.value
+              setPosicion({
+                ...posicion,
+                ...props.barrios[indiceBarrio].posicion
+              })
+              props.fijarBarrio(e.target.value.nombre)
+            }}>
+              {props.barrios.map((barrio, i) => (
                 <option
-                  key={`option-barrio-${barrio.nombre}`}
-                  value={barrio.nombre}
-                  onChange={e => props.fijarBarrio(e.target.value)}
+                  key={`option-barrio-${i}`}
+                  value={i}
                 >
                   {barrio.nombre}
                 </option>
               ))}
             </select>
+            <label htmlFor="nombre-centro">Centro</label>
+            <input id="nombre-centro" />
           </div>
         </div>
       </div>        
@@ -45,12 +50,12 @@ const Centro = props => {
           <h1>Ubicación</h1>
         </div>
         <div style={{padding: 16}}>
-          <Map center={position} zoom={position.zoom} style={{height: 500}}>
+          <Map center={posicion} zoom={posicion.zoom} style={{height: 500}}>
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={position}>
+            <Marker position={posicion}>
               <Popup>
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
@@ -63,7 +68,7 @@ const Centro = props => {
 };
 
 const mapStateToProps = state => ({
-  datos: state.centro
+  barrios: state.centro.barrios
 })
 
 const mapDispatchToProps = dispatch => ({

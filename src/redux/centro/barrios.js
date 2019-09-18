@@ -251,10 +251,14 @@ const barrios = {"ACS 10 A": {"coef": [0.0,
   -0.0003762102338964039],
   "intercepto": 418.34798151243876}}
 
-  export default Object.keys(barrios).map(k => ({
-    nombre: k,
+  export default Object.keys(barrios).map(nombre => ({
+    nombre,
+    posicion: {
+      lat: -42.4521753 + Math.random() - .5,
+      lng: -72.9928245 + 2 * Math.random() - 1
+    },
     modeloCrecimiento: {
-      coef: barrios[k].coef,
-      intercepto: barrios[k].intercepto
+      coef: barrios[nombre].coef,
+      intercepto: barrios[nombre].intercepto
     }
   }))
