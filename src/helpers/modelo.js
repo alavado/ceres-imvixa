@@ -26,7 +26,7 @@ export const obtenerCurvasDeCrecimiento = (centro, produccion, tratamientos) => 
   const { fechaInicio, pesoSmolt, pesoObjetivo } = produccion
   const { tratamientosA, tratamientosB } = tratamientos
   let inicio = moment(fechaInicio, 'YYYY-MM-DD')
-  let curva = [['x', 'Imvixa', 'Tradic.']]
+  let curva = [[1, pesoSmolt, pesoSmolt]]
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
   let semana = inicio.week()
@@ -37,7 +37,7 @@ export const obtenerCurvasDeCrecimiento = (centro, produccion, tratamientos) => 
   let pausaB = 0
   let pausasB = 0
   let tratamientosAplicadosB = {}
-  for (let dia = 1; pesoA < pesoObjetivo || pesoB < pesoObjetivo; dia++) {
+  for (let dia = 2; pesoA < pesoObjetivo || pesoB < pesoObjetivo; dia++) {
     semana += 1 / 7.0
     if (`${Math.ceil(semana)}` in tratamientosA && !(`${Math.ceil(semana)}` in tratamientosAplicadosA)) {
       pausaA = 3

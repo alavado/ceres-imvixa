@@ -9,9 +9,13 @@ div[id^="semanas-estrategia"] {
   flex-wrap: wrap;
 }
 
+.contenedor-tratamientos-estrategia > h2 {
+  font-weight: bold;
+}
+
 div[id^="semanas-estrategia"] > div {
   width: 20px;
-  height: 20px;
+  height: 16px;
   font-size: 0.6em;
   padding: 3px;
   background-color: white;

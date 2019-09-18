@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './ResumenComparacion.css'
 import { obtenerCurvasDeCrecimiento } from '../../../helpers/modelo'
-import GraficoCrecimiento from './GraficoCrecimiento';
+import GraficoCrecimiento from './GraficoCrecimiento2'
 
 const ResumenComparacion = props => {
 

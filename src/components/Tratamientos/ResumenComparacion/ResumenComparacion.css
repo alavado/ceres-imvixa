@@ -57,6 +57,7 @@ div[id^="fondo-estrategia"] {
 div[id^="fondo-estrategia"] h1 {
   padding: 12px 0;
   text-align: center;
+  font-weight: bold;
   width: 100%;
   color: white;
   border-top-left-radius: 8px;
