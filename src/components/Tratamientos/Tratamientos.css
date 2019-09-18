@@ -73,9 +73,10 @@ div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
 }
 
 .contenedor-tratamientos-estrategia > h2 {
-  margin-bottom: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
   font-size: 0.8em;
-  color: black;
+  color: #263238;
 }
 
 div[id^="semanas-estrategia"] > div > span {

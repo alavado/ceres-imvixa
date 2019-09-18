@@ -19,7 +19,7 @@ const ResumenComparacion = props => {
   return (
     <div id="fondo-resumen">
       <div id="barra-superior-resumen">
-        <h1>Resultados estrategias</h1>
+        <h1>Comparación de estrategias</h1>
       </div>
       <div id="contenido-resumen">
         <div id="grafico-crecimiento">

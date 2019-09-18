@@ -16,7 +16,7 @@ const Centro = props => {
       <div className="contenido">
         <div className="barra-superior-contenido">
           <div className="titulo-contenido">
-            Parámetros del centro
+            Centro productivo
           </div>
         </div>
         <div className="contenido-contenido">

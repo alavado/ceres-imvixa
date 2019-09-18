@@ -75,3 +75,8 @@ a {
   font-size: 1em;
   font-weight: bold;
 }
+
+.contenido-secundario-contenido {
+  padding: 32px;
+  background: red;
+}

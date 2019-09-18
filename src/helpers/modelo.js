@@ -29,7 +29,7 @@ export const obtenerCurvasDeCrecimiento = (centro, produccion, tratamientos) => 
   let curva = [[1, pesoSmolt, pesoSmolt]]
   let pesoA = pesoSmolt
   let pesoB = pesoSmolt
-  let semana = inicio.week()
+  let semana = inicio.week() + 1 / 7.0
   const modelo = centro.barrios[centro.indiceBarrioSeleccionado].modeloCrecimiento
   let pausaA = 0
   let pausasA = 0

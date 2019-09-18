@@ -5,7 +5,7 @@ const initialState = {
   numeroSmolts: 1E6,
   pesoSmolt: 170,
   costoSmolt: 1.8,
-  mortalidad: 0.15,
+  mortalidad: 0,
   pesoObjetivo: 5000,
   ajusteCrecimiento: 1,
   bFCR: 1.15,
