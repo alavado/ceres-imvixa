@@ -1,4 +1,4 @@
-#contenedor-semanas {
+#contenedor-calendarios {
   display: flex;
   flex-direction: column;
 }
@@ -7,10 +7,6 @@ div[id^="semanas-estrategia"] {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-}
-
-.contenedor-tratamientos-estrategia > h2 {
-  font-weight: bold;
 }
 
 div[id^="semanas-estrategia"] > div {
@@ -23,11 +19,11 @@ div[id^="semanas-estrategia"] > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #546E7A;
+  border-bottom: 1px solid #607D8B;
 }
 
 .contenedor-tratamientos-estrategia .tratamiento-aplicado {
-  background-color: #0097A7;
+  background-color: #607D8B;
   color: white;
 }
 
@@ -37,7 +33,7 @@ div[id^="semanas-estrategia"] > div {
 }
 
 .contenedor-tratamientos-estrategia .tratamiento-activo {
-  background-color: #80DEEA;
+  background-color: #B0BEC5;
 }
 
 .contenedor-tratamientos-estrategia:first-child .tratamiento-activo {
@@ -45,7 +41,7 @@ div[id^="semanas-estrategia"] > div {
 }
 
 div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
-  background-color: lightgray;
+  background-color: #ECEFF1;
 }
 
 .contenedor-tratamientos-estrategia {
@@ -59,7 +55,7 @@ div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
 }
 
 .contenedor-tratamientos-estrategia:nth-child(2) {
-  margin-top: 24px;
+  margin-top: 16px;
   background-color: white;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
 }
@@ -69,6 +65,7 @@ div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
   margin-bottom: 12px;
   font-size: 0.8em;
   color: #263238;
+  font-weight: bold;
 }
 
 div[id^="semanas-estrategia"] > div > span {

@@ -16,7 +16,7 @@ const Tratamientos = props => {
   })
 
   const moverPopup = (e, semana, estrategia) => {
-    var rect = document.getElementById('contenedor-semanas').getBoundingClientRect();
+    var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     var popup = document.getElementById('popup-semana')
@@ -26,8 +26,7 @@ const Tratamientos = props => {
     else {
       popup.innerHTML = `Semana ${semana}`
     }
-    popup.style.marginLeft = `${x + 5}px`
-    popup.style.marginTop = `${y - 18}px`
+    popup.style.margin = `${y - 18}px 0 0 ${x + 5}px`
     popup.style.display = 'block'
   }
 
@@ -37,13 +36,16 @@ const Tratamientos = props => {
   }
 
   const mostrarPopupNuevoTratamiento = (e, semana, estrategia) => {
-    setNuevoTratamiento({...nuevoTratamiento, semana: Number(semana), estrategia})
-    var rect = document.getElementById('contenedor-semanas').getBoundingClientRect();
+    setNuevoTratamiento({
+      ...nuevoTratamiento,
+      semana: Number(semana),
+      estrategia
+    })
+    var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     const popup = document.getElementById('popup-tratamiento')
-    popup.style.marginLeft = `${x}px`
-    popup.style.marginTop = `${y}px`
+    popup.style.margin = `${y}px 0 0 ${x}px`
     popup.style.display = 'block'
     document.getElementById('titulo-popup-tratamiento').innerHTML = `Tratamiento semana ${semana}`
   }
@@ -114,7 +116,7 @@ const Tratamientos = props => {
           </div>
         </div>
         <div className="contenido-contenido">
-          <div id="contenedor-semanas">
+          <div id="contenedor-calendarios">
             {Object.keys(props.tratamientos).map(estrategia => (
               <div className="contenedor-tratamientos-estrategia">
                 <h2>Semanas estrategia {estrategia}</h2>

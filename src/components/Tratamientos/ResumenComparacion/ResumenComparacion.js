@@ -1,20 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './ResumenComparacion.css'
-import { obtenerCurvasDeCrecimiento } from '../../../helpers/modelo'
+import { curvaCrecimiento } from '../../../helpers/modelo'
 import GraficoCrecimiento from './GraficoCrecimiento2'
 
-const ResumenComparacion = props => {
+const ResumenComparacion = ({produccion, tratamientos, modelo}) => {
 
-  const curvasCrecimiento = obtenerCurvasDeCrecimiento(props.centro, props.produccion, props.tratamientos)
-  const { pesoObjetivo } = props.produccion
-
-  const objetivoA = curvasCrecimiento.find(v => v[1] > pesoObjetivo)
-  const objetivoB = curvasCrecimiento.find(v => v[2] > pesoObjetivo)
-
-  if (!objetivoA || !objetivoB) {
-    return null
-  }
+  const { fechaInicio, pesoObjetivo, pesosSmolt } = produccion
+  const curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, pesoObjetivo, tratamientos.imvixa, modelo)
+  const curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, pesoObjetivo, tratamientos.tradicional, modelo)
 
   return (
     <div id="fondo-resumen">
@@ -24,7 +18,8 @@ const ResumenComparacion = props => {
       <div id="contenido-resumen">
         <div id="grafico-crecimiento">
           <GraficoCrecimiento
-            curvasCrecimiento={curvasCrecimiento}
+            curvaImvixa={curvaImvixa}
+            curvaTradicional={curvaTradicional}
             pesoObjetivo={pesoObjetivo}
           />
         </div>
@@ -32,14 +27,14 @@ const ResumenComparacion = props => {
           <div id="fondo-estrategia-a">
             <h1>Estrategia Imvixa</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * objetivoA[0] / 30.0) / 10.0}</h2>
+              <h2>{Math.round(10 * curvaImvixa.length / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia tradicional</h1>
             <div className="resultados-estrategia">
-              <h2>{Math.round(10 * objetivoB[0] / 30.0) / 10.0}</h2>
+              <h2>{Math.round(10 * curvaTradicional.length / 30.0) / 10.0}</h2>
               <p>meses para alcanzar el peso objetivo</p>
             </div>
           </div>
@@ -51,8 +46,8 @@ const ResumenComparacion = props => {
 
 const mapStateToProps = state => ({
   produccion: state.produccion,
-  centro: state.centro,
-  tratamientos: state.tratamientos
+  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloCrecimiento,
+  tratamientos: state.tratamientos.tratamientos
 })
 
 export default connect(mapStateToProps)(ResumenComparacion);

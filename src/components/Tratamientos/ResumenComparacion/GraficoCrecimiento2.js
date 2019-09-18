@@ -1,10 +1,12 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
 
-const GraficoCrecimiento2 = ({curvasCrecimiento, pesoObjetivo}) => {
+const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
+
+  const curvaMasLarga = curvaTradicional.length > curvaImvixa.length ? curvaTradicional : curvaImvixa
 
   const data = {
-    labels: curvasCrecimiento.reduce((arr, v, i) => (i + 1) % 7 === 1 ? [...arr, `${v[0]}`] : arr, []),
+    labels: curvaMasLarga.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaMasLarga.length - 1 ? [...arr, v[0]] : arr, []),
     datasets: [
       {
         label: 'Imvixa',
@@ -25,28 +27,28 @@ const GraficoCrecimiento2 = ({curvasCrecimiento, pesoObjetivo}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvasCrecimiento.reduce((arr, v, i) => i % 7 === 1 ? [...arr, v[1]] : arr, []),
+        data: curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
       },
       {
         label: 'Tradicional',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: '#0097A7',
-        borderColor: '#0097A7',
+        backgroundColor: '#546E7A',
+        borderColor: '#546E7A',
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: '#0097A7',
-        pointBackgroundColor: '#0097A7',
+        pointBorderColor: '#546E7A',
+        pointBackgroundColor: '#546E7A',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: '#0097A7',
-        pointHoverBorderColor: '#0097A7',
+        pointHoverBackgroundColor: '#546E7A',
+        pointHoverBorderColor: '#546E7A',
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvasCrecimiento.reduce((arr, v, i) => i % 7 === 1 ? [...arr, v[2]] : arr, []),
+        data: curvaTradicional.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaTradicional.length - 1 ? [...arr, v[1]] : arr, []),
       }
     ],
   }
@@ -61,10 +63,19 @@ const GraficoCrecimiento2 = ({curvasCrecimiento, pesoObjetivo}) => {
     },
     scales: {
       xAxes: [{
-         gridLines: {
-            display: false
-         }
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          stepSize: 30
+        }
       }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          max: pesoObjetivo
+        }
+      }]
     }
   }
   
