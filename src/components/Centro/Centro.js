@@ -24,12 +24,12 @@ const Centro = props => {
             <input id="nombre-empresa" />
             <label htmlFor="barrio">Barrio</label>
             <select id="barrio" onChange={e => {
-              const indiceBarrio = e.target.value
+              const barrioSeleccionado = props.barrios[e.target.value]
               setPosicion({
                 ...posicion,
-                ...props.barrios[indiceBarrio].posicion
+                ...barrioSeleccionado.posicion
               })
-              props.fijarBarrio(e.target.value.nombre)
+              props.fijarBarrio(barrioSeleccionado.nombre)
             }}>
               {props.barrios.map((barrio, i) => (
                 <option

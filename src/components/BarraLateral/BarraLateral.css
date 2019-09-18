@@ -47,12 +47,12 @@
 
 #lista-secciones .link-seccion:hover {
   color: #FFF;
-  background-color: #455A64;
+  background-color: #607D8B;
 }
 
 #lista-secciones .seccion-seleccionada {
   color: #FFF;
-  background-color: #455A64;
+  background-color: #546E7A;
 }
 
 #lista-secciones .link-seccion svg {
