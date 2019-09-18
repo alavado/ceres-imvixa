@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
+import { curvaMortalidad } from '../../helpers/modelo'
+import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 
 const Produccion = props => {
   const { datos } = props
+  const curva = curvaMortalidad()
   return (
     <>
       <div className="contenido">
@@ -83,6 +86,33 @@ const Produccion = props => {
         </div>
         <div className="contenido-secundario-contenido">
           <h1>Se mueren estos pescados: { datos.numeroSmolts * datos.mortalidad / 100.0 }</h1>
+          <Bar
+            data={{
+              labels: ['Peces al ingreso', 'Peces salida'],
+              datasets: [
+                {
+                  label: 'Estrategia Imvixa',
+                  data: [10, 50],
+                  backgroundColor: '#EF6C00',
+                },
+                {
+                  label: 'Estrategia tradicional',
+                  data: [20, 30],
+                  backgroundColor: '#546E7A'
+                }
+              ]
+            }}
+            options={{
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    stepSize: 30,
+                    min: 0
+                  }
+                }],
+              }
+            }}
+          />
         </div>
       </div>
     </>

@@ -16,7 +16,15 @@ const crecimientoConComida = (peso, temperatura, dia, escalaDeCrecimiento) => {
   return peso
 }
 
-const evaluarModelo = (modelo, diaCiclo, semanaAño, pesoIngreso) => {
+export const curvaMortalidad = (dias, mortalidad) => {
+  let curva = []
+  for (let dia = 1; dia < dias; dia++) {
+    curva.push(1.0 * mortalidad / dias)
+  }
+  return curva
+}
+
+const evaluarModeloCrecimiento = (modelo, diaCiclo, semanaAño, pesoIngreso) => {
   const x = diaCiclo, y = semanaAño, z = pesoIngreso
   const vars = [1, x, y, z, x*x, x*y, x*z, y*y, y*z, z*z, x**3, x*x*y, x*x*z, x*y*y, x*y*z, x*z*z, y**3, y*y*z, y*z*z, z**3]
   return Math.round(modelo.coef.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
@@ -40,7 +48,7 @@ export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, pesoObjet
       tratamientosAplicados[`${Math.ceil(semana)}`] = 1
     }
     if (diasAyunoRestante <= 0) {
-      pesoActual = evaluarModelo(modelo, dia - diasAyunoTotal, semana, pesoIngreso)
+      pesoActual = evaluarModeloCrecimiento(modelo, dia - diasAyunoTotal, semana, pesoIngreso)
     }
     diasAyunoRestante--
     curva.push([dia, pesoActual])

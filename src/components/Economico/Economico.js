@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './Economico.css'
 import economicoActions  from '../../redux/economico/actions'
+import { Bar } from 'react-chartjs-2'
 
 const Economico = props => {
   const { datos } = props
@@ -39,6 +40,35 @@ const Economico = props => {
       <div className="contenido-secundario">
         <div className="titulo-contenido-secundario">
           <h1>Proyección</h1>
+        </div>
+        <div className="contenido-secundario-contenido">
+          <Bar
+            data={{
+              labels: ['Peces al ingreso', 'Peces salida'],
+              datasets: [
+                {
+                  label: 'Estrategia Imvixa',
+                  data: [10, 50],
+                  backgroundColor: '#EF6C00',
+                },
+                {
+                  label: 'Estrategia tradicional',
+                  data: [20, 30],
+                  backgroundColor: '#546E7A'
+                }
+              ]
+            }}
+            options={{
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    stepSize: 30,
+                    min: 0
+                  }
+                }],
+              }
+            }}
+          />
         </div>
       </div>
     </>
