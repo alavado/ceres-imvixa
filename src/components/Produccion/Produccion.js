@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
 import { curvaMortalidad } from '../../helpers/modelo'
-import { Bar } from 'react-chartjs-2'
+import { Line, Doughnut } from 'react-chartjs-2'
 import './Produccion.css'
+import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 
 const Produccion = props => {
   const { datos } = props
@@ -35,31 +36,22 @@ const Produccion = props => {
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
           />
-          <label htmlFor="peso-objetivo">Peso objetivo</label>
-          <input
-            id="peso-objetivo"
-            name="peso-objetivo"
-            type="number" min="500" step="50"
-            defaultValue={datos.pesoObjetivo}
-            onChange={e => props.fijarPesoObjetivo(e.target.value)}
-            style={{width: 50}}
-          /> g
           <label htmlFor="mortalidad">Mortalidad ciclo</label>
           <input
             id="mortalidad"
             name="mortalidad"
-            type="number" min="0" step=".5"
+            type="number" min="0" step=".5" max="100"
             defaultValue={datos.mortalidad}
             onChange={e => props.fijarMortalidad(e.target.value)}
             style={{width: 45}}
           /> %
-          <h1 style={{marginBottom: 12, marginTop: 8}}>Pesos medios de ingreso</h1>
+          <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Pesos medios de ingreso</h1>
           <div style={{display: 'flex'}}>
             <div>
-              <label htmlFor="peso-smolt">Estrategia Imvixa</label>
+              <label htmlFor="peso-smolt-imvixa">Estrategia Imvixa</label>
               <input
-                id="peso-smolt"
-                name="peso-smolt"
+                id="peso-smolt-imvixa"
+                name="peso-smolt-imvixa"
                 type="number" min="5" step="5"
                 defaultValue={datos.pesosSmolt.imvixa}
                 onChange={e => props.fijarPesoSmoltEstrategiaImvixa(e.target.value)}
@@ -67,16 +59,43 @@ const Produccion = props => {
               /> g
             </div>
             <div style={{marginLeft: 32}}>
-              <label htmlFor="peso-smolt">Estrategia tradicional</label>
+              <label htmlFor="peso-smolt-tradicional">Estrategia tradicional</label>
               <input
-                id="peso-smolt"
-                name="peso-smolt"
+                id="peso-smolt-tradicional"
+                name="peso-smolt-tradicional"
                 type="number" min="5" step="5"
                 defaultValue={datos.pesosSmolt.tradicional}
                 onChange={e => props.fijarPesoSmoltEstrategiaTradicional(e.target.value)}
                 style={{width: 46}}
               /> g
             </div>
+          </div>
+          <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
+          <div style={{display: 'flex', alignItems: 'baseline'}}>
+            <input type="radio" name="objetivo" className="radio-button" checked={datos.objetivo === OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_PESO)} />
+            <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
+            <input
+              id="peso-objetivo"
+              name="peso-objetivo"
+              type="number" min="500" step="50"
+              defaultValue={datos.pesoObjetivo}
+              onChange={e => props.fijarPesoObjetivo(e.target.value)}
+              style={{width: 50, marginRight: 4}}
+              onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
+            /> g
+          </div>
+          <div style={{display: 'flex', alignItems: 'baseline'}}>
+            <input type="radio" name="objetivo" className="radio-button" checked={datos.objetivo !== OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)} />
+            <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="fecha-objetivo">Fin de ciclo:</label>
+            <input
+              id="fecha-objetivo"
+              name="fecha-objetivo"
+              type="date"
+              defaultValue={datos.fechaObjetivo}
+              onChange={e => props.fijarFechaObjetivo(e.target.value)}
+              style={{width: 130}}
+              onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
+            />
           </div>
         </div>
       </div>
@@ -85,33 +104,35 @@ const Produccion = props => {
           <h1>Proyección</h1>
         </div>
         <div className="contenido-secundario-contenido">
-          <h1>Se mueren estos pescados: { datos.numeroSmolts * datos.mortalidad / 100.0 }</h1>
-          <Bar
-            data={{
-              labels: ['Peces al ingreso', 'Peces salida'],
-              datasets: [
-                {
-                  label: 'Estrategia Imvixa',
-                  data: [10, 50],
-                  backgroundColor: '#EF6C00',
-                },
-                {
-                  label: 'Estrategia tradicional',
-                  data: [20, 30],
-                  backgroundColor: '#546E7A'
-                }
-              ]
-            }}
-            options={{
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    min: 0
+          <div style={{marginTop: 32, width: '640px', height: '350px'}}>
+            {/* <h1>Mortalidad ciclo</h1>
+            <Line
+              data={{
+                labels: ['x', 'y'],
+                datasets: [
+                  {
+                    data: [1, 2],
+                    backgroundColor: 'red'
                   }
-                }],
-              }
-            }}
-          />
+                ]
+              }}
+            /> */}
+            <h1>Biomasa</h1>
+            <Doughnut
+              data={{
+                labels: ['Biomasa producida', 'Biomasa perdida'],
+                datasets: [
+                  {
+                    data: [
+                      datos.numeroSmolts - datos.numeroSmolts * datos.mortalidad / 100.0,
+                      datos.numeroSmolts * datos.mortalidad / 100.0,
+                    ],
+                    backgroundColor: ['#4CAF50', '#F44336']
+                  }
+                ]
+              }}
+            />
+          </div>
         </div>
       </div>
     </>
@@ -139,10 +160,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarCostoSmolt(Number(usd)))
   },
   fijarMortalidad: tasa => {
-    dispatch(produccionActions.fijarMortalidad(Number(tasa)))
+    dispatch(produccionActions.fijarMortalidad(Math.max(0, Math.min(Number(tasa), 100))))
   },
   fijarPesoObjetivo: g => {
-    dispatch(produccionActions.fijarPesoObjetivo(Math.max(Number(g), 500)))
+    dispatch(produccionActions.fijarPesoObjetivo(Math.min(PESO_OBJETIVO_MAXIMO, Math.max(Number(g), PESO_OBJETIVO_MINIMO))))
   },
   fijarAjusteCrecimiento: tasa => {
     dispatch(produccionActions.fijarAjusteCrecimiento(Number(tasa)))
@@ -152,6 +173,12 @@ const mapDispatchToProps = dispatch => ({
   },
   fijarCostoAlimento: usd => {
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))
+  },
+  fijarObjetivo: objetivo => {
+    dispatch(produccionActions.fijarObjetivo(objetivo))
+  },
+  fijarFechaObjetivo: fecha => {
+    dispatch(produccionActions.fijarFechaObjetivo(fecha))
   },
 })
 

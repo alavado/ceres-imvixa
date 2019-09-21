@@ -8,7 +8,7 @@ const initialState = {
     { id: 4, nombre: 'Peróxido de hidrógeno' },
     { id: 5, nombre: 'Cipermetrina' },
     { id: 6, nombre: 'Imvixa' },
-    { id: 7, nombre: 'Alpha Flux' },
+    //{ id: 7, nombre: 'Alpha Flux' },
   ],
   tratamientos: {
     imvixa: {

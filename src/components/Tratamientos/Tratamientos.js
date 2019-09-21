@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
-import {dias} from '../../helpers/constantes'
+import { dias } from '../../helpers/constantes'
+import { semanasCiclo } from '../../helpers/modelo'
 import ResumenComparacion from './ResumenComparacion/';
 
 const Tratamientos = props => {
+
+  const { tratamientos, medicamentos } = props
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: 0,
@@ -20,8 +23,8 @@ const Tratamientos = props => {
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     var popup = document.getElementById('popup-semana')
-    if (props.tratamientos[estrategia][semana]) {
-      popup.innerHTML = `Semana ${semana}<br />${props.medicamentos.find(t => t.id === props.tratamientos[estrategia][semana].idMedicamento).nombre}`
+    if (tratamientos[estrategia][semana]) {
+      popup.innerHTML = `Semana ${semana}<br />${medicamentos.find(t => t.id === tratamientos[estrategia][semana].idMedicamento).nombre}`
     }
     else {
       popup.innerHTML = `Semana ${semana}`
@@ -67,15 +70,15 @@ const Tratamientos = props => {
 
   const replicarTratamientos = estrategia => {
     const semanasTratamientosPrevios = Object
-      .keys(props.tratamientos[estrategia])
-      .filter(key => props.tratamientos[estrategia][key].id !== props.tratamientos[estrategia].find(t => t.nombre.toLowerCase() === 'imvixa').id)
+      .keys(tratamientos[estrategia])
+      .filter(key => tratamientos[estrategia][key].id !== tratamientos[estrategia].find(t => t.nombre.toLowerCase() === 'imvixa').id)
       .sort()
     let diferenciaEntreCiclos = nuevoTratamiento.semana - semanasTratamientosPrevios[0]
     for (let ciclo = 0; nuevoTratamiento.semana + diferenciaEntreCiclos * ciclo <= 70; ciclo++) {
       semanasTratamientosPrevios.forEach(semana => {
         let semanaAplicacion = nuevoTratamiento.semana + Number(semana) + diferenciaEntreCiclos * ciclo - semanasTratamientosPrevios[0]
         props.agregarTratamiento({
-          ...props.tratamientos[estrategia][semana],
+          ...tratamientos[estrategia][semana],
           semana: semanaAplicacion,
           estrategia: nuevoTratamiento.estrategia
         })
@@ -86,14 +89,23 @@ const Tratamientos = props => {
   const construirCalendario = estrategia => {
     let semanas = []
     let diasTratamientoVigente = 0
-    for (let semana = 1; semana <= 70; semana++) {
+    let imvixaActivo = false
+    for (let semana = 1; semana <= 80; semana++) {
       let classSemana =  'tratamiento-inactivo'
-      if (props.tratamientos[estrategia][semana]) {
-        classSemana = 'tratamiento-aplicado'
-        diasTratamientoVigente = props.tratamientos[estrategia][semana].duracion - 1
+      const tratamientoSemana = tratamientos[estrategia][semana]
+      if (tratamientoSemana) {
+        if (tratamientoSemana.idMedicamento === medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa').id) {
+          classSemana = 'imvixa tratamiento-aplicado'
+          imvixaActivo = true
+        }
+        else {
+          classSemana = 'tratamiento-aplicado'
+          imvixaActivo = false
+        }
+        diasTratamientoVigente = tratamientoSemana.duracion - 1
       }
       else if (diasTratamientoVigente-- > 0) {
-        classSemana = 'tratamiento-activo'
+        classSemana = imvixaActivo ? 'imvixa tratamiento-activo' : 'tratamiento-activo'
       }
       semanas.push(<div
         onClick={e => mostrarPopupNuevoTratamiento(e, semana, estrategia)}
@@ -117,7 +129,7 @@ const Tratamientos = props => {
         </div>
         <div className="contenido-contenido">
           <div id="contenedor-calendarios">
-            {Object.keys(props.tratamientos).map(estrategia => (
+            {Object.keys(tratamientos).map(estrategia => (
               <div className="contenedor-tratamientos-estrategia">
                 <h2>Semanas estrategia {estrategia}</h2>
                 <div id={`semanas-estrategia-${estrategia}`}>
@@ -138,8 +150,7 @@ const Tratamientos = props => {
                 onChange={e => setNuevoTratamiento({...nuevoTratamiento, idMedicamento: Number(e.target.value)})}
               >
                 <option value={0}>Ninguno</option>
-                {props
-                  .medicamentos
+                {medicamentos
                   .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
                   .map(t => <option value={t.id}>{t.nombre}</option>)
                 }

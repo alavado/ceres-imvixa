@@ -1,3 +1,7 @@
-#fecha-inicio {
+#fecha-inicio, #fecha-objetivo  {
   font-family: sans-serif;
+}
+
+.radio-button {
+  margin-right: 8px;
 }

@@ -27,7 +27,7 @@ div[id^="semanas-estrategia"] > div {
   color: white;
 }
 
-.contenedor-tratamientos-estrategia:first-child .tratamiento-aplicado {
+.contenedor-tratamientos-estrategia:first-child .tratamiento-aplicado.imvixa {
   background-color: #EF6C00;
   color: white;
 }
@@ -36,7 +36,7 @@ div[id^="semanas-estrategia"] > div {
   background-color: #B0BEC5;
 }
 
-.contenedor-tratamientos-estrategia:first-child .tratamiento-activo {
+.contenedor-tratamientos-estrategia:first-child .tratamiento-activo.imvixa {
   background-color: #FFCC80;
 }
 

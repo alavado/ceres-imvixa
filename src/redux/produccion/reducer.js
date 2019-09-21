@@ -1,15 +1,18 @@
 import produccionActions from './actions'
+import { OBJETIVO_PESO } from '../../helpers/constantes'
 
 const initialState = {
-  fechaInicio: '2019-01-01',
+  fechaInicio: `${new Date().getYear() + 1900}-01-01`,
   numeroSmolts: 1E6,
   pesosSmolt: { imvixa: 170, tradicional: 170 },
   costoSmolt: 1.8,
   mortalidad: 0,
-  pesoObjetivo: 5000,
   ajusteCrecimiento: 1,
   bFCR: 1.15,
-  costoAlimento: 1.1
+  costoAlimento: 1.1,
+  objetivo: OBJETIVO_PESO,
+  pesoObjetivo: 5000,
+  fechaObjetivo: `${new Date().getYear() + 1901}-01-01`
 }
 
 const produccionReducer = (state = initialState, action) => {
@@ -60,6 +63,16 @@ const produccionReducer = (state = initialState, action) => {
       return {
         ...state,
         costoAlimento: action.payload
+      }
+    case produccionActions.FIJAR_OBJETIVO:
+      return {
+        ...state,
+        objetivo: action.payload
+      }
+    case produccionActions.FIJAR_FECHA_OBJETIVO:
+      return {
+        ...state,
+        fechaObjetivo: action.payload
       }
     default:
       return state

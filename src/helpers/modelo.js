@@ -1,5 +1,6 @@
 import moment from 'moment'
 import porcentajeComidaDiaria from './escalaComida'
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from './constantes';
 
 const crecimientoConAyuno = (peso, perdidaPorAyuno) => {
   return peso - peso * perdidaPorAyuno
@@ -30,18 +31,19 @@ const evaluarModeloCrecimiento = (modelo, diaCiclo, semanaAño, pesoIngreso) => 
   return Math.round(modelo.coef.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
 }
 
-export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, pesoObjetivo, tratamientos, modelo) => {
-  console.log({tratamientos});
-  let inicio = moment(fechaInicio, 'YYYY-MM-DD')
+export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos, modelo) => {
+  let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
   let curva = [[1, pesoIngreso]]
   let pesoActual = pesoIngreso
-  let semana = inicio.week() + 1 / 7.0
+  let semana = fechaCiclo.week() + 1 / 7.0
   let diasAyunoRestante = 0
   let diasAyunoTotal = 0
   let tratamientosAplicados = {}
   let dia
-  for (dia = 2; pesoActual < pesoObjetivo; dia++) {
+  console.log(objetivo);
+  for (dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
     semana += 1 / 7.0
+    fechaCiclo.add(1, 'days')
     if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
       diasAyunoRestante = 3
       diasAyunoTotal += 3
@@ -52,6 +54,9 @@ export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, pesoObjet
     }
     diasAyunoRestante--
     curva.push([dia, pesoActual])
+    semanasCiclo = Math.max(semanasCiclo, semana)
   }
   return curva
 }
+
+export let semanasCiclo = 0
