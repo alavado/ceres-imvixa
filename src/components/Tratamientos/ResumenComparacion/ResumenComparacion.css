@@ -13,12 +13,18 @@
   align-items: center;
   border-top-right-radius: 8px;
   color: white;
+  justify-content: space-between;
 }
 
 #barra-superior-resumen h1 {
   margin-left: 24px;
   font-size: 1em;
   font-weight: bold;
+}
+
+#icono-imprimir-reporte {
+  margin-right: 24px;
+  cursor: pointer;
 }
 
 #contenido-resumen {

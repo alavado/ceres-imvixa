@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
 import { dias } from '../../helpers/constantes'
-import { semanasCiclo } from '../../helpers/modelo'
 import ResumenComparacion from './ResumenComparacion/';
 
 const Tratamientos = props => {

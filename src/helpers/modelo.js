@@ -39,9 +39,7 @@ export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, tipoObjet
   let diasAyunoRestante = 0
   let diasAyunoTotal = 0
   let tratamientosAplicados = {}
-  let dia
-  console.log(objetivo);
-  for (dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
+  for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
     semana += 1 / 7.0
     fechaCiclo.add(1, 'days')
     if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
@@ -54,9 +52,6 @@ export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, tipoObjet
     }
     diasAyunoRestante--
     curva.push([dia, pesoActual])
-    semanasCiclo = Math.max(semanasCiclo, semana)
   }
   return curva
 }
-
-export let semanasCiclo = 0

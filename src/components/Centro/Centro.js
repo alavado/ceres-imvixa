@@ -10,6 +10,7 @@ const Centro = props => {
     lng: -72.9928245,
     zoom: 8,
   })
+  const [macrozona, setMacrozona] = useState(props.barrios[0].macrozona)
   return (
     <>
       <div className="contenido">
@@ -22,16 +23,34 @@ const Centro = props => {
           <div id="contenedor-barrio">
             <label htmlFor="nombre-empresa">Empresa</label>
             <input id="nombre-empresa" />
+            <label htmlFor="macrozona">Macrozona</label>
+            <select
+              id="macrozona"
+              defaultValue={macrozona}
+              onChange={e => setMacrozona(e.target.value)}
+            >
+              {[...new Set(props.barrios.map(b => b.macrozona))].map((macrozona, i) => (
+                <option
+                  key={`option-macrozona-${i}`}
+                  value={macrozona}
+                >
+                  {macrozona}
+                </option>
+              ))}
+            </select>
             <label htmlFor="barrio">Barrio</label>
-            <select id="barrio" onChange={e => {
-              const barrioSeleccionado = props.barrios[e.target.value]
-              setPosicion({
-                ...posicion,
-                ...barrioSeleccionado.posicion
-              })
-              props.fijarBarrio(barrioSeleccionado.nombre)
-            }}>
-              {props.barrios.map((barrio, i) => (
+            <select
+              id="barrio"
+              onChange={e => {
+                const barrioSeleccionado = props.barrios[e.target.value]
+                setPosicion({
+                  ...posicion,
+                  ...barrioSeleccionado.posicion
+                })
+                props.fijarBarrio(barrioSeleccionado.nombre)
+              }}
+            >
+              {props.barrios.filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
                 <option
                   key={`option-barrio-${i}`}
                   value={i}

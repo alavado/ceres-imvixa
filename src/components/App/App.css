@@ -85,3 +85,13 @@ a {
 .contenido-secundario-contenido {
   padding: 32px;
 }
+
+select {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: .9em;
+}
+
+input {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: .9em;
+}

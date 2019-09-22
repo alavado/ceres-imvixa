@@ -257,6 +257,7 @@ const barrios = {"ACS 10 A": {"coef": [0.0,
       lat: -42.4521753 + Math.random() - .5,
       lng: -72.9928245 + 2 * Math.random() - 1
     },
+    macrozona: `Macrozona ${Math.random() > .5 ? 1 : 2}`,
     modeloCrecimiento: {
       coef: barrios[nombre].coef,
       intercepto: barrios[nombre].intercepto

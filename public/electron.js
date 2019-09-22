@@ -1,9 +1,11 @@
 const electron = require('electron');
+const { ipcMain } = require('electron')
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
+const fs = require('fs')
 
 let mainWindow;
 
@@ -12,7 +14,10 @@ function createWindow() {
     width: 900,
     height: 680,
     show: false,
-    icon: __dirname + '/logo512.png'
+    icon: __dirname + '/logo512.png',
+    webPreferences: {
+      nodeIntegration: true,
+    }
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   if (isDev) {
@@ -40,3 +45,27 @@ app.on('activate', () => {
     createWindow();
   }
 });
+function pdfSettings() {
+  var paperSizeArray = ["A4", "A5"];
+  var option = {
+      landscape: false,
+      marginsType: 0,
+      printBackground: false,
+      printSelectionOnly: false,
+      pageSize: "A4"
+  };
+return option;
+}
+ipcMain.on('imprimir', (event, state) => {
+  mainWindow.webContents.printToPDF(pdfSettings(), function(err, data) {
+    if (err) {
+        //do whatever you want
+        return;
+    }
+    try{
+        fs.writeFileSync('./generated_pdf.pdf', data);
+    }catch(err){
+        //unable to save pdf..
+    }
+   
+})})

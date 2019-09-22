@@ -4,8 +4,11 @@ import './ResumenComparacion.css'
 import { curvaCrecimiento } from '../../../helpers/modelo'
 import GraficoCrecimiento from './GraficoCrecimiento2'
 import { OBJETIVO_PESO } from '../../../helpers/constantes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 
-const ResumenComparacion = ({produccion, tratamientos, modelo}) => {
+const ResumenComparacion = ({state, produccion, tratamientos, modelo}) => {
 
   const { fechaInicio, objetivo, pesoObjetivo, fechaObjetivo, pesosSmolt } = produccion
   let curvaImvixa, curvaTradicional
@@ -22,6 +25,14 @@ const ResumenComparacion = ({produccion, tratamientos, modelo}) => {
     <div id="fondo-resumen">
       <div id="barra-superior-resumen">
         <h1>Comparación de estrategias</h1>
+        <div id="icono-imprimir-reporte">
+          <Link to="/reporte">
+            <FontAwesomeIcon
+              color="white"
+              icon={faFile}
+            />
+          </Link>
+        </div>
       </div>
       <div id="contenido-resumen">
         <div id="grafico-crecimiento">
@@ -65,6 +76,7 @@ const ResumenComparacion = ({produccion, tratamientos, modelo}) => {
 };
 
 const mapStateToProps = state => ({
+  state,
   produccion: state.produccion,
   modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloCrecimiento,
   tratamientos: state.tratamientos.tratamientos

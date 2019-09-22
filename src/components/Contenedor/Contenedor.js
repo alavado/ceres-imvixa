@@ -13,14 +13,12 @@ const Contenedor = () => {
   return (
     <div id="contenedor">
       <BarraLateral />
-      <Switch>
-        <Route path="/" exact component={Inicio} />
-        <Route path="/centro" exact component={Centro} />
-        <Route path="/produccion" exact component={Produccion} />
-        <Route path="/tratamientos" exact component={Tratamientos} />
-        <Route path="/ajustes" exact component={Ajustes} />
-        <Route path="/economico" exact component={Economico} />
-      </Switch>
+      <Route path="/" exact component={Inicio} />
+      <Route path="/centro" exact component={Centro} />
+      <Route path="/produccion" exact component={Produccion} />
+      <Route path="/tratamientos" exact component={Tratamientos} />
+      <Route path="/ajustes" exact component={Ajustes} />
+      <Route path="/economico" exact component={Economico} />
     </div>
   );
 };
