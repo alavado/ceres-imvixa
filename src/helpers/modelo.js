@@ -1,25 +1,9 @@
 import moment from 'moment'
-import porcentajeComidaDiaria from './escalaComida'
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from './constantes';
 
-const crecimientoConAyuno = (peso, perdidaPorAyuno) => {
-  return peso - peso * perdidaPorAyuno
-}
-
-const crecimientoConComida = (peso, temperatura, dia, escalaDeCrecimiento) => {
-  const perdidaPorAyuno = 0.03, bFCR = 1.15, coefAlimentoComido = 0.9, numdays = 365 * 2
-  const pcd = porcentajeComidaDiaria(peso, temperatura)
-  if (pcd === 0){
-    return crecimientoConAyuno(peso, perdidaPorAyuno)
-  }
-  const factorDeCrecimiento = escalaDeCrecimiento * Math.pow(dia+1, 1.1) / 28000 // factor de crecimiento lineal
-  peso += peso * factorDeCrecimiento * coefAlimentoComido * pcd / bFCR
-  return peso
-}
-
-export const curvaMortalidad = modelo => {
+export const curvaMortalidad = (modelo, dias) => {
   let curva = []
-  for (let dia = 1; dia < 1000; dia++) {
+  for (let dia = 1; dia < dias; dia++) {
     let vars = [1, dia, dia * dia]
     curva.push(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
   }
@@ -73,14 +57,12 @@ export const curvaCrecimientoPorPeso = (fechaInicio, pesoIngreso, tipoObjetivo, 
   let pesoActual = pesoIngreso
   let semana = fechaCiclo.week() + 1 / 7.0
   let diasAyunoRestante = 0
-  let diasAyunoTotal = 0
   let tratamientosAplicados = {}
   for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
     semana += 1 / 7.0
     fechaCiclo.add(1, 'days')
     if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
       diasAyunoRestante = 3
-      diasAyunoTotal += 3
       tratamientosAplicados[`${Math.ceil(semana)}`] = 1
     }
     if (diasAyunoRestante <= 0) {

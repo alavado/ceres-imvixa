@@ -6,7 +6,7 @@ const initialState = {
   numeroSmolts: 1E6,
   pesosSmolt: { imvixa: 170, tradicional: 170 },
   costoSmolt: 1.8,
-  mortalidad: 0,
+  mortalidad: 10,
   ajusteCrecimiento: 1,
   bFCR: 1.15,
   costoAlimento: 1.1,
