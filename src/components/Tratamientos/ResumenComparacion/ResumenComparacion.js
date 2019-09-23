@@ -1,25 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './ResumenComparacion.css'
-import { curvaCrecimiento } from '../../../helpers/modelo'
 import GraficoCrecimiento from './GraficoCrecimiento2'
-import { OBJETIVO_PESO } from '../../../helpers/constantes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { OBJETIVO_PESO } from '../../../helpers/constantes';
 
-const ResumenComparacion = ({state, produccion, tratamientos, modelo}) => {
+const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
 
   const { fechaInicio, objetivo, pesoObjetivo, fechaObjetivo, pesosSmolt } = produccion
-  let curvaImvixa, curvaTradicional
-  if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
-  }
-  else {
-    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
-  }
 
   return (
     <div id="fondo-resumen">

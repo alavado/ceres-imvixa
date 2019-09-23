@@ -12,9 +12,9 @@ const initialState = {
   ],
   tratamientos: {
     imvixa: {
-      1: {
+      0: {
         idMedicamento: 6,
-        duracion: 34
+        duracion: 35
       }
     },
     tradicional: {}

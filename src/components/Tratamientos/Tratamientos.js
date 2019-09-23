@@ -6,14 +6,27 @@ import { dias } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { OBJETIVO_PESO } from '../../helpers/constantes';
+import { curvaCrecimiento } from '../../helpers/modelo'
 
 const Tratamientos = props => {
 
-  const { tratamientos, medicamentos } = props
+  const { tratamientos, medicamentos, produccion, modelo } = props
+  const { objetivo, fechaObjetivo, pesosSmolt, fechaInicio,pesoObjetivo } = produccion
+
+  let curvaImvixa, curvaTradicional
+  if (objetivo === OBJETIVO_PESO) {
+    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
+  }
+  else {
+    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
+  }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id,
-    estrategia: 'A',
+    estrategia: 'imvixa',
     semana: 1,
     dia: 'Lunes',
     duracion: 3
@@ -24,11 +37,12 @@ const Tratamientos = props => {
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     var popup = document.getElementById('popup-semana')
+    const textoSemana = semana === 0 ? 'Antes del ingreso' : `Semana ${semana}`
     if (tratamientos[estrategia][semana]) {
-      popup.innerHTML = `Semana ${semana}<br />${medicamentos.find(t => t.id === tratamientos[estrategia][semana].idMedicamento).nombre}`
+      popup.innerHTML = `${textoSemana}<br />${medicamentos.find(t => t.id === tratamientos[estrategia][semana].idMedicamento).nombre}`
     }
     else {
-      popup.innerHTML = `Semana ${semana}`
+      popup.innerHTML = textoSemana
     }
     popup.style.margin = `${y - 18}px 0 0 ${x + 5}px`
     popup.style.display = 'block'
@@ -72,7 +86,8 @@ const Tratamientos = props => {
     let semanas = []
     let diasTratamientoVigente = 0
     let imvixaActivo = false
-    for (let semana = 1; semana <= 80; semana++) {
+    const totalSemanas = estrategia === 'imvixa' ? (curvaImvixa.length / 7): (curvaTradicional.length / 7)
+    for (let semana = 0; semana <= totalSemanas; semana++) {
       let classSemana =  'tratamiento-inactivo'
       const tratamientoSemana = tratamientos[estrategia][semana]
       if (tratamientoSemana) {
@@ -95,7 +110,7 @@ const Tratamientos = props => {
         onMouseLeave={esconderPopup}
         className={classSemana}
       >
-        <span>{semana}</span>
+        <span>{semana === 0 ? 'A' : semana}</span>
       </div>)
     }
     return semanas
@@ -141,7 +156,10 @@ const Tratamientos = props => {
                 >
                   {/* <option value={0}>Ninguno</option> */}
                   {medicamentos
-                    .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
+                    .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
+                    .filter(m =>
+                      (nuevoTratamiento.semana === 0 && ((m.nombre === 'Imvixa' && nuevoTratamiento.estrategia === 'imvixa') || m.nombre === 'Emamectina')) ||
+                      (nuevoTratamiento.semana !== 0 && m.nombre !== 'Imvixa'))
                     .map(t => <option value={t.id}>{t.nombre}</option>)
                   }
                 </select>
@@ -171,14 +189,19 @@ const Tratamientos = props => {
           </div>
         </div>
       </div>
-      <ResumenComparacion />
+      <ResumenComparacion
+        curvaImvixa={curvaImvixa}
+        curvaTradicional={curvaTradicional}
+      />
     </>
   );
 };
 
 const mapStateToProps = state => ({
   tratamientos: state.tratamientos.tratamientos,
-  medicamentos: state.tratamientos.medicamentos
+  medicamentos: state.tratamientos.medicamentos,
+  produccion: state.produccion,
+  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloCrecimiento
 })
 
 const mapDispatchToProps = dispatch => ({
