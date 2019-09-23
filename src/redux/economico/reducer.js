@@ -1,9 +1,9 @@
 import economicoActions from './actions'
 
 const initialState = {
-  costoAlimento : 1.5,
+  costoAlimento : 1.1,
   costoNoAlimento : 70,
-  valorKiloProducido : 4.5
+  valorKiloProducido : 7.6
 }
 
 const economicoReducer = (state = initialState, action) => {

@@ -24,7 +24,7 @@ const Centro = props => {
               defaultValue={props.barrio.macrozona}
               onChange={e => setMacrozona(e.target.value)}
             >
-              {[...new Set(props.barrios.map(b => b.macrozona))].map((macrozona, i) => (
+              {[...new Set(props.barrios.map(b => b.macrozona))].sort().map((macrozona, i) => (
                 <option
                   key={`option-macrozona-${i}`}
                   value={macrozona}
@@ -39,7 +39,7 @@ const Centro = props => {
               onChange={e => props.fijarBarrio(e.target.value)}
               defaultValue={props.barrio.nombre}
             >
-              {props.barrios.filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
+              {props.barrios.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
                 <option
                   key={`option-barrio-${i}`}
                   value={barrio.nombre}
@@ -65,7 +65,7 @@ const Centro = props => {
             />
             <Marker position={props.barrio.posicion}>
               <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                Barrio seleccionado
               </Popup>
             </Marker>
           </Map>

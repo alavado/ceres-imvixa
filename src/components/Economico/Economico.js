@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './Economico.css'
 import economicoActions  from '../../redux/economico/actions'
-import { Bar } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 
 const Economico = props => {
-  const { datos } = props
+  const { costoAlimento, costoNoAlimento, valorKiloProducido } = props.economico
   return (
     <>
       <div className="contenido">
@@ -20,19 +20,22 @@ const Economico = props => {
             <input
               id="costo-alimento"
               type="number" min="1" max ="3" step="0.1"
-              defaultValue={datos.costoAlimento}
+              defaultValue={costoAlimento}
+              onChange={e => props.fijarCostoAlimento(e.target.value)}
             />
             <label htmlFor="costo-no-alimento">Costo alimento por kilo producido (%)</label>
             <input
               id="costo-no-alimento"
-              type="number" min="1" max ="100" step="1"
-              defaultValue={datos.costoNoAlimento}
+              type="number" min="1" max ="100" step="0.1"
+              defaultValue={costoNoAlimento}
+              onChange={e => props.fijarCostoNoAlimento(e.target.value)}
             />
-            <label htmlFor="valor-kilo-producido">Valor por kilo producido (USD)</label>
+            <label htmlFor="valor-kilo-producido">Precio venta kilo producido (USD)</label>
             <input
               id="valor-kilo-producido"
-              type="number" min="2" max ="5" step="0.5"
-              defaultValue={datos.valorKiloProducido}
+              type="number" min="1" max ="10" step="0.1"
+              defaultValue={valorKiloProducido}
+              onChange={e => props.fijarValorKiloProducido(e.target.value)}
             />
           </div>
         </div>
@@ -42,32 +45,20 @@ const Economico = props => {
           <h1>Proyección</h1>
         </div>
         <div className="contenido-secundario-contenido">
-          <Bar
-            data={{
-              labels: ['Peces al ingreso', 'Peces salida'],
-              datasets: [
-                {
-                  label: 'Estrategia Imvixa',
-                  data: [10, 50],
-                  backgroundColor: '#EF6C00',
-                },
-                {
-                  label: 'Estrategia tradicional',
-                  data: [20, 30],
-                  backgroundColor: '#546E7A'
-                }
-              ]
-            }}
-            options={{
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    min: 0
+          <div style={{width: '640px', height: '350px'}}>
+            <h1 style={{marginTop: -12, marginBottom: 16}}>Costo por kg producido</h1>
+            <Doughnut
+              data={{
+                labels: ['Costo alimento', 'Otros costos'],
+                datasets: [
+                  {
+                    data: [Math.round(100 * costoAlimento) / 100.0, Math.round(100 * (costoAlimento*(100-costoNoAlimento))/100) / 100.0],
+                    backgroundColor: ['#4CAF50', '#78909C'],
                   }
-                }],
-              }
-            }}
-          />
+                ]
+              }}
+            />
+          </div>
         </div>
       </div>
     </>
@@ -75,7 +66,7 @@ const Economico = props => {
 };
 
 const mapStateToProps = state => ({
-  datos: state.economico
+  economico: state.economico
 })
 
 const mapDispatchToProps = dispatch => ({

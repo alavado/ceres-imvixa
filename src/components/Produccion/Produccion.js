@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
 import { curvaMortalidad, curvaCrecimientoPorPeso } from '../../helpers/modelo'
-import { Bar, Doughnut } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 
@@ -20,7 +20,7 @@ const Produccion = props => {
   }
 
   let curvaMuerte = curvaMortalidad(props.modeloMortalidad, curvaCrecimiento.length)
-  const factorEscala = produccion.mortalidad / curvaMuerte[curvaMuerte.length - 1]
+  const factorEscala = (produccion.mortalidad / 100.0) / curvaMuerte[curvaMuerte.length - 1]
   curvaMuerte = curvaMuerte.map(mortAcum => mortAcum * factorEscala)
   
   return (

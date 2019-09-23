@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import './Reporte.css'
-import ResumenComparacion from '../Tratamientos/ResumenComparacion';
 const { ipcRenderer } = window.require('electron');
 
 const Reporte = () => {
