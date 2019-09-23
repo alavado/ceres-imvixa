@@ -17,10 +17,11 @@ const crecimientoConComida = (peso, temperatura, dia, escalaDeCrecimiento) => {
   return peso
 }
 
-export const curvaMortalidad = (dias, mortalidad) => {
+export const curvaMortalidad = modelo => {
   let curva = []
-  for (let dia = 1; dia < dias; dia++) {
-    curva.push(1.0 * mortalidad / dias)
+  for (let dia = 1; dia < 1000; dia++) {
+    let vars = [1, dia, dia * dia]
+    curva.push(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
   }
   return curva
 }
@@ -31,7 +32,12 @@ const evaluarModeloCrecimiento = (modelo, diaCiclo, semanaAño, pesoIngreso) => 
   return Math.round(modelo.coef.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
 }
 
-export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos, modelo) => {
+const evaluarModeloDeltaCrecimiento = (modelo, peso) => {
+  const vars = [1, peso, peso ** 2, peso ** 3, peso ** 4]
+  return Math.round(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
+}
+
+export const curvaCrecimiento = (fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos, modelo) => {
   let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
   let curva = [[1, pesoIngreso]]
   let pesoActual = pesoIngreso
@@ -49,6 +55,39 @@ export const curvaCrecimiento = (estrategia, fechaInicio, pesoIngreso, tipoObjet
     }
     if (diasAyunoRestante <= 0) {
       pesoActual = evaluarModeloCrecimiento(modelo, dia - diasAyunoTotal, semana, pesoIngreso)
+    }
+    diasAyunoRestante--
+    curva.push([dia, pesoActual])
+  }
+  return curva
+}
+
+const obtenerModelo = (modelos, fecha) => {
+  const trimestre = 1 + (Number(fecha.substring(4, 2)) - 1) / 3
+  return modelos[trimestre] ? modelos[trimestre] : modelos[Object.keys(modelos).sort((m1, m2) => Math.abs(m1 - trimestre) < Math.abs(m2 - trimestre) ? -1 : 1)[0]]
+}
+
+export const curvaCrecimientoPorPeso = (fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos, modelos) => {
+  let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
+  let curva = [[1, pesoIngreso]]
+  let pesoActual = pesoIngreso
+  let semana = fechaCiclo.week() + 1 / 7.0
+  let diasAyunoRestante = 0
+  let diasAyunoTotal = 0
+  let tratamientosAplicados = {}
+  for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
+    semana += 1 / 7.0
+    fechaCiclo.add(1, 'days')
+    if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
+      diasAyunoRestante = 3
+      diasAyunoTotal += 3
+      tratamientosAplicados[`${Math.ceil(semana)}`] = 1
+    }
+    if (diasAyunoRestante <= 0) {
+      pesoActual += evaluarModeloDeltaCrecimiento(obtenerModelo(modelos, fechaInicio), pesoActual) / 7.0
+    }
+    else {
+      pesoActual += evaluarModeloDeltaCrecimiento(obtenerModelo(modelos, fechaInicio), pesoActual) / 14.0
     }
     diasAyunoRestante--
     curva.push([dia, pesoActual])

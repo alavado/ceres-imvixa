@@ -2,7 +2,7 @@ import React from 'react';
 import './Contenedor.css'
 import BarraLateral from '../BarraLateral';
 import Inicio from '../Inicio';
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Centro from '../Centro';
 import Produccion from '../Produccion';
 import Tratamientos from '../Tratamientos';

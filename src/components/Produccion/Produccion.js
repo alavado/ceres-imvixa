@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
 import { curvaMortalidad } from '../../helpers/modelo'
-import { Line, Doughnut } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 
 const Produccion = props => {
   const { datos } = props
-  const curva = curvaMortalidad()
+  const curva = curvaMortalidad(props.modeloMortalidad)
   return (
     <>
       <div className="contenido">
@@ -72,7 +72,12 @@ const Produccion = props => {
           </div>
           <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
-            <input type="radio" name="objetivo" className="radio-button" checked={datos.objetivo === OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_PESO)} />
+            <input
+              type="radio"
+              name="objetivo"
+              className="radio-button"
+              defaultChecked={datos.objetivo === OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
+            />
             <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
             <input
               id="peso-objetivo"
@@ -85,7 +90,12 @@ const Produccion = props => {
             /> g
           </div>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
-            <input type="radio" name="objetivo" className="radio-button" checked={datos.objetivo !== OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)} />
+            <input
+              type="radio"
+              name="objetivo"
+              className="radio-button"
+              defaultChecked={datos.objetivo !== OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
+            />
             <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="fecha-objetivo">Fin de ciclo:</label>
             <input
               id="fecha-objetivo"
@@ -140,7 +150,8 @@ const Produccion = props => {
 };
 
 const mapStateToProps = state => ({
-  datos: state.produccion
+  datos: state.produccion,
+  modeloMortalidad: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloMortalidad
 })
 
 const mapDispatchToProps = dispatch => ({

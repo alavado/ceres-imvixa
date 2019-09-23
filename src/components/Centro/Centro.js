@@ -5,12 +5,7 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Centro.css'
 
 const Centro = props => {
-  const [ posicion, setPosicion ] = useState({
-    lat: -42.4521753,
-    lng: -72.9928245,
-    zoom: 8,
-  })
-  const [macrozona, setMacrozona] = useState(props.barrios[0].macrozona)
+  const [macrozona, setMacrozona] = useState(props.barrio.macrozona)
   return (
     <>
       <div className="contenido">
@@ -26,7 +21,7 @@ const Centro = props => {
             <label htmlFor="macrozona">Macrozona</label>
             <select
               id="macrozona"
-              defaultValue={macrozona}
+              defaultValue={props.barrio.macrozona}
               onChange={e => setMacrozona(e.target.value)}
             >
               {[...new Set(props.barrios.map(b => b.macrozona))].map((macrozona, i) => (
@@ -41,19 +36,13 @@ const Centro = props => {
             <label htmlFor="barrio">Barrio</label>
             <select
               id="barrio"
-              onChange={e => {
-                const barrioSeleccionado = props.barrios[e.target.value]
-                setPosicion({
-                  ...posicion,
-                  ...barrioSeleccionado.posicion
-                })
-                props.fijarBarrio(barrioSeleccionado.nombre)
-              }}
+              onChange={e => props.fijarBarrio(e.target.value)}
+              defaultValue={props.barrio.nombre}
             >
               {props.barrios.filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
                 <option
                   key={`option-barrio-${i}`}
-                  value={i}
+                  value={barrio.nombre}
                 >
                   {barrio.nombre}
                 </option>
@@ -69,12 +58,12 @@ const Centro = props => {
           <h1>Ubicación</h1>
         </div>
         <div style={{padding: 16}}>
-          <Map center={posicion} zoom={posicion.zoom} style={{height: 500}}>
+          <Map center={props.barrio.posicion} zoom={8} style={{height: 500}}>
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={posicion}>
+            <Marker position={props.barrio.posicion}>
               <Popup>
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
@@ -87,7 +76,8 @@ const Centro = props => {
 };
 
 const mapStateToProps = state => ({
-  barrios: state.centro.barrios
+  barrios: state.centro.barrios,
+  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado]
 })
 
 const mapDispatchToProps = dispatch => ({

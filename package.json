@@ -22,12 +22,17 @@
     "redux": "^4.0.4"
   },
   "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "react-build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "cross-env concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "cross-env concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "release": "yarn react-build && electron-builder --publish=always",
+    "build": "yarn react-build && yarn electron-build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,8 +58,12 @@
     "wait-on": "^3.3.0"
   },
   "author": {
-    "name": "Your Name",
+    "name": "Compsci SpA",
     "email": "your.email@domain.com",
-    "url": "https://your-website.com"
-  }
+    "url": "https://compsci.cl"
+  },
+  "build": {
+    "appId": "cl.compsci.ceres-imvixa"
+  },
+  "description": "Simulación salmones"
 }

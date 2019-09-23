@@ -9,7 +9,7 @@ import { OBJETIVO_PESO } from '../../../helpers/constantes';
 
 const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
 
-  const { fechaInicio, objetivo, pesoObjetivo, fechaObjetivo, pesosSmolt } = produccion
+  const { objetivo, pesoObjetivo } = produccion
 
   return (
     <div id="fondo-resumen">

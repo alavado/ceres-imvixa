@@ -14,7 +14,7 @@ const initialState = {
     imvixa: {
       0: {
         idMedicamento: 6,
-        duracion: 35
+        duracion: 34
       }
     },
     tradicional: {}
@@ -41,18 +41,8 @@ const tratamientosReducer = (state = initialState, action) => {
       }
     }
     case tratamientosActions.ELIMINAR_TRATAMIENTO: {
-      const { semana, estrategia } = action.payload
-      const claveTratamientos = 1
-      return {
-        ...state,
-        [claveTratamientos]: Object.keys(state[claveTratamientos])
-          .reduce((object, key) => {
-            if (Number(key) !== semana) {
-              object[key] = state[claveTratamientos][key]
-            }
-            return object
-        }, {})
-      }
+      //const { semana, estrategia } = action.payload
+      return state
     }
     default:
       return state

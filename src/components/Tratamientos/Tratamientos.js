@@ -7,21 +7,21 @@ import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
-import { curvaCrecimiento } from '../../helpers/modelo'
+import { curvaCrecimientoPorPeso } from '../../helpers/modelo'
 
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, modelo } = props
-  const { objetivo, fechaObjetivo, pesosSmolt, fechaInicio,pesoObjetivo } = produccion
+  const { objetivo, fechaObjetivo, pesosSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
   if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.tradicional, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
   }
   else {
-    curvaImvixa = curvaCrecimiento('imvixa', fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimiento('tradicional', fechaInicio, pesosSmolt.tradicional, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.tradicional, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
@@ -105,6 +105,7 @@ const Tratamientos = props => {
         classSemana = imvixaActivo ? 'imvixa tratamiento-activo' : 'tratamiento-activo'
       }
       semanas.push(<div
+        key={`semana-${semana}-estrategia-${estrategia}`}
         onClick={e => mostrarPopupNuevoTratamiento(e, semana, estrategia)}
         onMouseMove={e => moverPopup(e, semana, estrategia)}
         onMouseLeave={esconderPopup}
@@ -127,7 +128,10 @@ const Tratamientos = props => {
         <div className="contenido-contenido">
           <div id="contenedor-calendarios">
             {Object.keys(tratamientos).map(estrategia => (
-              <div className="contenedor-tratamientos-estrategia">
+              <div
+                key={`contenedor-calendario-${estrategia}`}
+                className="contenedor-tratamientos-estrategia"
+              >
                 <h2>Semanas estrategia {estrategia}</h2>
                 <div id={`semanas-estrategia-${estrategia}`}>
                   {construirCalendario(estrategia)}
@@ -160,7 +164,7 @@ const Tratamientos = props => {
                     .filter(m =>
                       (nuevoTratamiento.semana === 0 && ((m.nombre === 'Imvixa' && nuevoTratamiento.estrategia === 'imvixa') || m.nombre === 'Emamectina')) ||
                       (nuevoTratamiento.semana !== 0 && m.nombre !== 'Imvixa'))
-                    .map(t => <option value={t.id}>{t.nombre}</option>)
+                    .map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)
                   }
                 </select>
               </div>
@@ -171,11 +175,11 @@ const Tratamientos = props => {
                     id="dia-nuevo-tratamiento"
                     onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
                   >
-                    {dias.map(dia => <option value={dia}>{dia}</option>)}
+                    {dias.map(dia => <option key={dia} value={dia}>{dia}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="dia-nuevo-tratamiento">Duración</label>
+                  <label htmlFor="dia-nuevo-tratamiento">Efectividad</label>
                   <input
                     type="number"
                     min={1}
@@ -201,7 +205,7 @@ const mapStateToProps = state => ({
   tratamientos: state.tratamientos.tratamientos,
   medicamentos: state.tratamientos.medicamentos,
   produccion: state.produccion,
-  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloCrecimiento
+  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modelosCrecimientoMacrozona
 })
 
 const mapDispatchToProps = dispatch => ({
