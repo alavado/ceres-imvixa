@@ -4,13 +4,15 @@ import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
 import { dias } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos } = props
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
-    idMedicamento: 0,
+    idMedicamento: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id,
     estrategia: 'A',
     semana: 1,
     dia: 'Lunes',
@@ -49,7 +51,6 @@ const Tratamientos = props => {
     const popup = document.getElementById('popup-tratamiento')
     popup.style.margin = `${y}px 0 0 ${x}px`
     popup.style.display = 'block'
-    document.getElementById('titulo-popup-tratamiento').innerHTML = `Tratamiento semana ${semana}`
   }
 
   const esconderPopupNuevoTratamiento = () => {
@@ -64,24 +65,6 @@ const Tratamientos = props => {
     }
     else {
       props.eliminarTratamiento(nuevoTratamiento)
-    }
-  }
-
-  const replicarTratamientos = estrategia => {
-    const semanasTratamientosPrevios = Object
-      .keys(tratamientos[estrategia])
-      .filter(key => tratamientos[estrategia][key].id !== tratamientos[estrategia].find(t => t.nombre.toLowerCase() === 'imvixa').id)
-      .sort()
-    let diferenciaEntreCiclos = nuevoTratamiento.semana - semanasTratamientosPrevios[0]
-    for (let ciclo = 0; nuevoTratamiento.semana + diferenciaEntreCiclos * ciclo <= 70; ciclo++) {
-      semanasTratamientosPrevios.forEach(semana => {
-        let semanaAplicacion = nuevoTratamiento.semana + Number(semana) + diferenciaEntreCiclos * ciclo - semanasTratamientosPrevios[0]
-        props.agregarTratamiento({
-          ...tratamientos[estrategia][semana],
-          semana: semanaAplicacion,
-          estrategia: nuevoTratamiento.estrategia
-        })
-      })
     }
   }
 
@@ -138,39 +121,52 @@ const Tratamientos = props => {
             ))}
             <div id="popup-semana">Semana 1</div>
             <div id="popup-tratamiento">
-              <label
-                htmlFor="nombre-nuevo-tratamiento"
-                id="titulo-popup-tratamiento"
+              <button
+                id="boton-cerrar-popup-tratamiento"
+                onClick={esconderPopupNuevoTratamiento}
               >
-                Tratamiento semana
-              </label>
-              <select
-                id="nombre-nuevo-tratamiento"
-                onChange={e => setNuevoTratamiento({...nuevoTratamiento, idMedicamento: Number(e.target.value)})}
-              >
-                <option value={0}>Ninguno</option>
-                {medicamentos
-                  .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
-                  .map(t => <option value={t.id}>{t.nombre}</option>)
-                }
-              </select>
-              <label htmlFor="dia-nuevo-tratamiento">Día de aplicación</label>
-              <select
-                id="dia-nuevo-tratamiento"
-                onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
-              >
-                {dias.map(dia => <option value={dia}>{dia}</option>)}
-              </select>
-              <label htmlFor="dia-nuevo-tratamiento">Duración (semanas)</label>
-              <input
-                type="number"
-                min={1}
-                onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
-                defaultValue={3} />
-              <br />
-              <button onClick={agregarTratamiento}>Aplicar</button>
-              <button onClick={replicarTratamientos}>!!!</button>
-              <button onClick={esconderPopupNuevoTratamiento}>X</button>
+                <FontAwesomeIcon icon={faTimes} size="sm" />
+              </button>
+              <div>
+                <label
+                  htmlFor="nombre-nuevo-tratamiento"
+                  id="titulo-popup-tratamiento"
+                >
+                  Tratamiento
+                </label>
+                <select
+                  id="nombre-nuevo-tratamiento"
+                  defaultValue={medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id}
+                  onChange={e => setNuevoTratamiento({...nuevoTratamiento, idMedicamento: Number(e.target.value)})}
+                >
+                  {/* <option value={0}>Ninguno</option> */}
+                  {medicamentos
+                    .sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)
+                    .map(t => <option value={t.id}>{t.nombre}</option>)
+                  }
+                </select>
+              </div>
+              <div style={{display: 'flex'}}>
+                <div>
+                  <label htmlFor="dia-nuevo-tratamiento">Día aplicación</label>
+                  <select
+                    id="dia-nuevo-tratamiento"
+                    onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
+                  >
+                    {dias.map(dia => <option value={dia}>{dia}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="dia-nuevo-tratamiento">Duración</label>
+                  <input
+                    type="number"
+                    min={1}
+                    onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
+                    defaultValue={3} />
+                  <span>sem.</span>
+                </div>
+              </div>
+              <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
             </div>
           </div>
         </div>

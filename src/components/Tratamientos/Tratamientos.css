@@ -91,19 +91,24 @@ div[id^="semanas-estrategia"] > div:hover {
 #popup-tratamiento {
   position: absolute;
   padding: 8px 8px;
-  background-color: #607D8B;
+  background-color: white;
+  border-radius: 0 8px 8px 8px;
   display: none;
   z-index: 10;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #90A4AE;
 }
 
 #popup-tratamiento label {
   font-size: .7em;
-  color: white;
+  color: #263238;
 }
 
 #popup-tratamiento select {
+  font-size: .7em;
   margin-bottom: 8px;
+  padding: 2px;
+  border-radius: 4px;
 }
 
 #popup-tratamiento button {
@@ -111,7 +116,36 @@ div[id^="semanas-estrategia"] > div:hover {
 }
 
 #popup-tratamiento input {
-  font-size: .8em;
-  padding: 4px;
+  font-size: .7em;
+  padding: 2px 0 2px 4px;
   width: 30px;
+}
+
+#popup-tratamiento input+span {
+  font-size: .7em;
+  margin-left: 2px;
+}
+
+#popup-tratamiento div:nth-child(3) div:nth-child(2) {
+  margin-left: 8px;
+}
+
+#popup-tratamiento button[id^="boton"] {
+  border: 0;
+}
+
+#boton-cerrar-popup-tratamiento {
+  position: absolute;
+  color: #455A64;
+  background: rgba(0, 0, 0, 0);
+  top: 4px;
+  right: 4px;
+}
+
+#boton-agregar-tratamiento {
+  padding: 4px 12px;
+  color: white;
+  background: #455A64;
+  border-radius: 4px;
+  font-size: .7em;
 }

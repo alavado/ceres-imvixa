@@ -251,13 +251,24 @@ const barrios = {"ACS 10 A": {"coef": [0.0,
   -0.0003762102338964039],
   "intercepto": 418.34798151243876}}
 
+  const macrozonas = {
+    "1": ["1", "2", "3a", "3b", "4"],
+    "2": ["5", "6"],
+    "3": ["7", "8", "9a", "9b", "9c", "10a", "10b"],
+    "5": ["17b", "17a", "16", "15", "14", "13"],
+    "4": ["11", "12a", "12b", "12c"],
+    "6": ["18a", "18b", "18c", "18d", "19c", "19a", "19b", "20", "21a", "21b", "21c", "21d"],
+    "8": ["35", "34", "33", "31b", "32", "31a", "30a", "30b"],
+    "7": ["22a", "22c", "22b", "22d", "29", "28a", "28b", "28c", "23a", "23b", "23c", "24", "27", "26a", "26b", "25", "25a", "25b"]
+  }
+
   export default Object.keys(barrios).map(nombre => ({
     nombre,
     posicion: {
       lat: -42.4521753 + Math.random() - .5,
       lng: -72.9928245 + 2 * Math.random() - 1
     },
-    macrozona: `Macrozona ${Math.random() > .5 ? 1 : 2}`,
+    macrozona: Object.keys(macrozonas).find(key => macrozonas[key].find(b => b === nombre.toLocaleLowerCase().replace(/ /g, '').substring(3))),
     modeloCrecimiento: {
       coef: barrios[nombre].coef,
       intercepto: barrios[nombre].intercepto

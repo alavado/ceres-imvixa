@@ -6,7 +6,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
   const curvaMasLarga = curvaTradicional.length > curvaImvixa.length ? curvaTradicional : curvaImvixa
 
   const data = {
-    labels: curvaMasLarga.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaMasLarga.length - 1 ? [...arr, v[0]] : arr, []),
+    labels: curvaMasLarga.map(v => v[0]),//curvaMasLarga.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaMasLarga.length - 1 ? [...arr, v[0]] : arr, []),
     datasets: [
       {
         label: 'Imvixa',
@@ -27,7 +27,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
+        data: curvaImvixa.map(v => v[1])//curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
       },
       {
         label: 'Tradicional',
@@ -48,7 +48,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvaTradicional.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaTradicional.length - 1 ? [...arr, v[1]] : arr, []),
+        data: curvaTradicional.map(v => v[1])//curvaTradicional.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaTradicional.length - 1 ? [...arr, v[1]] : arr, []),
       }
     ],
   }
