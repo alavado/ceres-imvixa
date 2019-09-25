@@ -23,7 +23,7 @@ const Economico = props => {
               defaultValue={costoAlimento}
               onChange={e => props.fijarCostoAlimento(e.target.value)}
             />
-            <label htmlFor="costo-no-alimento">Costo alimento por kilo producido (%)</label>
+            <label htmlFor="costo-no-alimento">Porcentaje alimento costo total de producción (%)</label>
             <input
               id="costo-no-alimento"
               type="number" min="1" max ="100" step="0.1"

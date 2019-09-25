@@ -12,16 +12,16 @@ import { curvaCrecimientoPorPeso } from '../../helpers/modelo'
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, modelo } = props
-  const { objetivo, fechaObjetivo, pesosSmolt, fechaInicio, pesoObjetivo } = produccion
+  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
   if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.tradicional, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
   }
   else {
-    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.tradicional, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
+    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({

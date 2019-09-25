@@ -2,7 +2,7 @@ import economicoActions from './actions'
 
 const initialState = {
   costoAlimento : 1.1,
-  costoNoAlimento : 70,
+  costoNoAlimento : 55,
   valorKiloProducido : 7.6
 }
 

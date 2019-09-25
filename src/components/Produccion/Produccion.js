@@ -9,14 +9,14 @@ import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FEC
 const Produccion = props => {
 
   const { produccion, modelo } = props
-  const { objetivo, fechaObjetivo, pesosSmolt, fechaInicio, pesoObjetivo } = produccion
+  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, pesoObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [], modelo)
   }
   else {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesosSmolt.imvixa, objetivo, fechaObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [], modelo)
   }
 
   let curvaMuerte = curvaMortalidad(props.modeloMortalidad, curvaCrecimiento.length)
@@ -50,6 +50,15 @@ const Produccion = props => {
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
           />
+          <label htmlFor="peso-smolt-imvixa">Peso smolts al ingreso</label>
+          <input
+            id="peso-smolt-imvixa"
+            name="peso-smolt-imvixa"
+            type="number" min="5" step="5"
+            defaultValue={produccion.pesoSmolt}
+            onChange={e => props.fijarPesoSmolt(e.target.value)}
+            style={{width: 46}}
+          /> g
           <label htmlFor="mortalidad">Mortalidad ciclo</label>
           <input
             id="mortalidad"
@@ -59,31 +68,6 @@ const Produccion = props => {
             onChange={e => props.fijarMortalidad(e.target.value)}
             style={{width: 45}}
           /> %
-          <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Pesos medios de ingreso</h1>
-          <div style={{display: 'flex'}}>
-            <div>
-              <label htmlFor="peso-smolt-imvixa">Estrategia Imvixa</label>
-              <input
-                id="peso-smolt-imvixa"
-                name="peso-smolt-imvixa"
-                type="number" min="5" step="5"
-                defaultValue={produccion.pesosSmolt.imvixa}
-                onChange={e => props.fijarPesoSmoltEstrategiaImvixa(e.target.value)}
-                style={{width: 46}}
-              /> g
-            </div>
-            <div style={{marginLeft: 32}}>
-              <label htmlFor="peso-smolt-tradicional">Estrategia tradicional</label>
-              <input
-                id="peso-smolt-tradicional"
-                name="peso-smolt-tradicional"
-                type="number" min="5" step="5"
-                defaultValue={produccion.pesosSmolt.tradicional}
-                onChange={e => props.fijarPesoSmoltEstrategiaTradicional(e.target.value)}
-                style={{width: 46}}
-              /> g
-            </div>
-          </div>
           <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
@@ -129,29 +113,38 @@ const Produccion = props => {
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '350px'}}>
-            <h1 style={{marginTop: -12, marginBottom: 16}}>Biomasa perdida acumulada (kg/mes)</h1>
+            <h1 style={{marginTop: -12, marginBottom: 16}}>Biomasa acumulada (kg/mes)</h1>
             <Bar
               data={{
                 labels: Object.keys(curvaMuerte.filter((v, i) => i % 30 === 0)),
                 datasets: [
                   {
-                    data: curvaMuerte.filter((v, i) => i % 30 === 0).map((mortAcum, i) => mortAcum * curvaCrecimiento[i][1] * produccion.numeroSmolts / 1000),
+                    label: 'Biomasa viva',
+                    data: curvaMuerte.filter((v, i) => i % 30 === 0).map((mortAcum, i) => (1 - mortAcum) * curvaCrecimiento[i * 30][1] * produccion.numeroSmolts / 1000),
+                    backgroundColor: '#4CAF50'
+                  },
+                  {
+                    label: 'Biomasa perdida',
+                    data: curvaMuerte.filter((v, i) => i % 30 === 0).map((mortAcum, i) => mortAcum * curvaCrecimiento[i * 30][1] * produccion.numeroSmolts / 1000),
                     backgroundColor: '#F44336'
                   }
                 ]
               }}
               options={{
                 legend: {
-                  display: false,
+                  display: true,
+                  position: 'bottom'
                 },
                 scales: {
                   xAxes: [{
                     gridLines: {
                       display: false
-                    }
+                    },
+                    stacked: true
                   }],
                   yAxes: [{
                     display: true,
+                    stacked: true
                   }]
                 }
               }}
@@ -191,11 +184,8 @@ const mapDispatchToProps = dispatch => ({
   fijarNumeroSmolts: n => {
     dispatch(produccionActions.fijarNumeroSmolts(Number(n)))
   },
-  fijarPesoSmoltEstrategiaImvixa: peso => {
-    dispatch(produccionActions.fijarPesoSmolt('imvixa', Number(peso)))
-  },
-  fijarPesoSmoltEstrategiaTradicional: peso => {
-    dispatch(produccionActions.fijarPesoSmolt('tradicional', Number(peso)))
+  fijarPesoSmolt: peso => {
+    dispatch(produccionActions.fijarPesoSmolt(Number(peso)))
   },
   fijarCostoSmolt: usd => {
     dispatch(produccionActions.fijarCostoSmolt(Number(usd)))

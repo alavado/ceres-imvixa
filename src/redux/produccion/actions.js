@@ -20,7 +20,7 @@ const produccionActions = {
   }),
   fijarPesoSmolt: (estrategia, peso) => ({
     type: produccionActions.FIJAR_PESO_SMOLT,
-    payload: { peso, estrategia }
+    payload: peso
   }),
   fijarCostoSmolt: usd => ({
     type: produccionActions.FIJAR_COSTO_SMOLT,

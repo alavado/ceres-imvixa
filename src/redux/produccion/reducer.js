@@ -4,7 +4,7 @@ import { OBJETIVO_PESO } from '../../helpers/constantes'
 const initialState = {
   fechaInicio: `${new Date().getYear() + 1900}-01-01`,
   numeroSmolts: 1E6,
-  pesosSmolt: { imvixa: 170, tradicional: 170 },
+  pesoSmolt: 170,
   costoSmolt: 1.8,
   mortalidad: 10,
   ajusteCrecimiento: 1,
@@ -28,10 +28,10 @@ const produccionReducer = (state = initialState, action) => {
         numeroSmolts: action.payload
       }
     case produccionActions.FIJAR_PESO_SMOLT: {
-      const { peso, estrategia } = action.payload
+      const peso = action.payload
       return {
         ...state,
-        pesosSmolt: {...state.pesosSmolt, [estrategia]: peso}
+        pesosSmolt: peso
       }
     }
     case produccionActions.FIJAR_COSTO_SMOLT:
