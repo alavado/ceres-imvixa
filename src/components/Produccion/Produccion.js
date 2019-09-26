@@ -5,11 +5,12 @@ import { curvaMortalidad, curvaCrecimientoPorPeso } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
+import moment from 'moment'
 
 const Produccion = props => {
 
   const { produccion, modelo } = props
-  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
+  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -41,7 +42,7 @@ const Produccion = props => {
             onChange={e => props.fijarFechaInicio(e.target.value)}
             style={{width: 130}}
           />
-          <label htmlFor="numero-smolts">N° smolts al ingreso</label>
+          <label htmlFor="numero-smolts">N° de smolts al ingreso</label>
           <input
             id="numero-smolts"
             name="numero-smolts"
@@ -59,6 +60,38 @@ const Produccion = props => {
             onChange={e => props.fijarPesoSmolt(e.target.value)}
             style={{width: 46}}
           /> g
+          <label htmlFor="jaulas">N° de jaulas</label>
+          <input
+            id="jaulas"
+            name="jaulas"
+            type="number" min="0" step="1" max="100"
+            defaultValue={20}
+            style={{width: 45}}
+          /> 
+          <div style={{display: 'flex', alignItems: 'baseline'}}>
+            <div>
+              <label  style={{ marginRight: 8 }} htmlFor="bfcr">bFCR</label>
+              <input
+                id="bfcr"
+                name="bfcr"
+                type="number" min="1" step=".01" max="3"
+                defaultValue={bFCR}
+                onChange={e => props.fijarBFCR(e.target.value)}
+                style={{width: 45, marginRight: 32 }}
+              />
+            </div>
+            <div>
+              <label  style={{ marginRight: 8 }} htmlFor="efcr">eFCR</label>
+              <input
+                id="efcr"
+                name="efcr"
+                type="number" min="1" step=".01" max="3"
+                defaultValue={eFCR}
+                onChange={e => props.fijarEFCR(e.target.value)}
+                style={{width: 45, marginRight: 8 }}
+              /> 
+            </div>
+          </div>
           <label htmlFor="mortalidad">Mortalidad ciclo</label>
           <input
             id="mortalidad"
@@ -76,7 +109,7 @@ const Produccion = props => {
               className="radio-button"
               checked={produccion.objetivo === OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
             />
-            <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
+            <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
             <input
               id="peso-objetivo"
               name="peso-objetivo"
@@ -94,13 +127,13 @@ const Produccion = props => {
               className="radio-button"
               checked={produccion.objetivo !== OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
-            <label style={{ fontSize: '1em', marginRight: 8 }} htmlFor="fecha-objetivo">Fin de ciclo:</label>
+            <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="fecha-objetivo">Meses ciclo:</label>
             <input
               id="fecha-objetivo"
               name="fecha-objetivo"
-              type="date"
-              defaultValue={produccion.fechaObjetivo}
-              onChange={e => props.fijarFechaObjetivo(e.target.value)}
+              type="number"
+              defaultValue={15}
+              onChange={e => props.fijarFechaObjetivo(e.target.value, fechaInicio)}
               style={{width: 130}}
               onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
@@ -202,13 +235,17 @@ const mapDispatchToProps = dispatch => ({
   fijarBFCR: valor => {
     dispatch(produccionActions.fijarBFCR(Number(valor)))
   },
+  fijarEFCR: valor => {
+    dispatch(produccionActions.fijarEFCR(Number(valor)))
+  },
   fijarCostoAlimento: usd => {
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))
   },
   fijarObjetivo: objetivo => {
     dispatch(produccionActions.fijarObjetivo(objetivo))
   },
-  fijarFechaObjetivo: fecha => {
+  fijarFechaObjetivo: (meses, fechaInicio) => {
+    const fecha = moment(fechaInicio).add(meses,'months')
     dispatch(produccionActions.fijarFechaObjetivo(fecha))
   },
 })

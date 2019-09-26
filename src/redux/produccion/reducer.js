@@ -8,11 +8,12 @@ const initialState = {
   costoSmolt: 1.8,
   mortalidad: 10,
   ajusteCrecimiento: 1,
-  bFCR: 1.15,
+  bFCR: 1.4,
+  eFCR: 1.5,
   costoAlimento: 1.1,
   objetivo: OBJETIVO_PESO,
   pesoObjetivo: 5000,
-  fechaObjetivo: `${new Date().getYear() + 1901}-01-01`
+  fechaObjetivo: `${new Date().getYear() + 1901}-04-01`
 }
 
 const produccionReducer = (state = initialState, action) => {
@@ -58,6 +59,11 @@ const produccionReducer = (state = initialState, action) => {
       return {
         ...state,
         bFCR: action.payload
+      }
+    case produccionActions.FIJAR_EFCR:
+      return {
+        ...state,
+        eFCR: action.payload
       }
     case produccionActions.FIJAR_COSTO_ALIMENTO:
       return {

@@ -1,9 +1,10 @@
 import economicoActions from './actions'
 
 const initialState = {
-  costoAlimento : 1.1,
-  costoNoAlimento : 55,
-  valorKiloProducido : 7.6
+  costoAlimento : 1.2,
+  porcentajeAlimento : 47,
+  valorKiloProducido : 7.6,
+  costoSmolt: 2.15
 }
 
 const economicoReducer = (state = initialState, action) => {
@@ -15,11 +16,11 @@ const economicoReducer = (state = initialState, action) => {
         costoAlimento: costo
       }
     }
-    case economicoActions.FIJAR_COSTO_NO_ALIMENTO: {
-      const { costo } = action.payload
+    case economicoActions.FIJAR_PORCENTAJE_ALIMENTO: {
+      const porcentajeAlimento = action.payload
       return {
         ...state,
-        costoNoAlimento: costo
+        porcentajeAlimento
       }
     }
     case economicoActions.FIJAR_VALOR_KILO_PRODUCIDO: {
@@ -27,6 +28,13 @@ const economicoReducer = (state = initialState, action) => {
       return {
         ...state,
         valorKiloProducido: valor
+      }
+    }
+    case economicoActions.FIJAR_COSTO_SMOLT: {
+      const costoSmolt = action.payload
+      return {
+        ...state,
+        costoSmolt
       }
     }
     default:

@@ -58,6 +58,7 @@ export const curvaCrecimientoPorPeso = (fechaInicio, pesoIngreso, tipoObjetivo, 
   let semana = fechaCiclo.week() + 1 / 7.0
   let diasAyunoRestante = 0
   let tratamientosAplicados = {}
+  const modelo = obtenerModelo(modelos, fechaInicio)
   for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
     semana += 1 / 7.0
     fechaCiclo.add(1, 'days')
@@ -66,10 +67,10 @@ export const curvaCrecimientoPorPeso = (fechaInicio, pesoIngreso, tipoObjetivo, 
       tratamientosAplicados[`${Math.ceil(semana)}`] = 1
     }
     if (diasAyunoRestante <= 0) {
-      pesoActual += evaluarModeloDeltaCrecimiento(obtenerModelo(modelos, fechaInicio), pesoActual) / 7.0
+      pesoActual += evaluarModeloDeltaCrecimiento(modelo, pesoActual) / 7.0
     }
     else {
-      pesoActual += evaluarModeloDeltaCrecimiento(obtenerModelo(modelos, fechaInicio), pesoActual) / 14.0
+      pesoActual += evaluarModeloDeltaCrecimiento(modelo, pesoActual) / 14.0
     }
     diasAyunoRestante--
     curva.push([dia, pesoActual])

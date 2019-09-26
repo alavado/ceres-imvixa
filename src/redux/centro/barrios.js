@@ -1,3 +1,13 @@
+import centros from './datos_centros.json'
+
+const centrosFormateados = centros['cod_centro'].map((codigo, i) => ({
+  codigo,
+  titular: centros['Titular'][i],
+  rut: centros['Rut'][i],
+  barrio: centros['Barrio'][i],
+  posicion: { lng: -Number(centros['coords'][i].split(',')[0]), lat: -Number(centros['coords'][i].split(',')[1]) }
+}))
+
 const macrozonas = {
   "1": ["1", "2", "3 A", "3 B", "4"],
   "2": ["5", "6"],
@@ -192,6 +202,7 @@ export default barrios.map(nombre => {
     modeloCrecimiento,
     modelosCrecimientoMacrozona: modelosCrecimientosMacrozonas[Object.keys(modelosCrecimientosMacrozonas)
       .find(key => macrozonas[key].find(b => b === nombre))],
-    modeloMortalidad
+    modeloMortalidad,
+    centros: centrosFormateados.filter(centro => centro.barrio === nombre.replace(' ', ''))
   }
 })
