@@ -69,21 +69,21 @@ const Economico = props => {
       </div>        
       <div className="contenido-secundario">
         <div className="titulo-contenido-secundario">
-          <h1>Distribución de costos</h1>
+          <h1>Distribución de costos ex jaula por kilo producido</h1>
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '350px'}}>
             <Doughnut
               data={{
-                labels: ['Costo alimento', 'Costo smolt', 'Otros costos'],
+                labels: ['Costo smolt', 'Otros costos','Costo alimento', ],
                 datasets: [
                   {
                     data: [
-                      Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
                       Math.round(100 * costoSmolts / biomasaCosechada) / 100.0, 
-                      Math.round(100 * costoOtros / biomasaCosechada) / 100.0
+                      Math.round(100 * costoOtros / biomasaCosechada) / 100.0,
+                      Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
                     ],        
-                    backgroundColor: ['#4CAF50', '#FF7043', '#90A4AE'],
+                    backgroundColor: ['#FF7043', '#90A4AE', '#4CAF50' ],
                   }
                 ]
               }}
