@@ -2,12 +2,36 @@ import tratamientosActions from './actions'
 
 const initialState = {
   medicamentos: [
-    { id: 1, nombre: 'Azametifos' },
-    { id: 2, nombre: 'Emamectina' },
-    { id: 3, nombre: 'Deltametrina'  },
-    { id: 4, nombre: 'Peróxido de hidrógeno' },
-    { id: 5, nombre: 'Cipermetrina' },
-    { id: 6, nombre: 'Imvixa' },
+    {
+      id: 1,
+      nombre: 'Azametifos',
+      duracion: 4
+    },
+    {
+      id: 2,
+      nombre: 'Emamectina',
+      duracion: 4
+    },
+    {
+      id: 3,
+      nombre: 'Deltametrina',
+      duracion: 3
+    },
+    {
+      id: 4,
+      nombre: 'Peróxido de hidrógeno',
+      duracion: 4
+    },
+    {
+      id: 5,
+      nombre: 'Cipermetrina',
+      duracion: 3
+    },
+    {
+      id: 6,
+      nombre: 'Imvixa',
+      duracion: 34
+    },
     //{ id: 7, nombre: 'Alpha Flux' },
   ],
   tratamientos: {

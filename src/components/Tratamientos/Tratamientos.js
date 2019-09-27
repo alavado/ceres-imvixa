@@ -11,17 +11,17 @@ import { curvaCrecimientoPorPeso } from '../../helpers/modelo'
 
 const Tratamientos = props => {
 
-  const { tratamientos, medicamentos, produccion, modelo } = props
+  const { tratamientos, medicamentos, produccion, macrozona } = props
   const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
   if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
+    curvaTradicional = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
   }
   else {
-    curvaImvixa = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa, modelo)
-    curvaTradicional = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional, modelo)
+    curvaImvixa = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa)
+    curvaTradicional = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional)
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
@@ -205,7 +205,7 @@ const mapStateToProps = state => ({
   tratamientos: state.tratamientos.tratamientos,
   medicamentos: state.tratamientos.medicamentos,
   produccion: state.produccion,
-  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modelosCrecimientoMacrozona
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
 })
 
 const mapDispatchToProps = dispatch => ({

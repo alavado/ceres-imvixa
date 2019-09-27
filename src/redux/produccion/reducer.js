@@ -28,13 +28,11 @@ const produccionReducer = (state = initialState, action) => {
         ...state,
         numeroSmolts: action.payload
       }
-    case produccionActions.FIJAR_PESO_SMOLT: {
-      const peso = action.payload
+    case produccionActions.FIJAR_PESO_SMOLT:
       return {
         ...state,
-        pesosSmolt: peso
+        pesoSmolt: action.payload
       }
-    }
     case produccionActions.FIJAR_COSTO_SMOLT:
       return {
         ...state,

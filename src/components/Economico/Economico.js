@@ -4,19 +4,19 @@ import './Economico.css'
 import economicoActions  from '../../redux/economico/actions'
 import { Doughnut } from 'react-chartjs-2'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
-import { curvaCrecimientoPorPeso, curvaMortalidad } from '../../helpers/modelo';
+import { curvaCrecimientoPorPeso } from '../../helpers/modelo';
 
 const Economico = props => {
   const { costoAlimento, costoSmolt, porcentajeAlimento, valorKiloProducido } = props.economico
-  const { produccion, modelo } = props
+  const { macrozona, produccion, modelo } = props
   const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
   }
   else {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
   }
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1][1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)
@@ -98,7 +98,7 @@ const Economico = props => {
 const mapStateToProps = state => ({
   economico: state.economico,
   produccion: state.produccion,
-  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modelosCrecimientoMacrozona
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -51,10 +51,10 @@ const Produccion = props => {
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
           />
-          <label htmlFor="peso-smolt-imvixa">Peso smolts al ingreso</label>
+          <label htmlFor="peso-smolt">Peso smolts al ingreso</label>
           <input
-            id="peso-smolt-imvixa"
-            name="peso-smolt-imvixa"
+            id="peso-smolt"
+            name="peso-smolt"
             type="number" min="5" step="5"
             defaultValue={produccion.pesoSmolt}
             onChange={e => props.fijarPesoSmolt(e.target.value)}

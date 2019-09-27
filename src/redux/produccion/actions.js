@@ -19,7 +19,7 @@ const produccionActions = {
     type: produccionActions.FIJAR_NUMERO_SMOLTS,
     payload: n
   }),
-  fijarPesoSmolt: (estrategia, peso) => ({
+  fijarPesoSmolt: peso => ({
     type: produccionActions.FIJAR_PESO_SMOLT,
     payload: peso
   }),

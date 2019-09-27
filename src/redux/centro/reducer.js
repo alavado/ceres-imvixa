@@ -3,7 +3,7 @@ import barrios from './barrios'
 
 const initialState = {
   barrios,
-  indiceBarrioSeleccionado: 0
+  indiceBarrioSeleccionado: 0,
 }
 
 const centroReducer = (state = initialState, action) => {

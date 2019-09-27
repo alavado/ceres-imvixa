@@ -8,6 +8,14 @@ const Centro = props => {
   const [macrozona, setMacrozona] = useState(props.barrio.macrozona)
   const [centro, setCentro] = useState(null)
   const [titular, setTitular] = useState(null)
+
+  const cambioMacrozona = e => {
+    const nuevaMacrozona = e.target.value
+    setMacrozona(nuevaMacrozona)
+    const primerBarrio = props.barrios.filter(barrio => barrio.macrozona === nuevaMacrozona)[0]
+    props.fijarBarrio(primerBarrio.nombre)
+  }
+  
   return (
     <>
       <div className="contenido">
@@ -22,7 +30,7 @@ const Centro = props => {
             <select
               id="macrozona"
               defaultValue={props.barrio.macrozona}
-              onChange={e => setMacrozona(e.target.value)}
+              onChange={cambioMacrozona}
             >
               {[...new Set(props.barrios.map(b => b.macrozona))].sort().map((macrozona, i) => (
                 <option
@@ -39,7 +47,7 @@ const Centro = props => {
               onChange={e => props.fijarBarrio(e.target.value)}
               defaultValue={props.barrio.nombre}
             >
-              {props.barrios.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
+              {props.barrios.filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
                 <option
                   key={`option-barrio-${i}`}
                   value={barrio.nombre}
@@ -51,9 +59,7 @@ const Centro = props => {
             <label htmlFor="nombre-empresa">Empresa</label>
             <select
               id="empresa"
-              onChange={e => {
-                setTitular(e.target.value)
-              }}
+              onChange={e => setTitular(e.target.value)}
             >
               {[...new Set(props.barrio.centros.map(({titular}) => titular))].sort((x, y) => x > y ? 1 : -1).map((titular, i) => (
                 <option value={titular} key={`option-titular-${i}`}>
@@ -64,9 +70,7 @@ const Centro = props => {
             <label htmlFor="nombre-centro">Centro</label>
             <select
               id="centro"
-              onChange={e => {
-                setCentro(props.barrio.centros.find(({codigo}) => Number(codigo) === Number(e.target.value)))
-              }}
+              onChange={e => setCentro(props.barrio.centros.find(({codigo}) => Number(codigo) === Number(e.target.value)))}
             >
               {props.barrio.centros.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(centro => centro.titular === titular).map((centro, i) => (
                 <option
@@ -103,7 +107,7 @@ const Centro = props => {
 };
 
 const mapStateToProps = state => ({
-  barrios: state.centro.barrios,
+  barrios: state.centro.barrios.sort((x, y) => x.nombre > y.nombre ? 1 : -1),
   barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado]
 })
 
