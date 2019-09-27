@@ -13,16 +13,17 @@ export const curvaMortalidad = (modelo, dias) => {
 }
 
 const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta) => {
+  // No había suficientes datos para las macrozonas 1 y 2
+  if (macrozona === '1' || macrozona === '2') {
+    macrozona = '3'
+  }
   const modelo = modelosCrecimientoPorMacrozona[macrozona]
   const x = peso, y = uta
   const vars = [1, x, y, x*x, x*y, y*y]
   return Math.round(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
 }
 
-const crecimientoSinComida = (macrozona, peso, uta) => {
-  //return evaluarModeloDeltaCrecimiento(modelo, peso, uta) / 14.0
-  return 0
-}
+const crecimientoSinComida = (macrozona, peso, uta) => 0// evaluarModeloDeltaCrecimiento(modelo, peso, uta) / 14.0
 
 export const curvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos) => {
   let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
@@ -31,12 +32,11 @@ export const curvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tip
   let semana = 1 / 7.0
   let diasAyunoRestante = 0
   let tratamientosAplicados = {}
-
-  let uta = temperaturasMensuales[fechaCiclo.month()+1] * 7
+  let uta = temperaturasMensuales[fechaCiclo.month() + 1] * 7
   for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && fechaCiclo < moment(objetivo, 'YYYY-MM-DD')); dia++) {
     semana += 1 / 7.0
     fechaCiclo.add(1, 'days')
-    uta += temperaturasMensuales[fechaCiclo.month()+1]
+    uta += temperaturasMensuales[fechaCiclo.month() + 1]
     if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
       diasAyunoRestante = 3
       tratamientosAplicados[`${Math.ceil(semana)}`] = 1

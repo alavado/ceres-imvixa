@@ -9,15 +9,15 @@ import moment from 'moment'
 
 const Produccion = props => {
 
-  const { produccion, modelo } = props
+  const { produccion, macrozona } = props
   const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
   }
   else {
-    curvaCrecimiento = curvaCrecimientoPorPeso(fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [], modelo)
+    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
   }
 
   let curvaMuerte = curvaMortalidad(props.modeloMortalidad, curvaCrecimiento.length)
@@ -208,6 +208,7 @@ const mapStateToProps = state => ({
   produccion: state.produccion,
   modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modelosCrecimientoMacrozona,
   modeloMortalidad: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloMortalidad,
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
 })
 
 const mapDispatchToProps = dispatch => ({
