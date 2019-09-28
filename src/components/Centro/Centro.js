@@ -1,24 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import centroActions from '../../redux/centro/actions'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Centro.css'
 
 const Centro = props => {
-  const [macrozona, setMacrozona] = useState(props.barrio.macrozona)
-  const [titular, setTitular] = useState(null)
-  const [centro, setCentro] = useState(null)
-
-  const cambioMacrozona = e => {
-    const nuevaMacrozona = e.target.value
-    setMacrozona(nuevaMacrozona)
-    const primerBarrio = props.barrios.filter(barrio => barrio.macrozona === nuevaMacrozona)[0]
-    props.fijarBarrio(primerBarrio.nombre)
-    const primerTitular = [...new Set(primerBarrio.centros.map(({titular}) => titular))].sort((x, y) => x > y ? 1 : -1)[0]
-    setTitular(primerTitular)
-    const primerCentro = primerBarrio.centros.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(centro => centro.titular === primerTitular)[0]
-    setCentro(primerCentro)
-  }
   
   return (
     <>
@@ -34,7 +20,7 @@ const Centro = props => {
             <select
               id="macrozona"
               defaultValue={props.barrio.macrozona}
-              onChange={cambioMacrozona}
+              onChange={e => props.fijarMacrozona(e.target.value)}
             >
               {[...new Set(props.barrios.map(b => b.macrozona))].sort().map((macrozona, i) => (
                 <option
@@ -51,7 +37,7 @@ const Centro = props => {
               onChange={e => props.fijarBarrio(e.target.value)}
               defaultValue={props.barrio.nombre}
             >
-              {props.barrios.filter(barrio => barrio.macrozona === macrozona).map((barrio, i) => (
+              {props.barrios.filter(barrio => barrio.macrozona === props.barrio.macrozona).map((barrio, i) => (
                 <option
                   key={`option-barrio-${i}`}
                   value={barrio.nombre}
@@ -63,7 +49,8 @@ const Centro = props => {
             <label htmlFor="nombre-empresa">Empresa</label>
             <select
               id="empresa"
-              onChange={e => setTitular(e.target.value)}
+              onChange={e => props.fijarTitular(e.target.value)}
+              defaultValue={props.centro.titular}
             >
               {[...new Set(props.barrio.centros.map(({titular}) => titular))].sort((x, y) => x > y ? 1 : -1).map((titular, i) => (
                 <option value={titular} key={`option-titular-${i}`}>
@@ -74,9 +61,10 @@ const Centro = props => {
             <label htmlFor="nombre-centro">Centro</label>
             <select
               id="centro"
-              onChange={e => setCentro(props.barrio.centros.find(({codigo}) => Number(codigo) === Number(e.target.value)))}
+              onChange={e => props.fijarCentro(e.target.value)}
+              defaultValue={props.centro.codigo}
             >
-              {props.barrio.centros.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(centro => centro.titular === titular).map((centro, i) => (
+              {props.barrio.centros.filter(centro => centro.titular === props.titular).sort((x, y) => x.codigo > y.codigo ? 1 : -1).map((centro, i) => (
                 <option
                   key={`option-centro-${i}`}
                   value={centro.codigo}
@@ -93,12 +81,12 @@ const Centro = props => {
           <h1>Ubicación</h1>
         </div>
         <div style={{padding: 16}}>
-          <Map center={(centro && centro.posicion)|| props.barrio.posicion} zoom={10} style={{height: 500}}>
+          <Map center={(props.centro && props.centro.posicion)|| props.barrio.posicion} zoom={10} style={{height: 500}}>
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={(centro && centro.posicion)|| props.barrio.posicion}>
+            <Marker position={(props.centro && props.centro.posicion)|| props.barrio.posicion}>
               <Popup>
                 Barrio seleccionado
               </Popup>
@@ -112,11 +100,16 @@ const Centro = props => {
 
 const mapStateToProps = state => ({
   barrios: state.centro.barrios.sort((x, y) => x.nombre > y.nombre ? 1 : -1),
-  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado]
+  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado],
+  titular: state.centro.titular,
+  centro: state.centro.barrios[state.centro.indiceBarrioSeleccionado].centros[state.centro.indiceCentroSeleccionado]
 })
 
 const mapDispatchToProps = dispatch => ({
   fijarBarrio: nombre => dispatch(centroActions.fijarBarrio(nombre)),
+  fijarMacrozona: macrozona => dispatch(centroActions.fijarMacrozona(macrozona)),
+  fijarTitular: titular => dispatch(centroActions.fijarTitular(titular)),
+  fijarCentro: codigo => dispatch(centroActions.fijarCentro(Number(codigo)))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Centro);
