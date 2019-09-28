@@ -6,14 +6,18 @@ import './Centro.css'
 
 const Centro = props => {
   const [macrozona, setMacrozona] = useState(props.barrio.macrozona)
-  const [centro, setCentro] = useState(null)
   const [titular, setTitular] = useState(null)
+  const [centro, setCentro] = useState(null)
 
   const cambioMacrozona = e => {
     const nuevaMacrozona = e.target.value
     setMacrozona(nuevaMacrozona)
     const primerBarrio = props.barrios.filter(barrio => barrio.macrozona === nuevaMacrozona)[0]
     props.fijarBarrio(primerBarrio.nombre)
+    const primerTitular = [...new Set(primerBarrio.centros.map(({titular}) => titular))].sort((x, y) => x > y ? 1 : -1)[0]
+    setTitular(primerTitular)
+    const primerCentro = primerBarrio.centros.sort((x, y) => x.nombre > y.nombre ? 1 : -1).filter(centro => centro.titular === primerTitular)[0]
+    setCentro(primerCentro)
   }
   
   return (
@@ -112,7 +116,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fijarTemperatura: (mes, grados) => dispatch(centroActions.fijarTemperatura(mes, grados)),
   fijarBarrio: nombre => dispatch(centroActions.fijarBarrio(nombre)),
 })
 
