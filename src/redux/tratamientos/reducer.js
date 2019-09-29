@@ -57,6 +57,13 @@ const tratamientosReducer = (state = initialState, action) => {
       const { idMedicamento, semana, dia, estrategia, duracion } = action.payload
       return {
         ...state,
+        medicamentos: [
+          ...state.medicamentos.filter(m => m.id !== idMedicamento),
+          {
+            ...state.medicamentos.find(m => m.id === idMedicamento),
+            duracion
+          }
+        ],
         tratamientos: {
           ...state.tratamientos,
           [estrategia]: {

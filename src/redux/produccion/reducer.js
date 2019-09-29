@@ -13,7 +13,7 @@ const initialState = {
   costoAlimento: 1.1,
   objetivo: OBJETIVO_PESO,
   pesoObjetivo: 5000,
-  mesesObjetivo: 15
+  mesesObjetivo: 14
 }
 
 const produccionReducer = (state = initialState, action) => {

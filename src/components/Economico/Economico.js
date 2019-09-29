@@ -9,14 +9,14 @@ import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo';
 const Economico = props => {
   const { costoAlimento, costoSmolt, porcentajeAlimento, valorKiloProducido } = props.economico
   const { macrozona, produccion, modelo } = props
-  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
     curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
   }
   else {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, [])
   }
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)

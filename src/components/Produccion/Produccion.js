@@ -109,7 +109,7 @@ const Produccion = props => {
               className="radio-button"
               checked={produccion.objetivo === OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_PESO)}
             />
-            <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
+            <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso cosecha:</label>
             <input
               id="peso-objetivo"
               name="peso-objetivo"
