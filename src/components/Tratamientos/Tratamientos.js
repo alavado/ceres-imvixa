@@ -12,7 +12,7 @@ import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, macrozona } = props
-  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
   if (objetivo === OBJETIVO_PESO) {
@@ -20,8 +20,8 @@ const Tratamientos = props => {
     curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
   }
   else {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa)
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.tradicional)
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({

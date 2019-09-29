@@ -10,7 +10,7 @@ const produccionActions = {
   FIJAR_BFCR: 'FIJAR_BFCR',
   FIJAR_EFCR: 'FIJAR_EFCR',
   FIJAR_COSTO_ALIMENTO: 'FIJAR_COSTO_ALIMENTO',
-  FIJAR_FECHA_OBJETIVO: 'FIJAR_FECHA_OBJETIVO',
+  FIJAR_MESES_OBJETIVO: 'FIJAR_MESES_OBJETIVO',
   fijarFechaInicio: fecha => ({
     type: produccionActions.FIJAR_FECHA_INICIO,
     payload: fecha
@@ -55,9 +55,9 @@ const produccionActions = {
     type: produccionActions.FIJAR_OBJETIVO,
     payload: objetivo
   }),
-  fijarFechaObjetivo: fecha => ({
-    type: produccionActions.FIJAR_FECHA_OBJETIVO,
-    payload: fecha
+  fijarMesesObjetivo: meses => ({
+    type: produccionActions.FIJAR_MESES_OBJETIVO,
+    payload: meses
   }),
 }
 

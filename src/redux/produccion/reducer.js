@@ -13,7 +13,7 @@ const initialState = {
   costoAlimento: 1.1,
   objetivo: OBJETIVO_PESO,
   pesoObjetivo: 5000,
-  fechaObjetivo: `${new Date().getYear() + 1901}-04-01`
+  mesesObjetivo: 15
 }
 
 const produccionReducer = (state = initialState, action) => {
@@ -73,10 +73,10 @@ const produccionReducer = (state = initialState, action) => {
         ...state,
         objetivo: action.payload
       }
-    case produccionActions.FIJAR_FECHA_OBJETIVO:
+    case produccionActions.FIJAR_MESES_OBJETIVO:
       return {
         ...state,
-        fechaObjetivo: action.payload
+        mesesObjetivo: action.payload
       }
     default:
       return state

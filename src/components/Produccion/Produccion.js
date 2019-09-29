@@ -10,14 +10,14 @@ import moment from 'moment'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
     curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
   }
   else {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, [])
   }
 
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
@@ -132,8 +132,8 @@ const Produccion = props => {
               id="fecha-objetivo"
               name="fecha-objetivo"
               type="number"
-              defaultValue={15}
-              onChange={e => props.fijarFechaObjetivo(e.target.value, fechaInicio)}
+              defaultValue={mesesObjetivo}
+              onChange={e => props.fijarMesesObjetivo(e.target.value)}
               style={{width: 130}}
               onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
@@ -245,9 +245,8 @@ const mapDispatchToProps = dispatch => ({
   fijarObjetivo: objetivo => {
     dispatch(produccionActions.fijarObjetivo(objetivo))
   },
-  fijarFechaObjetivo: (meses, fechaInicio) => {
-    const fecha = moment(fechaInicio).add(meses,'months')
-    dispatch(produccionActions.fijarFechaObjetivo(fecha))
+  fijarMesesObjetivo: meses => {
+    dispatch(produccionActions.fijarMesesObjetivo(meses))
   },
 })
 
