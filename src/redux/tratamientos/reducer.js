@@ -5,32 +5,38 @@ const initialState = {
     {
       id: 1,
       nombre: 'Azametifos',
-      duracion: 4
+      duracion: 4,
+      mortalidad: 0.1
     },
     {
       id: 2,
       nombre: 'Emamectina',
-      duracion: 4
+      duracion: 4,
+      mortalidad: 0.1
     },
     {
       id: 3,
       nombre: 'Deltametrina',
-      duracion: 3
+      duracion: 3,
+      mortalidad: 0.1
     },
     {
       id: 4,
       nombre: 'Peróxido de hidrógeno',
-      duracion: 4
+      duracion: 4,
+      mortalidad: 0
     },
     {
       id: 5,
       nombre: 'Cipermetrina',
-      duracion: 3
+      duracion: 3,
+      mortalidad: 0.1
     },
     {
       id: 6,
       nombre: 'Imvixa',
-      duracion: 34
+      duracion: 34,
+      mortalidad: 0
     },
     //{ id: 7, nombre: 'Alpha Flux' },
   ],

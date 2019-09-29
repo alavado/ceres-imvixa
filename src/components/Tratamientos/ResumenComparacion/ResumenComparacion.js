@@ -41,7 +41,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
                 <p>meses para alcanzar el peso objetivo</p>
               </div>) :
               (<div className="resultados-estrategia">
-                <h2>{Math.round(.1 * curvaImvixa[curvaImvixa.length - 1][1]) / 100.0}</h2>
+                <h2>{Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0}</h2>
                 <p>kg a la cosecha</p>
               </div>)
             }
@@ -54,7 +54,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
                 <p>meses para alcanzar el peso objetivo</p>
               </div>) :
               (<div className="resultados-estrategia">
-                <h2>{Math.round(.1 * curvaTradicional[curvaTradicional.length - 1][1]) / 100.0}</h2>
+                <h2>{Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0}</h2>
                 <p>kg a la cosecha</p>
               </div>)
             }

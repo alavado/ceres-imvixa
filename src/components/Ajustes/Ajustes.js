@@ -1,6 +1,7 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
 
-const Ajustes = () => {
+const Ajustes = ({medicamentos}) => {
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
@@ -8,9 +9,17 @@ const Ajustes = () => {
           Ajustes
         </div>
       </div>
+      <h1>Fármacos</h1>
+      {medicamentos.map(m => (
+        <p>{m.nombre}</p>
+      ))}
     </div>
   );
 };
 
+const mapStateToProps = state => ({
+  medicamentos: state.tratamientos.medicamentos
+})
+
 // certificacion parametro disp a pagar
-export default Ajustes;
+export default connect(mapStateToProps)(Ajustes);

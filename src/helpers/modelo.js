@@ -3,13 +3,47 @@ import { OBJETIVO_PESO, OBJETIVO_FECHA } from './constantes';
 import modelosCrecimientoPorMacrozona from './modelos_crecimiento_macrozonas.json'
 import temperaturasMensuales from './temperaturas.json'
 
-export const curvaMortalidad = (modelo, dias) => {
+export const obtenerCurvaMortalidadAcumulada = (modelo, dias, mortalidadTotal) => {
   let curva = []
-  for (let dia = 1; dia < dias; dia++) {
+  for (let dia = 0; dia < dias; dia++) {
     let vars = [1, dia, dia * dia]
     curva.push(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
   }
+  const factorEscala = (mortalidadTotal / 100.0) / curva[curva.length - 1]
+  return curva.map(mortalidad => mortalidad * factorEscala)
+}
+
+export const obtenerCurvaBiomasaPerdida = (curvaMortalidad, curvaCrecimiento, numeroSmolts, intervalo) => {
+  let curva = []
+  let dia
+  for (dia = 0; dia < curvaCrecimiento.length; dia += intervalo) {
+    curva.push(obtenerBiomasaPerdida(curvaMortalidad, curvaCrecimiento, numeroSmolts, dia, dia + intervalo))
+  }
+  curva.push(obtenerBiomasaPerdida(curvaMortalidad, curvaCrecimiento, numeroSmolts, dia - intervalo, curvaCrecimiento.length - 1))
   return curva
+}
+
+export const obtenerBiomasaPerdida = (curvaMortalidad, curvaCrecimiento, numeroSmolts, diaInicio, diaFin) => {
+  let bioMasaPerdida = 0
+  for (let dia = diaInicio + 1; dia < diaFin; dia++) {
+    const deltaMortalidad = (curvaMortalidad[dia] - curvaMortalidad[dia - 1]) / 100.0
+    const pesoAyer = curvaCrecimiento[dia - 1]
+    bioMasaPerdida += deltaMortalidad * pesoAyer * numeroSmolts
+  }
+  return bioMasaPerdida / 10
+}
+
+export const obtenerCurvaBiomasa = (curvaMortalidad, curvaCrecimiento, numeroSmolts, intervalo) => {
+  let curva = []
+  for (let dia = intervalo; dia < curvaCrecimiento.length; dia += intervalo) {
+    curva.push(obtenerBiomasa(curvaMortalidad, curvaCrecimiento, numeroSmolts, dia))
+  }
+  curva.push(obtenerBiomasa(curvaMortalidad, curvaCrecimiento, numeroSmolts, curvaCrecimiento.length - 1))
+  return curva
+}
+
+export const obtenerBiomasa = (curvaMortalidad, curvaCrecimiento, numeroSmolts, dia) => {
+  return ((1 - curvaMortalidad[dia]) / 100.0) * curvaCrecimiento[dia] * numeroSmolts / 10
 }
 
 const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta) => {
@@ -25,9 +59,9 @@ const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta) => {
 
 const crecimientoSinComida = (macrozona, peso, uta) => 0// evaluarModeloDeltaCrecimiento(modelo, peso, uta) / 14.0
 
-export const curvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos) => {
+export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tipoObjetivo, objetivo, tratamientos) => {
   let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
-  let curva = [[1, pesoIngreso]]
+  let curva = [pesoIngreso]
   let pesoActual = pesoIngreso
   let semana = 1 / 7.0
   let diasAyunoRestante = 0
@@ -48,7 +82,7 @@ export const curvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tip
       pesoActual += crecimientoSinComida(macrozona, pesoActual, uta)
     }
     diasAyunoRestante--
-    curva.push([dia, pesoActual])
+    curva.push(pesoActual)
   }
   return curva
 }

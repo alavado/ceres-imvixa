@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
-import { curvaMortalidad, curvaCrecimientoPorPeso } from '../../helpers/modelo'
+import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasaPerdida, obtenerCurvaBiomasa } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
@@ -10,19 +10,19 @@ import moment from 'moment'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR } = produccion
+  const { objetivo, fechaObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
   }
   else {
-    curvaCrecimiento = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, [])
   }
 
-  let curvaMuerte = curvaMortalidad(props.modeloMortalidad, curvaCrecimiento.length)
-  const factorEscala = (produccion.mortalidad / 100.0) / curvaMuerte[curvaMuerte.length - 1]
-  curvaMuerte = curvaMuerte.map(mortAcum => mortAcum * factorEscala)
+  const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
+  //const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
+  const curvaBiomasa = obtenerCurvaBiomasa(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
   
   return (
     <>
@@ -107,7 +107,7 @@ const Produccion = props => {
               type="radio"
               name="objetivo"
               className="radio-button"
-              checked={produccion.objetivo === OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
+              checked={produccion.objetivo === OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_PESO)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso:</label>
             <input
@@ -125,7 +125,7 @@ const Produccion = props => {
               type="radio"
               name="objetivo"
               className="radio-button"
-              checked={produccion.objetivo !== OBJETIVO_PESO} onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
+              checked={produccion.objetivo !== OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="fecha-objetivo">Meses ciclo:</label>
             <input
@@ -146,21 +146,21 @@ const Produccion = props => {
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '350px'}}>
-            <h1 style={{marginTop: -12, marginBottom: 16}}>Biomasa acumulada (kg/mes)</h1>
+            <h1 style={{marginTop: -12, marginBottom: 16}}>Biomasa mensual</h1>
             <Bar
               data={{
-                labels: Object.keys(curvaMuerte.filter((v, i) => i % 30 === 0)),
+                labels: curvaBiomasa.map((v, i) => i + 1),
                 datasets: [
                   {
                     label: 'Biomasa viva',
-                    data: curvaMuerte.filter((v, i) => i % 30 === 0).map((mortAcum, i) => (1 - mortAcum) * curvaCrecimiento[i * 30][1] * produccion.numeroSmolts / 1000),
+                    data: curvaBiomasa,
                     backgroundColor: '#4CAF50'
                   },
-                  {
-                    label: 'Biomasa perdida',
-                    data: curvaMuerte.filter((v, i) => i % 30 === 0).map((mortAcum, i) => mortAcum * curvaCrecimiento[i * 30][1] * produccion.numeroSmolts / 1000),
-                    backgroundColor: '#F44336'
-                  }
+                  // {
+                  //   label: 'Biomasa perdida',
+                  //   data: curvaBiomasaPerdida,
+                  //   backgroundColor: '#F44336'
+                  // }
                 ]
               }}
               options={{

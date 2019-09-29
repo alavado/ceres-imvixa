@@ -7,7 +7,7 @@ import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
-import { curvaCrecimientoPorPeso } from '../../helpers/modelo'
+import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 
 const Tratamientos = props => {
 
@@ -16,12 +16,12 @@ const Tratamientos = props => {
 
   let curvaImvixa, curvaTradicional
   if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
-    curvaTradicional = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
   }
   else {
-    curvaImvixa = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa)
-    curvaTradicional = curvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, fechaObjetivo, tratamientos.tradicional)
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
