@@ -142,6 +142,12 @@ div[id^="semanas-estrategia"] > div:hover {
   right: 4px;
 }
 
+#boton-eliminar-tratamiento {
+  color: #455A64;
+  background: rgba(0, 0, 0, 0);
+  outline: none;
+}
+
 #boton-agregar-tratamiento {
   padding: 4px 12px;
   color: white;

@@ -5,7 +5,7 @@ import tratamientosActions from '../../redux/tratamientos/actions';
 import { dias } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 
@@ -29,7 +29,7 @@ const Tratamientos = props => {
     estrategia: 'imvixa',
     semana: 1,
     dia: 'Lunes',
-    duracion: 3
+    duracion: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].duracion
   })
 
   const moverPopup = (e, semana, estrategia) => {
@@ -67,6 +67,14 @@ const Tratamientos = props => {
     popup.style.display = 'block'
   }
 
+  const cambiarTratamiento = e => {
+    const idMedicamento = Number(e.target.value) 
+    setNuevoTratamiento({...nuevoTratamiento,
+      idMedicamento,
+      duracion: medicamentos.find(m => m.id === idMedicamento).duracion
+    })
+  }
+
   const esconderPopupNuevoTratamiento = () => {
     const popupTratamiento = document.getElementById('popup-tratamiento')
     popupTratamiento.style.display = 'none'
@@ -74,12 +82,12 @@ const Tratamientos = props => {
 
   const agregarTratamiento = () => {
     esconderPopupNuevoTratamiento()
-    if (nuevoTratamiento.id !== 0) { 
-      props.agregarTratamiento(nuevoTratamiento)
-    }
-    else {
-      props.eliminarTratamiento(nuevoTratamiento)
-    }
+    props.agregarTratamiento(nuevoTratamiento)
+  }
+
+  const eliminarTratamiento = () => {
+    esconderPopupNuevoTratamiento()
+    props.eliminarTratamiento(nuevoTratamiento.estrategia, nuevoTratamiento.semana)
   }
 
   const construirCalendario = estrategia => {
@@ -156,7 +164,7 @@ const Tratamientos = props => {
                 <select
                   id="nombre-nuevo-tratamiento"
                   defaultValue={medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id}
-                  onChange={e => setNuevoTratamiento({...nuevoTratamiento, idMedicamento: Number(e.target.value)})}
+                  onChange={cambiarTratamiento}
                 >
                   {/* <option value={0}>Ninguno</option> */}
                   {medicamentos
@@ -184,11 +192,18 @@ const Tratamientos = props => {
                     type="number"
                     min={1}
                     onChange={e => setNuevoTratamiento({...nuevoTratamiento, duracion: Number(e.target.value)})}
-                    defaultValue={3} />
+                    value={nuevoTratamiento.duracion} />
                   <span>sem.</span>
                 </div>
               </div>
-              <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
+                {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] &&
+                  <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
+                    <FontAwesomeIcon icon={faTrash} size="sm" />
+                  </button>
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -213,9 +228,8 @@ const mapDispatchToProps = dispatch => ({
     const { idMedicamento, semana, estrategia, dia, duracion } = tratamiento
     dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, dia, estrategia, duracion))
   },
-  eliminarTratamiento: tratamiento => {
-    const { semana, estrategia } = tratamiento
-    dispatch(tratamientosActions.eliminarTratamiento(semana, estrategia))
+  eliminarTratamiento: (estrategia, semana) => {
+    dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana))
   }
 })
 

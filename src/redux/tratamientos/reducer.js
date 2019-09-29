@@ -71,7 +71,21 @@ const tratamientosReducer = (state = initialState, action) => {
       }
     }
     case tratamientosActions.ELIMINAR_TRATAMIENTO: {
-      //const { semana, estrategia } = action.payload
+      const { estrategia, semana } = action.payload
+      if (state.tratamientos[estrategia][semana]) {
+        return {
+          ...state,
+          tratamientos:  {
+            ...state.tratamientos,
+            [estrategia]: Object.keys(state.tratamientos[estrategia]).reduce((object, key) => {
+              if (Number(key) !== semana) {
+                object[key] = state.tratamientos[estrategia][key]
+              }
+              return object
+            }, {})
+          }
+        }
+      }
       return state
     }
     default:

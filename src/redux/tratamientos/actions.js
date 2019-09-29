@@ -5,9 +5,9 @@ const tratamientosActions = {
     type: tratamientosActions.AGREGAR_TRATAMIENTO,
     payload: { idMedicamento, semana, dia, estrategia, duracion }
   }),
-  eliminarTratamiento: (semana, estrategia) => ({
+  eliminarTratamiento: (estrategia, semana) => ({
     type: tratamientosActions.ELIMINAR_TRATAMIENTO,
-    payload: { semana, estrategia }
+    payload: { estrategia, semana }
   }),
 }
 
