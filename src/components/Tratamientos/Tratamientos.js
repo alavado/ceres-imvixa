@@ -32,6 +32,11 @@ const Tratamientos = props => {
     duracion: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].duracion
   })
 
+  const [ultimosTratamientos, setUltimosTratamientos] = useState({
+    siguiente: 0,
+    lista: []
+  })
+
   const moverPopup = (e, semana, estrategia) => {
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
@@ -59,12 +64,28 @@ const Tratamientos = props => {
       semana: Number(semana),
       estrategia
     })
+    verSiSePuedeSugerirTratamiento()
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     const popup = document.getElementById('popup-tratamiento')
     popup.style.margin = `${y}px 0 0 ${x}px`
     popup.style.display = 'block'
+  }
+
+  const verSiSePuedeSugerirTratamiento = () => {
+    return
+    // console.log(ultimosTratamientos.siguiente);
+    // console.log(ultimosTratamientos.lista);
+    // if (ultimosTratamientos.lista.length === 3 && ultimosTratamientos.lista[0] === ultimosTratamientos.lista[1]) {
+    //   const idMedicamento = ultimosTratamientos.lista[ultimosTratamientos.siguiente]
+    //   console.log('sugerido', idMedicamento);
+    //   setNuevoTratamiento({
+    //     ...nuevoTratamiento,
+    //     idMedicamento,
+    //     duracion: medicamentos.find(m => m.id === idMedicamento).duracion
+    //   })
+    // }
   }
 
   const cambiarTratamiento = e => {
@@ -82,6 +103,12 @@ const Tratamientos = props => {
 
   const agregarTratamiento = () => {
     esconderPopupNuevoTratamiento()
+    let listaUltimosTratamientos = [...ultimosTratamientos.lista]
+    listaUltimosTratamientos[ultimosTratamientos.siguiente] = nuevoTratamiento.idMedicamento
+    setUltimosTratamientos({
+      siguiente: (ultimosTratamientos.siguiente + 1) % 3,
+      lista: [...listaUltimosTratamientos]
+    })
     props.agregarTratamiento(nuevoTratamiento)
   }
 
@@ -98,6 +125,7 @@ const Tratamientos = props => {
     for (let semana = 0; semana <= totalSemanas; semana++) {
       let classSemana =  'tratamiento-inactivo'
       const tratamientoSemana = tratamientos[estrategia][semana]
+      let estilo = {}
       if (tratamientoSemana) {
         if (tratamientoSemana.idMedicamento === medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa').id) {
           classSemana = 'imvixa tratamiento-aplicado'
@@ -106,6 +134,7 @@ const Tratamientos = props => {
         else {
           classSemana = 'tratamiento-aplicado'
           imvixaActivo = false
+          estilo.backgroundColor = medicamentos.find(t => t.id === tratamientoSemana.idMedicamento).color
         }
         diasTratamientoVigente = tratamientoSemana.duracion - 1
       }
@@ -118,6 +147,7 @@ const Tratamientos = props => {
         onMouseMove={e => moverPopup(e, semana, estrategia)}
         onMouseLeave={esconderPopup}
         className={classSemana}
+        style={estilo}
       >
         <span>{semana === 0 ? 'A' : semana}</span>
       </div>)

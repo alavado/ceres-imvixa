@@ -6,37 +6,43 @@ const initialState = {
       id: 1,
       nombre: 'Azametifos',
       duracion: 4,
-      mortalidad: 0.1
+      mortalidad: 0.1,
+      color: '#EF5350'
     },
     {
       id: 2,
       nombre: 'Emamectina',
       duracion: 4,
-      mortalidad: 0.1
+      mortalidad: 0.1,
+      color: '#BA68C8'
     },
     {
       id: 3,
       nombre: 'Deltametrina',
       duracion: 3,
-      mortalidad: 0.1
+      mortalidad: 0.1,
+      color: '#6D4C41'
     },
     {
       id: 4,
       nombre: 'Peróxido de hidrógeno',
       duracion: 4,
-      mortalidad: 0
+      mortalidad: 0,
+      color: '#1E88E5'
     },
     {
       id: 5,
       nombre: 'Cipermetrina',
       duracion: 3,
-      mortalidad: 0.1
+      mortalidad: 0.1,
+      color: '#827717'
     },
     {
       id: 6,
       nombre: 'Imvixa',
       duracion: 34,
-      mortalidad: 0
+      mortalidad: 0,
+      color: '#FF8A65'
     },
     //{ id: 7, nombre: 'Alpha Flux' },
   ],
