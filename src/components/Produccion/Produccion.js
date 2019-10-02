@@ -156,20 +156,15 @@ const Produccion = props => {
                     data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
                     backgroundColor: '#E65100',
                     type: 'line',
-                    yAxisID: 'B',
+                    yAxisID: 'EjeYPesoPromedio',
                     fill: false
                   },
                   {
                     label: 'Biomasa viva',
                     data: curvaBiomasa,
-                    backgroundColor: '#4CAF50',
-                    yAxisID: 'A'
+                    backgroundColor: '#81C784',
+                    yAxisID: 'EjeYBiomasa'
                   }
-                  // {
-                  //   label: 'Biomasa perdida',
-                  //   data: curvaBiomasaPerdida,
-                  //   backgroundColor: '#F44336'
-                  // }
                 ]
               }}
               options={{
@@ -186,12 +181,12 @@ const Produccion = props => {
                   }],
                   yAxes: [
                     {
-                      id: 'A',
+                      id: 'EjeYBiomasa',
                       type: 'linear',
                       position: 'left'
                     },
                     { 
-                      id: 'B',
+                      id: 'EjeYPesoPromedio',
                       type: 'linear',
                       position: 'right',
                       gridLines: {

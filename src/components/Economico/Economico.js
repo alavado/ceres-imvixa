@@ -57,13 +57,13 @@ const Economico = props => {
               defaultValue={porcentajeAlimento}
               onChange={e => props.fijarPorcentajeAlimento(e.target.value)}
             /> %
-            <label htmlFor="valor-kilo-producido">Precio venta kilo producido</label>
+            {/* <label htmlFor="valor-kilo-producido">Precio venta kilo producido</label>
             <input
               id="valor-kilo-producido"
               type="number" min="1" max ="10" step="0.1"
               defaultValue={valorKiloProducido}
               onChange={e => props.fijarValorKiloProducido(e.target.value)}
-            /> USD
+            /> USD */}
           </div>
         </div>
       </div>        
@@ -83,7 +83,7 @@ const Economico = props => {
                       Math.round(100 * costoOtros / biomasaCosechada) / 100.0,
                       Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
                     ],        
-                    backgroundColor: ['#FF7043', '#90A4AE', '#4CAF50' ],
+                    backgroundColor: ['#FF7043', '#90A4AE', '#26C6DA' ],
                   }
                 ]
               }}
