@@ -9,27 +9,6 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
     labels: curvaMasLarga.map((v, dia) => dia),//curvaMasLarga.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaMasLarga.length - 1 ? [...arr, v[0]] : arr, []),
     datasets: [
       {
-        label: 'Imvixa',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: '#EF6C00',
-        borderColor: '#EF6C00',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: '#EF6C00',
-        pointBackgroundColor: '#EF6C00',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: '#EF6C00',
-        pointHoverBorderColor: '#EF6C00',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: curvaImvixa//curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
-      },
-      {
         label: 'Tradicional',
         fill: false,
         lineTension: 0.1,
@@ -49,13 +28,33 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
         pointRadius: 1,
         pointHitRadius: 10,
         data: curvaTradicional//curvaTradicional.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaTradicional.length - 1 ? [...arr, v[1]] : arr, []),
+      },
+      {
+        label: 'Imvixa',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: '#EF6C00',
+        borderColor: '#EF6C00',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: '#EF6C00',
+        pointBackgroundColor: '#EF6C00',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: '#EF6C00',
+        pointHoverBorderColor: '#EF6C00',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: curvaImvixa//curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
       }
     ],
   }
 
   const options = {
     legend: {
-      position: 'right',
       display: true,
       labels: {
         boxWidth: 14,
@@ -67,13 +66,24 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
           display: false
         },
         ticks: {
-          stepSize: 30
+          callback: function(v, i, vs) { return i % 30 === 0 ? i / 30 : undefined },
+          maxRotation: 0,
+          autoSkip: false
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Mes del ciclo'
         }
       }],
       yAxes: [{
         display: true,
         ticks: {
-          max: pesoObjetivo
+          max: pesoObjetivo,
+          callback: function(v, i, vs) { return `${(v / 1000).toLocaleString(undefined, { minimumFractionDigits: 1})}` }
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Peso promedio (kg)'
         }
       }]
     }

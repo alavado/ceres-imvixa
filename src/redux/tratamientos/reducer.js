@@ -47,13 +47,13 @@ const initialState = {
     //{ id: 7, nombre: 'Alpha Flux' },
   ],
   tratamientos: {
+    tradicional: {},
     imvixa: {
       0: {
         idMedicamento: 6,
         duracion: 34
       }
-    },
-    tradicional: {}
+    }
   }
 }
 

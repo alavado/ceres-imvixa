@@ -33,28 +33,28 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
           />
         </div>
         <div id="cuadros-estrategias">
-          <div id="fondo-estrategia-a">
-            <h1>Estrategia Imvixa</h1>
-            {objetivo === OBJETIVO_PESO ?
-              (<div className="resultados-estrategia">
-                <h2>{Math.round(10 * curvaImvixa.length / 30.0) / 10.0}</h2>
-                <p>meses para alcanzar el peso objetivo</p>
-              </div>) :
-              (<div className="resultados-estrategia">
-                <h2>{Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0}</h2>
-                <p>kg a la cosecha</p>
-              </div>)
-            }
-          </div>
           <div id="fondo-estrategia-b">
             <h1>Estrategia tradicional</h1>
             {objetivo === OBJETIVO_PESO ?
               (<div className="resultados-estrategia">
-                <h2>{Math.round(10 * curvaTradicional.length / 30.0) / 10.0}</h2>
+                <h2>{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
                 <p>meses para alcanzar el peso objetivo</p>
               </div>) :
               (<div className="resultados-estrategia">
-                <h2>{Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0}</h2>
+                <h2>{(Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                <p>kg a la cosecha</p>
+              </div>)
+            }
+          </div>
+          <div id="fondo-estrategia-a">
+            <h1>Estrategia Imvixa</h1>
+            {objetivo === OBJETIVO_PESO ?
+              (<div className="resultados-estrategia">
+                <h2>{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                <p>meses para alcanzar el peso objetivo</p>
+              </div>) :
+              (<div className="resultados-estrategia">
+                <h2>{(Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 2})}</h2>
                 <p>kg a la cosecha</p>
               </div>)
             }

@@ -27,7 +27,7 @@ div[id^="semanas-estrategia"] > div {
   color: white;
 }
 
-.contenedor-tratamientos-estrategia:first-child .tratamiento-aplicado.imvixa {
+.contenedor-tratamientos-estrategia .tratamiento-aplicado.imvixa {
   background-color: #EF6C00;
   color: white;
 }
@@ -36,7 +36,7 @@ div[id^="semanas-estrategia"] > div {
   background-color: #B0BEC5;
 }
 
-.contenedor-tratamientos-estrategia:first-child .tratamiento-activo.imvixa {
+.contenedor-tratamientos-estrategia .tratamiento-activo.imvixa {
   background-color: #FFCC80;
 }
 
@@ -47,17 +47,12 @@ div[id^="semanas-estrategia"] > div.tratamiento-inactivo {
 .contenedor-tratamientos-estrategia {
   padding: 8px 12px;
   border-radius: 8px;
-}
-
-.contenedor-tratamientos-estrategia:first-child {
   background-color: white;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .contenedor-tratamientos-estrategia:nth-child(2) {
   margin-top: 16px;
-  background-color: white;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .contenedor-tratamientos-estrategia > h2 {

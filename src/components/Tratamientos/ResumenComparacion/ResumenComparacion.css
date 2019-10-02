@@ -51,13 +51,13 @@ div[id^="fondo-estrategia"] {
 }
 
 #fondo-estrategia-a {
-  margin-left: 16px;
-  margin-right: 8px;
+  margin-left: 8px;
+  margin-right: 32px;
 }
 
 #fondo-estrategia-b {
-  margin-left: 8px;
-  margin-right: 16px;
+  margin-left: 32px;
+  margin-right: 8px;
 }
 
 div[id^="fondo-estrategia"] h1 {

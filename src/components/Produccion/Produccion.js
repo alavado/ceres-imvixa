@@ -61,7 +61,7 @@ const Produccion = props => {
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
           /> */}
-          <label htmlFor="peso-smolt">Peso smolts al ingreso</label>
+          <label htmlFor="peso-smolt">Peso de smolt al ingreso</label>
           <input
             id="peso-smolt"
             name="peso-smolt"
@@ -213,7 +213,7 @@ const Produccion = props => {
                         labelString: 'Peso promedio (kg)'
                       },
                       ticks: {
-                        callback: function(v, i, vs) { return `${v / 1000}` }
+                        callback: function(v, i, vs) { return `${(v / 1000).toLocaleString(undefined, { minimumFractionDigits: 1})}` }
                       },
                       gridLines: {
                         display: false
