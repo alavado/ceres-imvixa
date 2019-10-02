@@ -152,10 +152,19 @@ const Produccion = props => {
                 labels: curvaBiomasa.map((v, i) => i + 1),
                 datasets: [
                   {
+                    label: 'Peso promedio',
+                    data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
+                    backgroundColor: '#E65100',
+                    type: 'line',
+                    yAxisID: 'B',
+                    fill: false
+                  },
+                  {
                     label: 'Biomasa viva',
                     data: curvaBiomasa,
-                    backgroundColor: '#4CAF50'
-                  },
+                    backgroundColor: '#4CAF50',
+                    yAxisID: 'A'
+                  }
                   // {
                   //   label: 'Biomasa perdida',
                   //   data: curvaBiomasaPerdida,
@@ -175,10 +184,21 @@ const Produccion = props => {
                     },
                     stacked: true
                   }],
-                  yAxes: [{
-                    display: true,
-                    stacked: true
-                  }]
+                  yAxes: [
+                    {
+                      id: 'A',
+                      type: 'linear',
+                      position: 'left'
+                    },
+                    { 
+                      id: 'B',
+                      type: 'linear',
+                      position: 'right',
+                      gridLines: {
+                        display: false
+                      }
+                    }
+                  ]
                 }
               }}
             />
