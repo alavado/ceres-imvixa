@@ -83,7 +83,7 @@ const Economico = props => {
                       Math.round(100 * costoOtros / biomasaCosechada) / 100.0,
                       Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
                     ],        
-                    backgroundColor: ['#FF7043', '#90A4AE', '#26C6DA' ],
+                    backgroundColor: ['#FF7043', '#90A4AE', '#66BB6A' ],
                   }
                 ]
               }}

@@ -5,7 +5,7 @@ import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtene
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
-import moment from 'moment'
+import NumberFormat from 'react-number-format'
 
 const Produccion = props => {
 
@@ -43,14 +43,24 @@ const Produccion = props => {
             style={{width: 130}}
           />
           <label htmlFor="numero-smolts">N° de smolts al ingreso</label>
-          <input
+          <NumberFormat
+            id="numero-smolts"
+            value={produccion.numeroSmolts}
+            thousandSeparator={'.'}
+            decimalSeparator={','}
+            min={500}
+            max={5000000}
+            step={50000}
+            onChange={e => props.fijarNumeroSmolts(e.target.value)}          />
+
+          {/* <input
             id="numero-smolts"
             name="numero-smolts"
             type="number" min="50000" step="50000"
             defaultValue={produccion.numeroSmolts}
             onChange={e => props.fijarNumeroSmolts(e.target.value)}
             style={{width: 80}}
-          />
+          /> */}
           <label htmlFor="peso-smolt">Peso smolts al ingreso</label>
           <input
             id="peso-smolt"
@@ -134,7 +144,7 @@ const Produccion = props => {
               type="number"
               defaultValue={mesesObjetivo}
               onChange={e => props.fijarMesesObjetivo(e.target.value)}
-              style={{width: 130}}
+              style={{width: 45}}
               onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
           </div>
@@ -146,7 +156,6 @@ const Produccion = props => {
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '350px'}}>
-            <h1 style={{marginTop: -12, marginBottom: 16}}>Biomasa mensual</h1>
             <Bar
               data={{
                 labels: curvaBiomasa.map((v, i) => i + 1),
@@ -160,35 +169,52 @@ const Produccion = props => {
                     fill: false
                   },
                   {
-                    label: 'Biomasa viva',
+                    label: 'Biomasa total',
                     data: curvaBiomasa,
-                    backgroundColor: '#81C784',
+                    backgroundColor: '#66BB6A',
                     yAxisID: 'EjeYBiomasa'
                   }
                 ]
               }}
               options={{
                 legend: {
-                  display: true,
-                  position: 'bottom'
+                  display: true
                 },
                 scales: {
                   xAxes: [{
                     gridLines: {
                       display: false
                     },
-                    stacked: true
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Mes del ciclo'
+                    }
                   }],
                   yAxes: [
                     {
                       id: 'EjeYBiomasa',
                       type: 'linear',
-                      position: 'left'
+                      position: 'left',
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Biomasa total (kg)'
+                      },
+                      ticks: {
+                        callback: function(v, i, vs) { return `${v.toLocaleString()}` }
+                      }
                     },
                     { 
                       id: 'EjeYPesoPromedio',
                       type: 'linear',
                       position: 'right',
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Peso promedio (kg)'
+                      },
+                      ticks: {
+                        callback: function(v, i, vs) { return `${v / 1000}` }
+                      },
                       gridLines: {
                         display: false
                       }
@@ -231,7 +257,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarFechaInicio(fecha))
   },
   fijarNumeroSmolts: n => {
-    dispatch(produccionActions.fijarNumeroSmolts(Number(n)))
+    console.log(n);
+    dispatch(produccionActions.fijarNumeroSmolts(Number(n.replace(/\./g, ''))))
   },
   fijarPesoSmolt: peso => {
     dispatch(produccionActions.fijarPesoSmolt(Number(peso)))

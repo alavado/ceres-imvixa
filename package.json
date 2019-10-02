@@ -15,6 +15,7 @@
     "react-dom": "^16.9.0",
     "react-google-charts": "^3.0.14",
     "react-leaflet": "^2.4.0",
+    "react-number-format": "^4.3.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
