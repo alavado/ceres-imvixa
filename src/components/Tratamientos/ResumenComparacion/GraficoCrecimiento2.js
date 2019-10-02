@@ -27,7 +27,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvaTradicional//curvaTradicional.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaTradicional.length - 1 ? [...arr, v[1]] : arr, []),
+        data: curvaTradicional
       },
       {
         label: 'Imvixa',
@@ -48,7 +48,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: curvaImvixa//curvaImvixa.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaImvixa.length - 1 ? [...arr, v[1]] : arr, []),
+        data: curvaImvixa
       }
     ],
   }
@@ -58,6 +58,20 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
       display: true,
       labels: {
         boxWidth: 14,
+      }
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          if (label) {
+              label += ': ';
+          }
+          label += (tooltipItem.yLabel / 1000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2})
+          label += ' kg'
+          return label;
+        },
+        title: () => 'Peso promedio (kg)'
       }
     },
     scales: {
@@ -90,7 +104,7 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
   }
   
   return (
-    <div style={{marginTop: 32, width: '640px', height: '350px'}}>
+    <div style={{marginTop: 12, width: '640px', height: '350px'}}>
       <Line
         data={data}
         options={options}

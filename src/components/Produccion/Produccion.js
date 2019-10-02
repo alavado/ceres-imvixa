@@ -180,6 +180,22 @@ const Produccion = props => {
                 legend: {
                   display: true
                 },
+                tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                      if (label === 'Biomasa total') {
+                        label += ': ' +  tooltipItem.yLabel.toLocaleString(undefined, { maximumFractionDigits: 0});
+                      }
+                      else {
+                        label += ': ' +  (tooltipItem.yLabel / 1000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2});
+                      }
+                      label += ' kg'
+                      return label;
+                    },
+                    title: () => ''
+                  }
+                },
                 scales: {
                   xAxes: [{
                     gridLines: {
