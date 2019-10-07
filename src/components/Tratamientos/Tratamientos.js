@@ -170,10 +170,10 @@ const Tratamientos = props => {
                   onChange={cambiarTratamiento}
                 >
                   {medicamentos
-                    .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
                     .filter(m =>
-                      (nuevoTratamiento.semana === 0 && ((m.nombre === 'Imvixa' && nuevoTratamiento.estrategia === 'imvixa') || m.nombre === 'Emamectina')) ||
+                      (nuevoTratamiento.semana === 0 && ((m.nombre === 'Imvixa' && nuevoTratamiento.estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
                       (nuevoTratamiento.semana !== 0 && m.nombre !== 'Imvixa'))
+                    .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
                     .map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)
                   }
                 </select>

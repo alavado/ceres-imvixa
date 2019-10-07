@@ -11,14 +11,15 @@
 #tabla-estructura-costos td {
   font-size: .8em;
   text-transform: capitalize;
-  padding-right: 10px;
-  padding-left: 10px;
+  vertical-align: middle;
+  padding: 4px 10px;
 }
 
 #tabla-estructura-costos input {
-  height: 10px;
+  height: 12px;
   font-size: .8em;
   width: 40px;
+  margin: 0;
 }
 
 #tabla-estructura-costos tr:nth-child(odd) {

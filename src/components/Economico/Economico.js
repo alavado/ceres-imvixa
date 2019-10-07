@@ -72,14 +72,16 @@ const Economico = props => {
                       <tr>
                         <td>{elemento}</td>
                         <td>
-                          <input
-                            type="number"
-                            step="0.5"
-                            min="0"
-                            max="100"
-                            disabled={elemento === 'indirectos'}
-                            value={estructuraCostos[elemento]}
-                            onChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.target.value)} /> %
+                          <div>
+                            <input
+                              type="number"
+                              step="0.5"
+                              min="0"
+                              max="100"
+                              disabled={elemento === 'indirectos'}
+                              value={estructuraCostos[elemento]}
+                              onChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.target.value)} /> %
+                          </div>
                         </td>
                       </tr> 
                     ))}
