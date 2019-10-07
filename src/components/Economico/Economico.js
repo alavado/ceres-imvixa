@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import './Economico.css'
 import economicoActions  from '../../redux/economico/actions'
@@ -7,9 +7,11 @@ import { OBJETIVO_PESO } from '../../helpers/constantes';
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo';
 
 const Economico = props => {
-  const { costoAlimento, costoSmolt, porcentajeAlimento, valorKiloProducido } = props.economico
-  const { macrozona, produccion, modelo } = props
+  const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
+  const { macrozona, produccion } = props
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
+
+  const [mostrarEstructura, setMostrarEstructura] = useState(true)
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -24,11 +26,12 @@ const Economico = props => {
   const deltaPeso = pesoFinal - pesoSmolt / 1000
   const cantidadAlimento = deltaPeso * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
   const costoTotalAlimento = costoAlimento * cantidadAlimento
-  const costoTotal = costoTotalAlimento / (porcentajeAlimento / 100)
-  const costoOtros = costoTotal * (1 - (porcentajeAlimento / 100)) - costoSmolts
+  const costoTotal = costoTotalAlimento / (estructuraCostos.alimento / 100)
+  const costoOtros = costoTotal * (1 - (estructuraCostos.alimento / 100)) - costoSmolts
+
   return (
     <>
-      <div className="contenido">
+      <div id="contenido-economicos" className="contenido">
         <div className="barra-superior-contenido">
           <div className="titulo-contenido">
             Parámetros económicos
@@ -50,20 +53,41 @@ const Economico = props => {
               defaultValue={costoAlimento}
               onChange={e => props.fijarCostoAlimento(e.target.value)}
             /> USD
-            <label htmlFor="porcentaje-alimento">Porcentaje costo alimento sobre costo ex-jaula</label>
-            <input
-              id="porcentaje-alimento"
-              type="number" min="1" max ="80" step="0.1"
-              defaultValue={porcentajeAlimento}
-              onChange={e => props.fijarPorcentajeAlimento(e.target.value)}
-            /> %
-            {/* <label htmlFor="valor-kilo-producido">Precio venta kilo producido</label>
-            <input
-              id="valor-kilo-producido"
-              type="number" min="1" max ="10" step="0.1"
-              defaultValue={valorKiloProducido}
-              onChange={e => props.fijarValorKiloProducido(e.target.value)}
-            /> USD */}
+            {!mostrarEstructura ?
+              <>
+                <label htmlFor="porcentaje-alimento">Porcentaje costo alimento sobre costo ex-jaula</label>
+                <input
+                  id="porcentaje-alimento"
+                  type="number" min="1" max ="80" step="0.1"
+                  defaultValue={estructuraCostos.alimento}
+                  onChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.target.value)}
+                /> %
+                <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>
+              </> :
+              <>
+                <h6 id="titulo-tabla-estructura-costos">Estructura de costos</h6>
+                <table id="tabla-estructura-costos">
+                  <tbody>
+                    {Object.keys(estructuraCostos).map((elemento, i) => (
+                      <tr>
+                        <td>{elemento}</td>
+                        <td>
+                          <input
+                            type="number"
+                            step="0.5"
+                            min="0"
+                            max="100"
+                            disabled={elemento === 'indirectos'}
+                            value={estructuraCostos[elemento]}
+                            onChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.target.value)} /> %
+                        </td>
+                      </tr> 
+                    ))}
+                  </tbody>
+                </table>
+                <button onClick={() => setMostrarEstructura(false)}>Solo valor alimento</button>
+              </>
+            }
           </div>
         </div>
       </div>        
@@ -73,6 +97,7 @@ const Economico = props => {
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '350px'}}>
+          {!mostrarEstructura ?
             <Doughnut
               data={{
                 labels: ['Costo smolt', 'Otros costos','Costo alimento', ],
@@ -88,6 +113,19 @@ const Economico = props => {
                 ]
               }}
             />
+            :
+            <Doughnut
+              data={{
+                labels: Object.keys(estructuraCostos).map((elemento, i) => elemento),
+                datasets: [
+                  {
+                    data: Object.keys(estructuraCostos).map((elemento, i) => estructuraCostos[elemento]),        
+                    backgroundColor: ['#66BB6A', '#FF7043', '#8D6E63', '#FFEE58', '#29B6F6','#7E57C2', '#26A69A', '#EC407A'],
+                  }
+                ]
+              }}
+            />
+          }
           </div>
         </div>
       </div>
@@ -103,7 +141,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fijarCostoAlimento: costo => dispatch(economicoActions.fijarCostoAlimento(costo)),
-  fijarPorcentajeAlimento: valor => dispatch(economicoActions.fijarPorcentajeAlimento(valor)),
+  fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, porcentaje)),
   fijarValorKiloProducido: valor => dispatch(economicoActions.fijarValorKiloProducido(valor)),
   fijarCostoSmolt: valor => dispatch(economicoActions.fijarCostoSmolt(valor))
 })

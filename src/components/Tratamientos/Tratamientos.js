@@ -25,16 +25,11 @@ const Tratamientos = props => {
   }
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
-    idMedicamento: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id,
+    idMedicamento: medicamentos[0].id,
     estrategia: 'imvixa',
     semana: 1,
     dia: 'Lunes',
-    duracion: medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].duracion
-  })
-
-  const [ultimosTratamientos, setUltimosTratamientos] = useState({
-    siguiente: 0,
-    lista: []
+    duracion: medicamentos[0].duracion
   })
 
   const moverPopup = (e, semana, estrategia) => {
@@ -64,28 +59,12 @@ const Tratamientos = props => {
       semana: Number(semana),
       estrategia
     })
-    verSiSePuedeSugerirTratamiento()
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
     var y = e.clientY - rect.top
     const popup = document.getElementById('popup-tratamiento')
     popup.style.margin = `${y}px 0 0 ${x}px`
     popup.style.display = 'block'
-  }
-
-  const verSiSePuedeSugerirTratamiento = () => {
-    return
-    // console.log(ultimosTratamientos.siguiente);
-    // console.log(ultimosTratamientos.lista);
-    // if (ultimosTratamientos.lista.length === 3 && ultimosTratamientos.lista[0] === ultimosTratamientos.lista[1]) {
-    //   const idMedicamento = ultimosTratamientos.lista[ultimosTratamientos.siguiente]
-    //   console.log('sugerido', idMedicamento);
-    //   setNuevoTratamiento({
-    //     ...nuevoTratamiento,
-    //     idMedicamento,
-    //     duracion: medicamentos.find(m => m.id === idMedicamento).duracion
-    //   })
-    // }
   }
 
   const cambiarTratamiento = e => {
@@ -103,12 +82,6 @@ const Tratamientos = props => {
 
   const agregarTratamiento = () => {
     esconderPopupNuevoTratamiento()
-    let listaUltimosTratamientos = [...ultimosTratamientos.lista]
-    listaUltimosTratamientos[ultimosTratamientos.siguiente] = nuevoTratamiento.idMedicamento
-    setUltimosTratamientos({
-      siguiente: (ultimosTratamientos.siguiente + 1) % 3,
-      lista: [...listaUltimosTratamientos]
-    })
     props.agregarTratamiento(nuevoTratamiento)
   }
 
@@ -196,7 +169,6 @@ const Tratamientos = props => {
                   defaultValue={medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id}
                   onChange={cambiarTratamiento}
                 >
-                  {/* <option value={0}>Ninguno</option> */}
                   {medicamentos
                     .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
                     .filter(m =>

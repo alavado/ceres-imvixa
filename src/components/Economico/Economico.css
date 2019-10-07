@@ -1,34 +1,26 @@
-#contenedor-temperaturas {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 400px;
-  justify-content: flex-start;
-  margin-left: 4px;
+#titulo-tabla-estructura-costos {
+  font-size: .8em;
+  font-weight: bold;
+  margin-top: 8px;
 }
 
-#contenedor-temperaturas input[type="number"] {
-  width: 100px;
+#tabla-estructura-costos {
+  margin-top: 8px;
 }
 
-#contenedor-temperaturas label {
+#tabla-estructura-costos td {
+  font-size: .8em;
   text-transform: capitalize;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
-#titulo-temperaturas {
-  font-size: 1em;
-  margin-bottom: 16px;
+#tabla-estructura-costos input {
+  height: 10px;
+  font-size: .8em;
+  width: 40px;
 }
 
-#contenedor-barrio {
-  margin-bottom: 24px;
-}
-
-#contenedor-barrio select, #contenedor-barrio option {
-  padding: 8px;
-  border-radius: 4px;
-}
-
-#contenedor-barrio option {
-  font-size: 1em;
+#tabla-estructura-costos tr:nth-child(odd) {
+  background: #ECEFF1;
 }
