@@ -15,19 +15,19 @@ const Ajustes = ({medicamentos}) => {
         <table id="tabla-medicamentos">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Duración</th>
+              <th>Nombre comercial</th>
+              <th>Principio activo</th>
               <th>Mortalidad</th>
-              <th>Proveedores</th>
+              <th>Efectividad</th>
             </tr>
           </thead>
           <tbody>
             {medicamentos.map(m => (
               <tr>
                 <td>{m.nombre}</td>
-                <td>{m.duración}</td>
-                <td>{m.mortalidad}</td>
-                <td>{m.proveedores}</td>
+                <td>{m.principioActivo}</td>
+                <td>{m.mortalidad.toLocaleString(undefined, { minimumFractionDigits: 1})}%</td>
+                <td>{m.duracion} semanas</td>
               </tr>
             ))}
           </tbody>

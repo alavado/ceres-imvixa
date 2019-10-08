@@ -3,14 +3,14 @@ import economicoActions from './actions'
 const initialState = {
   costoAlimento : 1.2,
   estructuraCostos: {
-    alimento: 47,
-    smolts: 15,
-    personal: 3,
-    produccion: 7,
-    operaciones: 17,
-    generales: 1,
-    depreciacion: 1,
-    indirectos: 9
+    alimento: 52,
+    smolts: 13,
+    personal: 4,
+    operaciones: 14.2,
+    depreciacion: 4.4,
+    sanidad: 4.4,
+    seguros: 3,
+    otros: 5
   },
   valorKiloProducido : 7.6,
   costoSmolt: 2.15
@@ -38,7 +38,7 @@ const economicoReducer = (state = initialState, action) => {
         // debiese calcular cual es la relacion entre alimento y smolt
         // delta_porcentaje += cambio_por_relacion_alimento_smolt
       }
-      if (nombre === 'indirectos' || (delta_porcentaje < 0 && state.estructuraCostos.indirectos + delta_porcentaje < 0)) {
+      if (nombre === 'otros' || (delta_porcentaje < 0 && state.estructuraCostos.otros + delta_porcentaje < 0)) {
         return state
       }
       return {
@@ -46,7 +46,7 @@ const economicoReducer = (state = initialState, action) => {
         estructuraCostos: {
           ...state.estructuraCostos,
           [nombre]: porcentaje,
-          indirectos: state.estructuraCostos.indirectos + delta_porcentaje
+          otros: state.estructuraCostos.otros + delta_porcentaje
         }
       }
     }

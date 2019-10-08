@@ -78,7 +78,7 @@ const Economico = props => {
                               step="0.5"
                               min="0"
                               max="100"
-                              disabled={elemento === 'indirectos'}
+                              disabled={elemento === 'otros'}
                               value={estructuraCostos[elemento]}
                               onChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.target.value)} /> %
                           </div>

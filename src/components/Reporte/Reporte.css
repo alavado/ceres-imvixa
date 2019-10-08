@@ -1,0 +1,47 @@
+#reporte {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  -webkit-print-color-adjust: exact;
+  width: 950px;
+  margin: 0 auto;
+  border: 1px solid gray;
+  padding: 32px;
+}
+
+#reporte h6 {
+  font-size: .6em;
+  align-self: center;
+  margin-bottom: 32px;
+}
+
+#comparacion {
+  display: flex;
+}
+
+#comparacion > div {
+  flex: 1;
+}
+
+#comparacion > div {
+  display: flex;
+  flex-direction: column;
+}
+
+#comparacion > div:first-child {
+  align-items: flex-end;
+}
+
+#comparacion > div:nth-child(2) {
+  align-items: center;
+}
+
+#comparacion > div:last-child {
+  align-items: flex-start;
+}
+
+#comparacion > div > h3 {
+  background-color: #ECEFF1;
+  padding: 8px;
+  font-weight: bold;
+}
