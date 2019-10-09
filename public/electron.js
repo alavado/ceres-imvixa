@@ -66,9 +66,13 @@ ipcMain.on('imprimir', (event, state) => {
         return;
     }
     try{
-        fs.writeFileSync('./generated_pdf.pdf', data);
+        fs.writeFileSync(path.join(__dirname, './generated_pdf.pdf'), data);
     }catch(err){
         //unable to save pdf..
+    }
+    finally {
+      electron.shell.openItem(path.join(__dirname, 'generated_pdf.pdf'));
+      console.log('x');
     }
    
 })})

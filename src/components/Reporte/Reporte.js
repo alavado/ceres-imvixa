@@ -51,7 +51,6 @@ const Reporte = () => {
     <button onClick={() => window.history.back()}>Volver</button>
     <div id="reporte">
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-      <h1>Indicador principal: costo ex-jaula</h1>
       <ol>
         <li>
           <h2>IMPACTO PRODUCTIVO</h2>
@@ -114,9 +113,6 @@ const Reporte = () => {
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <h3>Memoria cálculo</h3>
         </li>
         <li>
           <h3>Estructura costos ex-jaula</h3>
