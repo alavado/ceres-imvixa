@@ -15,6 +15,13 @@
   margin-bottom: 32px;
 }
 
+#reporte h2 {
+  text-align: center;
+  margin: 32px 0;
+  font-size: 1.8em;
+  color: #2A2E57;
+}
+
 #comparacion {
   display: flex;
 }
@@ -41,7 +48,96 @@
 }
 
 #comparacion > div > h3 {
-  background-color: #ECEFF1;
+  background-color: #F2F2F2;
+  color: #2A2E57;
   padding: 8px;
   font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 16px;
+}
+
+#comparacion > div > div {
+  text-transform: uppercase;
+  font-size: .8em;
+  font-weight: bold;
+  margin: 6px 0;
+  padding: 8px 0;
+  height: 10px;
+  color: #2A2E57;
+  background-color: #F2F2F2;
+  width: 120px;
+}
+
+#comparacion > div:nth-child(1) > div {
+  text-align: right;
+  padding-right: 16px;
+  border-radius: 24px 0 0 24px;
+}
+
+#comparacion > div:nth-child(3) > div {
+  padding-left: 16px;
+  border-radius: 0 24px 24px 0;
+}
+
+#comparacion > div:nth-child(2) > div {
+  color: gray;
+  background-color: white;
+  text-align: center;
+  width: 300px;
+}
+
+#comparacion > div:nth-child(2) > div:last-child {
+  height: 24px;
+  border-top: 1px solid lightblue;
+  border-bottom: 1px solid lightblue;
+  font-size: .9em;
+  color: #2A2E57;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lengueta {
+  background-color: #9CC7CE;
+  height: 26px;
+  margin-top: -8px;
+}
+
+.valor {
+  margin-top: -18px;
+}
+
+#comparacion > div:nth-child(1) > div > div.lengueta {
+  border-radius: 24px 0 0 24px;
+}
+
+#comparacion > div:nth-child(1) > div > div.valor {
+  margin-right: 16px;
+}
+
+#comparacion > div:nth-child(3) > div > div.lengueta {
+  margin-left: -16px;
+  border-radius: 0 24px 24px 0;
+}
+
+#comparacion > div:nth-child(3) > div > div.valor {
+  margin-left: 16px;
+}
+
+#comparacion > div:nth-child(1) > div:last-child,
+#comparacion > div:nth-child(3) > div:last-child {
+  font-size: 1.2em;
+  height: 26px;
+}
+
+#comparacion > div:nth-child(1) > div:last-child > div.lengueta,
+#comparacion > div:nth-child(3) > div:last-child > div.lengueta {
+  height: 42px;
+  background: #417B85;
+}
+
+#comparacion > div:nth-child(1) > div:last-child > div.valor,
+#comparacion > div:nth-child(3) > div:last-child > div.valor {
+  margin-top: -30px;
+  color: white;
 }

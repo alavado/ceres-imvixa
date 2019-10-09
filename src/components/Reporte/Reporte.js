@@ -8,45 +8,110 @@ const Reporte = () => {
     ipcRenderer.send('imprimir')
   }
 
+  const lenguetas = [
+    {
+      nombre: 'Baños',
+      imvixa: 0.09,
+      tradicional: 0.1
+    },
+    {
+      nombre: 'Ayunos',
+      imvixa: 0.07,
+      tradicional: 0.08
+    },
+    {
+      nombre: 'Emamectina',
+      imvixa: 0,
+      tradicional: 0.005
+    },
+    {
+      nombre: 'Imvixa',
+      imvixa: 0.08,
+      tradicional: 0
+    },
+    {
+      nombre: 'Mortalidad incremental (%)',
+      imvixa: 0,
+      tradicional: 0.03
+    },
+    {
+      nombre: 'Producción',
+      imvixa: 3.31,
+      tradicional: 3.47
+    }
+  ]
+
+  const anchoMaximoLengueta = 120
+  const anchoMaximoLenguetaColoreada = 100
+  const totalImvixa = lenguetas.reduce((sum, x) => x.imvixa + sum, 0)
+  const totalTradicional = lenguetas.reduce((sum, x) => x.tradicional + sum, 0)
+
   return (
     <>
     <button onClick={() => window.history.back()}>Volver</button>
     <div id="reporte">
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-      <h1>Indicador principal: costo ex jaula</h1>
+      <h1>Indicador principal: costo ex-jaula</h1>
       <ol>
         <li>
-          <h2>Impacto productivo</h2>
+          <h2>IMPACTO PRODUCTIVO</h2>
           <div id="comparacion">
             <div>
-              <h3>Terapia con Imvixa</h3>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
+              <h3>TERAPIA CON IMVIXA</h3>
+              {lenguetas.map(lengueta => {
+                const anchoLengueta = (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
+                return (
+                  <div>
+                    <div className="lengueta" style={{
+                      width: anchoLengueta,
+                      marginLeft: 16 + anchoMaximoLengueta - anchoLengueta
+                    }}></div>
+                    <div className="valor">
+                      {lengueta.imvixa > 0 && lengueta.imvixa.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                    </div>
+                  </div>
+                )
+              })}
+              <div>
+                <div className="lengueta" style={{
+                    width: anchoMaximoLenguetaColoreada,
+                    marginLeft: 36
+                  }}></div>
+                <div className="valor">
+                  {totalImvixa.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                </div>
+              </div>
             </div>
             <div>
-              <h3>costo USD/kg ex jaula</h3>
-              <div className="aspecto-comparacion">Baños</div>
-              <div className="aspecto-comparacion">Ayunos</div>
-              <div className="aspecto-comparacion">Emamectina</div>
-              <div className="aspecto-comparacion">Imvixa</div>
-              <div className="aspecto-comparacion">Mortalidad incremental (1%)</div>
-              <div className="aspecto-comparacion">Producción</div>
-              <div className="aspecto-comparacion">Costo marginal USD/KG ex jaula</div>
+              <h3>costo USD/kg ex-jaula</h3>
+              {lenguetas.map(lengueta => (
+                <div>{lengueta.nombre}</div>
+              ))}
+              <div>Costo marginal USD/KG<br /> ex-jaula</div>
             </div>
             <div>
-              <h3>Terapia tradicional</h3>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
-              <div className="barrita-comparacion">0.09</div>
+              <h3>TERAPIA TRADICIONAL</h3>
+              {lenguetas.map(lengueta => {
+                const anchoLengueta = (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
+                return (
+                  <div>
+                    <div className="lengueta" style={{
+                      width: anchoLengueta
+                    }}></div>
+                    <div className="valor">
+                      {lengueta.tradicional > 0 && lengueta.tradicional.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                    </div>
+                  </div>
+                )
+              })}
+              <div>
+                <div className="lengueta" style={{
+                  width: anchoMaximoLenguetaColoreada
+                }}></div>
+                <div className="valor">
+                  {totalTradicional.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                </div>
+              </div>
             </div>
           </div>
         </li>
@@ -54,7 +119,7 @@ const Reporte = () => {
           <h3>Memoria cálculo</h3>
         </li>
         <li>
-          <h3>Estructura costos ex jaula</h3>
+          <h3>Estructura costos ex-jaula</h3>
           <table>
             <thead>
               <tr>
