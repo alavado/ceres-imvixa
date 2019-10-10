@@ -22,7 +22,7 @@ const initialState = {
       costoUnitario: 0.0144,
       dosisBaño: '',
       cantidadPorJaula: 0,
-      duracion: 4,
+      duracion: 8,
       mortalidad: 0,
       color: '#BA68C8'
     },

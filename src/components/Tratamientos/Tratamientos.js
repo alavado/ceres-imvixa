@@ -26,11 +26,13 @@ const Tratamientos = props => {
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: medicamentos[0].id,
-    estrategia: 'imvixa',
+    estrategia: 'tradicional',
     semana: 1,
     dia: 'Lunes',
     duracion: medicamentos[0].duracion
   })
+
+  const [medicamentosDisponibles, setMedicamentosDisponibles] = useState(medicamentos)
 
   const moverPopup = (e, semana, estrategia) => {
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
@@ -54,8 +56,15 @@ const Tratamientos = props => {
   }
 
   const mostrarPopupNuevoTratamiento = (e, semana, estrategia) => {
+    let meds = medicamentos
+      .filter(m =>
+        (semana === 0 && ((m.principioActivo === 'Lufenurón' && estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
+        (semana !== 0 && m.principioActivo !== 'Lufenurón'))
+      .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
+    setMedicamentosDisponibles(meds)
     setNuevoTratamiento({
       ...nuevoTratamiento,
+      idMedicamento: meds[0].id,
       semana: Number(semana),
       estrategia
     })
@@ -166,16 +175,10 @@ const Tratamientos = props => {
                 </label>
                 <select
                   id="nombre-nuevo-tratamiento"
-                  defaultValue={medicamentos.sort((t1, t2) => t1.nombre > t2.nombre ? 1 : -1)[0].id}
+                  value={nuevoTratamiento.idMedicamento}
                   onChange={cambiarTratamiento}
                 >
-                  {medicamentos
-                    .filter(m =>
-                      (nuevoTratamiento.semana === 0 && ((m.nombre === 'Imvixa' && nuevoTratamiento.estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
-                      (nuevoTratamiento.semana !== 0 && m.nombre !== 'Imvixa'))
-                    .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
-                    .map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)
-                  }
+                  {medicamentosDisponibles.map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)}
                 </select>
               </div>
               <div style={{display: 'flex'}}>
@@ -184,6 +187,7 @@ const Tratamientos = props => {
                   <select
                     id="dia-nuevo-tratamiento"
                     onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
+                    value={nuevoTratamiento.dia}
                   >
                     {dias.map(dia => <option key={dia} value={dia}>{dia}</option>)}
                   </select>
