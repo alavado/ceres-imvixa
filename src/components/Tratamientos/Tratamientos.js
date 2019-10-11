@@ -137,7 +137,7 @@ const Tratamientos = props => {
     return semanas
   }
 
-  return (true ? <>aa</> :
+  return (
     <>
       <div className="contenido">
         <div className="barra-superior-contenido">
