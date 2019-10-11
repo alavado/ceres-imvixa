@@ -7,7 +7,7 @@ const initialState = {
     smolts: 13,
     personal: 4,
     operaciones: 14.2,
-    depreciacion: 4.4,
+    depreciación: 4.4,
     sanidad: 4.4,
     seguros: 3,
     otros: 5

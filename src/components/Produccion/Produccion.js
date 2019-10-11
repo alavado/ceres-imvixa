@@ -87,7 +87,7 @@ const Produccion = props => {
           /> 
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <div>
-              <label  style={{ marginRight: 8 }} htmlFor="bfcr">bFCR</label>
+              <label style={{ marginRight: 8 }} htmlFor="bfcr">bFCR</label>
               <input
                 id="bfcr"
                 name="bfcr"
@@ -98,7 +98,7 @@ const Produccion = props => {
               />
             </div>
             <div>
-              <label  style={{ marginRight: 8 }} htmlFor="efcr">eFCR</label>
+              <label style={{ marginRight: 8 }} htmlFor="efcr">eFCR</label>
               <input
                 id="efcr"
                 name="efcr"

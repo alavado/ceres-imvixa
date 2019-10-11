@@ -117,13 +117,13 @@ const Economico = props => {
               options={{
                 legend: {
                   position: 'bottom'
-                }
+                },
               }}
             />
             :
             <Doughnut
               data={{
-                labels: Object.keys(estructuraCostos).map((elemento, i) => elemento),
+                labels: Object.keys(estructuraCostos).map((e, i) => e.charAt(0).toUpperCase() + e.slice(1)),
                 datasets: [
                   {
                     data: Object.keys(estructuraCostos).map((elemento, i) => estructuraCostos[elemento]),        
