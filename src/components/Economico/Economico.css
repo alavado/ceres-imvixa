@@ -1,7 +1,5 @@
 #titulo-tabla-estructura-costos {
-  font-size: .8em;
-  font-weight: bold;
-  margin-top: 8px;
+  font-size: .85em;
 }
 
 #tabla-estructura-costos {
@@ -16,12 +14,16 @@
 }
 
 #tabla-estructura-costos input {
-  height: 12px;
-  font-size: .8em;
-  width: 40px;
+  height: 11px;
+  font-size: .9em;
+  width: 38px;
   margin: 0;
 }
 
 #tabla-estructura-costos tr:nth-child(odd) {
   background: #ECEFF1;
+}
+
+#tabla-estructura-costos button {
+  background-color: red;
 }

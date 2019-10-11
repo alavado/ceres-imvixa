@@ -149,10 +149,10 @@ const Produccion = props => {
             <input
               id="fecha-objetivo"
               name="fecha-objetivo"
-              type="number"
+              type="number" step="0.5"
               defaultValue={mesesObjetivo}
               onChange={e => props.fijarMesesObjetivo(e.target.value)}
-              style={{width: 45}}
+              style={{width: 48}}
               onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
           </div>
