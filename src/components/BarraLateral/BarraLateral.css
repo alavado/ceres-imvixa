@@ -3,25 +3,19 @@
   border-radius: 8px 0 0 8px;
   width: 200px;
   display: flex;
-}
-
-#barra-lateral h1 {
-  border-radius: 8px 0 0 0;
-  background-color: #CFD8DC;
-  color: #263238;
-  font-size: 0.8em;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #titulo-barra-lateral a {
   color: #263238;
 }
 
+#herramientas {
+  height: 50px;
+}
+
 #lista-secciones {
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,9 +28,9 @@
 
 #lista-secciones .link-seccion {
   background-color: transparent;
-  width: 100%;
   padding: 18px 16px;
-  color: #455A64;
+  flex: 1;
+  color: #003E65;;
   font-size: .8em;
   text-transform: uppercase;
   display: flex;
@@ -47,15 +41,22 @@
 
 #lista-secciones .link-seccion:hover {
   color: #FFF;
-  background-color: #607D8B;
+  background-color: #0078BF;
 }
 
 #lista-secciones .seccion-seleccionada {
   color: #FFF;
-  background-color: #546E7A;
+  background-color: #0078BF;
 }
 
 #lista-secciones .link-seccion svg {
   margin-right: 16px;
   width: 20px;
+}
+
+#logo-elanco {
+  width: 148px;
+  margin-left: 26px;
+  margin-bottom: 16px;
+  margin-top: 10px;
 }

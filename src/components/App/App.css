@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'FiraSans';
+  src: url(../../assets/fonts/FiraSans-Regular.otf)
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url(../../assets/fonts/FiraSans-Bold.otf);
+  font-weight: bold;
+}
+
 #fondo {
   background: url(../../assets/fish-farm-iceland.jpg);
   background-size: cover;
@@ -5,7 +16,7 @@
   justify-content: center;
   align-items: stretch;
   height: 100vh;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'FiraSans';
 }
 
 * {
@@ -24,7 +35,7 @@ a {
 .barra-superior-contenido {
   height: 50px;
   width: 100%;
-  background-color: #607D8B;
+  background-color: #0078BF;
   display: flex;
   align-items: center;
 }
@@ -69,10 +80,9 @@ a {
 .titulo-contenido-secundario {
   height: 50px;
   width: 100%;
-  background-color: #546E7A;
   display: flex;
   align-items: center;
-  border-top-right-radius: 8px;
+  background-color: #003E65;
   color: white;
 }
 
@@ -87,11 +97,11 @@ a {
 }
 
 select {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'FiraSans';
   font-size: .9em;
 }
 
 input {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'FiraSans';
   font-size: .9em;
 }

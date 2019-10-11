@@ -3,14 +3,17 @@ import { NavLink as Link } from 'react-router-dom'
 import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFish, faWarehouse, faSyringe, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons'
+import logoElanco from '../../assets/elanco.svg'
 
 const BarraLateral = () => {
   console.log(window.location.href);
   return (
     <div id="barra-lateral">
-      <h1 id="titulo-barra-lateral"><Link to="/"></Link></h1>
-      <div id="lista-secciones">
-        <div>
+      <div>
+        <div id="herramientas">
+
+        </div>
+        <div id="lista-secciones">
           <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/centro">
             <div>
               <FontAwesomeIcon icon={faWarehouse} size="lg" />
@@ -36,14 +39,11 @@ const BarraLateral = () => {
             </div>
           </Link>
         </div>
-        <div>
-          <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/ajustes">
-            <div>
-              <FontAwesomeIcon icon={faCog} size="lg" />
-              Ajustes
-            </div>
-          </Link>
-        </div>
+      </div>
+      <div id="contenedor-logo">
+        <Link to="/">
+          <img src={logoElanco} alt="logo elanco" id="logo-elanco" />
+        </Link>
       </div>
     </div>
   );

@@ -8,10 +8,9 @@
 #barra-superior-resumen {
   height: 50px;
   width: 100%;
-  background-color: #546E7A;
+  background-color: #003E65;
   display: flex;
   align-items: center;
-  border-top-right-radius: 8px;
   color: white;
   justify-content: space-between;
 }
@@ -71,7 +70,7 @@ div[id^="fondo-estrategia"] h1 {
 }
 
 #fondo-estrategia-a h1 {
-  background-color: #EF6C00;
+  background-color: #EF7B10;
 }
 
 #fondo-estrategia-b h1 {

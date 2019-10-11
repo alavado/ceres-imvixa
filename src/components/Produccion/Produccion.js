@@ -53,12 +53,12 @@ const Produccion = props => {
           <NumberFormat
             id="numero-smolts"
             value={produccion.numeroSmolts}
-            thousandSeparator={'.'}
-            decimalSeparator={','}
+            thousandSeparator={','}
+            decimalSeparator={'.'}
             min={500}
             max={5000000}
             step={50000}
-            onChange={e => props.fijarNumeroSmolts(e.target.value)}          />
+            onChange={e => props.fijarNumeroSmolts(e.target.value)} />
 
           {/* <input
             id="numero-smolts"
@@ -171,7 +171,7 @@ const Produccion = props => {
                   {
                     label: 'Peso promedio',
                     data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
-                    backgroundColor: '#E65100',
+                    backgroundColor: '#E35205',
                     type: 'line',
                     yAxisID: 'EjeYPesoPromedio',
                     fill: false
@@ -179,7 +179,7 @@ const Produccion = props => {
                   {
                     label: 'Biomasa total',
                     data: curvaBiomasa,
-                    backgroundColor: '#66BB6A',
+                    backgroundColor: '#6AB96F',
                     yAxisID: 'EjeYBiomasa'
                   }
                 ]
@@ -247,21 +247,6 @@ const Produccion = props => {
                 }
               }}
             />
-            {/* <h1>Biomasa</h1>
-            <Doughnut
-              data={{
-                labels: ['Biomasa producida', 'Biomasa perdida'],
-                datasets: [
-                  {
-                    data: [
-                      produccion.numeroSmolts - produccion.numeroSmolts * produccion.mortalidad / 100.0,
-                      produccion.numeroSmolts * produccion.mortalidad / 100.0,
-                    ],
-                    backgroundColor: ['#4CAF50', '#F44336']
-                  }
-                ]
-              }}
-            /> */}
           </div>
         </div>
       </div>
@@ -281,8 +266,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarFechaInicio(fecha))
   },
   fijarNumeroSmolts: n => {
-    console.log(n);
-    dispatch(produccionActions.fijarNumeroSmolts(Number(n.replace(/\./g, ''))))
+    dispatch(produccionActions.fijarNumeroSmolts(Number(n.replace(/,/g, ''))))
   },
   fijarPesoSmolt: peso => {
     dispatch(produccionActions.fijarPesoSmolt(Number(peso)))

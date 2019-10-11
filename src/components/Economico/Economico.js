@@ -11,7 +11,7 @@ const Economico = props => {
   const { macrozona, produccion } = props
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
 
-  const [mostrarEstructura, setMostrarEstructura] = useState(true)
+  const [mostrarEstructura, setMostrarEstructura] = useState(false)
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -55,7 +55,7 @@ const Economico = props => {
             /> USD
             {!mostrarEstructura ?
               <>
-                <label htmlFor="porcentaje-alimento">Porcentaje costo alimento sobre costo ex-jaula</label>
+                <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
                 <input
                   id="porcentaje-alimento"
                   type="number" min="1" max ="80" step="0.1"
@@ -110,9 +110,14 @@ const Economico = props => {
                       Math.round(100 * costoOtros / biomasaCosechada) / 100.0,
                       Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
                     ],        
-                    backgroundColor: ['#FF7043', '#90A4AE', '#66BB6A' ],
+                    backgroundColor: ['#FB6E45', '#91A7B0', '#6AB96F' ],
                   }
                 ]
+              }}
+              options={{
+                legend: {
+                  position: 'bottom'
+                }
               }}
             />
             :
@@ -122,9 +127,14 @@ const Economico = props => {
                 datasets: [
                   {
                     data: Object.keys(estructuraCostos).map((elemento, i) => estructuraCostos[elemento]),        
-                    backgroundColor: ['#66BB6A', '#FF7043', '#8D6E63', '#FFEE58', '#29B6F6','#7E57C2', '#26A69A', '#EC407A'],
+                    backgroundColor: ['#6AB96F', '#FB6E45', '#8D6E61', '#FFED56', '#29C0E7','#7D55C7', '#26A69A', '#EF426F'],
                   }
                 ]
+              }}
+              options={{
+                legend: {
+                  position: 'bottom'
+                }
               }}
             />
           }
