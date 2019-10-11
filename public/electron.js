@@ -6,7 +6,8 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 const fs = require('fs')
-
+const { autoUpdater } = require("electron-updater")
+autoUpdater.checkForUpdatesAndNotify()
 let mainWindow;
 
 function createWindow() {
