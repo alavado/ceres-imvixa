@@ -21,13 +21,7 @@ const Produccion = props => {
   }
 
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
-  let cantidadAlimentoDiaX =  0
-  for (let i=1; i<curvaMortalidadAcumulada.length; i+=1){
-    cantidadAlimentoDiaX += bFCR*(curvaCrecimiento[i]-curvaCrecimiento[i-1])*numeroSmolts *(1-curvaMortalidadAcumulada[i-1])
-  }
-  console.log(cantidadAlimentoDiaX/((pesoObjetivo-pesoSmolt)*numeroSmolts));
-  console.log(bFCR*(pesoObjetivo-pesoSmolt));
-  console.log(cantidadAlimentoDiaX/(numeroSmolts*0.9));
+  
   //const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
   const curvaBiomasa = obtenerCurvaBiomasa(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
   

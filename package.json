@@ -1,6 +1,6 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "chart.js": "^2.8.0",
     "electron-is-dev": "^1.1.0",
+    "electron-updater": "^4.1.2",
     "leaflet": "^1.5.1",
     "moment": "^2.24.0",
     "react": "^16.9.0",
@@ -60,11 +61,11 @@
   },
   "author": {
     "name": "Compsci SpA",
-    "email": "your.email@domain.com",
+    "email": "alejandro.lvd@gmail.com",
     "url": "https://compsci.cl"
   },
   "build": {
-    "appId": "cl.compsci.ceres-imvixa"
+    "appId": "cl.compsci.ceres.imvixa"
   },
   "description": "Simulación salmones"
 }
