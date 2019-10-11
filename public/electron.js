@@ -36,7 +36,7 @@ function createWindow() {
 }
 
 app.on('ready', () => {
-  autoUpdater.checkForUpdatesAndNotify()
+  autoUpdater.checkForUpdates()
   createWindow()
 });
 
@@ -52,7 +52,6 @@ app.on('activate', () => {
   }
 });
 function pdfSettings() {
-  var paperSizeArray = ["A4", "A5"];
   var option = {
       landscape: false,
       marginsType: 0,
