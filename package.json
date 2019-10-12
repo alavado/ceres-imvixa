@@ -66,15 +66,13 @@
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
-    "win": [
-      {
-        "provider": "github",
-        "private": true,
-        "owner": "alavado",
-        "repo": "ceres-imvixa",
-        "token": "d64dd62e1179586fd8bb981b2e3122dca7a34b60"
-      }
-    ]
+    "publish": [{
+      "provider": "github",
+      "private": true,
+      "owner": "alavado",
+      "repo": "ceres-imvixa",
+      "token": "d64dd62e1179586fd8bb981b2e3122dca7a34b60"
+    }]
   },
   "description": "Simulación salmones"
 }
