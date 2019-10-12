@@ -142,7 +142,7 @@ const Tratamientos = props => {
       <div className="contenido">
         <div className="barra-superior-contenido">
           <div className="titulo-contenido">
-            Calendarios de tratamientos
+            TCalendarios de tratamientos
           </div>
         </div>
         <div className="contenido-contenido">
