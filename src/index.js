@@ -6,6 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import {version} from '../package.json'
 
 console.log(version);
+
+// var ipcRenderer = window.require('electron').ipcRenderer;
+// ipcRenderer.on('leer-medicamentos', function (event,store) {
+//   console.log('leer medicamentos');
+//   console.log(event, store);
+// });
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -17,7 +17,7 @@ const Contenedor = () => {
       <Route path="/centro" exact component={Centro} />
       <Route path="/produccion" exact component={Produccion} />
       <Route path="/tratamientos" exact component={Tratamientos} />
-      <Route path="/ajustes" exact component={Ajustes} />
+      <Route path="/antiparasitarios" exact component={Ajustes} />
       <Route path="/economico" exact component={Economico} />
     </div>
   );

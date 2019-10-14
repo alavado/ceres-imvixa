@@ -6,6 +6,7 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 const fs = require('fs')
+// const csv = require('csvtojson')
 const { autoUpdater } = require("electron-updater")
 let mainWindow;
 
@@ -30,7 +31,14 @@ function createWindow() {
   }
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
-  })  
+  })
+  // mainWindow.webContents.on('did-finish-load', () => {
+  //   csv()
+  //     .fromFile(path.join(__dirname, '.', 'medicamentos.csv'))
+  //     .then(jsonObj => {
+  //       mainWindow.webContents.send('leer-medicamentos', jsonObj);
+  //     })
+  // })
   mainWindow.on('closed', () => mainWindow = null);
   //mainWindow.removeMenu()
 }

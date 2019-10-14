@@ -133,8 +133,8 @@ div[id^="semanas-estrategia"] > div:hover {
   position: absolute;
   color: #455A64;
   background: rgba(0, 0, 0, 0);
-  top: 4px;
-  right: 4px;
+  top: -10px;
+  right: -2px;
 }
 
 #boton-eliminar-tratamiento {

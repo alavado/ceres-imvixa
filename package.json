@@ -1,12 +1,13 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "chart.js": "^2.8.0",
+    "csvtojson": "^2.0.10",
     "electron-is-dev": "^1.1.0",
     "electron-updater": "^4.1.2",
     "leaflet": "^1.5.1",
@@ -66,13 +67,15 @@
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
-    "publish": [{
-      "provider": "github",
-      "private": true,
-      "owner": "alavado",
-      "repo": "ceres-imvixa",
-      "token": "d64dd62e1179586fd8bb981b2e3122dca7a34b60"
-    }]
+    "publish": [
+      {
+        "provider": "github",
+        "private": true,
+        "owner": "alavado",
+        "repo": "ceres-imvixa",
+        "token": "d64dd62e1179586fd8bb981b2e3122dca7a34b60"
+      }
+    ]
   },
   "description": "Simulación salmones"
 }

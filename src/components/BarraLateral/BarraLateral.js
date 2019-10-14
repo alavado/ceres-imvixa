@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink as Link } from 'react-router-dom'
 import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFish, faWarehouse, faSyringe, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faFish, faWarehouse, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
 import logoElanco from '../../assets/elanco.svg'
 
 const BarraLateral = () => {

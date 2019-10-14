@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
+import Ajustes from '../Ajustes';
 
 const Tratamientos = props => {
 
@@ -31,6 +32,8 @@ const Tratamientos = props => {
     dia: 'Lunes',
     duracion: medicamentos[0].duracion
   })
+
+  const [mostrarTabla, setMostrarTabla] = useState(true)
 
   const [medicamentosDisponibles, setMedicamentosDisponibles] = useState(medicamentos)
 
@@ -58,8 +61,9 @@ const Tratamientos = props => {
   const mostrarPopupNuevoTratamiento = (e, semana, estrategia) => {
     let meds = medicamentos
       .filter(m =>
-        (semana === 0 && ((m.principioActivo === 'Lufenurón' && estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
-        (semana !== 0 && m.principioActivo !== 'Lufenurón'))
+        m.activo &&
+        ((semana === 0 && ((m.principioActivo === 'Lufenurón' && estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
+        (semana !== 0 && m.principioActivo !== 'Lufenurón')))
       .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
     setMedicamentosDisponibles(meds)
     setNuevoTratamiento({
@@ -137,7 +141,7 @@ const Tratamientos = props => {
     return semanas
   }
 
-  return (
+  return mostrarTabla ? <Ajustes setMostrarTabla={setMostrarTabla} /> : (
     <>
       <div className="contenido">
         <div className="barra-superior-contenido">

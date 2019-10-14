@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
-import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasaPerdida, obtenerCurvaBiomasa } from '../../helpers/modelo'
+import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';

@@ -6,6 +6,9 @@
   margin-top: 16px;
   text-align: left;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  display: block;
+  height: 65vh;
+  overflow-y: scroll;
 }
 
 #tabla-medicamentos th {
@@ -13,8 +16,9 @@
 }
 
 #tabla-medicamentos th, #tabla-medicamentos td {
-  padding: 12px 16px;
-  font-size: .9em;
+  padding: 8px 16px;
+  font-size: .75em;
+  vertical-align: middle;
 }
 
 #tabla-medicamentos tbody>tr:nth-child(odd) {
@@ -23,4 +27,16 @@
 
 #tabla-medicamentos tbody>tr:nth-child(even) {
   background-color: white;
+}
+
+#tabla-medicamentos tbody>tr.medicamento-activo {
+  color: white;
+}
+
+#tabla-medicamentos tbody>tr.medicamento-activo:nth-child(odd) {
+  background-color: hsl(202, 100%, 43%);
+}
+
+#tabla-medicamentos tbody>tr.medicamento-activo:nth-child(even) {
+  background-color: #0078BF;
 }
