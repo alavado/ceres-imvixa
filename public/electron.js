@@ -70,7 +70,7 @@ function pdfSettings() {
 return option;
 }
 ipcMain.on('imprimir', (event, state) => {
-  mainWindow.webContents.printToPDF(pdfSettings(), function(err, data) {
+  mainWindow.webContents.printToPDF({}, function(err, data) {
     if (err) {
         //do whatever you want
         return;
@@ -82,7 +82,6 @@ ipcMain.on('imprimir', (event, state) => {
     }
     finally {
       electron.shell.openItem(path.join(__dirname, 'generated_pdf.pdf'));
-      console.log('x');
     }
    
 })})

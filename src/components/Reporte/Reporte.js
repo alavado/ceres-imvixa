@@ -54,12 +54,12 @@ const Reporte = props => {
     <button onClick={() => window.history.back()}>Volver</button>
     <div id="reporte">
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-      <h2>IMPACTO PRODUCTIVO</h2>
+      <h2>1. IMPACTO PRODUCTIVO</h2>
       <div id="comparacion">
         <div>
           <h3>TERAPIA CON IMVIXA</h3>
-          {lenguetas.map(lengueta => {
-            const anchoLengueta = (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
+          {lenguetas.map((lengueta, i) => {
+            const anchoLengueta = (i < 5 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
             return (
               <div>
                 <div className="lengueta" style={{
@@ -91,8 +91,8 @@ const Reporte = props => {
         </div>
       <div>
         <h3>TERAPIA TRADICIONAL</h3>
-        {lenguetas.map(lengueta => {
-          const anchoLengueta = (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
+        {lenguetas.map((lengueta, i) => {
+          const anchoLengueta = (i < 5 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
           return (
             <div>
               <div className="lengueta" style={{
@@ -114,27 +114,39 @@ const Reporte = props => {
           </div>
         </div>
       </div>
-      <h3>Estructura costos ex-jaula</h3>
-      <table id="reporte-estructura-costos">
-        <thead>
-          <tr>
-            <th>ÍTEM</th>
-            <th>PARTICIPACIÓN</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(estructuraCostos).map((elemento, i) => (
+      <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
+      <h3>Jornadas laborales con imvixa: 3</h3>
+      <h3>Cantidad adicional de productos vertidos al mar en terapia tradicional por mayor n de baños</h3>
+      <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
+      <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      <h3>Estimación beneficios incrementales por biomasa producida</h3>
+      <h2>4. IMPACTOS DE REGULACIÓN</h2>
+      <h3>Gráfica de distancia entre ambas terapias</h3>
+      <h3>Estimación beneficios incrementales por biomasa producida</h3>
+      <div id="anexos">
+        <h2>Anexos</h2>
+        <h3>Estructura costos ex-jaula</h3>
+        <table id="reporte-estructura-costos">
+          <thead>
             <tr>
-              <td>{elemento}</td>
-              <td>
-                <div>
-                    {estructuraCostos[elemento].toLocaleString(undefined, { maximumFractionDigits: 1, minimumFractionDigits: 1 })}%
-                </div>
-              </td>
-            </tr> 
-          ))}
-        </tbody>
-      </table>
+              <th>ÍTEM</th>
+              <th>PARTICIPACIÓN</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(estructuraCostos).map((elemento, i) => (
+              <tr>
+                <td>{elemento}</td>
+                <td>
+                  <div>
+                      {estructuraCostos[elemento].toLocaleString(undefined, { maximumFractionDigits: 1, minimumFractionDigits: 1 })}%
+                  </div>
+                </td>
+              </tr> 
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
     <button onClick={imprimirPDF}>Imprimir PDF</button>
     </>

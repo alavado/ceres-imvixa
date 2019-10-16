@@ -1,7 +1,5 @@
 #reporte {
   font-family: 'FiraSans';
-  display: flex;
-  flex-direction: column;
   -webkit-print-color-adjust: exact;
   width: 950px;
   margin: 0 auto;
@@ -16,8 +14,8 @@
 }
 
 #reporte h2 {
-  text-align: center;
-  margin: 16px 0;
+  text-align: left;
+  margin: 16px 32px;
   font-size: 1.8em;
   margin-bottom: 36px;
   color: #2A2E57;
@@ -183,4 +181,8 @@
 
 #reporte-estructura-costos tr:nth-child(even) {
   background: #ECEFF1;
+}
+
+#anexos {
+  page-break-before: always;
 }

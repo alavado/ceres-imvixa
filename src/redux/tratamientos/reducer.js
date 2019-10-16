@@ -1,4 +1,5 @@
 import tratamientosActions from './actions'
+import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
 
 const initialState = {
   medicamentos: [
@@ -6,7 +7,7 @@ const initialState = {
       id: 1,
       nombre: 'Purisan',
       empresa: 'Fish Vet Group SPA',
-      formaFarmaceutica: 'Polvo para Suspensión Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
@@ -22,7 +23,7 @@ const initialState = {
       id: 2,
       nombre: 'Slice',
       empresa: 'Intervet Chile Ltda.',
-      formaFarmaceutica: 'Polvo Oral',
+      formaFarmaceutica: FARMACO_APLICACION_ORAL,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -38,7 +39,7 @@ const initialState = {
       id: 3,
       nombre: 'AMX',
       empresa: 'FAV S.A.',
-      formaFarmaceutica: 'Solución Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Deltametrina',
       unidad: 'lts',
       costoUnitario: 750,
@@ -54,7 +55,7 @@ const initialState = {
       id: 4,
       nombre: 'Paramove',
       empresa: 'Solvay Peróxidos de Los Andes Industrial y Comercial Ltda.',
-      formaFarmaceutica: 'Solución Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Peróxido de hidrógeno',
       unidad: 'lts',
       costoUnitario: 1420,
@@ -70,7 +71,7 @@ const initialState = {
       id: 5,
       nombre: 'Betamax',
       empresa: 'Eli Lilly Interamérica Inc. y Cía. Ltda.',
-      formaFarmaceutica: 'Solución Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Cipermetrina',
       unidad: 'lts',
       costoUnitario: 1000,
@@ -86,7 +87,7 @@ const initialState = {
       id: 6,
       nombre: 'Imvixa',
       empresa: 'Eli Lilly Interamérica Inc. y Cía. Ltda.',
-      formaFarmaceutica: 'Polvo Oral',
+      formaFarmaceutica: FARMACO_APLICACION_ORAL,
       principioActivo: 'Lufenurón',
       unidad: 'dosis',
       costoUnitario: 0.37,
@@ -102,7 +103,7 @@ const initialState = {
       id: 7,
       nombre: 'Alpha Flux',
       empresa: 'Pharmaq AS Chile Ltda.',
-      formaFarmaceutica: 'Solución Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Hexaflumuron',
       unidad: 'lt',
       costoUnitario: 0.37,  // no hay que buscarlo qele qe aksd
@@ -118,7 +119,7 @@ const initialState = {
       id: 8,
       nombre: 'Emamectina 0,2%',
       empresa: 'Intervet Chile Ltda.',
-      formaFarmaceutica: 'Polvo Oral',
+      formaFarmaceutica: FARMACO_APLICACION_ORAL,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -134,7 +135,7 @@ const initialState = {
       id: 9,
       nombre: 'Deltafav',
       empresa: 'FAV S.A.',
-      formaFarmaceutica: 'Solución Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Deltametrina',
       unidad: 'lts',
       costoUnitario: 750,
@@ -150,7 +151,7 @@ const initialState = {
       id: 10,
       nombre: 'CalFree',
       empresa: 'FAV S.A.',
-      formaFarmaceutica: 'Polvo para Suspensión Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
@@ -166,7 +167,7 @@ const initialState = {
       id: 11,
       nombre: 'Azasure',
       empresa: 'Centrovet Ltda.',
-      formaFarmaceutica: 'Polvo para Suspensión Externa',
+      formaFarmaceutica: FARMACO_APLICACION_BAÑO,
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
@@ -186,8 +187,9 @@ const initialState = {
         idMedicamento: 6,
         duracion: 34
       }
-    }
-  }
+    },
+  },
+  medicamentosFueronSeleccionados: false
 }
 
 const tratamientosReducer = (state = initialState, action) => {
@@ -244,6 +246,13 @@ const tratamientosReducer = (state = initialState, action) => {
             [propiedad]: valor
           }
         ]
+      }
+    }
+    case tratamientosActions.MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS: {
+      const valor = action.payload
+      return {
+        ...state,
+        medicamentosFueronSeleccionados: valor
       }
     }
     default:

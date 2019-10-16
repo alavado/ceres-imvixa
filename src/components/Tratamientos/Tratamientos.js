@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
-import { dias } from '../../helpers/constantes'
+import { dias, FARMACO_APLICACION_BAÑO } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faTrash, faShower } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 import Ajustes from '../Ajustes';
+import { start } from 'pretty-error';
 
 const Tratamientos = props => {
 
-  const { tratamientos, medicamentos, produccion, macrozona } = props
+  const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
+          marcarMedicamentosFueronSeleccionados } = props
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
+
   if (objetivo === OBJETIVO_PESO) {
     curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
     curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
@@ -32,8 +35,6 @@ const Tratamientos = props => {
     dia: 'Lunes',
     duracion: medicamentos[0].duracion
   })
-
-  const [mostrarTabla, setMostrarTabla] = useState(true)
 
   const [medicamentosDisponibles, setMedicamentosDisponibles] = useState(medicamentos)
 
@@ -141,7 +142,7 @@ const Tratamientos = props => {
     return semanas
   }
 
-  return mostrarTabla ? <Ajustes setMostrarTabla={setMostrarTabla} /> : (
+  return !medicamentosFueronSeleccionados ? <Ajustes/> : (
     <>
       <div className="contenido">
         <div className="barra-superior-contenido">
@@ -156,7 +157,20 @@ const Tratamientos = props => {
                 key={`contenedor-calendario-${estrategia}`}
                 className="contenedor-tratamientos-estrategia"
               >
-                <h2>Semanas estrategia {estrategia}</h2>
+                <div className="contenedor-header-calendario">
+                  <h2>Semanas estrategia {estrategia}</h2>
+                  <div className="numero-baños">
+                    <div>
+                      {Object.keys(tratamientos[estrategia])
+                        .filter(key => {
+                          const { idMedicamento } = tratamientos[estrategia][key]
+                          const medicamento = medicamentos.find(m => m.id === idMedicamento)
+                          return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
+                        }).length}
+                    </div>
+                    <FontAwesomeIcon icon={faShower} size="s" title='Número de baños'/>
+                  </div>
+                </div>
                 <div id={`semanas-estrategia-${estrategia}`}>
                   {construirCalendario(estrategia)}
                 </div>
@@ -216,6 +230,7 @@ const Tratamientos = props => {
               </div>
             </div>
           </div>
+          <button id="boton-volver-tratamientos" onClick={() => marcarMedicamentosFueronSeleccionados(false)}>Volver a selecionar</button>
         </div>
       </div>
       <ResumenComparacion
@@ -230,7 +245,8 @@ const mapStateToProps = state => ({
   tratamientos: state.tratamientos.tratamientos,
   medicamentos: state.tratamientos.medicamentos,
   produccion: state.produccion,
-  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona,
+  medicamentosFueronSeleccionados: state.tratamientos.medicamentosFueronSeleccionados
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -240,7 +256,8 @@ const mapDispatchToProps = dispatch => ({
   },
   eliminarTratamiento: (estrategia, semana) => {
     dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana))
-  }
+  },
+  marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tratamientos);

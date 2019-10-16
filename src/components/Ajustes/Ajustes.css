@@ -1,42 +1,46 @@
 #contenedor-ajustes {
   padding: 32px;
+  height: 65vh;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
-#tabla-medicamentos {
+.tabla-medicamentos {
   margin-top: 16px;
   text-align: left;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
   display: block;
-  height: 65vh;
-  overflow-y: scroll;
+  margin-bottom: 32px;
 }
 
-#tabla-medicamentos th {
+.tabla-medicamentos th {
   font-weight: bold;
+  background-color: hsl(202, 100%, 43%);
+  color: white;
 }
 
-#tabla-medicamentos th, #tabla-medicamentos td {
+.tabla-medicamentos th, .tabla-medicamentos td {
   padding: 8px 16px;
   font-size: .75em;
   vertical-align: middle;
 }
 
-#tabla-medicamentos tbody>tr:nth-child(odd) {
+.tabla-medicamentos tbody>tr:nth-child(odd) {
   background-color: #ECEFF1;
 }
 
-#tabla-medicamentos tbody>tr:nth-child(even) {
+.tabla-medicamentos tbody>tr:nth-child(even) {
   background-color: white;
 }
 
-#tabla-medicamentos tbody>tr.medicamento-activo {
-  color: white;
+.tabla-medicamentos tbody>tr.medicamento-activo {
+  
 }
 
-#tabla-medicamentos tbody>tr.medicamento-activo:nth-child(odd) {
-  background-color: hsl(202, 100%, 43%);
-}
-
-#tabla-medicamentos tbody>tr.medicamento-activo:nth-child(even) {
-  background-color: #0078BF;
+.circulito-al-lado {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin-right: 4px;
 }
