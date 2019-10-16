@@ -1,22 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import './Ajustes.css'
-import { Link } from 'react-router-dom'
-import tratamientosActions from '../../redux/tratamientos/actions';
-import { FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO } from '../../helpers/constantes';
+import './SeleccionMedicamentos.css'
+import tratamientosActions from '../../../redux/tratamientos/actions';
+import { FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO } from '../../../helpers/constantes';
 
-const Ajustes = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
+const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
-          Calendarios de tratamientos
+          Selección de medicamentos
         </div>
       </div>
       <div id="contenedor-ajustes">
         {[FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO].map(tipoAplicacion => (
           <>
-            <h1>Seleccionar tratamientos de {tipoAplicacion === FARMACO_APLICACION_ORAL ? 'aplicación oral' : 'aplicación externa'}</h1>
+            <h1>Medicamentos de aplicación {tipoAplicacion === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
             <table className="tabla-medicamentos">
               <thead>
                 <tr>
@@ -65,4 +64,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 // certificacion parametro disp a pagar
-export default connect(mapStateToProps, mapDispatchToProps)(Ajustes);
+export default connect(mapStateToProps, mapDispatchToProps)(SeleccionMedicamentos);

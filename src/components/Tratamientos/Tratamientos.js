@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
-import { dias, FARMACO_APLICACION_BAÑO } from '../../helpers/constantes'
+import { dias, FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faTrash, faShower } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faTrash, faShower, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { OBJETIVO_PESO } from '../../helpers/constantes';
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
-import Ajustes from '../Ajustes';
-import { start } from 'pretty-error';
+import { calcularNumeroDeBaños } from '../../helpers/helpers'
+import SeleccionMedicamentos from './SeleccionMedicamentos';
 
 const Tratamientos = props => {
 
@@ -63,14 +63,19 @@ const Tratamientos = props => {
     let meds = medicamentos
       .filter(m =>
         m.activo &&
-        ((semana === 0 && ((m.principioActivo === 'Lufenurón' && estrategia === 'imvixa') || m.principioActivo === 'Emamectina')) ||
-        (semana !== 0 && m.principioActivo !== 'Lufenurón')))
+        ((semana === 0 && (
+          (estrategia === 'tradicional' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL && m.nombre !== 'Imvixa') ||
+          (estrategia === 'imvixa' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL && m.nombre === 'Imvixa'))) ||
+        (semana !== 0 && (m.formaFarmaceutica === FARMACO_APLICACION_BAÑO || (
+          (estrategia === 'tradicional' && m.nombre !== 'Imvixa') ||
+          (estrategia === 'imvixa' && m.nombre === 'Imvixa'))))))
       .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
     setMedicamentosDisponibles(meds)
     setNuevoTratamiento({
       ...nuevoTratamiento,
       idMedicamento: meds[0].id,
       semana: Number(semana),
+      duracion: meds[0].duracion,
       estrategia
     })
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
@@ -142,7 +147,7 @@ const Tratamientos = props => {
     return semanas
   }
 
-  return !medicamentosFueronSeleccionados ? <Ajustes/> : (
+  return !medicamentosFueronSeleccionados ? <SeleccionMedicamentos /> : (
     <>
       <div className="contenido">
         <div className="barra-superior-contenido">
@@ -161,12 +166,7 @@ const Tratamientos = props => {
                   <h2>Semanas estrategia {estrategia}</h2>
                   <div className="numero-baños">
                     <div>
-                      {Object.keys(tratamientos[estrategia])
-                        .filter(key => {
-                          const { idMedicamento } = tratamientos[estrategia][key]
-                          const medicamento = medicamentos.find(m => m.id === idMedicamento)
-                          return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
-                        }).length}
+                      {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos)}
                     </div>
                     <FontAwesomeIcon icon={faShower} size="s" title='Número de baños'/>
                   </div>
@@ -220,7 +220,7 @@ const Tratamientos = props => {
                   <span>sem.</span>
                 </div>
               </div>
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div id="contenedor-acciones-tratamiento">
                 <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
                 {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] &&
                   <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
@@ -230,7 +230,10 @@ const Tratamientos = props => {
               </div>
             </div>
           </div>
-          <button id="boton-volver-tratamientos" onClick={() => marcarMedicamentosFueronSeleccionados(false)}>Volver a selecionar</button>
+          <button id="boton-volver-tratamientos" onClick={() => marcarMedicamentosFueronSeleccionados(false)}>
+            <FontAwesomeIcon icon={faChevronLeft} size="sm" />
+            Selección de medicamentos
+          </button>
         </div>
       </div>
       <ResumenComparacion

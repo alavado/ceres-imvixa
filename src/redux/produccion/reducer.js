@@ -13,7 +13,8 @@ const initialState = {
   costoAlimento: 1.1,
   objetivo: OBJETIVO_PESO,
   pesoObjetivo: 5000,
-  mesesObjetivo: 14
+  mesesObjetivo: 14,
+  numeroJaulas: 20
 }
 
 const produccionReducer = (state = initialState, action) => {
@@ -77,6 +78,11 @@ const produccionReducer = (state = initialState, action) => {
       return {
         ...state,
         mesesObjetivo: action.payload
+      }
+    case produccionActions.FIJAR_NUMERO_JAULAS:
+      return {
+        ...state,
+        numeroJaulas: action.payload
       }
     default:
       return state

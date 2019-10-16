@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom'
 import Centro from '../Centro';
 import Produccion from '../Produccion';
 import Tratamientos from '../Tratamientos';
-import Ajustes from '../Ajustes';
+import SeleccionMedicamentos from '../Tratamientos/SeleccionMedicamentos';
 import Economico from '../Economico';
 
 const Contenedor = () => {
@@ -17,7 +17,7 @@ const Contenedor = () => {
       <Route path="/centro" exact component={Centro} />
       <Route path="/produccion" exact component={Produccion} />
       <Route path="/tratamientos" exact component={Tratamientos} />
-      <Route path="/antiparasitarios" exact component={Ajustes} />
+      <Route path="/antiparasitarios" exact component={SeleccionMedicamentos} />
       <Route path="/economico" exact component={Economico} />
     </div>
   );

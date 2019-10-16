@@ -10,7 +10,7 @@ import NumberFormat from 'react-number-format'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts, numeroJaulas } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -76,7 +76,8 @@ const Produccion = props => {
             id="jaulas"
             name="jaulas"
             type="number" min="0" step="1" max="100"
-            defaultValue={20}
+            defaultValue={numeroJaulas}
+            onChange={e => props.fijarNumeroJaulas(e.target.value)}
             style={{width: 45}}
           /> 
           <div style={{display: 'flex', alignItems: 'baseline'}}>
@@ -291,6 +292,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fijarMesesObjetivo: meses => {
     dispatch(produccionActions.fijarMesesObjetivo(meses))
+  },
+  fijarNumeroJaulas: numero => {
+    dispatch(produccionActions.fijarNumeroJaulas(numero))
   },
 })
 

@@ -1,11 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
+import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos } from '../../helpers/helpers'
+import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
 const { ipcRenderer } = window.require('electron');
 
-const Reporte = props => {
+const Reporte = ({ state }) => {
+  const { estructuraCostos } = state.economico
+  const { medicamentos, tratamientos } = state.tratamientos
+  const { numeroJaulas } = state.produccion
 
-  const { estructuraCostos } = props.economico
+  const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
+  const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
+  const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
+  console.log(calcularCantidadDeProductosVertidos(medicamentos, tratamientos));
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -115,8 +123,42 @@ const Reporte = props => {
         </div>
       </div>
       <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
-      <h3>Jornadas laborales con imvixa: 3</h3>
-      <h3>Cantidad adicional de productos vertidos al mar en terapia tradicional por mayor n de baños</h3>
+      <h3>Jornadas laborales</h3>
+      <table className="tabla-reporte">
+        <thead>
+          <tr>
+              <th>Estrategia con Imvixa</th>
+              <th>Estrategia tradicional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td> {numeroBañosImixa * jornadasPorBaño} </td>
+              <td>{numeroBañosTradicional * jornadasPorBaño}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Cantidad de productos vertidos al mar</h3>
+      <table className="tabla-reporte">
+        <thead>
+          <tr>
+              <th>Producto</th>
+              <th>Estrategia con Imvixa</th>
+              <th>Estrategia tradicional</th>
+              <th>Diferencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => (
+            <tr key={`vertidos-${i}`}>
+              <td>{v.principioActivo}</td>
+              <td>{v.imvixa}</td>
+              <td>{v.tradicional}</td>
+              <td>0</td>
+            </tr> 
+          ))}
+        </tbody>
+      </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
@@ -154,7 +196,7 @@ const Reporte = props => {
 };
 
 const mapStateToProps = state => ({
-  economico: state.economico,
+  state
 })
 
 export default connect(mapStateToProps)(Reporte);

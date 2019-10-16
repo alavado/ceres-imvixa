@@ -186,3 +186,36 @@
 #anexos {
   page-break-before: always;
 }
+.tabla-reporte {
+  margin: 18px auto;
+  width: 70%
+}
+
+.tabla-reporte th {
+  font-size: 1.0em;
+  font-weight: bold;
+  color: #2A2E57;
+  background: #ECEFF1;
+  text-transform: capitalize;
+  vertical-align: middle;
+  padding: 6px 10px;
+  border-bottom: 2px solid #2A2E57;
+}
+
+.tabla-reporte td {
+  font-size: 1.0em;
+  text-transform: capitalize;
+  vertical-align: middle;
+  padding: 6px 10px;
+}
+
+.tabla-reporte input {
+  height: 12px;
+  font-size: .8em;
+  width: 40px;
+  margin: 0;
+}
+
+.tabla-reporte tr:nth-child(even) {
+  background: #ECEFF1;
+}
