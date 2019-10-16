@@ -10,9 +10,7 @@ const store = createStore(
 )
 
 store.subscribe(throttle(() => {
-  saveState({
-    state: store.getState()
-  });
+  saveState(store.getState())
 }, 1000))
 
 //let store = createStore(combineReducers(reducers))

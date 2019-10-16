@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos } from '../../helpers/helpers'
 import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 const Reporte = ({ state }) => {
@@ -59,7 +61,10 @@ const Reporte = ({ state }) => {
 
   return (
     <>
-    <button onClick={() => window.history.back()}>Volver</button>
+    <button onClick={() => window.location.href="/tratamientos"}>
+      <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
+      Calendarios de tratamientos
+    </button>
     <div id="reporte">
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
       <h2>1. IMPACTO PRODUCTIVO</h2>
@@ -123,7 +128,7 @@ const Reporte = ({ state }) => {
         </div>
       </div>
       <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
-      <h3>Jornadas laborales</h3>
+      <h3>Jornadas laborales por concepto de baños</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -152,9 +157,9 @@ const Reporte = ({ state }) => {
           {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => (
             <tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
-              <td>{v.imvixa}</td>
-              <td>{v.tradicional}</td>
-              <td>0</td>
+              <td>{Math.round(v.imvixa * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
+              <td>{Math.round(v.tradicional * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
+              <td>{Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10} {v.unidad}</td>
             </tr> 
           ))}
         </tbody>
