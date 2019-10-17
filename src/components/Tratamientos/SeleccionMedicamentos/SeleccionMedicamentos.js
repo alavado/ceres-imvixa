@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import './SeleccionMedicamentos.css'
 import tratamientosActions from '../../../redux/tratamientos/actions';
@@ -6,8 +6,22 @@ import { FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO } from '../../../help
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle as iconoAgregar } from '@fortawesome/free-solid-svg-icons';
 import FilaMedicamento from './FilaMedicamento';
+import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
 
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
+
+  const [agregandoMedicamento, setAgregandoMedicamento] = useState({
+    [FARMACO_APLICACION_ORAL]: true,
+    [FARMACO_APLICACION_BAÑO]: true
+  })
+
+  const activarAgregarMedicamento = (tipo, valor) => {
+    setAgregandoMedicamento({
+      ...agregandoMedicamento,
+      [tipo]: valor
+    })
+  }
+
   return (
     <div className="contenido">
       <div className="barra-superior-contenido">
@@ -39,10 +53,11 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                       activarMedicamento={activarMedicamento}
                     />
                   ))}
+                  {agregandoMedicamento[tipoAplicacion] && <FilaNuevoMedicamento mostrar={v => activarAgregarMedicamento(tipoAplicacion, v)} />}
                 </tbody>
               </table>
               <div className="contenedor-boton-agregar-medicamento">
-                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => console.log('x')} />
+                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(tipoAplicacion, true)} />
               </div>
             </div>
           </React.Fragment>

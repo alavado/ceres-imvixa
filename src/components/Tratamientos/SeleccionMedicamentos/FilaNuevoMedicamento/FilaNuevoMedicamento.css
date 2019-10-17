@@ -1,0 +1,21 @@
+#fila-nuevo-medicamento {
+  
+}
+
+#fila-nuevo-medicamento td > input[type="text"] {
+  width: 80px;
+}
+
+#fila-nuevo-medicamento td > button {
+  height: 28px;
+  font-size: .9em;
+  margin: 0;
+}
+
+#fila-nuevo-medicamento td > button:last-child {
+  margin-left: 16px;
+}
+
+#fila-nuevo-medicamento td:last-child {
+  display: flex;
+}

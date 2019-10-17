@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
 import { dias, FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
-import ResumenComparacion from './ResumenComparacion/';
+import ResumenComparacion from './ResumenComparacion/'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrash, faShower, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { OBJETIVO_PESO } from '../../helpers/constantes';
+import { OBJETIVO_PESO } from '../../helpers/constantes'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 import { calcularNumeroDeBaños } from '../../helpers/helpers'
-import SeleccionMedicamentos from './SeleccionMedicamentos';
+import SeleccionMedicamentos from './SeleccionMedicamentos'
 
 const Tratamientos = props => {
 
@@ -235,20 +235,20 @@ const Tratamientos = props => {
               </div>
               <div id="contenedor-acciones-tratamiento-extra">
                 <div id="contenedor-acciones-tratamiento">
-                  {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] ?
+                  <div>
+                    <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
+                    <input
+                      id="numero-aplicaciones"
+                      type="number" min="1" max="3" step="1"
+                      value={nuevoTratamiento.aplicaciones}
+                      onChange={e => setNuevoTratamiento({...nuevoTratamiento, aplicaciones: Number(e.target.value)})}
+                    />
+                    <label htmlFor="numero-aplicaciones">{nuevoTratamiento.aplicaciones > 1 ? 'veces' : 'vez'}</label>
+                  </div>
+                  {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] &&
                     <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
                       <FontAwesomeIcon icon={faTrash} />
-                    </button> :
-                    <div>
-                      <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
-                      <input
-                        id="numero-aplicaciones"
-                        type="number" min="1" max="3" step="1"
-                        value={nuevoTratamiento.aplicaciones}
-                        onChange={e => setNuevoTratamiento({...nuevoTratamiento, aplicaciones: Number(e.target.value)})}
-                      />
-                      <label htmlFor="numero-aplicaciones">{nuevoTratamiento.aplicaciones > 1 ? 'veces' : 'vez'}</label>
-                    </div>
+                    </button>
                   }
                 </div>
                 {nuevoTratamiento.semana === medicamentoImvixa.duracion && nuevoTratamiento.estrategia === 'imvixa' &&
