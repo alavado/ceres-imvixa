@@ -101,7 +101,7 @@ const initialState = {
       cantidadPorJaula: 0,
       duracion: 34,
       mortalidad: 0,
-      color: '#FF8A65',
+      color: '#EF7B10',
       activo: true,
       aplicaciones: 1
     },
