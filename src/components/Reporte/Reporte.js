@@ -5,12 +5,14 @@ import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos } from '../
 import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import GraficoNiveles from './GraficoNiveles/';
+
 const { ipcRenderer } = window.require('electron');
 
 const Reporte = ({ state }) => {
   const { estructuraCostos } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
-  const { numeroJaulas } = state.produccion
+  const { numeroJaulas, mortalidad } = state.produccion
 
   const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
@@ -168,7 +170,8 @@ const Reporte = ({ state }) => {
       <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
-      <h3>Gráfica de distancia entre ambas terapias</h3>
+      <h3>Riesgo de disminución de siembra por regulación</h3>
+      <GraficoNiveles GHeight={300} GWidth={60} height={100} width={30} max={30} value={mortalidad}></GraficoNiveles>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
