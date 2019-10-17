@@ -1,16 +1,29 @@
 #contenedor-ajustes {
   padding: 32px;
-  height: 65vh;
+  max-height: 65vh;
   overflow: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#contenedor-ajustes > div {
+  margin-bottom: 8px;
+  max-width: 70vw;
+  display: flex;
+  flex-direction: column;
+}
+
+#contenedor-ajustes h1 {
+  font-size: .85em;
 }
 
 .tabla-medicamentos {
-  margin-top: 16px;
+  margin-top: 8px;
   text-align: left;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
-  display: block;
-  margin-bottom: 32px;
+  max-width: 70vw;
+  flex: 1;
 }
 
 .tabla-medicamentos th {
@@ -31,4 +44,85 @@
 
 .tabla-medicamentos tbody>tr:nth-child(even) {
   background-color: white;
+}
+
+.contenedor-boton-agregar-medicamento {
+  align-self: flex-end;
+  flex: 1;
+  margin-top: 8px;
+}
+
+.contenedor-boton-agregar-medicamento > svg {
+  margin-left: 8px;
+  color: hsl(202, 100%, 43%);
+  cursor: pointer;
+}
+
+.tabla-medicamentos td input[type="text"] {
+  width: 40px;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  margin-right: 4px;
+}
+
+.tabla-medicamentos td span {
+  display: inline;
+}
+
+.tabla-medicamentos td:nth-child(2) {
+  width: 220px;
+}
+
+.tabla-medicamentos td:nth-child(3) {
+  width: 220px;
+}
+
+.tabla-medicamentos td:nth-child(4) {
+  width: 150px;
+}
+
+.tabla-medicamentos td:nth-child(5) {
+  width: 150px;
+}
+
+.tabla-medicamentos td:nth-child(6) {
+  width: 150px;
+}
+
+#contenedor-fondo-lista-medicamentos {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-top: 16px;
+  margin-left: 32px;
+}
+
+#contenedor-fondo-lista-medicamentos button {
+  margin-right: 8px;
+}
+
+#contenedor-fondo-lista-medicamentos li, #contenedor-fondo-lista-medicamentos span {
+  display: inline-block;
+  font-size: .8em;
+}
+
+#contenedor-fondo-lista-medicamentos span {
+  margin-right: 6px;
+}
+
+#contenedor-fondo-lista-medicamentos li::after {
+  content: ', ';
+  margin-right: 6px;
+}
+
+#contenedor-fondo-lista-medicamentos li:last-child::after {
+  content: '';
+}
+
+.cuadradito-medicamento {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 2px;
 }

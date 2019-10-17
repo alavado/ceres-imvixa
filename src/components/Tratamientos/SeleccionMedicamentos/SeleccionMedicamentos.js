@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import './SeleccionMedicamentos.css'
 import tratamientosActions from '../../../redux/tratamientos/actions';
 import { FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO } from '../../../helpers/constantes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle as iconoAgregar } from '@fortawesome/free-solid-svg-icons';
+import FilaMedicamento from './FilaMedicamento';
 
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
   return (
@@ -14,45 +17,53 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
       </div>
       <div id="contenedor-ajustes">
         {[FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO].map(tipoAplicacion => (
-          <>
+          <React.Fragment key={`tipo-${tipoAplicacion}`}>
             <h1>Medicamentos de aplicación {tipoAplicacion === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
-            <table className="tabla-medicamentos">
-              <thead>
-                <tr>
-                  <th>Usar</th>
-                  <th>Nombre comercial</th>
-                  <th>Principio activo</th>
-                  <th>Proveedor</th>
-                  <th>Costo unitario</th>
-                  <th>Costo operacional</th>
-                  <th>Mortalidad</th>
-                  <th>Efectividad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {medicamentos.filter(m => m.formaFarmaceutica === tipoAplicacion).sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1).map((m, i) => (
-                  <tr style={{borderLeft: `8px solid ${m.activo ? m.color: 'transparent'}`}} key={`tabla-medicamentos-${i}`} className={m.activo ? 'medicamento-activo' : 'medicamento-inactivo'}>
-                    <td  onClick={() => activarMedicamento(Number(m.id), !m.activo)}><input type="checkbox" checked={m.activo} onChange={e => activarMedicamento(Number(m.id), e.target.checked)} /></td>
-                    <td>{m.nombre}</td>
-                    <td>{m.principioActivo}</td>
-                    <td>{m.empresa}</td>
-                    <td>{m.costoUnitario} USD/{m.unidad}</td>
-                    <td>{m.costoOperacional} USD</td>
-                    <td>{m.mortalidad.toLocaleString(undefined, { minimumFractionDigits: 1})}%</td>
-                    <td>{m.duracion} semanas</td>
+            <div>
+              <table className="tabla-medicamentos">
+                <thead>
+                  <tr>
+                    <th>Usar</th>
+                    <th>Nombre comercial</th>
+                    <th>Principio activo</th>
+                    <th>Costo unitario</th>
+                    <th>Costo operacional</th>
+                    <th>Mortalidad</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
+                </thead>
+                <tbody>
+                  {medicamentos.filter(m => m.formaFarmaceutica === tipoAplicacion).sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1).map((m, i) => (
+                    <FilaMedicamento
+                      key={`tabla-medicamentos-${i}`}
+                      id={m.id}
+                      activarMedicamento={activarMedicamento}
+                    />
+                  ))}
+                </tbody>
+              </table>
+              <div className="contenedor-boton-agregar-medicamento">
+                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => console.log('x')} />
+              </div>
+            </div>
+          </React.Fragment>
         ))}
       </div>
-      <div style={{display: 'flex', justifyContent: 'flex-start', marginTop: 16, marginLeft: 32}}>
+      <div id="contenedor-fondo-lista-medicamentos">
         <button onClick={() => marcarMedicamentosFueronSeleccionados(true)}>Confirmar</button>
+        <span>Medicamentos seleccionados:</span>
+        <ul>
+          {medicamentos
+            .filter(m => m.activo)
+            .map(m => (
+              <li>
+                <div className="cuadradito-medicamento" style={{ backgroundColor: m.color }}></div>{m.nombre}
+              </li>
+          ))}
+        </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => ({
   medicamentos: state.tratamientos.medicamentos,
