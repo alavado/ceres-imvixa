@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
-import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa } from '../../helpers/modelo'
+import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
@@ -10,7 +10,7 @@ import NumberFormat from 'react-number-format'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, eFCR, numeroSmolts, numeroJaulas } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas } = produccion
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -22,9 +22,14 @@ const Produccion = props => {
 
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
   
-  //const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
+  const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
   const curvaBiomasa = obtenerCurvaBiomasa(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
-  
+  const curvaBiomasaDiaria = obtenerCurvaBiomasa(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
+
+  const pesoGanado = curvaBiomasaDiaria.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
+  const pesoMuerto = curvaBiomasaPerdida.slice(-1)[0]
+  const cantidadAlimento = (pesoGanado + pesoMuerto) * bFCR
+  const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
   return (
     <>
       <div className="contenido">
@@ -99,8 +104,7 @@ const Produccion = props => {
                 name="efcr"
                 type="number" min="1" step=".01" max="3"
                 disabled={true}
-                defaultValue={eFCR}
-                onChange={e => props.fijarEFCR(e.target.value)}
+                value={eFCRCalculado}
                 style={{width: 45, marginRight: 8 }}
               /> 
             </div>
@@ -280,9 +284,6 @@ const mapDispatchToProps = dispatch => ({
   },
   fijarBFCR: valor => {
     dispatch(produccionActions.fijarBFCR(Number(valor)))
-  },
-  fijarEFCR: valor => {
-    dispatch(produccionActions.fijarEFCR(Number(valor)))
   },
   fijarCostoAlimento: usd => {
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))

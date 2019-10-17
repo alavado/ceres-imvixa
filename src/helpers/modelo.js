@@ -28,9 +28,11 @@ export const obtenerBiomasaPerdida = (curvaMortalidad, curvaCrecimiento, numeroS
   for (let dia = diaInicio + 1; dia < diaFin; dia++) {
     const deltaMortalidad = (curvaMortalidad[dia] - curvaMortalidad[dia - 1]) / 100.0
     const pesoAyer = curvaCrecimiento[dia - 1]
-    bioMasaPerdida += deltaMortalidad * pesoAyer * numeroSmolts
+    if (deltaMortalidad){
+      bioMasaPerdida += deltaMortalidad * pesoAyer * numeroSmolts
+    }
   }
-  return bioMasaPerdida / 10
+  return bioMasaPerdida
 }
 
 export const obtenerCurvaBiomasa = (curvaMortalidad, curvaCrecimiento, numeroSmolts, intervalo) => {
