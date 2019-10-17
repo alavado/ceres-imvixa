@@ -18,7 +18,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 6,
+      factorMetodo: 1
     },
     {
       id: 2,
@@ -35,7 +37,9 @@ const initialState = {
       mortalidad: 0,
       color: '#BA68C8',
       activo: true,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 4,
+      factorMetodo: 0.8
     },
     {
       id: 3,
@@ -52,7 +56,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#6D4C41',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 6,
+      factorMetodo: 1
     },
     {
       id: 4,
@@ -69,7 +75,9 @@ const initialState = {
       mortalidad: 0,
       color: '#1E88E5',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 0,
+      factorMetodo: 0.2
     },
     {
       id: 5,
@@ -86,7 +94,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#827717',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 4,
+      factorMetodo: 1
     },
     {
       id: 6,
@@ -103,7 +113,9 @@ const initialState = {
       mortalidad: 0,
       color: '#EF7B10',
       activo: true,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 0,
+      factorMetodo: 0.8,
     },
     {
       id: 7,
@@ -120,7 +132,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#000066',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 9,
+      factorMetodo: 0.8
     },
     {
       id: 8,
@@ -137,7 +151,9 @@ const initialState = {
       mortalidad: 0,
       color: '#BA68C8',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 4,
+      factorMetodo: 0.8
     },
     {
       id: 9,
@@ -154,7 +170,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#6D4C41',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 6,
+      factorMetodo: 1
     },
     {
       id: 10,
@@ -171,7 +189,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 6,
+      factorMetodo: 1
     },
     {
       id: 11,
@@ -188,7 +208,9 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
-      aplicaciones: 1
+      aplicaciones: 1,
+      factorFarmaco: 6,
+      factorMetodo: 1
     }
   ],
   tratamientos: {
