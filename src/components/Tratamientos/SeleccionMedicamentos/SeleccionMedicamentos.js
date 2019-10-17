@@ -11,8 +11,8 @@ import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
 
   const [agregandoMedicamento, setAgregandoMedicamento] = useState({
-    [FARMACO_APLICACION_ORAL]: true,
-    [FARMACO_APLICACION_BAÑO]: true
+    [FARMACO_APLICACION_ORAL]: false,
+    [FARMACO_APLICACION_BAÑO]: false
   })
 
   const activarAgregarMedicamento = (tipo, valor) => {

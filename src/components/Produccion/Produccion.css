@@ -1,3 +1,28 @@
 .radio-button {
   margin-right: 8px;
 }
+
+.cuadro-biomasa {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: -28px;
+}
+
+.fondo-cuadro-biomasa {
+  width: 304px;
+  border-radius: 4px;
+  margin-top: 16px;
+  background-color: #F5F5F5;
+}
+
+.fondo-cuadro-biomasa > h1 {
+  padding: 12px 0;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #6AB96F;
+}

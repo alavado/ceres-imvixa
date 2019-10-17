@@ -80,7 +80,7 @@ const Produccion = props => {
           <input
             id="jaulas"
             name="jaulas"
-            type="number" min="0" step="1" max="100"
+            type="number" min="1" step="1" max="100"
             defaultValue={numeroJaulas}
             onChange={e => props.fijarNumeroJaulas(e.target.value)}
             style={{width: 45}}
@@ -246,6 +246,15 @@ const Produccion = props => {
                 }
               }}
             />
+          </div>
+          <div className="cuadro-biomasa">
+            <div className="fondo-cuadro-biomasa">
+              <h1>Biomasa cosechada</h1>
+              <div className="resultados-estrategia">
+                <h2>{Math.round(curvaBiomasa.slice(-1)[0] / 1000.0).toLocaleString(undefined, { maximumFractionDigits: 0})} ton</h2>
+                <p>sin considerar tratamientos</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
