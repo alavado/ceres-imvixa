@@ -2,29 +2,63 @@
   font-family: 'FiraSans';
   -webkit-print-color-adjust: exact;
   width: 950px;
-  margin: 0 auto;
+  margin: 16px auto;
   border: 1px solid gray;
   padding: 32px;
+}
+
+#logo-elanco-reporte {
+  position: absolute;
+  margin-left: 780px;
+  width: 160px;
+}
+
+#datos-empresa-reporte {
+  margin-left: 40px;
+  margin-bottom: 40px;
+}
+
+#datos-empresa-reporte li {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+#datos-empresa-reporte li > span {
+  font-weight: bold;
 }
 
 #reporte h6 {
   font-size: .6em;
   align-self: center;
   margin-bottom: 32px;
+  width: 100%;
+  text-align: center;
+}
+
+#reporte h1 {
+  text-align: left;
+  margin: 16px 32px;
+  margin-top: 60px;
+  font-size: 2em;
+  margin-bottom: 36px;
+  color: #2A2E57;
 }
 
 #reporte h2 {
   text-align: left;
-  margin: 16px 32px;
+  margin: 36px;
+  margin-top: 48px;
   font-size: 1.8em;
-  margin-bottom: 36px;
   color: #2A2E57;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #0078BF;
 }
 
 #reporte h3 {
   font-size: 1.4em;
   margin: 16px auto;
   color: #2A2E57;
+  margin-left: 40px;
 }
 
 #comparacion {

@@ -6,6 +6,7 @@ import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import GraficoNiveles from './GraficoNiveles/';
+import logoElanco from '../../assets/elanco.svg'
 
 const { ipcRenderer } = window.require('electron');
 
@@ -68,7 +69,14 @@ const Reporte = ({ state }) => {
       Calendarios de tratamientos
     </button>
     <div id="reporte">
+      <img src={logoElanco} alt="logo elanco" id="logo-elanco-reporte" />
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
+      <h1>REPORTE IMPACTO IMVIXA</h1>
+      <ul id="datos-empresa-reporte">
+        <li>Empesa: <span>Fiordo Blanco S.A.</span></li>
+        <li>Centro: <span>1029930</span></li>
+        <li>Fecha: <span>17 de octubre de 2019</span></li>
+      </ul>
       <h2>1. IMPACTO PRODUCTIVO</h2>
       <div id="comparacion">
         <div>
@@ -174,7 +182,7 @@ const Reporte = ({ state }) => {
       <GraficoNiveles
         mortalidades={{
           imvixa: mortalidad,
-          tradicional: mortalidad + 1
+          tradicional: mortalidad + .31
         }}
       />
       <h3>Estimación beneficios incrementales por biomasa producida</h3>

@@ -22,40 +22,50 @@
 
 #porcentajes-niveles-bioseguridad > div {
   position: absolute;
+  margin-left: 4px;
 }
 
 #porcentajes-niveles-bioseguridad .texto-nivel {
-  margin-left: -220px;
+  margin-left: -240px;
   padding-top: 8px;
   border-bottom: 1px dashed gray;
   padding-bottom: 8px;
-  padding-right: 16px;
+  padding-right: 36px;
 }
 
 #termometro-bioseguridad {
   background: rgb(212,2,2);
-  background: linear-gradient(180deg, rgba(212,2,2,1) 0%, rgba(210,221,69,1) 78%, rgba(0,255,161,1) 100%);
+  background: linear-gradient(180deg, rgba(212,2,2,1) 0%, rgba(210,221,69,1) 66%, rgba(0,255,161,1) 100%);
   width: 48px;
+  border-radius: 4px;
 }
 
 div[id^="regulacion"] {
   position: absolute;
   width: 48px;
-  height: 2px;
-  border-top: 1px solid rgb(2,2,2, 0.35);
-  border-bottom: 1px solid rgb(2,2,2, 0.35);
+  height: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.253);
+  border-top: 1px solid rgba(0, 0, 0, 0.253);
 }
 
 #regulacion-imvixa {
-  background-color: rgba(255, 166, 0, 0.75);
+  background-color: rgb(233, 151, 0);
+}
+
+#regulacion-imvixa > p {
+  margin-top: 3px;
 }
 
 #regulacion-tradicional {
-  background-color: rgba(128, 128, 128, 0.75);
+  background-color: rgba(128, 128, 128, 1);
+}
+
+#regulacion-tradicional > p {
+  margin-top: -5px;
 }
 
 div[id^="regulacion"] > p {
-  margin-left: 48px;
+  margin-left: 52px;
   margin-top: -4px;
   width: 200px;
   font-size: .8em;
