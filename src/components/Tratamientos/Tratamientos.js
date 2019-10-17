@@ -222,6 +222,7 @@ const Tratamientos = props => {
               </div>
               <div id="contenedor-acciones-tratamiento">
                 <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
+                {nuevoTratamiento.estrategia === 'imvixa' && <button id="boton-agregar-tratamiento" onClick={() => console.log('replicar')}>Replicar</button>}
                 {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] &&
                   <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
                     <FontAwesomeIcon icon={faTrash} size="sm" />
