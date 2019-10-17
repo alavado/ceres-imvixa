@@ -14,7 +14,7 @@ import SeleccionMedicamentos from './SeleccionMedicamentos';
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
-          marcarMedicamentosFueronSeleccionados } = props
+          marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
 
   let curvaImvixa, curvaTradicional
@@ -33,7 +33,8 @@ const Tratamientos = props => {
     estrategia: 'tradicional',
     semana: 1,
     dia: 'Lunes',
-    duracion: medicamentos[0].duracion
+    duracion: medicamentos[0].duracion,
+    aplicaciones: 1
   })
 
   const [medicamentosDisponibles, setMedicamentosDisponibles] = useState(medicamentos)
@@ -76,7 +77,8 @@ const Tratamientos = props => {
       idMedicamento: meds[0].id,
       semana: Number(semana),
       duracion: meds[0].duracion,
-      estrategia
+      estrategia,
+      aplicaciones: meds[0].aplicaciones
     })
     var rect = document.getElementById('contenedor-calendarios').getBoundingClientRect();
     var x = e.clientX - rect.left
@@ -87,10 +89,11 @@ const Tratamientos = props => {
   }
 
   const cambiarTratamiento = e => {
-    const idMedicamento = Number(e.target.value) 
+    const { id: idMedicamento, duracion, aplicaciones } = medicamentos.find(m => m.id === Number(e.target.value))
     setNuevoTratamiento({...nuevoTratamiento,
       idMedicamento,
-      duracion: medicamentos.find(m => m.id === idMedicamento).duracion
+      duracion,
+      aplicaciones
     })
   }
 
@@ -109,6 +112,8 @@ const Tratamientos = props => {
     props.eliminarTratamiento(nuevoTratamiento.estrategia, nuevoTratamiento.semana)
   }
 
+  const medicamentoImvixa = medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa')
+
   const construirCalendario = estrategia => {
     let semanas = []
     let diasTratamientoVigente = 0
@@ -119,7 +124,7 @@ const Tratamientos = props => {
       const tratamientoSemana = tratamientos[estrategia][semana]
       let estilo = {}
       if (tratamientoSemana) {
-        if (tratamientoSemana.idMedicamento === medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa').id) {
+        if (tratamientoSemana.idMedicamento === medicamentoImvixa.id) {
           classSemana = 'imvixa tratamiento-aplicado'
           imvixaActivo = true
         }
@@ -147,6 +152,11 @@ const Tratamientos = props => {
     return semanas
   }
 
+  const replicarEstrategiaTradicional = () => {
+    esconderPopupNuevoTratamiento()
+    replicarEstrategia('tradicional', 'imvixa', (curvaImvixa.length / 7))
+  }
+
   return !medicamentosFueronSeleccionados ? <SeleccionMedicamentos /> : (
     <>
       <div className="contenido">
@@ -157,25 +167,28 @@ const Tratamientos = props => {
         </div>
         <div className="contenido-contenido">
           <div id="contenedor-calendarios">
-            {Object.keys(tratamientos).map(estrategia => (
-              <div
-                key={`contenedor-calendario-${estrategia}`}
-                className="contenedor-tratamientos-estrategia"
-              >
-                <div className="contenedor-header-calendario">
-                  <h2>Semanas estrategia {estrategia}</h2>
-                  <div className="numero-baños">
-                    <div>
-                      {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos)}
+            {Object.keys(tratamientos).map(estrategia => {
+              const calendario = construirCalendario(estrategia)
+              return (
+                <div
+                  key={`contenedor-calendario-${estrategia}`}
+                  className="contenedor-tratamientos-estrategia"
+                >
+                  <div className="contenedor-header-calendario">
+                    <h2>Semanas estrategia {estrategia}</h2>
+                    <div className="numero-baños">
+                      <div>
+                        {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos)}
+                      </div>
+                      <FontAwesomeIcon icon={faShower} size="sm" title='Número de baños'/>
                     </div>
-                    <FontAwesomeIcon icon={faShower} size="s" title='Número de baños'/>
+                  </div>
+                  <div id={`semanas-estrategia-${estrategia}`}>
+                    {calendario}
                   </div>
                 </div>
-                <div id={`semanas-estrategia-${estrategia}`}>
-                  {construirCalendario(estrategia)}
-                </div>
-              </div>
-            ))}
+              )
+            })}
             <div id="popup-semana">Semana 1</div>
             <div id="popup-tratamiento">
               <button
@@ -220,13 +233,26 @@ const Tratamientos = props => {
                   <span>sem.</span>
                 </div>
               </div>
-              <div id="contenedor-acciones-tratamiento">
-                <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
-                {nuevoTratamiento.estrategia === 'imvixa' && <button id="boton-agregar-tratamiento" onClick={() => console.log('replicar')}>Replicar</button>}
-                {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] &&
-                  <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
-                    <FontAwesomeIcon icon={faTrash} size="sm" />
-                  </button>
+              <div id="contenedor-acciones-tratamiento-extra">
+                <div id="contenedor-acciones-tratamiento">
+                  {tratamientos[nuevoTratamiento.estrategia][nuevoTratamiento.semana] ?
+                    <button id="boton-eliminar-tratamiento" onClick={eliminarTratamiento}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button> :
+                    <div>
+                      <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
+                      <input
+                        id="numero-aplicaciones"
+                        type="number" min="1" max="3" step="1"
+                        value={nuevoTratamiento.aplicaciones}
+                        onChange={e => setNuevoTratamiento({...nuevoTratamiento, aplicaciones: Number(e.target.value)})}
+                      />
+                      <label htmlFor="numero-aplicaciones">{nuevoTratamiento.aplicaciones > 1 ? 'veces' : 'vez'}</label>
+                    </div>
+                  }
+                </div>
+                {nuevoTratamiento.semana === medicamentoImvixa.duracion && nuevoTratamiento.estrategia === 'imvixa' &&
+                  <button id="boton-agregar-tratamiento" onClick={replicarEstrategiaTradicional}>Replicar estr. tradicional</button>
                 }
               </div>
             </div>
@@ -255,13 +281,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   agregarTratamiento: tratamiento => {
-    const { idMedicamento, semana, estrategia, dia, duracion } = tratamiento
-    dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, dia, estrategia, duracion))
+    const { idMedicamento, semana, estrategia, dia, duracion, aplicaciones } = tratamiento
+    dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, dia, estrategia, duracion, aplicaciones))
   },
-  eliminarTratamiento: (estrategia, semana) => {
-    dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana))
-  },
-  marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor))
+  eliminarTratamiento: (estrategia, semana) => dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana)),
+  marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor)),
+  replicarEstrategia: (base, objetivo, semanas) => dispatch(tratamientosActions.replicarEstrategia(base, objetivo, semanas))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tratamientos);

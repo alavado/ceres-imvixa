@@ -3,9 +3,10 @@ const tratamientosActions = {
   ELIMINAR_TRATAMIENTO: 'ELIMINAR_TRATAMIENTO',
   EDITAR_MEDICAMENTO: 'EDITAR_MEDICAMENTO',
   MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS: 'MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS',
-  agregarTratamiento: (idMedicamento, semana, dia, estrategia, duracion) => ({
+  REPLICAR_ESTRATEGIA: 'REPLICAR_ESTRATEGIA',
+  agregarTratamiento: (idMedicamento, semana, dia, estrategia, duracion, aplicaciones) => ({
     type: tratamientosActions.AGREGAR_TRATAMIENTO,
-    payload: { idMedicamento, semana, dia, estrategia, duracion }
+    payload: { idMedicamento, semana, dia, estrategia, duracion, aplicaciones }
   }),
   eliminarTratamiento: (estrategia, semana) => ({
     type: tratamientosActions.ELIMINAR_TRATAMIENTO,
@@ -18,6 +19,10 @@ const tratamientosActions = {
   marcarMedicamentosFueronSeleccionados: valor => ({
     type: tratamientosActions.MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS,
     payload: valor
+  }),
+  replicarEstrategia: (base, objetivo, semanas) => ({
+    type: tratamientosActions.REPLICAR_ESTRATEGIA,
+    payload: { base, objetivo, semanas }
   })
 }
 

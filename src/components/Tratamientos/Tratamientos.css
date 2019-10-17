@@ -153,6 +153,7 @@ div[id^="semanas-estrategia"] > div:hover {
   background: rgba(0, 0, 0, 0);
   top: -10px;
   right: -2px;
+  outline: none;
 }
 
 #boton-eliminar-tratamiento {
@@ -183,4 +184,29 @@ div[id^="semanas-estrategia"] > div:hover {
 #contenedor-acciones-tratamiento {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+#contenedor-acciones-tratamiento > div {
+  display: flex;
+  align-items: baseline;
+}
+
+#contenedor-acciones-tratamiento > div > input {
+  width: 24px;
+  height: 16px;
+  margin: 0;
+  margin-left: 4px;
+  margin-right: 2px;
+  padding: 0;
+  padding-left: 4px;
+}
+
+#contenedor-acciones-tratamiento-extra {
+  display: flex;
+  flex-direction: column;
+}
+
+#contenedor-acciones-tratamiento-extra > button {
+  margin-top: 8px;
 }

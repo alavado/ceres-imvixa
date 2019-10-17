@@ -18,6 +18,7 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
+      aplicaciones: 1
     },
     {
       id: 2,
@@ -33,7 +34,8 @@ const initialState = {
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
-      activo: true
+      activo: true,
+      aplicaciones: 1
     },
     {
       id: 3,
@@ -49,7 +51,8 @@ const initialState = {
       duracion: 3,
       mortalidad: 0.06,
       color: '#6D4C41',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 4,
@@ -65,7 +68,8 @@ const initialState = {
       duracion: 4,
       mortalidad: 0,
       color: '#1E88E5',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 5,
@@ -81,7 +85,8 @@ const initialState = {
       duracion: 3,
       mortalidad: 0.06,
       color: '#827717',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 6,
@@ -97,7 +102,8 @@ const initialState = {
       duracion: 34,
       mortalidad: 0,
       color: '#FF8A65',
-      activo: true
+      activo: true,
+      aplicaciones: 1
     },
     {
       id: 7,
@@ -113,7 +119,8 @@ const initialState = {
       duracion: 16,
       mortalidad: 0.06,
       color: '#000066',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 8,
@@ -129,7 +136,8 @@ const initialState = {
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 9,
@@ -145,7 +153,8 @@ const initialState = {
       duracion: 3,
       mortalidad: 0.06,
       color: '#6D4C41',
-      activo: false
+      activo: false,
+      aplicaciones: 1
     },
     {
       id: 10,
@@ -162,6 +171,7 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
+      aplicaciones: 1
     },
     {
       id: 11,
@@ -178,6 +188,7 @@ const initialState = {
       mortalidad: 0.06,
       color: '#EF5350',
       activo: false,
+      aplicaciones: 1
     }
   ],
   tratamientos: {
@@ -195,25 +206,26 @@ const initialState = {
 const tratamientosReducer = (state = initialState, action) => {
   switch (action.type) {
     case tratamientosActions.AGREGAR_TRATAMIENTO: {
-      const { idMedicamento, semana, dia, estrategia, duracion } = action.payload
+      const { idMedicamento, semana, dia, estrategia, duracion, aplicaciones } = action.payload
       return {
         ...state,
         medicamentos: [
           ...state.medicamentos.filter(m => m.id !== idMedicamento),
           {
             ...state.medicamentos.find(m => m.id === idMedicamento),
-            duracion
+            duracion,
+            aplicaciones
           }
         ],
         tratamientos: {
           ...state.tratamientos,
           [estrategia]: {
             ...state.tratamientos[estrategia],
-            [semana]: {
+            ...[...Array(aplicaciones).keys()].reduce((obj, i) => ({...obj, [semana + i * duracion]: {
               idMedicamento,
               dia,
               duracion
-            }
+            }}), {})
           }
         }
       }
@@ -257,6 +269,23 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     default:
       return state
+    case tratamientosActions.REPLICAR_ESTRATEGIA: {
+      const { base, objetivo, semanas } = action.payload
+      const duracionComidaBase = state.medicamentos.find(m => m.id === state.tratamientos[base][0].idMedicamento).duracion
+      const duracionComidaObjetivo = state.medicamentos.find(m => m.id === state.tratamientos[objetivo][0].idMedicamento).duracion
+      return {
+        ...state,
+        tratamientos: {
+          ...state.tratamientos,
+          [objetivo]: {
+            0: state.tratamientos[objetivo][0],
+            ...Object.keys(state.tratamientos[base])
+              .filter(semana => Number(semana) > 0 && (Number(semana) + duracionComidaObjetivo - duracionComidaBase) <= semanas)
+              .reduce((obj, semana) => ({...obj, [Number(semana) + duracionComidaObjetivo - duracionComidaBase]: state.tratamientos[base][semana]}), {})
+          }
+        }
+      }
+    }
   }
 }
 
