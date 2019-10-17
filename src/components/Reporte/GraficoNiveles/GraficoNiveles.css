@@ -1,20 +1,62 @@
-.svg-container {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  padding-bottom: 30%; /* aspect ratio */
-  vertical-align: bottom;
-  overflow: hidden;
-
+#grafico-regulacion {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 960px;
+  padding-bottom: 32px;
 }
-.svg-content-responsive {
-  display: inline-block;
+
+#nombres-niveles-bioseguridad {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#nombres-niveles-bioseguridad > div {
+  border-bottom: 1px solid black;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#porcentajes-niveles-bioseguridad > div {
   position: absolute;
-  maring-top: 30px;
-  left: 0;
 }
 
-svg text{
-  font-size: 1.2em;
-  font-family: sans-serif;
+#porcentajes-niveles-bioseguridad .texto-nivel {
+  margin-left: -220px;
+  padding-top: 8px;
+  border-bottom: 1px dashed gray;
+  padding-bottom: 8px;
+  padding-right: 16px;
+}
+
+#termometro-bioseguridad {
+  background: rgb(212,2,2);
+  background: linear-gradient(180deg, rgba(212,2,2,1) 0%, rgba(210,221,69,1) 78%, rgba(0,255,161,1) 100%);
+  width: 48px;
+}
+
+div[id^="regulacion"] {
+  position: absolute;
+  width: 48px;
+  height: 2px;
+  border-top: 1px solid rgb(2,2,2, 0.35);
+  border-bottom: 1px solid rgb(2,2,2, 0.35);
+}
+
+#regulacion-imvixa {
+  background-color: rgba(255, 166, 0, 0.75);
+}
+
+#regulacion-tradicional {
+  background-color: rgba(128, 128, 128, 0.75);
+}
+
+div[id^="regulacion"] > p {
+  margin-left: 48px;
+  margin-top: -4px;
+  width: 200px;
+  font-size: .8em;
 }

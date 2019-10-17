@@ -134,14 +134,14 @@ const Reporte = ({ state }) => {
       <table className="tabla-reporte">
         <thead>
           <tr>
-              <th>Estrategia con Imvixa</th>
-              <th>Estrategia tradicional</th>
+            <th>Estrategia con Imvixa</th>
+            <th>Estrategia tradicional</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-              <td> {numeroBañosImixa * jornadasPorBaño} </td>
-              <td>{numeroBañosTradicional * jornadasPorBaño}</td>
+            <td>{numeroBañosImixa * jornadasPorBaño}</td>
+            <td>{numeroBañosTradicional * jornadasPorBaño}</td>
           </tr>
         </tbody>
       </table>
@@ -149,10 +149,10 @@ const Reporte = ({ state }) => {
       <table className="tabla-reporte">
         <thead>
           <tr>
-              <th>Producto</th>
-              <th>Estrategia con Imvixa</th>
-              <th>Estrategia tradicional</th>
-              <th>Diferencia</th>
+            <th>Producto</th>
+            <th>Estrategia con Imvixa</th>
+            <th>Estrategia tradicional</th>
+            <th>Diferencia</th>
           </tr>
         </thead>
         <tbody>
@@ -170,8 +170,13 @@ const Reporte = ({ state }) => {
       <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
-      <h3>Riesgo de disminución de siembra por regulación</h3>
-      <GraficoNiveles GHeight={300} GWidth={60} height={100} width={30} max={30} value={mortalidad}></GraficoNiveles>
+      <h3>Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
+      <GraficoNiveles
+        mortalidades={{
+          imvixa: mortalidad,
+          tradicional: mortalidad + 1
+        }}
+      />
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
