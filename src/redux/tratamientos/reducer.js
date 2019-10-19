@@ -114,7 +114,7 @@ const initialState = {
       color: '#EF7B10',
       activo: true,
       aplicaciones: 1,
-      factorFarmaco: 0,
+      factorFarmaco: 4,
       factorMetodo: 0.8,
     },
     {
@@ -133,8 +133,8 @@ const initialState = {
       color: '#000066',
       activo: false,
       aplicaciones: 1,
-      factorFarmaco: 9,
-      factorMetodo: 0.8
+      factorFarmaco: 6,
+      factorMetodo: 1
     },
     {
       id: 8,
