@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos, calcularPTI } from '../../helpers/helpers'
 import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +18,6 @@ const Reporte = ({ state }) => {
   const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
-  console.log(calcularCantidadDeProductosVertidos(medicamentos, tratamientos));
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -176,6 +175,20 @@ const Reporte = ({ state }) => {
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      <table className="tabla-reporte">
+      <thead>
+          <tr>
+            <th>PTI Estrategia con Imvixa</th>
+            <th>PTI Estrategia tradicional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{calcularPTI(medicamentos, tratamientos['imvixa'])}</td>
+            <td>{calcularPTI(medicamentos, tratamientos['tradicional'])}</td>
+          </tr>
+        </tbody>
+      </table>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>Riesgo de disminución de siembra por clasificación de bioseguridad</h3>

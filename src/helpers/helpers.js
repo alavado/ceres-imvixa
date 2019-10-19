@@ -8,6 +8,19 @@ export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos) =
   }).length
 }
 
+export const calcularPTI = (medicamentos, tratamientos) => {
+  const principiosActivos = [...new Set(medicamentos.map(m => m.principioActivo))]
+  const ptiPrincipioActivo = principiosActivos
+  .reduce((suma, principioActivo) => {
+    const {factorFarmaco, factorMetodo} = medicamentos.find(m => m.principioActivo === principioActivo)
+    const semanas = Object.keys(tratamientos)
+    const numeroDeAplicaciones = semanas.filter(s => medicamentos.find(m => m.id === tratamientos[s].idMedicamento).principioActivo === principioActivo).length
+    // TODO mejorar el número de aplicaciones pq solo si son dos en 12 meses, no en el ciclo
+    const factorResistencia = numeroDeAplicaciones > 1 ? 2 : 1 
+    return suma + (factorResistencia * factorFarmaco * factorMetodo)},0)
+  return ptiPrincipioActivo
+}
+
 export const calcularCantidadDeProductosVertidos = (medicamentos, tratamientos) => {
   const principiosActivos = [...new Set(medicamentos.filter(m => m.formaFarmaceutica === FARMACO_APLICACION_BAÑO).map(m => m.principioActivo))]
   const estrategias = Object.keys(tratamientos)
