@@ -26,3 +26,12 @@
   border-top-right-radius: 8px;
   background-color: #6AB96F;
 }
+
+#boton-mostrar-calculadora-volumen-jaula {
+  position: absolute;
+  background: none;
+  color: gray;
+  margin-top: -45px;
+  margin-left: 100px;
+  outline: none;
+}
