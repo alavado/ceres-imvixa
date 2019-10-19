@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
 import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
@@ -6,11 +6,15 @@ import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
 import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 import NumberFormat from 'react-number-format'
+import CalculadoraVolumen from './CalculadoraVolumen';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas } = produccion
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, volumenJaula } = produccion
+  const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
 
   let curvaCrecimiento
   if (objetivo === OBJETIVO_PESO) {
@@ -76,15 +80,36 @@ const Produccion = props => {
             onChange={e => props.fijarPesoSmolt(e.target.value)}
             style={{width: 46}}
           /> g
-          <label htmlFor="jaulas">N° de jaulas</label>
-          <input
-            id="jaulas"
-            name="jaulas"
-            type="number" min="1" step="1" max="100"
-            defaultValue={numeroJaulas}
-            onChange={e => props.fijarNumeroJaulas(e.target.value)}
-            style={{width: 45}}
-          /> 
+          <div style={{display: 'flex', alignItems: 'baseline'}}>
+            <div>
+              <label htmlFor="jaulas">N° jaulas</label>
+              <input
+                id="jaulas"
+                name="jaulas"
+                type="number" min="1" step="1" max="100"
+                defaultValue={numeroJaulas}
+                onChange={e => props.fijarNumeroJaulas(e.target.value)}
+                style={{width: 45, marginRight: 32}}
+              />
+            </div>
+            <div>
+              {mostrandoCalculadoraVolumen && <CalculadoraVolumen mostrar={setMostrandoCalculadoraVolumen} />}
+              <label htmlFor="volumenJaula">Volumen jaula</label>
+              <input
+                id="volumenJaula"
+                name="volumenJaula"
+                type="number" min="100" step="100" max="20000"
+                value={volumenJaula}
+                onChange={e => props.fijarVolumenJaula(e.target.value)}
+                style={{width: 60}}
+              /> m<sup>3</sup>
+              <button
+                id="boton-mostrar-calculadora-volumen-jaula"
+                onClick={() => setMostrandoCalculadoraVolumen(true)}>
+                <FontAwesomeIcon icon={faCalculator} />
+              </button>
+            </div>
+          </div>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <div>
               <label style={{ marginRight: 8 }} htmlFor="bfcr">bFCR</label>
@@ -305,6 +330,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fijarNumeroJaulas: numero => {
     dispatch(produccionActions.fijarNumeroJaulas(numero))
+  },
+  fijarVolumenJaula: numero => {
+    dispatch(produccionActions.fijarVolumenJaula(numero))
   },
 })
 

@@ -1,0 +1,58 @@
+#calculadora-volumen {
+  position: absolute;
+  margin-left: 110px;
+  background-color: white;
+  font-size: .8em;
+  padding: 8px;
+  top: 250px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+#calculadora-volumen button {
+  align-self: flex-end;
+}
+
+#calculadora-volumen button:first-child {
+  background: none;
+  color: gray;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+#calculadora-volumen input[type="radio"] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+#formulario-calculadora-volumen {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+#formulario-calculadora-volumen .campos-volumen-jaula {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+#formulario-calculadora-volumen .campos-volumen-jaula label {
+  padding: 0;
+  margin: 0;
+  margin-top: 4px;
+}
+
+#formulario-calculadora-volumen .campos-volumen-jaula input {
+  padding: 2px;
+  margin: 0;
+  width: 60px;
+}
+
+#formulario-calculadora-volumen img {
+  height: 64px;
+}
