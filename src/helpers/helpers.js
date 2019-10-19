@@ -8,17 +8,33 @@ export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos) =
   }).length
 }
 
+export const checkSemanasAnteriores = (tratamientos, medicamentos, semana, principioActivo) => {
+  const semanas = Object.keys(tratamientos).map(s => Number(s))
+  const semanasMenores = semanas.filter(s => s > semana - 52 && s < semana)
+  return semanasMenores.reduce((obj, v) => medicamentos.
+  find( m =>  m.id === tratamientos[v].idMedicamento).principioActivo === principioActivo || obj, false)
+}
+
 export const calcularPTI = (medicamentos, tratamientos) => {
-  const principiosActivos = [...new Set(medicamentos.map(m => m.principioActivo))]
-  const ptiPrincipioActivo = principiosActivos
-  .reduce((suma, principioActivo) => {
-    const {factorFarmaco, factorMetodo} = medicamentos.find(m => m.principioActivo === principioActivo)
-    const semanas = Object.keys(tratamientos)
-    const numeroDeAplicaciones = semanas.filter(s => medicamentos.find(m => m.id === tratamientos[s].idMedicamento).principioActivo === principioActivo).length
-    // TODO mejorar el número de aplicaciones pq solo si son dos en 12 meses, no en el ciclo
-    const factorResistencia = numeroDeAplicaciones > 1 ? 2 : 1 
-    return suma + (factorResistencia * factorFarmaco * factorMetodo)},0)
-  return ptiPrincipioActivo
+  const semanas = Object.keys(tratamientos).sort((a,b) => Number(a) > Number(b) ? 1 : -1)
+  const pti = semanas.reduce((obj, semana, i) => {
+    const {factorFarmaco, factorMetodo, principioActivo} = medicamentos.find(m => m.id === tratamientos[semana].idMedicamento)
+    const factorResistencia = checkSemanasAnteriores(tratamientos, medicamentos, semana, principioActivo)? 2 : 1 
+    let calculoParcial = factorResistencia * factorFarmaco * factorMetodo
+    return {
+      ...obj,
+      suma: obj.suma + (semana === '0' ? 0 : calculoParcial),
+      trataciones: [...obj.trataciones, {
+        i,
+        semana,
+        principioActivo,
+        factorResistencia,
+        factorFarmaco,
+        factorMetodo,
+        pTI: semana === '0' ? '-' : calculoParcial 
+      }] 
+    }},{suma: 0, trataciones: []})
+  return pti
 }
 
 export const calcularCantidadDeProductosVertidos = (medicamentos, tratamientos) => {
