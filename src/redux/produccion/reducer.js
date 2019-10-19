@@ -2,7 +2,7 @@ import produccionActions from './actions'
 import { OBJETIVO_PESO } from '../../helpers/constantes'
 
 const initialState = {
-  fechaInicio: `${new Date().getYear() + 1900}-${new Date().getMonth() < 10 ? `0${new Date().getMonth()}` : new Date().getMonth()}-01`,
+  fechaInicio: `${new Date().toISOString().slice(0,10)}`,
   numeroSmolts: 1E6,
   pesoSmolt: 170,
   costoSmolt: 1.8,
