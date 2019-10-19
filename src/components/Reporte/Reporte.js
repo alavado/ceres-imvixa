@@ -18,6 +18,8 @@ const Reporte = ({ state }) => {
   const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
+  const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
+  const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -175,20 +177,6 @@ const Reporte = ({ state }) => {
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
-      <table className="tabla-reporte">
-      <thead>
-          <tr>
-            <th>PTI Estrategia con Imvixa</th>
-            <th>PTI Estrategia tradicional</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{calcularPTI(medicamentos, tratamientos['imvixa'])}</td>
-            <td>{calcularPTI(medicamentos, tratamientos['tradicional'])}</td>
-          </tr>
-        </tbody>
-      </table>
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
@@ -201,6 +189,70 @@ const Reporte = ({ state }) => {
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
+        <h3>Tratamientos estrategia Imvixa</h3>
+        <table className="tabla-reporte">
+          <thead>
+          <tr>
+            <th>Tratamiento</th>
+            <th>Semana</th>
+            <th>Principio activo</th>
+            <th>Factor fármaco</th>
+            <th>Factor método</th>
+            <th>Factor resistencia</th>
+            <th>PTI</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ptiImvixa.trataciones.map((elemento, i) => (
+          <tr>
+            <td>{elemento.i}</td>
+            <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+            <td>{elemento.principioActivo}</td>
+            <td>{elemento.factorFarmaco}</td>
+            <td>{elemento.factorMetodo}</td>
+            <td>{elemento.factorResistencia}</td>
+            <td>{elemento.pTI}</td>
+          </tr>
+          ))}
+          <tr>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td>PTI total </td>
+            <td>{ptiImvixa.suma}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Tratamientos estrategia Tradicional</h3>
+        <table className="tabla-reporte">
+          <thead>
+          <tr>
+            <th>Tratamiento</th>
+            <th>Semana</th>
+            <th>Principio activo</th>
+            <th>Factor fármaco</th>
+            <th>Factor método</th>
+            <th>Factor resistencia</th>
+            <th>PTI</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ptiTradicional.trataciones.map((elemento, i) => (
+          <tr>
+            <td>{elemento.i}</td>
+            <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+            <td>{elemento.principioActivo}</td>
+            <td>{elemento.factorFarmaco}</td>
+            <td>{elemento.factorMetodo}</td>
+            <td>{elemento.factorResistencia}</td>
+            <td>{elemento.pTI}</td>
+          </tr>
+          ))}
+          <tr>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td>PTI total </td>
+            <td>{ptiTradicional.suma}</td>
+          </tr>
+        </tbody>
+      </table>
         <h3>Estructura costos ex-jaula</h3>
         <table id="reporte-estructura-costos">
           <thead>
