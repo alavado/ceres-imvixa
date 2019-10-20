@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './ResumenComparacion.css'
-import GraficoCrecimiento from './GraficoCrecimiento2'
+import GraficoCrecimiento from './GraficoCrecimiento'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
@@ -30,6 +30,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
             curvaImvixa={curvaImvixa}
             curvaTradicional={curvaTradicional}
             pesoObjetivo={pesoObjetivo}
+            objetivo={objetivo}
           />
         </div>
         <div id="cuadros-estrategias">
