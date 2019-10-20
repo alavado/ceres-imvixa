@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos, calcularPTI } from '../../helpers/helpers'
-import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
+import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos,
+  calcularCostoBaños, calcularPTI } from '../../helpers/helpers'
+import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada,
+  obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
+import {JORNADAS_POR_BAÑO_POR_JAULA, OBJETIVO_PESO } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import GraficoNiveles from './GraficoNiveles/';
@@ -13,13 +16,45 @@ const { ipcRenderer } = window.require('electron');
 const Reporte = ({ state }) => {
   const { estructuraCostos } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
-  const { numeroJaulas, mortalidad } = state.produccion
-
+  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo,
+    numeroSmolts, bFCR, numeroJaulas, volumenJaula, mortalidad } = state.produccion
+  const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
   const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
+  const costoBañosImvixa = calcularCostoBaños(medicamentos, tratamientos['imvixa'], numeroJaulas, volumenJaula)
+  const costoBañosTradicional = calcularCostoBaños(medicamentos, tratamientos['tradicional'], numeroJaulas, volumenJaula)
+
+  let curvaImvixa, curvaTradicional
+  if (objetivo === OBJETIVO_PESO) {
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
+  }
+  else {
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.tradicional)
+  }
+  // Imvixa
+  const curvaMortalidadAcumuladaImvixa = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaImvixa.length, mortalidad)
+  const curvaBiomasaPerdidaImvixa = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
+  const curvaBiomasaImvixa = obtenerCurvaBiomasa(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
+  // Tradicional
+  const curvaMortalidadAcumuladaTradicional = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaTradicional.length, mortalidad)
+  const curvaBiomasaPerdidaTradicional = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaTradicional, curvaImvixa, numeroSmolts, 30)
+  const curvaBiomasaTradicional = obtenerCurvaBiomasa(curvaMortalidadAcumuladaTradicional, curvaTradicional, numeroSmolts, 30)
+  // Imvixa
+  const pesoGanadoImvixa = curvaBiomasaImvixa.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
+  const pesoMuertoImvixa = curvaBiomasaPerdidaImvixa.slice(-1)[0]
+  const cantidadAlimentoImvixa = (pesoGanadoImvixa + pesoMuertoImvixa) * bFCR
+  //const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
+  
+  const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
+  const biomasaCosechadaImvixa = pesoFinalImvixa
+
+  const costoMarginalBañosImvixa = costoBañosImvixa/curvaBiomasaImvixa.slice(-1)[0]
+  const costoMarginalBañosTradicional = costoBañosTradicional/curvaBiomasaTradicional.slice(-1)[0]
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -28,8 +63,8 @@ const Reporte = ({ state }) => {
   const lenguetas = [
     {
       nombre: 'Baños',
-      imvixa: 0.09,
-      tradicional: 0.1
+      imvixa: costoMarginalBañosImvixa,
+      tradicional: costoMarginalBañosTradicional
     },
     {
       nombre: 'Ayunos',
