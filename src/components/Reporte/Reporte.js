@@ -4,7 +4,7 @@ import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos, calcularPTI } from '../../helpers/helpers'
 import {JORNADAS_POR_BAÑO_POR_JAULA } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import GraficoNiveles from './GraficoNiveles/';
 import logoElanco from '../../assets/elanco.svg'
 
@@ -139,18 +139,28 @@ const Reporte = ({ state }) => {
         </div>
       </div>
       <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
-      <h3>Jornadas laborales por concepto de baños</h3>
+      <h3>Impactos laborales</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
+            <th></th>
             <th>Estrategia con Imvixa</th>
             <th>Estrategia tradicional</th>
+            <th>Diferencia</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>Número de Baños</td>
+            <td>{numeroBañosImixa}</td>
+            <td>{numeroBañosTradicional}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImixa)}</td>
+          </tr>
+          <tr>
+            <td>Jornadas laborales por concepto de baños</td>
             <td>{numeroBañosImixa * jornadasPorBaño}</td>
             <td>{numeroBañosTradicional * jornadasPorBaño}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImixa) * jornadasPorBaño}</td>
           </tr>
         </tbody>
       </table>
@@ -170,7 +180,12 @@ const Reporte = ({ state }) => {
               <td>{v.principioActivo}</td>
               <td>{Math.round(v.imvixa * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
               <td>{Math.round(v.tradicional * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
-              <td>{Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10} {v.unidad}</td>
+              <td> {Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10 > 0 ?
+              <FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} /> :
+              Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10 === 0 ?
+              '':<FontAwesomeIcon icon={faArrowUp} size="m" style={{marginRight: 4, color:'red'}} />
+              } 
+              {Math.round(Math.abs(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10} {v.unidad}</td>
             </tr> 
           ))}
         </tbody>
@@ -189,7 +204,7 @@ const Reporte = ({ state }) => {
       <h3>Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
-        <h3>Tratamientos estrategia Imvixa</h3>
+        <h3>Tratamientos estrategia Imvixa e índice de tratamiento antiparasitario (PTI)</h3>
         <table className="tabla-reporte">
           <thead>
           <tr>
@@ -221,7 +236,7 @@ const Reporte = ({ state }) => {
           </tr>
         </tbody>
       </table>
-      <h3>Tratamientos estrategia Tradicional</h3>
+      <h3>Tratamientos estrategia Tradicional e índice de tratamiento antiparasitario (PTI)</h3>
         <table className="tabla-reporte">
           <thead>
           <tr>
@@ -253,7 +268,7 @@ const Reporte = ({ state }) => {
           </tr>
         </tbody>
       </table>
-        <h3>Estructura costos ex-jaula</h3>
+        <h3>Estructura costos ex-jaula por centro</h3>
         <table id="reporte-estructura-costos">
           <thead>
             <tr>
