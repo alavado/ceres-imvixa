@@ -1,7 +1,8 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
+import { OBJETIVO_PESO } from '../../../helpers/constantes';
 
-const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
+const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo, objetivo}) => {
 
   const curvaMasLarga = curvaTradicional.length > curvaImvixa.length ? curvaTradicional : curvaImvixa
 
@@ -92,8 +93,8 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo}) => {
       yAxes: [{
         display: true,
         ticks: {
-          max: pesoObjetivo,
-          callback: function(v, i, vs) { return `${(v / 1000).toLocaleString(undefined, { minimumFractionDigits: 1})}` }
+          max: objetivo === OBJETIVO_PESO ? pesoObjetivo: curvaMasLarga.slice(-1)[0],
+          callback: function(v, i, vs) { return `${(Math.round((v / 100)) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}` }
         },
         scaleLabel: {
           display: true,

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { OBJETIVO_PESO, OBJETIVO_FECHA } from './constantes';
+import { OBJETIVO_PESO, OBJETIVO_FECHA, MAXIMOS_DIAS_CICLO } from './constantes';
 import modelosCrecimientoPorMacrozona from './modelos_crecimiento_macrozonas.json'
 import temperaturasMensuales from './temperaturas.json'
 
@@ -69,7 +69,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
   let diasAyunoRestante = 0
   let tratamientosAplicados = {}
   let uta = temperaturasMensuales[fechaCiclo.month() + 1] * 7
-  for (let dia = 2; (tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && dia < objetivo * 30); dia++) {
+  for (let dia = 2; dia < MAXIMOS_DIAS_CICLO && ((tipoObjetivo === OBJETIVO_PESO && pesoActual < objetivo) || (tipoObjetivo === OBJETIVO_FECHA && dia < objetivo * 30)); dia++) {
     semana += 1 / 7.0
     fechaCiclo.add(1, 'days')
     uta += temperaturasMensuales[fechaCiclo.month() + 1]

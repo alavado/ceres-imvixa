@@ -30,6 +30,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
             curvaImvixa={curvaImvixa}
             curvaTradicional={curvaTradicional}
             pesoObjetivo={pesoObjetivo}
+            objetivo={objetivo}
           />
         </div>
         <div id="cuadros-estrategias">

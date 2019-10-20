@@ -10,6 +10,8 @@ import CalculadoraVolumen from './CalculadoraVolumen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
+const CampoNumerico = props => <NumberFormat {...props} thousandSeparator={'.'} decimalSeparator={','} />
+
 const Produccion = props => {
 
   const { produccion, macrozona } = props
@@ -53,33 +55,18 @@ const Produccion = props => {
             style={{width: 130}}
           />
           <label htmlFor="numero-smolts">N° de smolts al ingreso</label>
-          <NumberFormat
+          <CampoNumerico
             id="numero-smolts"
+            style={{width: 78 }}
             value={produccion.numeroSmolts}
-            thousandSeparator={','}
-            decimalSeparator={'.'}
-            min={500}
-            max={5000000}
-            step={50000}
-            onChange={e => props.fijarNumeroSmolts(e.target.value)} />
-
-          {/* <input
-            id="numero-smolts"
-            name="numero-smolts"
-            type="number" min="50000" step="50000"
-            defaultValue={produccion.numeroSmolts}
-            onChange={e => props.fijarNumeroSmolts(e.target.value)}
-            style={{width: 80}}
-          /> */}
+            onValueChange={e => props.fijarNumeroSmolts(e.floatValue)} />
           <label htmlFor="peso-smolt">Peso de smolt al ingreso</label>
-          <input
+          <CampoNumerico
             id="peso-smolt"
-            name="peso-smolt"
-            type="number" min="5" step="5"
-            defaultValue={produccion.pesoSmolt}
-            onChange={e => props.fijarPesoSmolt(e.target.value)}
-            style={{width: 46}}
-          /> g
+            style={{width: 45 }}
+            value={produccion.pesoSmolt}
+            suffix={' g'}
+            onValueChange={e => props.fijarPesoSmolt(e.floatValue)} />
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <div>
               <label htmlFor="jaulas">N° jaulas</label>
@@ -94,15 +81,13 @@ const Produccion = props => {
             </div>
             <div>
               {mostrandoCalculadoraVolumen && <CalculadoraVolumen mostrar={setMostrandoCalculadoraVolumen} />}
-              <label htmlFor="volumenJaula">Volumen jaula</label>
-              <input
-                id="volumenJaula"
-                name="volumenJaula"
-                type="number" min="100" step="100" max="20000"
-                value={volumenJaula}
-                onChange={e => props.fijarVolumenJaula(e.target.value)}
-                style={{width: 60}}
-              /> m<sup>3</sup>
+              <label htmlFor="volumen-jaula">Volumen jaula</label>
+              <CampoNumerico
+                id="volumen-jaula"
+                value={produccion.volumenJaula}
+                suffix={' m3'}
+                style={{width: 80}}
+                onValueChange={e => props.fijarVolumenJaula(e.floatValue)} />
               <button
                 id="boton-mostrar-calculadora-volumen-jaula"
                 onClick={() => setMostrandoCalculadoraVolumen(true)}>
@@ -113,14 +98,11 @@ const Produccion = props => {
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <div>
               <label style={{ marginRight: 8 }} htmlFor="bfcr">bFCR</label>
-              <input
+              <CampoNumerico
                 id="bfcr"
-                name="bfcr"
-                type="number" min="1" step=".01" max="3"
-                defaultValue={bFCR}
-                onChange={e => props.fijarBFCR(e.target.value)}
-                style={{width: 45, marginRight: 32 }}
-              />
+                value={bFCR}
+                style={{width: 45, marginRight: 32}}
+                onValueChange={e => props.fijarBFCR(e.floatValue)} />
             </div>
             <div>
               <label style={{ marginRight: 8 }} htmlFor="efcr">eFCR</label>
@@ -135,14 +117,12 @@ const Produccion = props => {
             </div>
           </div>
           <label htmlFor="mortalidad">Mortalidad ciclo</label>
-          <input
+          <CampoNumerico
             id="mortalidad"
-            name="mortalidad"
-            type="number" min="0" step=".5" max="100"
-            defaultValue={produccion.mortalidad}
-            onChange={e => props.fijarMortalidad(e.target.value)}
+            value={produccion.mortalidad}
+            suffix={' %'}
             style={{width: 45}}
-          /> %
+            onValueChange={e => props.fijarMortalidad(e.floatValue)} />
           <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
@@ -152,15 +132,13 @@ const Produccion = props => {
               checked={produccion.objetivo === OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_PESO)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso cosecha:</label>
-            <input
-              id="peso-objetivo"
-              name="peso-objetivo"
-              type="number" min="500" step="50"
-              defaultValue={produccion.pesoObjetivo}
-              onChange={e => props.fijarPesoObjetivo(e.target.value)}
-              style={{width: 50, marginRight: 4}}
+            <CampoNumerico
+              id="peso-smolt"
+              value={produccion.pesoObjetivo}
+              suffix={' g'}
+              style={{width: 60}}
               onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
-            /> g
+              onValueChange={e => props.fijarPesoObjetivo(e.floatValue)} />
           </div>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
@@ -170,15 +148,12 @@ const Produccion = props => {
               checked={produccion.objetivo !== OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_FECHA)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="fecha-objetivo">Meses ciclo:</label>
-            <input
+            <CampoNumerico
               id="fecha-objetivo"
-              name="fecha-objetivo"
-              type="number" step="0.5"
-              defaultValue={mesesObjetivo}
-              onChange={e => props.fijarMesesObjetivo(e.target.value)}
-              style={{width: 48}}
+              value={mesesObjetivo}
+              style={{width: 45}}
               onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
-            />
+              onValueChange={e => props.fijarMesesObjetivo(e.floatValue)} />
           </div>
         </div>
       </div>
@@ -299,10 +274,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarFechaInicio(fecha))
   },
   fijarNumeroSmolts: n => {
-    dispatch(produccionActions.fijarNumeroSmolts(Number(n.replace(/,/g, ''))))
+    console.log(n);
+    dispatch(produccionActions.fijarNumeroSmolts(n))
   },
   fijarPesoSmolt: peso => {
-    dispatch(produccionActions.fijarPesoSmolt(Number(peso)))
+    dispatch(produccionActions.fijarPesoSmolt(peso))
   },
   fijarCostoSmolt: usd => {
     dispatch(produccionActions.fijarCostoSmolt(Number(usd)))
@@ -311,7 +287,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarMortalidad(Math.max(0, Math.min(Number(tasa), 100))))
   },
   fijarPesoObjetivo: g => {
-    dispatch(produccionActions.fijarPesoObjetivo(Math.min(PESO_OBJETIVO_MAXIMO, Math.max(Number(g), PESO_OBJETIVO_MINIMO))))
+    dispatch(produccionActions.fijarPesoObjetivo(g))
   },
   fijarAjusteCrecimiento: tasa => {
     dispatch(produccionActions.fijarAjusteCrecimiento(Number(tasa)))
