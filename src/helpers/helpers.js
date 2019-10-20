@@ -15,12 +15,41 @@ export const calcularCostoBaños = (medicamentos, tratamientos, numeroDeJaulas, 
     if (medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO) {
       const costoProducto = (medicamento.costoUnitario / 1000) * medicamento.dosisBaño * Number(numeroDeJaulas) * Number(volumenJaula)
       const costoBaño = costoProducto + (Number(medicamento.costoOperacional) * Number(numeroDeJaulas))
-      console.log({[medicamento.principioActivo]: costoBaño});
       return suma + costoBaño
     }
     return suma
   }, 0)
-  
+}
+
+export const calcularCostoEmamectina = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+  return Object.keys(tratamientos).reduce((suma, semana) => {
+    const { idMedicamento } = tratamientos[semana]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    if (medicamento.principioActivo === 'Emamectina') {
+      if (semana === '0'){
+        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+      }
+      const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
+      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+    }
+    return suma
+  }, 0)
+}
+
+export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+  return Object.keys(tratamientos).reduce((suma, semana) => {
+    const { idMedicamento } = tratamientos[semana]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    console.log(medicamento.nombre);
+    if (medicamento.nombre === 'Imvixa') {
+      if (semana === '0'){
+        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+      }
+      const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
+      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+    }
+    return suma
+  }, 0)
 }
 
 export const checkTratamientoEnSemanasAnteriores = (tratamientos, medicamentos, semana, principioActivo) => {

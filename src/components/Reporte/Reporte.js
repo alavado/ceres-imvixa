@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos,
-  calcularCostoBaños, calcularPTI } from '../../helpers/helpers'
+  calcularCostoBaños, calcularPTI, calcularCostoEmamectina, calcularCostoImvixa } from '../../helpers/helpers'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada,
   obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import {JORNADAS_POR_BAÑO_POR_JAULA, OBJETIVO_PESO } from "../../helpers/constantes";
@@ -51,10 +51,20 @@ const Reporte = ({ state }) => {
   //const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
   
   const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
-  const biomasaCosechadaImvixa = pesoFinalImvixa
+  const biomasaImvixa = curvaBiomasaImvixa.slice(-1)[0]
+  const biomasaTradicional = curvaBiomasaTradicional.slice(-1)[0]
+  const costoMarginalBañosImvixa = costoBañosImvixa / biomasaImvixa
+  const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
+  
+  // estrategia Tradicional
+  const costoEmamectinaTradicional = calcularCostoEmamectina(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
+  const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
+  // estrategia Imvixa
+  const costoEmamectinaImvixa = calcularCostoEmamectina(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
+  const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
+  console.log(costoEmamectinaTradicional);
+  console.log(costoImvixaImvixa);
 
-  const costoMarginalBañosImvixa = costoBañosImvixa/curvaBiomasaImvixa.slice(-1)[0]
-  const costoMarginalBañosTradicional = costoBañosTradicional/curvaBiomasaTradicional.slice(-1)[0]
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -73,13 +83,13 @@ const Reporte = ({ state }) => {
     },
     {
       nombre: 'Emamectina',
-      imvixa: 0,
-      tradicional: 0.005
+      imvixa: costoEmamectinaImvixa,
+      tradicional: costoEmamectinaTradicional
     },
     {
       nombre: 'Imvixa',
-      imvixa: 0.08,
-      tradicional: 0
+      imvixa: costoImvixaImvixa,
+      tradicional: costoImvixaTradicional
     },
     {
       nombre: 'Mortalidad incremental (%)',
