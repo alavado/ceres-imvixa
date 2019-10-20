@@ -2,7 +2,7 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import { OBJETIVO_PESO } from '../../../helpers/constantes';
 
-const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo, objetivo}) => {
+const GraficoCrecimiento = ({curvaTradicional, curvaImvixa, pesoObjetivo, objetivo}) => {
 
   const curvaMasLarga = curvaTradicional.length > curvaImvixa.length ? curvaTradicional : curvaImvixa
 
@@ -114,4 +114,4 @@ const GraficoCrecimiento2 = ({curvaTradicional, curvaImvixa, pesoObjetivo, objet
   );
 };
 
-export default GraficoCrecimiento2;
+export default GraficoCrecimiento;

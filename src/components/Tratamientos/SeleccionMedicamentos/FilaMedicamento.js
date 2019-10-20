@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import CampoNumerico from '../../Produccion/CampoNumerico';
 
 const FilaMedicamento = ({id, activarMedicamento, medicamentos}) => {
 
@@ -19,9 +20,9 @@ const FilaMedicamento = ({id, activarMedicamento, medicamentos}) => {
       </td>
       <td>{m.nombre}</td>
       <td>{m.principioActivo}</td>
-      <td>{m.activo && <><input type="text" value={m.costoUnitario} /><span>{`USD/${m.unidad}`}</span></>}</td>
-      <td>{m.activo && <><input type="text" value={m.costoOperacional} /><span>USD</span></>}</td>
-      <td>{m.activo && <><input type="text" value={m.mortalidad.toLocaleString(undefined, { minimumFractionDigits: 1 })} /><span>%</span></>}</td>
+      <td>{m.activo && <CampoNumerico value={m.costoUnitario} suffix={' USD'} />}</td>
+      <td>{m.activo && <CampoNumerico value={m.costoOperacional} suffix={' USD'} />}</td>
+      <td>{m.activo && <CampoNumerico value={m.mortalidad} suffix={' %'} />}</td>
     </tr>
   );
 };

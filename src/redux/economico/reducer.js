@@ -29,15 +29,6 @@ const economicoReducer = (state = initialState, action) => {
       const { nombre, porcentaje } = action.payload
       let porcentaje_anterior = state.estructuraCostos[nombre]
       let delta_porcentaje = porcentaje_anterior - porcentaje
-      if (nombre === 'alimento') {
-        // debiese calcular cual es la relacion entre alimento y smolt
-        // delta_porcentaje += cambio_por_relacion_alimento_smolt
-
-      }
-      if (nombre === 'smolts') {
-        // debiese calcular cual es la relacion entre alimento y smolt
-        // delta_porcentaje += cambio_por_relacion_alimento_smolt
-      }
       if (nombre === 'otros' || (delta_porcentaje < 0 && state.estructuraCostos.otros + delta_porcentaje < 0)) {
         return state
       }

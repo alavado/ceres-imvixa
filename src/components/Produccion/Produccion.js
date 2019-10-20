@@ -4,13 +4,11 @@ import produccionActions from '../../redux/produccion/actions'
 import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
-import { PESO_OBJETIVO_MAXIMO, PESO_OBJETIVO_MINIMO, OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
-import NumberFormat from 'react-number-format'
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 import CalculadoraVolumen from './CalculadoraVolumen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator } from '@fortawesome/free-solid-svg-icons';
-
-const CampoNumerico = props => <NumberFormat {...props} thousandSeparator={'.'} decimalSeparator={','} />
+import CampoNumerico from './CampoNumerico'
 
 const Produccion = props => {
 
