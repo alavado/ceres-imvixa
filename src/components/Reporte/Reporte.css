@@ -42,6 +42,8 @@
   font-size: 2em;
   margin-bottom: 36px;
   color: #2A2E57;
+  padding: 4px 16px;
+  border-left: 8px solid #EF7B10;
 }
 
 #reporte h2 {
@@ -185,7 +187,8 @@
 
 #reporte-estructura-costos {
   margin: 18px auto;
-  width: 70%
+  width: 70%;
+  text-align: center;
 }
 
 #reporte-estructura-costos th {
