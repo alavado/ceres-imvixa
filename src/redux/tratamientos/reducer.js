@@ -317,6 +317,34 @@ const tratamientosReducer = (state = initialState, action) => {
         }
       }
     }
+    case tratamientosActions.AGREGAR_MEDICAMENTO: {
+      const { nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula } = action.payload
+      return {
+        ...state,
+        medicamentos: [
+          ...state.medicamentos,
+          {
+            id: state.medicamentos.sort((m1, m2) => m1.id < m2.id ? 1 : -1)[0].id + 1,
+            nombre,
+            formaFarmaceutica,
+            principioActivo,
+            costoUnitario,
+            costoOperacional,
+            cantidadPorJaula,
+            empresa: '',
+            unidad: formaFarmaceutica === FARMACO_APLICACION_BAÑO ? 'lt' : 'kg',
+            dosisBaño: 1250,
+            duracion: 4,
+            mortalidad: 0,
+            color: '#1E88E5',
+            activo: false,
+            aplicaciones: 1,
+            factorFarmaco: 0,
+            factorMetodo: 0
+          }
+        ]
+      }
+    }
   }
 }
 

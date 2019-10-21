@@ -8,12 +8,14 @@ import { faPlusCircle as iconoAgregar } from '@fortawesome/free-solid-svg-icons'
 import FilaMedicamento from './FilaMedicamento';
 import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
 
-const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
+const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados, agregarMedicamento}) => {
 
   const [agregandoMedicamento, setAgregandoMedicamento] = useState({
-    [FARMACO_APLICACION_ORAL]: true,
-    [FARMACO_APLICACION_BAÑO]: true
+    [FARMACO_APLICACION_ORAL]: false,
+    [FARMACO_APLICACION_BAÑO]: false
   })
+
+  const [nuevoMedicamento, setNuevoMedicamento] = useState({})
 
   const activarAgregarMedicamento = (tipo, valor) => {
     setAgregandoMedicamento({
@@ -30,9 +32,9 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
         </div>
       </div>
       <div id="contenedor-ajustes">
-        {[FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO].map(tipoAplicacion => (
-          <React.Fragment key={`tipo-${tipoAplicacion}`}>
-            <h1>Medicamentos de aplicación {tipoAplicacion === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
+        {[FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO].map(formaFarmaceutica => (
+          <React.Fragment key={`tipo-${formaFarmaceutica}`}>
+            <h1>Medicamentos de aplicación {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
             <div>
               <table className="tabla-medicamentos">
                 <thead>
@@ -47,23 +49,32 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                   </tr>
                 </thead>
                 <tbody>
-                  {medicamentos.filter(m => m.formaFarmaceutica === tipoAplicacion).sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1).map((m, i) => (
+                  {medicamentos.filter(m => m.formaFarmaceutica === formaFarmaceutica).sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1).map((m, i) => (
                     <FilaMedicamento
-                      key={`tabla-medicamentos-${i}`}
+                      key={`tabla-medicamentos-${m.id}`}
                       id={m.id}
                       activarMedicamento={activarMedicamento}
                     />
                   ))}
-                  {agregandoMedicamento[tipoAplicacion] && <FilaNuevoMedicamento mostrar={v => activarAgregarMedicamento(tipoAplicacion, v)} />}
+                  {agregandoMedicamento[formaFarmaceutica] &&
+                    <FilaNuevoMedicamento
+                      nuevoMedicamento={nuevoMedicamento}
+                      setNuevoMedicamento={setNuevoMedicamento}
+                      formaFarmaceutica={formaFarmaceutica}
+                    />
+                  }
                 </tbody>
               </table>
-              {!agregandoMedicamento[tipoAplicacion] ?
+              {!agregandoMedicamento[formaFarmaceutica] ?
                 <div className="contenedor-boton-agregar-medicamento">
-                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(tipoAplicacion, true)} />
+                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} />
                 </div> :
                 <div className="botones-nuevo-medicamento">
-                  <button onClick={() => activarAgregarMedicamento(tipoAplicacion, false)}>Agregar</button>
-                  <button onClick={() => activarAgregarMedicamento(tipoAplicacion, false)}>Cancelar</button>
+                  <button onClick={() => {
+                    agregarMedicamento({...nuevoMedicamento, formaFarmaceutica})
+                    activarAgregarMedicamento(formaFarmaceutica, false)}
+                  }>Agregar</button>
+                  <button onClick={() => activarAgregarMedicamento(formaFarmaceutica, false)}>Cancelar</button>
                 </div>
               }
             </div>
@@ -77,7 +88,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
           {medicamentos
             .filter(m => m.activo)
             .map(m => (
-              <li>
+              <li key={`minilista-medicamentos-item-${m.id}`}>
                 <div className="cuadradito-medicamento" style={{ backgroundColor: m.color }}></div>{m.nombre}
               </li>
           ))}
@@ -93,7 +104,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   activarMedicamento: (id, valor) => dispatch(tratamientosActions.editarMedicamento(id, 'activo', valor)),
-  marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor))
+  marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor)),
+  agregarMedicamento: medicamento => {
+    const { nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula } = medicamento
+    console.log(medicamento);
+    dispatch(tratamientosActions.agregarMedicamento(nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula))
+  }
 })
 
 // certificacion parametro disp a pagar
