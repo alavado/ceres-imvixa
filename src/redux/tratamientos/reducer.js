@@ -1,5 +1,5 @@
 import tratamientosActions from './actions'
-import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
+import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL, COSTO_OPERACIONAL_BAÑO } from '../../helpers/constantes'
 
 const initialState = {
   medicamentos: [
@@ -11,7 +11,7 @@ const initialState = {
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.2,
       cantidadPorJaula: 0.72,
       duracion: 4,
@@ -49,7 +49,7 @@ const initialState = {
       principioActivo: 'Deltametrina',
       unidad: 'lt',
       costoUnitario: 750,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.3,
       cantidadPorJaula: 1.08,
       duracion: 3,
@@ -68,7 +68,7 @@ const initialState = {
       principioActivo: 'Peróxido de hidrógeno',
       unidad: 'lt',
       costoUnitario: 1420,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 1250,
       cantidadPorJaula: 4500,
       duracion: 4,
@@ -87,7 +87,7 @@ const initialState = {
       principioActivo: 'Cipermetrina',
       unidad: 'lt',
       costoUnitario: 1000,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.375,
       cantidadPorJaula: 1.35,
       duracion: 3,
@@ -125,7 +125,7 @@ const initialState = {
       principioActivo: 'Hexaflumuron',
       unidad: 'lt',
       costoUnitario: 0.37,  // no hay que buscarlo qele qe aksd
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 20,
       cantidadPorJaula: 72,
       duracion: 16,
@@ -163,7 +163,7 @@ const initialState = {
       principioActivo: 'Deltametrina',
       unidad: 'lt',
       costoUnitario: 750,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.3,
       cantidadPorJaula: 1.08,
       duracion: 3,
@@ -182,7 +182,7 @@ const initialState = {
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.2,
       cantidadPorJaula: 0.72,
       duracion: 4,
@@ -201,7 +201,7 @@ const initialState = {
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 770,
-      costoOperacional: 1,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.2,
       cantidadPorJaula: 0.72,
       duracion: 4,

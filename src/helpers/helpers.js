@@ -8,7 +8,51 @@ export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos) =
   }).length
 }
 
-export const checkSemanasAnteriores = (tratamientos, medicamentos, semana, principioActivo) => {
+export const calcularCostoBaños = (medicamentos, tratamientos, numeroDeJaulas, volumenJaula) => {
+  return Object.keys(tratamientos).reduce((suma, key) => {
+    const { idMedicamento } = tratamientos[key]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    if (medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO) {
+      const costoProducto = (medicamento.costoUnitario / 1000) * medicamento.dosisBaño * Number(numeroDeJaulas) * Number(volumenJaula)
+      const costoBaño = costoProducto + (Number(medicamento.costoOperacional) * Number(numeroDeJaulas))
+      return suma + costoBaño
+    }
+    return suma
+  }, 0)
+}
+
+export const calcularCostoEmamectina = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+  return Object.keys(tratamientos).reduce((suma, semana) => {
+    const { idMedicamento } = tratamientos[semana]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    if (medicamento.principioActivo === 'Emamectina') {
+      if (semana === '0'){
+        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+      }
+      const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
+      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+    }
+    return suma
+  }, 0)
+}
+
+export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+  return Object.keys(tratamientos).reduce((suma, semana) => {
+    const { idMedicamento } = tratamientos[semana]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    console.log(medicamento.nombre);
+    if (medicamento.nombre === 'Imvixa') {
+      if (semana === '0'){
+        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+      }
+      const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
+      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+    }
+    return suma
+  }, 0)
+}
+
+export const checkTratamientoEnSemanasAnteriores = (tratamientos, medicamentos, semana, principioActivo) => {
   const semanas = Object.keys(tratamientos).map(s => Number(s))
   const semanasMenores = semanas.filter(s => s > semana - 52 && s < semana)
   return semanasMenores.reduce((obj, v) => medicamentos.
@@ -19,7 +63,7 @@ export const calcularPTI = (medicamentos, tratamientos) => {
   const semanas = Object.keys(tratamientos).sort((a,b) => Number(a) > Number(b) ? 1 : -1)
   const pti = semanas.reduce((obj, semana, i) => {
     const {factorFarmaco, factorMetodo, principioActivo} = medicamentos.find(m => m.id === tratamientos[semana].idMedicamento)
-    const factorResistencia = checkSemanasAnteriores(tratamientos, medicamentos, semana, principioActivo)? 2 : 1 
+    const factorResistencia = checkTratamientoEnSemanasAnteriores(tratamientos, medicamentos, semana, principioActivo)? 2 : 1 
     let calculoParcial = factorResistencia * factorFarmaco * factorMetodo
     return {
       ...obj,
