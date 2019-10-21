@@ -48,23 +48,23 @@ const Economico = props => {
           <label htmlFor="costo-smolt">Costo smolt</label>
           <CampoNumerico
             id="costo-smolts"
-            style={{width: 78 }}
+            style={{ width: 78 }}
             suffix={' USD'}
-            value={produccion.costoSmolt}
+            value={costoSmolt}
             onValueChange={e => props.fijarCostoSmolt(e.floatValue)} />
           <label htmlFor="costo-alimento">Costo por kilo de alimento</label>
           <CampoNumerico
             id="costo-alimento"
-            style={{width: 78 }}
+            style={{ width: 78 }}
             suffix={' USD'}
-            value={produccion.costoAlimento}
+            value={costoAlimento}
             onValueChange={e => props.fijarCostoAlimento(e.floatValue)} />
           {!mostrarEstructura ?
             <>
               <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
               <CampoNumerico
                 id="porcentaje-alimento"
-                style={{width: 78 }}
+                style={{ width: 78 }}
                 suffix={' %'}
                 value={estructuraCostos.alimento}
                 onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
@@ -162,7 +162,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fijarCostoAlimento: costo => dispatch(economicoActions.fijarCostoAlimento(costo)),
+  fijarCostoAlimento: costo => {
+    console.log(costo);
+    dispatch(economicoActions.fijarCostoAlimento(costo))
+  },
   fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, Math.min(100, porcentaje))),
   fijarValorKiloProducido: valor => dispatch(economicoActions.fijarValorKiloProducido(valor)),
   fijarCostoSmolt: valor => dispatch(economicoActions.fijarCostoSmolt(valor))
