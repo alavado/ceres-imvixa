@@ -73,7 +73,7 @@ const Reporte = ({ state }) => {
   const costoProduccionImvixa = (costoTotalImvixa - costosOtrosImvixa - costoSmolts) / biomasaImvixa
   const costoProduccionSinAlimentoImvixa = costoProduccionImvixa - (costoTotalAlimentoImvixa / biomasaImvixa)
   const costoAyunoImvixa = (costoProduccionSinAlimentoImvixa / curvaImvixa.length) * numeroBañosImvixa * 3
-  const costoProduccionSinAyunoImvixa = costoProduccionImvixa - costoAyunoImvixa
+  const costoProduccionSinAyunoImvixa = costoProduccionImvixa - costoAyunoImvixa + costoSmolts / biomasaImvixa
   // const costoMarginalImvixa = costoProduccionSinAyunoImvixa + costoAyunoImvixa + costoBañosImvixa + costoEmamectinaImvixa + costoImvixaImvixa
   // economicos estrategia Tradicional
   const deltaPesoTradicional = pesoFinalTradicional - pesoSmolt / 1000
@@ -83,11 +83,12 @@ const Reporte = ({ state }) => {
   const costoTotalAlimentoTradicional = costoTotalTradicional * (estructuraCostos.alimento / 100)
   const costoProduccionTradicional = (costoTotalTradicional - costosOtrosTradicional - costoSmolts) / biomasaTradicional
   const costoAyunoTradicional = (costoProduccionDia * numeroBañosTradicional * 3) / biomasaTradicional
-  const costoProduccionSinAyunoTradicional = costoProduccionTradicional - costoAyunoTradicional
+  const costoProduccionSinAyunoTradicional = costoProduccionTradicional - costoAyunoTradicional + costoSmolts / biomasaTradicional
   console.log({costoTotalImvixa, costoTotalTradicional})
   console.log({costoProduccionDia});
   console.log({biomasaTradicional, biomasaImvixa});
   console.log({costoProduccionTradicional, costoProduccionImvixa});
+  console.log(costoSmolts);
 
 
   const imprimirPDF = () => {
