@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import GraficoNiveles from './GraficoNiveles/';
 import logoElanco from '../../assets/elanco.svg'
+import GraficoPTI from './GraficoPTI';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -291,15 +292,40 @@ const Reporte = ({ state }) => {
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>3.1 Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      {/* <GraficoPTI
+        ptiImvixa={ptiImvixa}
+        ptiTradicional={ptiTradicional}
+      /> */}
+      <table className="tabla-reporte">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Estrategia Imvixa</th>
+            <th>Estrategia Tradicional</th>
+            <th>Certificación ASC</th>
+            <th>Distancia a Certificación estrategia Imvixa</th>
+            <th>Distancia a Certificación estrategia Tradicional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Indíce de tratamiento antiparasitario (PTI)</td>
+            <td>{ptiImvixa.suma}</td>
+            <td>{ptiTradicional.suma}</td>
+            <td>{13.0}</td>
+            <td>{ptiImvixa.suma - 13}</td>
+            <td>{ptiTradicional.suma - 13}</td>
+          </tr>
+        </tbody>
+      </table>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles
         mortalidades={{
-          imvixa: mortalidad,
-          tradicional: mortalidad + .31
+          imvixa: mortalidad + numeroBañosImvixa * 0.06,
+          tradicional: mortalidad + numeroBañosTradicional * .06
         }}
       />
-      <h3>4.2 Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
         <h3>Tratamientos estrategia Imvixa e índice de tratamiento antiparasitario (PTI)</h3>

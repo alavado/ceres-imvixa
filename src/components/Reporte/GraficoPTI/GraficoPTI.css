@@ -1,0 +1,19 @@
+#grafico-pti {
+  margin: 90px auto;
+}
+
+#contenedor-marcadores-pti {
+  display: flex;
+  flex-direction: row;
+  margin: 0px auto;
+}
+
+#barra-pti {
+  display: flex;
+  height: 30px;
+  background: rgba(255,255,255,1);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 22%, rgba(18,180,170,1) 100%);
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 0px auto;
+}

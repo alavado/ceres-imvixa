@@ -196,15 +196,17 @@
   font-weight: bold;
   color: #2A2E57;
   background: #ECEFF1;
-  text-transform: capitalize;
   vertical-align: middle;
   padding: 6px 10px;
   border-bottom: 2px solid #2A2E57;
 }
 
+#reporte-estructura-costos th:last-child {
+  text-transform: none;
+}
+
 #reporte-estructura-costos td {
   font-size: 1.0em;
-  text-transform: capitalize;
   vertical-align: middle;
   padding: 6px 10px;
 }
@@ -234,7 +236,6 @@
   font-weight: bold;
   color: #2A2E57;
   background: #ECEFF1;
-  text-transform: capitalize;
   vertical-align: middle;
   padding: 6px 10px;
   border-bottom: 2px solid #2A2E57;
@@ -257,17 +258,20 @@
   background: #ECEFF1;
 }
 
-#cuadros-reporte-estrategias{
+#cuadros-reporte-estrategias {
   display: flex;
   text-align: center;
+  margin-top: 0px;
 }
 
-#fondo-reporte-estrategia-b{
+#fondo-reporte-estrategia-b {
   flex: 1;
+  margin-top: 0px;
 }
 
-#fondo-reporte-estrategia-a{
+#fondo-reporte-estrategia-a {
   flex: 1;
+  margin-top: 0px;
 }
 
 #fondo-reporte-estrategia-b > h1 {
@@ -296,25 +300,27 @@
   text-align: center;
 }
 
-.resultados-reporte-estrategia {
+#reporte .resultados-reporte-estrategia {
   padding: 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #263238;
-}
-
-
-.resultados-reporte-estrategia h2 {
-  text-align: center;
   margin-top: 0px;
-  font-size: 1.2em;
-  background-color: red;
 }
 
+#reporte .resultados-reporte-estrategia h2 {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 3em;
+  font-weight: bold;
+  border: 0;
+  padding: 0;
+}
 
-.resultados-reporte-estrategia p {
+#reporte .resultados-reporte-estrategia p {
   width: 160px;
   text-align: center;
-  font-size: 1.2em;
+  font-size: .8em;
+  margin-top: 0;
 }
