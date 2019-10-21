@@ -249,7 +249,7 @@ const Produccion = props => {
             <div className="fondo-cuadro-biomasa">
               <h1>Biomasa cosechada</h1>
               <div className="resultados-estrategia">
-                <h2>{Math.round(curvaBiomasa.slice(-1)[0] / 1000.0).toLocaleString(undefined, { maximumFractionDigits: 0})} ton</h2>
+                <h2>{Math.round(curvaBiomasa.slice(-1)[0] / 1000.0).toLocaleString('de-DE', { maximumFractionDigits: 0})} ton</h2>
                 <p>sin considerar tratamientos</p>
               </div>
             </div>

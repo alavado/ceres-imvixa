@@ -30,6 +30,11 @@ const Economico = props => {
   const costoTotal = costoTotalAlimento / (estructuraCostos.alimento / 100)
   const costoOtros = costoTotal * (1 - (estructuraCostos.alimento / 100)) - costoSmolts
 
+  const costoProporcionalSmolt = Math.round(100 * costoSmolts / biomasaCosechada) / 100.0
+  const otrosCostos = Math.round(100 * costoOtros / biomasaCosechada) / 100.0
+  const costoProporcionalAlimento = Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0
+  const costoProporcionalTotal = (costoProporcionalSmolt + otrosCostos + costoProporcionalAlimento).toLocaleString(undefined, { maximumFractionDigits: 2})
+
   return (
     <>
       <div id="contenido-economicos" className="contenido">
@@ -79,6 +84,7 @@ const Economico = props => {
                             suffix={' %'}
                             disabled={elemento === 'otros'}
                             value={estructuraCostos[elemento]}
+                            decimalScale={1}
                             onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.floatValue)} />
                         </div>
                       </td>
@@ -104,11 +110,7 @@ const Economico = props => {
                 labels: ['Costo smolt', 'Otros costos','Costo alimento', ],
                 datasets: [
                   {
-                    data: [
-                      Math.round(100 * costoSmolts / biomasaCosechada) / 100.0, 
-                      Math.round(100 * costoOtros / biomasaCosechada) / 100.0,
-                      Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0, 
-                    ],        
+                    data: [costoProporcionalSmolt, otrosCostos, costoProporcionalAlimento],        
                     backgroundColor: ['#FB6E45', '#91A7B0', '#6AB96F' ],
                   }
                 ]
@@ -138,29 +140,15 @@ const Economico = props => {
             />
           }
           </div>
-          {/* <div className="cuadro-economicos">
+          <div className="cuadro-economicos">
             <div className="fondo-cuadro-economicos">
-              <h1>Costo alimento</h1>
+              <h1>Costo por kg de alimento</h1>
               <div className="resultados-estrategia">
-                <h2>xx ton</h2>
+                <h2>{costoProporcionalTotal} USD</h2>
                 <p>sin considerar tratamientos</p>
               </div>
             </div>
-            <div className="fondo-cuadro-economicos">
-              <h1>Costo alimento</h1>
-              <div className="resultados-estrategia">
-                <h2>xx ton</h2>
-                <p>sin considerar tratamientos</p>
-              </div>
-            </div>
-            <div className="fondo-cuadro-economicos">
-              <h1>Costo alimento</h1>
-              <div className="resultados-estrategia">
-                <h2>xx ton</h2>
-                <p>sin considerar tratamientos</p>
-              </div>
-            </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </>

@@ -272,6 +272,15 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     case tratamientosActions.EDITAR_MEDICAMENTO: {
       const { id, propiedad, valor } = action.payload
+      if (propiedad === 'costoOperacional') {
+        return {
+          ...state,
+          medicamentos: state.medicamentos.map(m => m.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? {
+            ...m,
+            costoOperacional: valor
+          } : m)
+        }
+      }
       return {
         ...state,
         medicamentos: [...state.medicamentos.filter(m => m.id !== id),

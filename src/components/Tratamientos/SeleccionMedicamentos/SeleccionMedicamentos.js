@@ -11,8 +11,8 @@ import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados}) => {
 
   const [agregandoMedicamento, setAgregandoMedicamento] = useState({
-    [FARMACO_APLICACION_ORAL]: false,
-    [FARMACO_APLICACION_BAÑO]: false
+    [FARMACO_APLICACION_ORAL]: true,
+    [FARMACO_APLICACION_BAÑO]: true
   })
 
   const activarAgregarMedicamento = (tipo, valor) => {
@@ -41,8 +41,9 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                     <th>Nombre comercial</th>
                     <th>Principio activo</th>
                     <th>Costo unitario</th>
-                    <th>Costo operacional</th>
-                    <th>Mortalidad</th>
+                    <th>Dosis por m3 de agua</th>
+                    <th>Costo operacional por baño</th>
+                    <th>Mortalidad por jaula</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,9 +57,15 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                   {agregandoMedicamento[tipoAplicacion] && <FilaNuevoMedicamento mostrar={v => activarAgregarMedicamento(tipoAplicacion, v)} />}
                 </tbody>
               </table>
-              <div className="contenedor-boton-agregar-medicamento">
-                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(tipoAplicacion, true)} />
-              </div>
+              {!agregandoMedicamento[tipoAplicacion] ?
+                <div className="contenedor-boton-agregar-medicamento">
+                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(tipoAplicacion, true)} />
+                </div> :
+                <div className="botones-nuevo-medicamento">
+                  <button onClick={() => activarAgregarMedicamento(tipoAplicacion, false)}>Agregar</button>
+                  <button onClick={() => activarAgregarMedicamento(tipoAplicacion, false)}>Cancelar</button>
+                </div>
+              }
             </div>
           </React.Fragment>
         ))}
