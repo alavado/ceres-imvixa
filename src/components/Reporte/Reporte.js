@@ -204,7 +204,7 @@ const Reporte = ({ state }) => {
         </div>
       </div>
       <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
-      <h3>Impactos laborales</h3>
+      <h3>2.1 Impactos laborales por ciclo</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -229,7 +229,7 @@ const Reporte = ({ state }) => {
           </tr>
         </tbody>
       </table>
-      <h3>Cantidad de productos vertidos al mar</h3>
+      <h3>2.2 Cantidad de productos vertidos al mar por ciclo</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -256,17 +256,17 @@ const Reporte = ({ state }) => {
         </tbody>
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
-      <h3>Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
-      <h3>Estimación beneficios incrementales por biomasa producida</h3>
+      <h3>3.1 Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      <h3>3.2 Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
-      <h3>Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
+      <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles
         mortalidades={{
           imvixa: mortalidad,
           tradicional: mortalidad + .31
         }}
       />
-      <h3>Estimación beneficios incrementales por biomasa producida</h3>
+      <h3>4.2 Estimación beneficios incrementales por biomasa producida</h3>
       <div id="anexos">
         <h2>Anexos</h2>
         <h3>Tratamientos estrategia Imvixa e índice de tratamiento antiparasitario (PTI)</h3>
