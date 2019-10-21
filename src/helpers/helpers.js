@@ -40,7 +40,6 @@ export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsIn
   return Object.keys(tratamientos).reduce((suma, semana) => {
     const { idMedicamento } = tratamientos[semana]
     const medicamento = medicamentos.find(m => m.id === idMedicamento)
-    console.log(medicamento.nombre);
     if (medicamento.nombre === 'Imvixa') {
       if (semana === '0'){
         return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)

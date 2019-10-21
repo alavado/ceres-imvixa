@@ -14,12 +14,12 @@ import logoElanco from '../../assets/elanco.svg'
 const { ipcRenderer } = window.require('electron');
 
 const Reporte = ({ state }) => {
-  const { estructuraCostos } = state.economico
+  const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo,
-    numeroSmolts, bFCR, numeroJaulas, volumenJaula, mortalidad } = state.produccion
+    numeroSmolts, bFCR, numeroJaulas, volumenJaula, mortalidad, eFCR } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
-  const numeroBañosImixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
+  const numeroBañosImvixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
@@ -47,8 +47,6 @@ const Reporte = ({ state }) => {
   // Imvixa
   const pesoGanadoImvixa = curvaBiomasaImvixa.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
   const pesoMuertoImvixa = curvaBiomasaPerdidaImvixa.slice(-1)[0]
-  const cantidadAlimentoImvixa = (pesoGanadoImvixa + pesoMuertoImvixa) * bFCR
-  //const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
   
   const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
   const biomasaImvixa = curvaBiomasaImvixa.slice(-1)[0]
@@ -57,13 +55,39 @@ const Reporte = ({ state }) => {
   const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
   
   // estrategia Tradicional
+  const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
   const costoEmamectinaTradicional = calcularCostoEmamectina(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
   const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
   // estrategia Imvixa
   const costoEmamectinaImvixa = calcularCostoEmamectina(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
   const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
-  console.log(costoEmamectinaTradicional);
-  console.log(costoImvixaImvixa);
+  
+  // economicos estrategia Imvixa
+  const costoSmolts = numeroSmolts * costoSmolt
+  const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000
+  const cantidadAlimentoImvixa = deltaPesoImvixa * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
+  const costoTotalAlimentoImvixa = costoAlimento * cantidadAlimentoImvixa
+  const costoTotalImvixa = costoTotalAlimentoImvixa / (estructuraCostos.alimento / 100)
+  const costosOtrosImvixa = costoBañosImvixa + costoEmamectinaImvixa + costoImvixaImvixa
+  const costoProduccionDia = (costoTotalImvixa - costosOtrosImvixa - costoTotalAlimentoImvixa - costoSmolts) / curvaImvixa.length
+  const costoProduccionImvixa = (costoTotalImvixa - costosOtrosImvixa - costoSmolts) / biomasaImvixa
+  const costoProduccionSinAlimentoImvixa = costoProduccionImvixa - (costoTotalAlimentoImvixa / biomasaImvixa)
+  const costoAyunoImvixa = (costoProduccionSinAlimentoImvixa / curvaImvixa.length) * numeroBañosImvixa * 3
+  const costoProduccionSinAyunoImvixa = costoProduccionImvixa - costoAyunoImvixa
+  // const costoMarginalImvixa = costoProduccionSinAyunoImvixa + costoAyunoImvixa + costoBañosImvixa + costoEmamectinaImvixa + costoImvixaImvixa
+  // economicos estrategia Tradicional
+  const deltaPesoTradicional = pesoFinalTradicional - pesoSmolt / 1000
+  const cantidadAlimentoTradicional = deltaPesoTradicional * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
+  const costosOtrosTradicional = costoBañosTradicional + costoEmamectinaTradicional + costoImvixaTradicional
+  const costoTotalTradicional = (costoProduccionDia * curvaTradicional.length + costosOtrosTradicional + costoSmolts) / (1 - estructuraCostos.alimento/ 100) //costoTotalAlimentoTradicional / (estructuraCostos.alimento / 100)
+  const costoTotalAlimentoTradicional = costoTotalTradicional * (estructuraCostos.alimento / 100)
+  const costoProduccionTradicional = (costoTotalTradicional - costosOtrosTradicional - costoSmolts) / biomasaTradicional
+  const costoAyunoTradicional = (costoProduccionDia * numeroBañosTradicional * 3) / biomasaTradicional
+  const costoProduccionSinAyunoTradicional = costoProduccionTradicional - costoAyunoTradicional
+  console.log({costoTotalImvixa, costoTotalTradicional})
+  console.log({costoProduccionDia});
+  console.log({biomasaTradicional, biomasaImvixa});
+  console.log({costoProduccionTradicional, costoProduccionImvixa});
 
 
   const imprimirPDF = () => {
@@ -78,8 +102,8 @@ const Reporte = ({ state }) => {
     },
     {
       nombre: 'Ayunos',
-      imvixa: 0.07,
-      tradicional: 0.08
+      imvixa: costoAyunoImvixa,
+      tradicional: costoAyunoTradicional
     },
     {
       nombre: 'Emamectina',
@@ -92,14 +116,9 @@ const Reporte = ({ state }) => {
       tradicional: costoImvixaTradicional
     },
     {
-      nombre: 'Mortalidad incremental (%)',
-      imvixa: 0,
-      tradicional: 0.03
-    },
-    {
       nombre: 'Producción',
-      imvixa: 3.31,
-      tradicional: 3.47
+      imvixa: costoProduccionSinAyunoImvixa,
+      tradicional: costoProduccionSinAyunoTradicional
     }
   ]
 
@@ -128,7 +147,7 @@ const Reporte = ({ state }) => {
         <div>
           <h3>TERAPIA CON IMVIXA</h3>
           {lenguetas.map((lengueta, i) => {
-            const anchoLengueta = (i < 5 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
+            const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
             return (
               <div>
                 <div className="lengueta" style={{
@@ -161,7 +180,7 @@ const Reporte = ({ state }) => {
       <div>
         <h3>TERAPIA TRADICIONAL</h3>
         {lenguetas.map((lengueta, i) => {
-          const anchoLengueta = (i < 5 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
+          const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
           return (
             <div>
               <div className="lengueta" style={{
@@ -197,15 +216,15 @@ const Reporte = ({ state }) => {
         <tbody>
           <tr>
             <td>Número de Baños</td>
-            <td>{numeroBañosImixa}</td>
+            <td>{numeroBañosImvixa}</td>
             <td>{numeroBañosTradicional}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImixa)}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa)}</td>
           </tr>
           <tr>
             <td>Jornadas laborales por concepto de baños</td>
-            <td>{numeroBañosImixa * jornadasPorBaño}</td>
+            <td>{numeroBañosImvixa * jornadasPorBaño}</td>
             <td>{numeroBañosTradicional * jornadasPorBaño}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImixa) * jornadasPorBaño}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa) * jornadasPorBaño}</td>
           </tr>
         </tbody>
       </table>
