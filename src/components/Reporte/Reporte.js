@@ -143,6 +143,40 @@ const Reporte = ({ state }) => {
         <li>Centro: <span>1029930</span></li>
         <li>Fecha: <span>17 de octubre de 2019</span></li>
       </ul>
+      <div id="contenido-resumen-reporte">
+      <div id="cuadros-reporte-estrategias">
+        <div id="fondo-reporte-estrategia-b">
+          <h1>Estrategia tradicional</h1>
+            <div className="resultados-reporte-estrategia">
+              {objetivo === OBJETIVO_PESO ?
+                <>
+                  <h2>{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <p>meses para alcanzar el peso de cosecha</p>
+                </> :
+                <>
+                  <h2>{(Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <p>kg a la cosecha</p>
+                </>
+              }
+            </div>
+        </div>
+        <div id="fondo-reporte-estrategia-a">
+          <h1>Estrategia Imvixa</h1>
+            <div className="resultados-reporte-estrategia">
+              {objetivo === OBJETIVO_PESO ?
+                <>
+                  <h2>{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <p>meses para alcanzar el peso de cosecha</p>
+                </> :
+                <>
+                  <h2>{(Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <p>kg a la cosecha</p>
+                </>
+              }
+            </div>
+        </div>
+      </div>
+      </div>
       <h2>1. IMPACTO PRODUCTIVO</h2>
       <div id="comparacion">
         <div>
@@ -257,7 +291,6 @@ const Reporte = ({ state }) => {
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>3.1 Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
-      <h3>3.2 Estimación beneficios incrementales por biomasa producida</h3>
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles

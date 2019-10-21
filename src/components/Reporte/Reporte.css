@@ -256,3 +256,63 @@
 .tabla-reporte tr:nth-child(even) {
   background: #ECEFF1;
 }
+
+#cuadros-reporte-estrategias{
+  display: flex;
+  text-align: center;
+}
+
+#fondo-reporte-estrategia-b{
+  flex: 1;
+}
+
+#fondo-reporte-estrategia-a{
+  flex: 1;
+}
+
+#fondo-reporte-estrategia-b > h1 {
+  border-left: 0px;
+  padding: 8px 16px;  
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: #5F7D8B;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: white;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+#fondo-reporte-estrategia-a > h1 {
+  border-left: 0px;
+  padding: 8px 16px;
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: #EF7B10;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: white;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.resultados-reporte-estrategia {
+  padding: 0px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #263238;
+}
+
+
+.resultados-reporte-estrategia h2 {
+  text-align: center;
+  margin-top: 0px;
+}
+
+
+.resultados-reporte-estrategia p {
+  width: 160px;
+  text-align: center;
+  font-size: 1.2em;
+}

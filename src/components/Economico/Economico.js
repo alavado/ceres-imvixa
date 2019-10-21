@@ -142,10 +142,10 @@ const Economico = props => {
           </div>
           <div className="cuadro-economicos">
             <div className="fondo-cuadro-economicos">
-              <h1>Costo por kg de alimento</h1>
+              <h1>Costo ex-jaula/kg producido</h1>
               <div className="resultados-estrategia">
                 <h2>{costoProporcionalTotal} USD</h2>
-                <p>sin considerar tratamientos</p>
+                <p>estimado sin considerar tratamientos</p>
               </div>
             </div>
           </div>
