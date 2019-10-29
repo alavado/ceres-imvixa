@@ -10,7 +10,7 @@ const GraficoCrecimiento = ({curvaTradicional, curvaImvixa, pesoObjetivo, objeti
     labels: curvaMasLarga.map((v, dia) => dia),//curvaMasLarga.reduce((arr, v, i) => (i + 1) % 7 === 1 || i === curvaMasLarga.length - 1 ? [...arr, v[0]] : arr, []),
     datasets: [
       {
-        label: 'Tradicional',
+        label: 'Estrategia 1',
         fill: false,
         lineTension: 0.1,
         backgroundColor: '#5F7D8B',
@@ -31,7 +31,7 @@ const GraficoCrecimiento = ({curvaTradicional, curvaImvixa, pesoObjetivo, objeti
         data: curvaTradicional
       },
       {
-        label: 'Imvixa',
+        label: 'Estrategia 2',
         fill: false,
         lineTension: 0.1,
         backgroundColor: '#EF7B10',

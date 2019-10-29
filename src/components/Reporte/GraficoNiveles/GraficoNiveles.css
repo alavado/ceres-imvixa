@@ -4,6 +4,7 @@
   justify-content: center;
   width: 960px;
   padding-bottom: 32px;
+  padding-top: 32px;
 }
 
 #nombres-niveles-bioseguridad {
@@ -34,10 +35,10 @@
 }
 
 #termometro-bioseguridad {
-  background: rgb(212,2,2);
   background: linear-gradient(180deg, rgba(212,2,2,1) 0%, rgba(210,221,69,1) 66%, rgba(0,255,161,1) 100%);
   width: 48px;
   border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.253);
 }
 
 div[id^="regulacion"] {
@@ -53,7 +54,9 @@ div[id^="regulacion"] {
 }
 
 #regulacion-imvixa > p {
-  margin-top: 3px;
+  margin-top: 0px;
+  height: 10px;
+  background-color: #EF7B10;
 }
 
 #regulacion-tradicional {
@@ -61,12 +64,46 @@ div[id^="regulacion"] {
 }
 
 #regulacion-tradicional > p {
-  margin-top: -5px;
+  margin-top: -52px;
+  background-color: #5F7D8B;
 }
 
 div[id^="regulacion"] > p {
-  margin-left: 52px;
+  margin-left: 72px;
   margin-top: -4px;
   width: 200px;
   font-size: .8em;
+  background: black;
+  color: white;
+  padding: 20px 10px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+}
+
+div[id^="regulacion"] > p > span {
+  position: absolute;
+}
+
+#regulacion-imvixa > p > span {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 45px;
+  border-style: solid;
+  border-width: 0 30px 20px 0;
+  border-color: transparent #EF7B10 transparent transparent;
+}
+
+#regulacion-tradicional > p > span {
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 1px;
+  left: 45px;
+  border-style: solid;
+  border-width: 0 0 20px 30px;
+  border-color: transparent transparent #5F7D8B transparent;
+
 }

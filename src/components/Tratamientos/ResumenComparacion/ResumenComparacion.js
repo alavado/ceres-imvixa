@@ -35,7 +35,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
         </div>
         <div id="cuadros-estrategias">
           <div id="fondo-estrategia-b">
-            <h1>Estrategia tradicional</h1>
+            <h1>Estrategia 1</h1>
               <div className="resultados-estrategia">
                 {objetivo === OBJETIVO_PESO ?
                   <>
@@ -50,7 +50,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
               </div>
           </div>
           <div id="fondo-estrategia-a">
-            <h1>Estrategia Imvixa</h1>
+            <h1>Estrategia 2</h1>
               <div className="resultados-estrategia">
                 {objetivo === OBJETIVO_PESO ?
                   <>

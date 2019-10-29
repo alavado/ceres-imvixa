@@ -10,13 +10,14 @@ import { OBJETIVO_PESO } from '../../helpers/constantes'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 import { calcularNumeroDeBaños } from '../../helpers/helpers'
 import SeleccionMedicamentos from './SeleccionMedicamentos'
+import CampoNumerico from '../Produccion/CampoNumerico'
 
 const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
           marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
   const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
-
+  
   let curvaImvixa, curvaTradicional
 
   if (objetivo === OBJETIVO_PESO) {
@@ -65,10 +66,10 @@ const Tratamientos = props => {
       .filter(m =>
         m.activo &&
         ((semana === 0 && (
-          (estrategia === 'tradicional' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL && m.nombre !== 'Imvixa') ||
-          (estrategia === 'imvixa' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL && m.nombre === 'Imvixa'))) ||
+          (estrategia === 'tradicional' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL/* && m.nombre !== 'Imvixa'*/) ||
+          (estrategia === 'imvixa' && m.formaFarmaceutica === FARMACO_APLICACION_ORAL/* && m.nombre === 'Imvixa'*/))) ||
         (semana !== 0 && (m.formaFarmaceutica === FARMACO_APLICACION_BAÑO || (
-          (estrategia === 'tradicional' && m.nombre !== 'Imvixa') ||
+          (estrategia === 'tradicional' && m.nombre === 'Imvixa'/*m.nombre !== 'Imvixa'*/) ||
           (estrategia === 'imvixa' && m.nombre === 'Imvixa'))))))
       .sort((m1, m2) => m1.nombre > m2.nombre ? 1 : -1)
     setMedicamentosDisponibles(meds)
@@ -113,7 +114,8 @@ const Tratamientos = props => {
   }
 
   const medicamentoImvixa = medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa')
-
+  const pesoDeAplicacion = Math.max(pesoSmolt - 20, 40)
+  
   const construirCalendario = estrategia => {
     let semanas = []
     let diasTratamientoVigente = 0
@@ -175,7 +177,7 @@ const Tratamientos = props => {
                   className="contenedor-tratamientos-estrategia"
                 >
                   <div className="contenedor-header-calendario">
-                    <h2>Semanas estrategia {estrategia}</h2>
+                    <h2>Semanas estrategia {estrategia === 'imvixa' ? '2' : '1'}</h2>
                     <div className="numero-baños">
                       <div>
                         {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos)}
@@ -214,14 +216,30 @@ const Tratamientos = props => {
               </div>
               <div style={{display: 'flex'}}>
                 <div>
-                  <label htmlFor="dia-nuevo-tratamiento">Día aplicación</label>
-                  <select
-                    id="dia-nuevo-tratamiento"
-                    onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
-                    value={nuevoTratamiento.dia}
-                  >
-                    {dias.map(dia => <option key={dia} value={dia}>{dia}</option>)}
-                  </select>
+                  {
+                    nuevoTratamiento.semana === 0 ? 
+                    <>
+                      <label htmlFor="peso-tratamiento-antes">Peso de aplicación</label>
+                      <CampoNumerico
+                        id="peso-tratamiento-antes"
+                        value={pesoDeAplicacion}
+                        suffix={' g'}
+                        style={{width: 60}}
+                        onValueChange={e => setNuevoTratamiento({...nuevoTratamiento, pesoDeAplicacion: e.target.value})} />
+                    </>
+                    :
+                    <>
+                      <label htmlFor="dia-nuevo-tratamiento">Día aplicación</label>
+                      <select
+                        id="dia-nuevo-tratamiento"
+                        onChange={e => setNuevoTratamiento({...nuevoTratamiento, dia: e.target.value})}
+                        value={nuevoTratamiento.dia}
+                      >
+                        {dias.map(dia => <option key={dia} value={dia}>{dia}</option>)}
+                      </select>
+                    </>
+                  }
+
                 </div>
                 <div>
                   <label htmlFor="dia-nuevo-tratamiento">Efectividad</label>

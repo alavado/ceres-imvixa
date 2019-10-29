@@ -58,21 +58,34 @@ const Centro = props => {
                 </option>
               ))}
             </select>
-            <label htmlFor="nombre-centro">Centro</label>
-            <select
-              id="centro"
-              onChange={e => props.fijarCentro(e.target.value)}
-              defaultValue={props.centro.codigo}
-            >
-              {props.barrio.centros.filter(centro => centro.titular === props.titular).sort((x, y) => x.codigo > y.codigo ? 1 : -1).map((centro, i) => (
-                <option
-                  key={`option-centro-${i}`}
-                  value={centro.codigo}
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <div>
+                <label htmlFor="nombre-centro">Centro</label>
+                <select
+                  id="centro"
+                  onChange={e => props.fijarCentro(e.target.value)}
+                  defaultValue={props.centro.codigo}
                 >
-                  {centro.codigo}
-                </option>
-              ))}
-            </select>
+                  {props.barrio.centros.filter(centro => centro.titular === props.titular).sort((x, y) => x.codigo > y.codigo ? 1 : -1).map((centro, i) => (
+                    <option
+                      key={`option-centro-${i}`}
+                      value={centro.codigo}
+                    >
+                      {centro.codigo}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div style={{ marginLeft: 32 }}>
+                <label htmlFor="nombre-fantasia-centro">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre-fantasia-centro"
+                  defaultValue={props.nombreCentro}
+                  onChange={e => props.fijarNombreCentro(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>        
@@ -102,6 +115,7 @@ const mapStateToProps = state => ({
   barrios: state.centro.barrios.sort((x, y) => x.nombre > y.nombre ? 1 : -1),
   barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado],
   titular: state.centro.titular,
+  nombreCentro: state.centro.nombreCentro,
   centro: state.centro.barrios[state.centro.indiceBarrioSeleccionado].centros[state.centro.indiceCentroSeleccionado]
 })
 
@@ -109,7 +123,8 @@ const mapDispatchToProps = dispatch => ({
   fijarBarrio: nombre => dispatch(centroActions.fijarBarrio(nombre)),
   fijarMacrozona: macrozona => dispatch(centroActions.fijarMacrozona(macrozona)),
   fijarTitular: titular => dispatch(centroActions.fijarTitular(titular)),
-  fijarCentro: codigo => dispatch(centroActions.fijarCentro(Number(codigo)))
+  fijarCentro: codigo => dispatch(centroActions.fijarCentro(Number(codigo))),
+  fijarNombreCentro: nombre => dispatch(centroActions.fijarNombreCentro(nombre))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Centro);

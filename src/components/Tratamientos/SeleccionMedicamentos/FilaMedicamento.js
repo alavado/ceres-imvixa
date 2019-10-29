@@ -7,6 +7,7 @@ import tratamientosActions from '../../../redux/tratamientos/actions';
 const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamentos}) => {
 
   const m = medicamentos.find(m => m.id === id)
+  const esBaño = m.formaFarmaceutica === FARMACO_APLICACION_BAÑO
 
   return (
     <tr
@@ -25,15 +26,15 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
       <td>{m.activo &&
         <CampoNumerico
           value={m.costoUnitario}
-          suffix={m.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? ' USD/lt' : ' USD/kg'}
+          suffix={esBaño ? ' USD/lt' : ' USD/kg'}
           onValueChange={e => editarMedicamento(id, 'costoUnitario', e.floatValue)}
         />
       }</td>
       <td>{m.activo &&
         <CampoNumerico
-          value={m.cantidadPorJaula}
-          suffix={m.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? ' lt' : ' kg'}
-          onValueChange={e => editarMedicamento(id, 'cantidadPorJaula', e.floatValue)}
+          value={esBaño ? m.cantidadPorJaula : m.diasDeAplicacion}
+          suffix={esBaño ? ' lt' : (m.diasDeAplicacion === 1 ? ' día' : ' días')}
+          onValueChange={e => editarMedicamento(id, esBaño ? 'cantidadPorJaula' : 'diasDeAplicacion', e.floatValue)}
         />
       }</td>
       <td>{m.activo &&

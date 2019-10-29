@@ -5,7 +5,8 @@ const initialState = {
   barrios,
   indiceBarrioSeleccionado: 0,
   titular: barrios[0].centros[0].titular,
-  indiceCentroSeleccionado: 0
+  indiceCentroSeleccionado: 0,
+  nombreCentro: ''
 }
 
 const centroReducer = (state = initialState, action) => {
@@ -49,6 +50,13 @@ const centroReducer = (state = initialState, action) => {
       return {
         ...state,
         indiceCentroSeleccionado
+      }
+    }
+    case centroActions.FIJAR_NOMBRE_CENTRO: {
+      const nombreCentro = action.payload
+      return {
+        ...state,
+        nombreCentro
       }
     }
     default:

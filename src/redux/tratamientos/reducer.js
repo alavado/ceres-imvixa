@@ -27,6 +27,7 @@ const initialState = {
       nombre: 'Slice',
       empresa: 'Intervet Chile Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
+      diasDeAplicacion: 1,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -103,6 +104,7 @@ const initialState = {
       nombre: 'Imvixa',
       empresa: 'Eli Lilly Interamérica Inc. y Cía. Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
+      diasDeAplicacion: 1,
       principioActivo: 'Lufenurón',
       unidad: 'dosis',
       costoUnitario: 0.37,
@@ -141,6 +143,7 @@ const initialState = {
       nombre: 'Emamectina 0,2%',
       empresa: 'Intervet Chile Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
+      diasDeAplicacion: 1,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -214,7 +217,8 @@ const initialState = {
     }
   ],
   tratamientos: {
-    tradicional: {},
+    tradicional: {
+    },
     imvixa: {
       0: {
         idMedicamento: 6,

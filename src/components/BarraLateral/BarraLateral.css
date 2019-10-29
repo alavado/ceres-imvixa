@@ -37,6 +37,7 @@
   justify-content: flex-start;
   align-items: center;
   transition: all .3s ease-in-out;
+  outline: none;
 }
 
 #lista-secciones .link-seccion:hover {

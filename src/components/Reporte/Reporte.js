@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos,
-  calcularCostoBaños, calcularPTI, calcularCostoEmamectina, calcularCostoImvixa } from '../../helpers/helpers'
+  calcularCostoBaños, calcularPTI, calcularCostoEmamectina, calcularCostoImvixa, obtenerFechaActualBonita, redondear } from '../../helpers/helpers'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada,
   obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import {JORNADAS_POR_BAÑO_POR_JAULA, OBJETIVO_PESO } from "../../helpers/constantes";
@@ -129,6 +129,9 @@ const Reporte = ({ state }) => {
   const totalImvixa = lenguetas.reduce((sum, x) => x.imvixa + sum, 0)
   const totalTradicional = lenguetas.reduce((sum, x) => x.tradicional + sum, 0)
 
+  const { nombreCentro, titular } = state.centro
+  const codigoCentro = state.centro.barrios[state.centro.indiceBarrioSeleccionado].centros[state.centro.indiceCentroSeleccionado].codigo
+
   return (
     <>
     <button onClick={() => window.location.href="/tratamientos"}>
@@ -138,39 +141,39 @@ const Reporte = ({ state }) => {
     <div id="reporte">
       <img src={logoElanco} alt="logo elanco" id="logo-elanco-reporte" />
       <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-      <h1>REPORTE IMPACTO IMVIXA</h1>
+      <h1>REPORTE IMPACTO ELANCO</h1>
       <ul id="datos-empresa-reporte">
-        <li>Empesa: <span>Fiordo Blanco S.A.</span></li>
-        <li>Centro: <span>1029930</span></li>
-        <li>Fecha: <span>17 de octubre de 2019</span></li>
+        <li>Empesa: <span>{titular}</span></li>
+        <li>Centro: <span>{(nombreCentro !== '' ? `${nombreCentro} (código: ${codigoCentro})` : codigoCentro)}</span></li>
+        <li>Fecha: <span>{obtenerFechaActualBonita()}</span></li>
       </ul>
       <div id="contenido-resumen-reporte">
       <div id="cuadros-reporte-estrategias">
         <div id="fondo-reporte-estrategia-b">
-          <h1>Estrategia tradicional</h1>
+          <h1>Estrategia 1</h1>
             <div className="resultados-reporte-estrategia">
               {objetivo === OBJETIVO_PESO ?
                 <>
-                  <h2>{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <h2>{redondear(curvaTradicional.length / 30.0)}</h2>
                   <p>meses para alcanzar el peso de cosecha</p>
                 </> :
                 <>
-                  <h2>{(Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <h2>{redondear(curvaTradicional[curvaTradicional.length - 1] / 1000.0, 2)}</h2>
                   <p>kg a la cosecha</p>
                 </>
               }
             </div>
         </div>
         <div id="fondo-reporte-estrategia-a">
-          <h1>Estrategia Imvixa</h1>
+          <h1>Estrategia 2</h1>
             <div className="resultados-reporte-estrategia">
               {objetivo === OBJETIVO_PESO ?
                 <>
-                  <h2>{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <h2>{redondear(curvaImvixa.length / 30.0)}</h2>
                   <p>meses para alcanzar el peso de cosecha</p>
                 </> :
                 <>
-                  <h2>{(Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
+                  <h2>{redondear(curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
                   <p>kg a la cosecha</p>
                 </>
               }
@@ -181,17 +184,17 @@ const Reporte = ({ state }) => {
       <h2>1. IMPACTO PRODUCTIVO</h2>
       <div id="comparacion">
         <div>
-          <h3>TERAPIA CON IMVIXA</h3>
+          <h3>ESTRATEGIA 1</h3>
           {lenguetas.map((lengueta, i) => {
-            const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
+            const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
             return (
-              <div>
+              <div key={`lengueta-tradicional-${i}`}>
                 <div className="lengueta" style={{
                   width: anchoLengueta,
                   marginLeft: 16 + anchoMaximoLengueta - anchoLengueta
                 }}></div>
                 <div className="valor">
-                  {lengueta.imvixa > 0 && lengueta.imvixa.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                  {lengueta.tradicional > 0 && redondear(lengueta.tradicional, 2)}
                 </div>
               </div>
             )
@@ -202,28 +205,30 @@ const Reporte = ({ state }) => {
                 marginLeft: 36
               }}></div>
             <div className="valor">
-              {totalImvixa.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+              {redondear(totalTradicional, 2)}
             </div>
           </div>
         </div>
         <div>
           <h3>costo USD/kg ex-jaula</h3>
-          {lenguetas.map(lengueta => (
-            <div>{lengueta.nombre}</div>
+          {lenguetas.map((lengueta, i) => (
+            <div key={`lengueta-central-${i}`}>
+              {lengueta.nombre}
+            </div>
           ))}
           <div>Costo marginal USD/KG<br /> ex-jaula</div>
         </div>
       <div>
-        <h3>TERAPIA TRADICIONAL</h3>
+        <h3>ESTRATEGIA 2</h3>
         {lenguetas.map((lengueta, i) => {
-          const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
+          const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
           return (
-            <div>
+            <div key={`lengueta-tradiconal-${i}`}>
               <div className="lengueta" style={{
                 width: anchoLengueta
               }}></div>
               <div className="valor">
-                {lengueta.tradicional > 0 && lengueta.tradicional.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                {lengueta.imvixa > 0 && redondear(lengueta.imvixa, 2)}
               </div>
             </div>
           )
@@ -233,7 +238,7 @@ const Reporte = ({ state }) => {
             width: anchoMaximoLenguetaColoreada
             }}></div>
             <div className="valor">
-              {totalTradicional.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              {redondear(totalImvixa, 2)}
             </div>
           </div>
         </div>
@@ -244,23 +249,23 @@ const Reporte = ({ state }) => {
         <thead>
           <tr>
             <th></th>
-            <th>Estrategia con Imvixa</th>
-            <th>Estrategia tradicional</th>
+            <th>Estrategia 1</th>
+            <th>Estrategia 2</th>
             <th>Diferencia</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Número de Baños</td>
-            <td>{numeroBañosImvixa}</td>
             <td>{numeroBañosTradicional}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa)}</td>
+            <td>{numeroBañosImvixa}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa)}</td>
           </tr>
           <tr>
             <td>Jornadas laborales por concepto de baños</td>
-            <td>{numeroBañosImvixa * jornadasPorBaño}</td>
             <td>{numeroBañosTradicional * jornadasPorBaño}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa) * jornadasPorBaño}</td>
+            <td>{numeroBañosImvixa * jornadasPorBaño}</td>
+            <td><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa) * jornadasPorBaño}</td>
           </tr>
         </tbody>
       </table>
@@ -269,8 +274,8 @@ const Reporte = ({ state }) => {
         <thead>
           <tr>
             <th>Producto</th>
-            <th>Estrategia con Imvixa</th>
-            <th>Estrategia tradicional</th>
+            <th>Estrategia 1</th>
+            <th>Estrategia 2</th>
             <th>Diferencia</th>
           </tr>
         </thead>
@@ -278,46 +283,46 @@ const Reporte = ({ state }) => {
           {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => (
             <tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
-              <td>{Math.round(v.imvixa * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
-              <td>{Math.round(v.tradicional * numeroJaulas * 10) / 10} {v.unidad}/centro</td>
-              <td> {Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10 > 0 ?
-              <FontAwesomeIcon icon={faArrowDown} size="m" style={{marginRight: 4, color:'green'}} /> :
-              Math.round((v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10 === 0 ?
-              '':<FontAwesomeIcon icon={faArrowUp} size="m" style={{marginRight: 4, color:'red'}} />
+              <td>{redondear(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
+              <td>{redondear(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
+              <td>{redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) > 0 ?
+              <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} /> :
+              redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) === 0 ?
+              '':<FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />
               } 
-              {Math.round(Math.abs(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) * 10) / 10} {v.unidad}</td>
+              {redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas)} {v.unidad}</td>
             </tr> 
           ))}
         </tbody>
       </table>
       <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
-      <h3>3.1 Gráfica de distancia entre óptimo ASC y posición REGULACIÓN</h3>
-      {/* <GraficoPTI
-        ptiImvixa={ptiImvixa}
-        ptiTradicional={ptiTradicional}
-      /> */}
+      <h3>3.1 Distancia entre óptimo ASC y posición REGULACIÓN</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
             <th></th>
-            <th>Estrategia Imvixa</th>
-            <th>Estrategia Tradicional</th>
+            <th>Estrategia 1</th>
+            <th>Estrategia 2</th>
             <th>Certificación ASC</th>
-            <th>Distancia a Certificación estrategia Imvixa</th>
-            <th>Distancia a Certificación estrategia Tradicional</th>
+            <th>Distancia a Certificación estrategia 1</th>
+            <th>Distancia a Certificación estrategia 2</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Indíce de tratamiento antiparasitario (PTI)</td>
-            <td>{ptiImvixa.suma}</td>
-            <td>{ptiTradicional.suma}</td>
+            <td>{redondear(ptiTradicional.suma)}</td>
+            <td>{redondear(ptiImvixa.suma)}</td>
             <td>{13.0}</td>
-            <td>{ptiImvixa.suma - 13}</td>
-            <td>{ptiTradicional.suma - 13}</td>
+            <td>{redondear(ptiTradicional.suma - 13)}</td>
+            <td>{redondear(ptiImvixa.suma - 13)}</td>
           </tr>
         </tbody>
       </table>
+      <GraficoPTI
+        ptiImvixa={ptiImvixa}
+        ptiTradicional={ptiTradicional}
+      />
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles
@@ -328,7 +333,40 @@ const Reporte = ({ state }) => {
       />
       <div id="anexos">
         <h2>Anexos</h2>
-        <h3>Tratamientos estrategia Imvixa e índice de tratamiento antiparasitario (PTI)</h3>
+        <h3>Tratamientos estrategia 1 e índice de tratamiento antiparasitario (PTI)</h3>
+          <table className="tabla-reporte">
+            <thead>
+            <tr>
+              <th>Tratamiento</th>
+              <th>Semana</th>
+              <th>Principio activo</th>
+              <th>Factor fármaco</th>
+              <th>Factor método</th>
+              <th>Factor resistencia</th>
+              <th>PTI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ptiTradicional.trataciones.map((elemento, i) => (
+            <tr key={`fila-pti-tradicional-${i}`}>
+              <td>{elemento.i}</td>
+              <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+              <td>{elemento.principioActivo}</td>
+              <td>{elemento.factorFarmaco}</td>
+              <td>{elemento.factorMetodo}</td>
+              <td>{elemento.factorResistencia}</td>
+              <td>{elemento.pTI}</td>
+            </tr>
+            ))}
+            <tr>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td>PTI total </td>
+              <td>{ptiTradicional.suma}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h3>Tratamientos estrategia 2 e índice de tratamiento antiparasitario (PTI)</h3>
         <table className="tabla-reporte">
           <thead>
           <tr>
@@ -343,15 +381,15 @@ const Reporte = ({ state }) => {
         </thead>
         <tbody>
           {ptiImvixa.trataciones.map((elemento, i) => (
-          <tr>
-            <td>{elemento.i}</td>
-            <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
-            <td>{elemento.principioActivo}</td>
-            <td>{elemento.factorFarmaco}</td>
-            <td>{elemento.factorMetodo}</td>
-            <td>{elemento.factorResistencia}</td>
-            <td>{elemento.pTI}</td>
-          </tr>
+            <tr key={`fila-pti-imvixa-${i}`}>
+              <td>{elemento.i}</td>
+              <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+              <td>{elemento.principioActivo}</td>
+              <td>{elemento.factorFarmaco}</td>
+              <td>{elemento.factorMetodo}</td>
+              <td>{elemento.factorResistencia}</td>
+              <td>{elemento.pTI}</td>
+            </tr>
           ))}
           <tr>
             <td></td><td></td><td></td><td></td><td></td>
@@ -360,38 +398,7 @@ const Reporte = ({ state }) => {
           </tr>
         </tbody>
       </table>
-      <h3>Tratamientos estrategia Tradicional e índice de tratamiento antiparasitario (PTI)</h3>
-        <table className="tabla-reporte">
-          <thead>
-          <tr>
-            <th>Tratamiento</th>
-            <th>Semana</th>
-            <th>Principio activo</th>
-            <th>Factor fármaco</th>
-            <th>Factor método</th>
-            <th>Factor resistencia</th>
-            <th>PTI</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ptiTradicional.trataciones.map((elemento, i) => (
-          <tr>
-            <td>{elemento.i}</td>
-            <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
-            <td>{elemento.principioActivo}</td>
-            <td>{elemento.factorFarmaco}</td>
-            <td>{elemento.factorMetodo}</td>
-            <td>{elemento.factorResistencia}</td>
-            <td>{elemento.pTI}</td>
-          </tr>
-          ))}
-          <tr>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td>PTI total </td>
-            <td>{ptiTradicional.suma}</td>
-          </tr>
-        </tbody>
-      </table>
+
         <h3>Estructura costos ex-jaula por centro</h3>
         <table id="reporte-estructura-costos">
           <thead>
@@ -402,11 +409,11 @@ const Reporte = ({ state }) => {
           </thead>
           <tbody>
             {Object.keys(estructuraCostos).map((elemento, i) => (
-              <tr>
+              <tr key={`fila-estructura-costos-anexos-${i}`}>
                 <td>{elemento}</td>
                 <td>
                   <div>
-                      {estructuraCostos[elemento].toLocaleString(undefined, { maximumFractionDigits: 1, minimumFractionDigits: 1 })}%
+                      {redondear(estructuraCostos[elemento])}%
                   </div>
                 </td>
               </tr> 

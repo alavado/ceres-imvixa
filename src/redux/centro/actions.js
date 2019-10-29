@@ -3,6 +3,7 @@ const centroActions = {
   FIJAR_MACROZONA: 'FIJAR_MACROZONA',
   FIJAR_TITULAR: 'FIJAR_TITULAR',
   FIJAR_CENTRO: 'FIJAR_CENTRO',
+  FIJAR_NOMBRE_CENTRO: 'FIJAR_NOMBRE_CENTRO',
   fijarBarrio: nombre => ({
     type: centroActions.FIJAR_BARRIO,
     payload: nombre
@@ -18,6 +19,10 @@ const centroActions = {
   fijarCentro: codigo => ({
     type: centroActions.FIJAR_CENTRO,
     payload: codigo
+  }),
+  fijarNombreCentro: nombre => ({
+    type: centroActions.FIJAR_NOMBRE_CENTRO,
+    payload: nombre
   }),
 }
 
