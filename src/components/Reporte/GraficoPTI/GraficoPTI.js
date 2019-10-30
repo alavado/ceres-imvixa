@@ -1,5 +1,7 @@
 import React from 'react';
 import './GraficoPTI.css'
+import logoASC from '../../../assets/asc-label-landscape.svg'
+import { redondear } from '../../../helpers/helpers';
 
 const GraficoPTI = ({ ptiImvixa, ptiTradicional }) => {
 
@@ -8,12 +10,19 @@ const GraficoPTI = ({ ptiImvixa, ptiTradicional }) => {
   return (
     <div id="grafico-pti">
       <div id="contenedor-marcadores-pti" style={{ width: anchoBarra }}>
-        <div id="pti-tradicional" style={{ marginLeft: 0 }}>Estrategia 1</div>
-        <div id="pti-imvixa" style={{ marginLeft: anchoBarra * ptiImvixa / ptiTradicional }}>Estrategia 2</div>
-        <div id="pti-objetivo" style={{ marginLeft: anchoBarra }}>Certificación ASC</div>
+        <div id="indicador-pti-tradicional" style={{ marginLeft: 0 }}>
+          <p>Estrategia 1<br />(PTI {redondear(ptiTradicional)})</p>
+          <span></span>
+        </div>
+        <div id="indicador-pti-imvixa" style={{ marginLeft: anchoBarra * (ptiTradicional - ptiImvixa) / ptiTradicional }}>
+          <p>Estrategia 2<br />(PTI {redondear(ptiImvixa)})</p>
+          <span></span>
+        </div>
+        <div id="logo-asc" style={{ marginLeft: anchoBarra }}>
+          <img src={logoASC} alt="logo asc" />
+        </div>
       </div>
       <div id="barra-pti" style={{ width: anchoBarra }}>
-        
       </div>
     </div>
   );

@@ -307,8 +307,8 @@ const Reporte = ({ state }) => {
             <th>Estrategia 1</th>
             <th>Estrategia 2</th>
             <th>Certificación ASC</th>
-            <th>Distancia a Certificación estrategia 1</th>
-            <th>Distancia a Certificación estrategia 2</th>
+            <th>Distancia a certificación estrategia 1</th>
+            <th>Distancia a certificación estrategia 2</th>
           </tr>
         </thead>
         <tbody>
@@ -323,8 +323,8 @@ const Reporte = ({ state }) => {
         </tbody>
       </table>
       <GraficoPTI
-        ptiImvixa={ptiImvixa}
-        ptiTradicional={ptiTradicional}
+        ptiImvixa={ptiImvixa.suma}
+        ptiTradicional={ptiTradicional.suma}
       />
       <h2>4. IMPACTOS DE REGULACIÓN</h2>
       <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>

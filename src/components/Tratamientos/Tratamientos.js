@@ -221,7 +221,7 @@ const Tratamientos = props => {
                       <label htmlFor="peso-tratamiento-antes">Peso de aplicación</label>
                       <CampoNumerico
                         id="peso-tratamiento-antes"
-                        value={nuevoTratamiento.pesoDeAplicacion}
+                        value={((nuevoTratamiento.estrategia === 'imvixa' && tratamientos.imvixa['0'] && tratamientos.imvixa['0'].pesoDeAplicacion) || (nuevoTratamiento.estrategia === 'tradicional' && tratamientos.tradicional['0'] && tratamientos.tradicional['0'].pesoDeAplicacion)) || nuevoTratamiento.pesoDeAplicacion}
                         suffix={' g'}
                         style={{width: 60}}
                         onValueChange={e => setNuevoTratamiento({...nuevoTratamiento, pesoDeAplicacion: e.floatValue})} />
