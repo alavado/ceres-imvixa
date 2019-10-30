@@ -27,7 +27,7 @@ const initialState = {
       nombre: 'Slice',
       empresa: 'Intervet Chile Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
-      diasDeAplicacion: 1,
+      diasDeAdministracion: 1,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -104,7 +104,7 @@ const initialState = {
       nombre: 'Imvixa',
       empresa: 'Eli Lilly Interamérica Inc. y Cía. Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
-      diasDeAplicacion: 1,
+      diasDeAdministracion: 1,
       principioActivo: 'Lufenurón',
       unidad: 'dosis',
       costoUnitario: 0.37,
@@ -143,7 +143,7 @@ const initialState = {
       nombre: 'Emamectina 0,2%',
       empresa: 'Intervet Chile Ltda.',
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
-      diasDeAplicacion: 1,
+      diasDeAdministracion: 1,
       principioActivo: 'Emamectina',
       unidad: 'dosis',
       costoUnitario: 0.0144,
@@ -232,7 +232,7 @@ const initialState = {
 const tratamientosReducer = (state = initialState, action) => {
   switch (action.type) {
     case tratamientosActions.AGREGAR_TRATAMIENTO: {
-      const { idMedicamento, semana, dia, estrategia, duracion, aplicaciones } = action.payload
+      const { idMedicamento, semana, pesoDeAplicacion, dia, estrategia, duracion, aplicaciones } = action.payload
       return {
         ...state,
         medicamentos: [
@@ -248,6 +248,7 @@ const tratamientosReducer = (state = initialState, action) => {
           [estrategia]: {
             ...state.tratamientos[estrategia],
             ...[...Array(aplicaciones).keys()].reduce((obj, i) => ({...obj, [semana + i * duracion]: {
+              pesoDeAplicacion,
               idMedicamento,
               dia,
               duracion

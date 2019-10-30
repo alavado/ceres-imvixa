@@ -5,9 +5,9 @@ const tratamientosActions = {
   MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS: 'MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS',
   REPLICAR_ESTRATEGIA: 'REPLICAR_ESTRATEGIA',
   AGREGAR_MEDICAMENTO: 'AGREGAR_MEDICAMENTO',
-  agregarTratamiento: (idMedicamento, semana, dia, estrategia, duracion, aplicaciones) => ({
+  agregarTratamiento: (idMedicamento, semana, pesoDeAplicacion, dia, estrategia, duracion, aplicaciones) => ({
     type: tratamientosActions.AGREGAR_TRATAMIENTO,
-    payload: { idMedicamento, semana, dia, estrategia, duracion, aplicaciones }
+    payload: { idMedicamento, semana, pesoDeAplicacion, dia, estrategia, duracion, aplicaciones }
   }),
   eliminarTratamiento: (estrategia, semana) => ({
     type: tratamientosActions.ELIMINAR_TRATAMIENTO,

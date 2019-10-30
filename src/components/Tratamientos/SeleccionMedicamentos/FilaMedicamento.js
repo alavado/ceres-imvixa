@@ -32,9 +32,9 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
       }</td>
       <td>{m.activo &&
         <CampoNumerico
-          value={esBaño ? m.cantidadPorJaula : m.diasDeAplicacion}
-          suffix={esBaño ? ' lt' : (m.diasDeAplicacion === 1 ? ' día' : ' días')}
-          onValueChange={e => editarMedicamento(id, esBaño ? 'cantidadPorJaula' : 'diasDeAplicacion', e.floatValue)}
+          value={esBaño ? m.cantidadPorJaula : m.diasDeAdministracion}
+          suffix={esBaño ? ' lt' : (m.diasDeAdministracion === 1 ? ' día' : ' días')}
+          onValueChange={e => editarMedicamento(id, esBaño ? 'cantidadPorJaula' : 'diasDeAdministracion', e.floatValue)}
         />
       }</td>
       <td>{m.activo &&

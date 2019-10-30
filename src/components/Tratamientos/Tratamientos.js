@@ -33,6 +33,7 @@ const Tratamientos = props => {
     idMedicamento: medicamentos[0].id,
     estrategia: 'tradicional',
     semana: 1,
+    pesoDeAplicacion: Math.max(pesoSmolt - 20, 40),
     dia: 'Lunes',
     duracion: medicamentos[0].duracion,
     aplicaciones: 1
@@ -114,8 +115,7 @@ const Tratamientos = props => {
   }
 
   const medicamentoImvixa = medicamentos.find(t => t.nombre.toLowerCase() === 'imvixa')
-  const pesoDeAplicacion = Math.max(pesoSmolt - 20, 40)
-  
+
   const construirCalendario = estrategia => {
     let semanas = []
     let diasTratamientoVigente = 0
@@ -216,18 +216,16 @@ const Tratamientos = props => {
               </div>
               <div style={{display: 'flex'}}>
                 <div>
-                  {
-                    nuevoTratamiento.semana === 0 ? 
+                  {nuevoTratamiento.semana === 0 ? 
                     <>
                       <label htmlFor="peso-tratamiento-antes">Peso de aplicación</label>
                       <CampoNumerico
                         id="peso-tratamiento-antes"
-                        value={pesoDeAplicacion}
+                        value={nuevoTratamiento.pesoDeAplicacion}
                         suffix={' g'}
                         style={{width: 60}}
-                        onValueChange={e => setNuevoTratamiento({...nuevoTratamiento, pesoDeAplicacion: e.target.value})} />
-                    </>
-                    :
+                        onValueChange={e => setNuevoTratamiento({...nuevoTratamiento, pesoDeAplicacion: e.floatValue})} />
+                    </> :
                     <>
                       <label htmlFor="dia-nuevo-tratamiento">Día aplicación</label>
                       <select
@@ -239,7 +237,6 @@ const Tratamientos = props => {
                       </select>
                     </>
                   }
-
                 </div>
                 <div>
                   <label htmlFor="dia-nuevo-tratamiento">Efectividad</label>
@@ -299,8 +296,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   agregarTratamiento: tratamiento => {
-    const { idMedicamento, semana, estrategia, dia, duracion, aplicaciones } = tratamiento
-    dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, dia, estrategia, duracion, aplicaciones))
+    const { idMedicamento, semana, estrategia, pesoDeAplicacion, dia, duracion, aplicaciones } = tratamiento
+    dispatch(tratamientosActions.agregarTratamiento(idMedicamento, semana, pesoDeAplicacion, dia, estrategia, duracion, aplicaciones))
   },
   eliminarTratamiento: (estrategia, semana) => dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana)),
   marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor)),

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCantidadDeProductosVertidos,
   calcularCostoBaños, calcularPTI, calcularCostoEmamectina, calcularCostoImvixa, obtenerFechaActualBonita, redondear } from '../../helpers/helpers'
+import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada,
   obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import {JORNADAS_POR_BAÑO_POR_JAULA, OBJETIVO_PESO } from "../../helpers/constantes";
@@ -89,8 +90,10 @@ const Reporte = ({ state }) => {
   console.log({costoProduccionDia});
   console.log({biomasaTradicional, biomasaImvixa});
   console.log({costoProduccionTradicional, costoProduccionImvixa});
-  console.log(costoSmolts);
+  console.log({curvaMortalidadAcumuladaImvixa});
 
+  const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'])
+  const mortalidadTotalImvixa = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaImvixa, medicamentos, tratamientos['imvixa'])
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
@@ -327,78 +330,52 @@ const Reporte = ({ state }) => {
       <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles
         mortalidades={{
-          imvixa: mortalidad + numeroBañosImvixa * 0.06,
-          tradicional: mortalidad + numeroBañosTradicional * .06
+          imvixa: mortalidadTotalImvixa,
+          tradicional: mortalidadTotalTradicional
         }}
       />
       <div id="anexos">
         <h2>Anexos</h2>
-        <h3>Tratamientos estrategia 1 e índice de tratamiento antiparasitario (PTI)</h3>
-          <table className="tabla-reporte">
-            <thead>
-            <tr>
-              <th>Tratamiento</th>
-              <th>Semana</th>
-              <th>Principio activo</th>
-              <th>Factor fármaco</th>
-              <th>Factor método</th>
-              <th>Factor resistencia</th>
-              <th>PTI</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ptiTradicional.trataciones.map((elemento, i) => (
-            <tr key={`fila-pti-tradicional-${i}`}>
-              <td>{elemento.i}</td>
-              <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
-              <td>{elemento.principioActivo}</td>
-              <td>{elemento.factorFarmaco}</td>
-              <td>{elemento.factorMetodo}</td>
-              <td>{elemento.factorResistencia}</td>
-              <td>{elemento.pTI}</td>
-            </tr>
-            ))}
-            <tr>
-              <td></td><td></td><td></td><td></td><td></td>
-              <td>PTI total </td>
-              <td>{ptiTradicional.suma}</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <h3>Tratamientos estrategia 2 e índice de tratamiento antiparasitario (PTI)</h3>
-        <table className="tabla-reporte">
-          <thead>
-          <tr>
-            <th>Tratamiento</th>
-            <th>Semana</th>
-            <th>Principio activo</th>
-            <th>Factor fármaco</th>
-            <th>Factor método</th>
-            <th>Factor resistencia</th>
-            <th>PTI</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ptiImvixa.trataciones.map((elemento, i) => (
-            <tr key={`fila-pti-imvixa-${i}`}>
-              <td>{elemento.i}</td>
-              <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
-              <td>{elemento.principioActivo}</td>
-              <td>{elemento.factorFarmaco}</td>
-              <td>{elemento.factorMetodo}</td>
-              <td>{elemento.factorResistencia}</td>
-              <td>{elemento.pTI}</td>
-            </tr>
-          ))}
-          <tr>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td>PTI total </td>
-            <td>{ptiImvixa.suma}</td>
-          </tr>
-        </tbody>
-      </table>
-
+        <div id="tratamientos-resumen">
+          <div className="estrategia-resumen">
+            <h3>Tratamientos estrategia 1</h3>
+              <table className="tabla-reporte">
+                <thead>
+                <tr>
+                  <th>Semana</th>
+                  <th>Principio activo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ptiTradicional.trataciones.map((elemento, i) => (
+                <tr key={`fila-pti-tradicional-${i}`}>
+                  <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+                  <td>{elemento.principioActivo}</td>
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="estrategia-resumen">
+            <h3>Tratamientos estrategia 2</h3>
+            <table className="tabla-reporte">
+              <thead>
+                <tr>
+                  <th>Semana</th>
+                  <th>Principio activo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ptiImvixa.trataciones.map((elemento, i) => (
+                  <tr key={`fila-pti-imvixa-${i}`}>
+                    <td>{elemento.semana === '0' ? 'Antes de mar' : elemento.semana}</td>
+                    <td>{elemento.principioActivo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <h3>Estructura costos ex-jaula por centro</h3>
         <table id="reporte-estructura-costos">
           <thead>
