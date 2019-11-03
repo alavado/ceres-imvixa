@@ -13,15 +13,15 @@ import CampoNumerico from './CampoNumerico'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, volumenJaula } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, volumenJaula } = produccion
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
 
   let curvaCrecimiento
-  if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
+  if (objetivos.includes(OBJETIVO_PESO)) {
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
   }
   else {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
   }
 
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
@@ -124,10 +124,11 @@ const Produccion = props => {
           <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
-              type="radio"
+              type="checkbox"
               name="objetivo"
               className="radio-button"
-              checked={produccion.objetivo === OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_PESO)}
+              checked={produccion.objetivos.includes(OBJETIVO_PESO)}
+              onChange={e => props.fijarObjetivo(OBJETIVO_PESO, e.target.checked)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso cosecha:</label>
             <CampoNumerico
@@ -135,22 +136,23 @@ const Produccion = props => {
               value={produccion.pesoObjetivo}
               suffix={' g'}
               style={{width: 60}}
-              onClick={() => props.fijarObjetivo(OBJETIVO_PESO)}
+              onClick={() => props.fijarObjetivo(OBJETIVO_PESO, true)}
               onValueChange={e => props.fijarPesoObjetivo(e.floatValue)} />
           </div>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
-              type="radio"
+              type="checkbox"
               name="objetivo"
               className="radio-button"
-              checked={produccion.objetivo !== OBJETIVO_PESO} onChange={() => props.fijarObjetivo(OBJETIVO_FECHA)}
+              checked={produccion.objetivos.includes(OBJETIVO_FECHA)}
+              onChange={e => props.fijarObjetivo(OBJETIVO_FECHA, e.target.checked)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="fecha-objetivo">Meses ciclo:</label>
             <CampoNumerico
               id="fecha-objetivo"
               value={mesesObjetivo}
               style={{width: 45}}
-              onClick={() => props.fijarObjetivo(OBJETIVO_FECHA)}
+              onClick={() => props.fijarObjetivo(OBJETIVO_FECHA, true)}
               onValueChange={e => props.fijarMesesObjetivo(e.floatValue)} />
           </div>
         </div>
@@ -272,7 +274,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarFechaInicio(fecha))
   },
   fijarNumeroSmolts: n => {
-    console.log(n);
     dispatch(produccionActions.fijarNumeroSmolts(n))
   },
   fijarPesoSmolt: peso => {
@@ -296,8 +297,9 @@ const mapDispatchToProps = dispatch => ({
   fijarCostoAlimento: usd => {
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))
   },
-  fijarObjetivo: objetivo => {
-    dispatch(produccionActions.fijarObjetivo(objetivo))
+  fijarObjetivo: (objetivo, valor) => {
+    console.log({valor});
+    dispatch(produccionActions.fijarObjetivo(objetivo, valor))
   },
   fijarMesesObjetivo: meses => {
     dispatch(produccionActions.fijarMesesObjetivo(meses))

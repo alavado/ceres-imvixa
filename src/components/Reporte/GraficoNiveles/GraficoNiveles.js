@@ -48,10 +48,10 @@ const GraficoNiveles = ({mortalidades}) => {
             )})}
         </div>
         <div id="regulacion-imvixa" style={{marginTop: altoGrafico * (30 - mortalidades.imvixa) / 30}}>
-          <p><span></span>Mortalidad estrategia 2 ({redondear(mortalidades.imvixa, 2)}%)</p>
+          <p><span></span>Mortalidad estrategia 2 ({redondear(mortalidades.imvixa)}%)</p>
         </div>
         <div id="regulacion-tradicional" style={{marginTop: altoGrafico * (30 - mortalidades.tradicional) / 30}}>
-          <p><span></span>Mortalidad estrategia 1 ({redondear(mortalidades.tradicional, 2)}%)</p>
+          <p><span></span>Mortalidad estrategia 1 ({redondear(mortalidades.tradicional)}%)</p>
         </div>
       </div>
     </div>

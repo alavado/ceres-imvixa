@@ -5,11 +5,11 @@ import GraficoCrecimiento from './GraficoCrecimiento'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import { OBJETIVO_PESO } from '../../../helpers/constantes';
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
 
 const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
 
-  const { objetivo, pesoObjetivo } = produccion
+  const { objetivos, pesoObjetivo } = produccion
 
   return (
     <div id="fondo-resumen">
@@ -30,14 +30,14 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
             curvaImvixa={curvaImvixa}
             curvaTradicional={curvaTradicional}
             pesoObjetivo={pesoObjetivo}
-            objetivo={objetivo}
+            objetivo={objetivos.includes(OBJETIVO_FECHA) ? OBJETIVO_FECHA : OBJETIVO_PESO}
           />
         </div>
         <div id="cuadros-estrategias">
           <div id="fondo-estrategia-b">
             <h1>Estrategia 1</h1>
               <div className="resultados-estrategia">
-                {objetivo === OBJETIVO_PESO ?
+                {objetivos.includes(OBJETIVO_PESO) ?
                   <>
                     <h2>{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
                     <p>meses para alcanzar el peso de cosecha</p>
@@ -52,7 +52,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
           <div id="fondo-estrategia-a">
             <h1>Estrategia 2</h1>
               <div className="resultados-estrategia">
-                {objetivo === OBJETIVO_PESO ?
+                {objetivos.includes(OBJETIVO_PESO) ?
                   <>
                     <h2>{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
                     <p>meses para alcanzar el peso de cosecha</p>

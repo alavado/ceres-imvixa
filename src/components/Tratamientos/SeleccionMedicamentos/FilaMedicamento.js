@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import CampoNumerico from '../../Produccion/CampoNumerico';
-import { FARMACO_APLICACION_BAÑO } from '../../../helpers/constantes';
+import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../../helpers/constantes';
 import tratamientosActions from '../../../redux/tratamientos/actions';
 
 const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamentos}) => {
@@ -40,7 +40,7 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
       <td>{m.activo &&
         <CampoNumerico
           value={m.costoOperacional}
-          suffix={' USD'}
+          suffix={m.formaFarmaceutica === FARMACO_APLICACION_ORAL ? ' USD/ton' : ' USD'}
           onValueChange={e => editarMedicamento(id, 'costoOperacional', e.floatValue)}
         />
       }</td>

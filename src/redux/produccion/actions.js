@@ -54,9 +54,9 @@ const produccionActions = {
     type: produccionActions.FIJAR_COSTO_ALIMENTO,
     payload: usd
   }),
-  fijarObjetivo: objetivo => ({
+  fijarObjetivo: (objetivo, valor) => ({
     type: produccionActions.FIJAR_OBJETIVO,
-    payload: objetivo
+    payload: {objetivo, valor}
   }),
   fijarMesesObjetivo: meses => ({
     type: produccionActions.FIJAR_MESES_OBJETIVO,

@@ -11,3 +11,5 @@ export const FARMACO_APLICACION_BAÑO = 'APLICACION_BAÑO'
 export const JORNADAS_POR_BAÑO_POR_JAULA = 2
 
 export const COSTO_OPERACIONAL_BAÑO = 1666.7
+
+export const DIAS_AYUNO_BAÑO = 3

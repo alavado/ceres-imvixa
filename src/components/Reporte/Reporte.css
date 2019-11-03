@@ -14,8 +14,9 @@
 }
 
 #datos-empresa-reporte {
-  margin-left: 40px;
-  margin-bottom: 40px;
+  margin: 40px;
+  border-bottom: 2px solid #2A2E57;
+  padding-bottom: 10px;
 }
 
 #datos-empresa-reporte li {
@@ -24,6 +25,21 @@
 }
 
 #datos-empresa-reporte li > span {
+  font-weight: bold;
+}
+
+#datos-simulacion-reporte{
+  margin-left: 40px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+#datos-simulacion-reporte li {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+#datos-simulacion-reporte li > span {
   font-weight: bold;
 }
 
@@ -53,7 +69,7 @@
   font-size: 1.8em;
   color: #2A2E57;
   padding-bottom: 2px;
-  border-bottom: 2px solid #0078BF;
+  border-bottom: 2px solid #2A2E57;
 }
 
 #reporte h3 {
@@ -247,6 +263,10 @@
   padding: 6px 10px;
 }
 
+.tabla-reporte td:last-child, .tabla-reporte th:last-child {
+  text-align: right;
+}
+
 .tabla-reporte input {
   height: 12px;
   font-size: .8em;
@@ -261,17 +281,14 @@
 #cuadros-reporte-estrategias {
   display: flex;
   text-align: center;
-  margin-top: 0px;
 }
 
 #fondo-reporte-estrategia-b {
   flex: 1;
-  margin-top: 0px;
 }
 
 #fondo-reporte-estrategia-a {
   flex: 1;
-  margin-top: 0px;
 }
 
 #fondo-reporte-estrategia-b > h1 {
@@ -284,6 +301,7 @@
   border-top-right-radius: 8px;
   color: white;
   margin-bottom: 0px;
+  margin-top: 0;
   text-align: center;
 }
 
@@ -297,6 +315,7 @@
   border-top-right-radius: 8px;
   color: white;
   margin-bottom: 0px;
+  margin-top: 0;
   text-align: center;
 }
 
@@ -332,6 +351,16 @@
 
 .estrategia-resumen{
   flex: 1;
-  text-align: center;
   justify-content: center;
+}
+.estrategia-resumen h3{
+  text-align: left;
+}
+
+.estrategia-resumen table{
+  margin-left: 36px;
+}
+
+.estrategia-resumen .tabla-reporte td:last-child, .estrategia-resumen .tabla-reporte th:last-child {
+  text-align: center;
 }

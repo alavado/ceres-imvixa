@@ -9,7 +9,7 @@ const initialState = {
   ajusteCrecimiento: 1,
   bFCR: 1.4,
   eFCR: 1.5,
-  objetivo: OBJETIVO_PESO,
+  objetivos: [OBJETIVO_PESO],
   pesoObjetivo: 5000,
   mesesObjetivo: 14,
   numeroJaulas: 20,
@@ -69,9 +69,10 @@ const produccionReducer = (state = initialState, action) => {
         costoAlimento: action.payload
       }
     case produccionActions.FIJAR_OBJETIVO:
+      const { objetivo, valor } = action.payload
       return {
         ...state,
-        objetivo: action.payload
+        objetivos: valor ? [...state.objetivos, objetivo] : state.objetivos.filter(o => o !== objetivo)
       }
     case produccionActions.FIJAR_MESES_OBJETIVO:
       return {

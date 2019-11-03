@@ -8,6 +8,15 @@ export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos) =
   }).length
 }
 
+export const obtenerBaños = (tratamientos, medicamentos) => {
+  const semanas = Object.keys(tratamientos).filter(key => {
+    const { idMedicamento } = tratamientos[key]
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
+  })
+  return semanas.reduce((obj, s) => ({...obj, [s]: tratamientos[s]}), {})
+}
+
 export const calcularCostoBaños = (medicamentos, tratamientos, numeroDeJaulas, volumenJaula) => {
   return Object.keys(tratamientos).reduce((suma, key) => {
     const { idMedicamento } = tratamientos[key]

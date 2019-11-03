@@ -30,13 +30,14 @@ const Reporte = ({ state }) => {
   const costoBañosTradicional = calcularCostoBaños(medicamentos, tratamientos['tradicional'], numeroJaulas, volumenJaula)
 
   let curvaImvixa, curvaTradicional
+
   if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.imvixa)
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
   }
   else {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.imvixa)
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
   }
   // Imvixa
   const curvaMortalidadAcumuladaImvixa = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaImvixa.length, mortalidad)
@@ -95,6 +96,16 @@ const Reporte = ({ state }) => {
   const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'])
   const mortalidadTotalImvixa = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaImvixa, medicamentos, tratamientos['imvixa'])
 
+  const iconoImpactoLaboral = (diferencia) => {
+    let icono = redondear(diferencia)
+    if (diferencia > 0){
+      icono = <><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} /> {redondear(diferencia)}</>
+    }
+    if (diferencia < 0){
+      icono = <><FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />{redondear(Math.abs(diferencia))}</>
+    }
+    return icono
+  }
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
   }
@@ -143,48 +154,68 @@ const Reporte = ({ state }) => {
     </button>
     <div id="reporte">
       <img src={logoElanco} alt="logo elanco" id="logo-elanco-reporte" />
-      <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-      <h1>REPORTE IMPACTO ELANCO</h1>
-      <ul id="datos-empresa-reporte">
-        <li>Empesa: <span>{titular}</span></li>
-        <li>Centro: <span>{(nombreCentro !== '' ? `${nombreCentro} (código: ${codigoCentro})` : codigoCentro)}</span></li>
-        <li>Fecha: <span>{obtenerFechaActualBonita()}</span></li>
-      </ul>
+      <div id="encabezado-reporte">
+        <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
+        <h1>REPORTE IMPACTO ELANCO</h1>
+        <ul id="datos-empresa-reporte">
+          <li>Empesa: <span>{titular}</span></li>
+          <li>Centro: <span>{(nombreCentro !== '' ? `${nombreCentro} (código: ${codigoCentro})` : codigoCentro)}</span></li>
+          <li>Fecha: <span>{obtenerFechaActualBonita()}</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Datos de la simulación sin tratamientos</h3>
+        <ul id="datos-simulacion-reporte">
+          <li>Inicio de ciclo: <span>{fechaInicio}</span></li>
+          <li>N° de smolts al ingreso: <span>{redondear(numeroSmolts, 0)}</span></li>
+          <li>Peso de smolt al ingreso: <span>{redondear(pesoSmolt, 0)} g</span></li>
+          <li>Mortalidad (sin tratamientos): <span>{redondear(mortalidad, 1)} %</span></li>
+          <li>Costo smolt: <span>{redondear(costoSmolt, 2)} USD</span></li>
+          <li>Costo por kilo de alimento: <span>{redondear(costoAlimento, 1)} USD</span></li>
+          <li>Objetivo de peso de cosecha: <span>{pesoObjetivo} g</span></li>
+          <li>Objetivo de tiempo de cosecha: <span>{mesesObjetivo} meses</span></li>
+        </ul>
+      </div>
       <div id="contenido-resumen-reporte">
+      <h2>1. IMPACTO PRODUCTIVO</h2>
       <div id="cuadros-reporte-estrategias">
         <div id="fondo-reporte-estrategia-b">
           <h1>Estrategia 1</h1>
-            <div className="resultados-reporte-estrategia">
-              {objetivo === OBJETIVO_PESO ?
-                <>
-                  <h2>{redondear(curvaTradicional.length / 30.0)}</h2>
-                  <p>meses para alcanzar el peso de cosecha</p>
-                </> :
-                <>
-                  <h2>{redondear(curvaTradicional[curvaTradicional.length - 1] / 1000.0, 2)}</h2>
-                  <p>kg a la cosecha</p>
-                </>
-              }
-            </div>
+          <div className="resultados-reporte-estrategia">
+            {objetivo === OBJETIVO_PESO ?
+              <>
+                <h2>{redondear(curvaTradicional.length / 30.0)}</h2>
+                <p>meses para alcanzar el peso de cosecha</p>
+                <h2>{redondear(biomasaTradicional / 1000, 0)}</h2>
+                <p>Ton</p>
+              </> :
+              <>
+                <h2>{redondear(curvaTradicional[curvaTradicional.length - 1] / 1000.0, 2)}</h2>
+                <p>kg a la cosecha</p>
+              </> // falta la biomasa cosechada en toneladas en cada cuadrito y la tercera columna el diferencial
+            }
+          </div>
         </div>
         <div id="fondo-reporte-estrategia-a">
           <h1>Estrategia 2</h1>
-            <div className="resultados-reporte-estrategia">
-              {objetivo === OBJETIVO_PESO ?
-                <>
-                  <h2>{redondear(curvaImvixa.length / 30.0)}</h2>
-                  <p>meses para alcanzar el peso de cosecha</p>
-                </> :
-                <>
-                  <h2>{redondear(curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
-                  <p>kg a la cosecha</p>
-                </>
-              }
-            </div>
+          <div className="resultados-reporte-estrategia">
+            {objetivo === OBJETIVO_PESO ?
+              <>
+                <h2>{redondear(curvaImvixa.length / 30.0)}</h2>
+                <p>meses para alcanzar el peso de cosecha</p>
+                <h2>{redondear(biomasaImvixa / 1000, 0)}</h2>
+                <p>Ton</p>
+              </> :
+              <>
+                <h2>{redondear(curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
+                <p>kg a la cosecha</p>
+              </>
+            }
+          </div>
         </div>
       </div>
       </div>
-      <h2>1. IMPACTO PRODUCTIVO</h2>
+      <h2>2. IMPACTO ECONÓMICO</h2>
       <div id="comparacion">
         <div>
           <h3>ESTRATEGIA 1</h3>
@@ -246,8 +277,8 @@ const Reporte = ({ state }) => {
           </div>
         </div>
       </div>
-      <h2>2. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
-      <h3>2.1 Impactos laborales por ciclo</h3>
+      <h2>3. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
+      <h3>3.1 Impactos laborales por ciclo</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -262,17 +293,17 @@ const Reporte = ({ state }) => {
             <td>Número de Baños</td>
             <td>{numeroBañosTradicional}</td>
             <td>{numeroBañosImvixa}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa)}</td>
+            <td>{iconoImpactoLaboral(numeroBañosTradicional-numeroBañosImvixa)}</td>
           </tr>
           <tr>
             <td>Jornadas laborales por concepto de baños</td>
             <td>{numeroBañosTradicional * jornadasPorBaño}</td>
             <td>{numeroBañosImvixa * jornadasPorBaño}</td>
-            <td><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />{(numeroBañosTradicional-numeroBañosImvixa) * jornadasPorBaño}</td>
+            <td>{iconoImpactoLaboral((numeroBañosTradicional-numeroBañosImvixa) * jornadasPorBaño)}</td>
           </tr>
         </tbody>
       </table>
-      <h3>2.2 Cantidad de productos vertidos al mar por ciclo</h3>
+      <h3>3.2 Cantidad de productos vertidos al mar por ciclo</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -283,23 +314,27 @@ const Reporte = ({ state }) => {
           </tr>
         </thead>
         <tbody>
-          {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => (
-            <tr key={`vertidos-${i}`}>
+          {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => {
+            let icono = ''
+            const diferencia = v.tradicional * numeroJaulas - v.imvixa * numeroJaulas
+            if (diferencia > 0){
+              icono = <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />
+            }
+            else if (diferencia < 0){
+              icono = <FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />
+            }
+            
+            return (<tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
               <td>{redondear(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
               <td>{redondear(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
-              <td>{redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) > 0 ?
-              <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} /> :
-              redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas) === 0 ?
-              '':<FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />
-              } 
-              {redondear(v.tradicional * numeroJaulas - v.imvixa * numeroJaulas)} {v.unidad}</td>
-            </tr> 
-          ))}
+              <td>{ icono } { redondear(Math.abs(diferencia)) } {v.unidad }</td>
+            </tr>)
+          })}
         </tbody>
       </table>
-      <h2>3. IMPACTOS DE CERTIFICACIÓN</h2>
-      <h3>3.1 Distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      <h2>4. IMPACTOS DE CERTIFICACIÓN</h2>
+      <h3>4.1 Distancia entre óptimo ASC y posición REGULACIÓN</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>
@@ -326,8 +361,8 @@ const Reporte = ({ state }) => {
         ptiImvixa={ptiImvixa.suma}
         ptiTradicional={ptiTradicional.suma}
       />
-      <h2>4. IMPACTOS DE REGULACIÓN</h2>
-      <h3>4.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
+      <h2>5. IMPACTOS DE REGULACIÓN</h2>
+      <h3>5.1 Riesgo de disminución de siembra por clasificación de bioseguridad</h3>
       <GraficoNiveles
         mortalidades={{
           imvixa: mortalidadTotalImvixa,
@@ -336,11 +371,12 @@ const Reporte = ({ state }) => {
       />
       <div id="anexos">
         <h2>Anexos</h2>
+        <h3>Detalle de estrategias antiparasitarias</h3>
         <div id="tratamientos-resumen">
           <div className="estrategia-resumen">
             <h3>Tratamientos estrategia 1</h3>
-              <table className="tabla-reporte">
-                <thead>
+            <table className="tabla-reporte">
+              <thead>
                 <tr>
                   <th>Semana</th>
                   <th>Principio activo</th>

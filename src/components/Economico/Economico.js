@@ -10,16 +10,16 @@ import CampoNumerico from '../Produccion/CampoNumerico'
 const Economico = props => {
   const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
   const { macrozona, produccion } = props
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR } = produccion
 
   const [mostrarEstructura, setMostrarEstructura] = useState(false)
 
   let curvaCrecimiento
-  if (objetivo === OBJETIVO_PESO) {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, [])
+  if (objetivos.includes(OBJETIVO_PESO)) {
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
   }
   else {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, mesesObjetivo, [])
+    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
   }
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)

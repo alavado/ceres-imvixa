@@ -29,7 +29,7 @@ const BarraLateral = () => {
           <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/economico">
             <div>
               <FontAwesomeIcon icon={faChartBar} size="lg" />
-              Económicos
+              Costos
             </div>
           </Link>
           <Link activeClassName="seccion-seleccionada" className="link-seccion" to="/tratamientos">
