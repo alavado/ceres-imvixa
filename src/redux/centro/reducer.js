@@ -1,16 +1,24 @@
 import centroActions from './actions'
-import barrios from './barrios'
+import obtenerBarrios from './barrios'
 
 const initialState = {
-  barrios,
+  barrios: obtenerBarrios(),
   indiceBarrioSeleccionado: 0,
-  titular: barrios[0].centros[0].titular,
+  titular: '',
   indiceCentroSeleccionado: 0,
   nombreCentro: ''
 }
 
 const centroReducer = (state = initialState, action) => {
   switch (action.type) {
+    case centroActions.FIJAR_BARRIOS: {
+      const centros = action.payload
+      console.log('centroReducer', state.barrios);
+      return {
+        ...state,
+        barrios: obtenerBarrios(centros)
+      }
+    }
     case centroActions.FIJAR_MACROZONA: {
       const macrozona = action.payload
       const indiceBarrioSeleccionado = state.barrios.findIndex(barrio => barrio.macrozona === macrozona)

@@ -129,7 +129,7 @@ const modelosMortalidadMacrozonas = {
   "2": {"coefs": [0.0, 3.077962893732444e-05, 1.330732801920674e-07], "intercepto": 0.0052083643490512775}
 }
 
-export default barrios.filter(nombre => centrosFormateados.filter(centro => centro.barrio === nombre.replace(' ', '')).length > 0).map(nombre => {
+const obtenerBarrios = (centros = centrosFormateados) => barrios.filter(nombre => centros.filter(centro => centro.barrio === nombre.replace(' ', '')).length > 0).map(nombre => {
   let modeloMortalidad = modelosMortalidadBarrios[Object.keys(modelosMortalidadBarrios).find(k => k === nombre)]
   if (!modeloMortalidad) {
     modeloMortalidad = modelosMortalidadMacrozonas[Object.keys(macrozonas).find(k => macrozonas[k].find(b => b === nombre))]
@@ -140,6 +140,8 @@ export default barrios.filter(nombre => centrosFormateados.filter(centro => cent
     macrozona: Object.keys(macrozonas)
       .find(key => macrozonas[key].find(b => b === nombre)),
     modeloMortalidad,
-    centros: centrosFormateados.filter(centro => centro.barrio === nombre.replace(' ', ''))
+    centros: centros.filter(centro => centro.barrio === nombre.replace(' ', ''))
   }
 })
+
+export default obtenerBarrios
