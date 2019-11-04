@@ -21,8 +21,7 @@ const { ipcRenderer } = window.require('electron');
 const Reporte = ({ state }) => {
   const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo,
-    numeroSmolts, bFCR, numeroJaulas, volumenJaula, mortalidad, eFCR } = state.produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
