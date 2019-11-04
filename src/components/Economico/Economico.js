@@ -40,7 +40,7 @@ const Economico = props => {
       <div id="contenido-economicos" className="contenido">
         <div className="barra-superior-contenido">
           <div className="titulo-contenido">
-            Parámetros económicos
+            Costos
           </div>
         </div>
         <div className="contenido-contenido">

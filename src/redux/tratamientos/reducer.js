@@ -220,10 +220,10 @@ const initialState = {
     tradicional: {
     },
     imvixa: {
-      0: {
-        idMedicamento: 6,
-        duracion: 34
-      }
+      // 0: {
+      //   idMedicamento: 6,
+      //   duracion: 34
+      // }
     },
   },
   medicamentosFueronSeleccionados: false

@@ -1,10 +1,10 @@
 import { FARMACO_APLICACION_BAÑO} from './constantes'
 
-export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos) => {
+export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos, curvaCrecimiento) => {
   return Object.keys(tratamientos[estrategia]).filter(key => {
     const { idMedicamento } = tratamientos[estrategia][key]
     const medicamento = medicamentos.find(m => m.id === idMedicamento)
-    return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
+    return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO && key < 1 + Math.floor(curvaCrecimiento.length / 7)
   }).length
 }
 

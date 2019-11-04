@@ -1,5 +1,5 @@
 import produccionActions from './actions'
-import { OBJETIVO_PESO } from '../../helpers/constantes'
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes'
 
 const initialState = {
   fechaInicio: `${new Date().toISOString().slice(0,10)}`,
@@ -70,9 +70,13 @@ const produccionReducer = (state = initialState, action) => {
       }
     case produccionActions.FIJAR_OBJETIVO:
       const { objetivo, valor } = action.payload
+      let objetivos = valor ? [...state.objetivos, objetivo] : state.objetivos.filter(o => o !== objetivo)
+      if (objetivos.length === 0) {
+        objetivos = [objetivo === OBJETIVO_PESO ? OBJETIVO_FECHA : OBJETIVO_PESO]
+      }
       return {
         ...state,
-        objetivos: valor ? [...state.objetivos, objetivo] : state.objetivos.filter(o => o !== objetivo)
+        objetivos
       }
     case produccionActions.FIJAR_MESES_OBJETIVO:
       return {

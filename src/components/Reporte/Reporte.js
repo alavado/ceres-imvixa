@@ -18,11 +18,9 @@ const { ipcRenderer } = window.require('electron');
 const Reporte = ({ state }) => {
   const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
-  const { objetivo, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo,
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo,
     numeroSmolts, bFCR, numeroJaulas, volumenJaula, mortalidad, eFCR } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
-  const numeroBañosImvixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos)
-  const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos)
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
@@ -31,14 +29,17 @@ const Reporte = ({ state }) => {
 
   let curvaImvixa, curvaTradicional
 
-  if (objetivo === OBJETIVO_PESO) {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
+  if (objetivos.includes(OBJETIVO_PESO)) {
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
   }
   else {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivo, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
+    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, tratamientos.imvixa)
+    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, tratamientos.tradicional)
   }
+  const numeroBañosImvixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos, curvaImvixa)
+  const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos, curvaTradicional)
+
   // Imvixa
   const curvaMortalidadAcumuladaImvixa = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaImvixa.length, mortalidad)
   const curvaBiomasaPerdidaImvixa = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
@@ -146,6 +147,26 @@ const Reporte = ({ state }) => {
   const { nombreCentro, titular } = state.centro
   const codigoCentro = state.centro.barrios[state.centro.indiceBarrioSeleccionado].centros[state.centro.indiceCentroSeleccionado].codigo
 
+  const obtenerTratamientosEnCiclo = (tratamientos, curvaCrecimiento) => {
+    const semanasCiclo = curvaCrecimiento.length / 7
+    return Object.keys(tratamientos).reduce((obj, s) => {
+      if (s >  semanasCiclo){
+        return obj
+      }
+      return {
+        ...obj,
+        [s]: tratamientos[s]
+      }
+    }, {})
+  }
+
+  const obtenerTratamientosEnCiclos = (tratamientos, curvaTradicional, curvaImvixa) =>{
+    return {
+      'imvixa': obtenerTratamientosEnCiclo(tratamientos['imvixa'], curvaImvixa),
+      'tradicional': obtenerTratamientosEnCiclo(tratamientos['tradicional'], curvaTradicional)
+    }
+  }
+
   return (
     <>
     <button onClick={() => window.location.href="/tratamientos"}>
@@ -182,7 +203,7 @@ const Reporte = ({ state }) => {
         <div id="fondo-reporte-estrategia-b">
           <h1>Estrategia 1</h1>
           <div className="resultados-reporte-estrategia">
-            {objetivo === OBJETIVO_PESO ?
+            {objetivos.includes(OBJETIVO_PESO) ?
               <>
                 <h2>{redondear(curvaTradicional.length / 30.0)}</h2>
                 <p>meses para alcanzar el peso de cosecha</p>
@@ -199,7 +220,7 @@ const Reporte = ({ state }) => {
         <div id="fondo-reporte-estrategia-a">
           <h1>Estrategia 2</h1>
           <div className="resultados-reporte-estrategia">
-            {objetivo === OBJETIVO_PESO ?
+            {objetivos.includes(OBJETIVO_PESO) ?
               <>
                 <h2>{redondear(curvaImvixa.length / 30.0)}</h2>
                 <p>meses para alcanzar el peso de cosecha</p>
@@ -314,21 +335,20 @@ const Reporte = ({ state }) => {
           </tr>
         </thead>
         <tbody>
-          {calcularCantidadDeProductosVertidos(medicamentos, tratamientos).map((v, i) => {
+          {calcularCantidadDeProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa)).map((v, i) => {
             let icono = ''
             const diferencia = v.tradicional * numeroJaulas - v.imvixa * numeroJaulas
-            if (diferencia > 0){
-              icono = <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} />
+            if (diferencia > 0) {
+              icono = <FontAwesomeIcon icon={faArrowDown} style={{ marginRight: 4, color: 'green' }} />
             }
-            else if (diferencia < 0){
-              icono = <FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />
+            else if (diferencia < 0) {
+              icono = <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: 4, color: 'red' }} />
             }
-            
             return (<tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
               <td>{redondear(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
               <td>{redondear(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
-              <td>{ icono } { redondear(Math.abs(diferencia)) } {v.unidad }</td>
+              <td>{icono} {redondear(Math.abs(diferencia))} {v.unidad}</td>
             </tr>)
           })}
         </tbody>

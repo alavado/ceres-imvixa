@@ -177,7 +177,7 @@ const Tratamientos = props => {
                     <h2>Semanas estrategia {estrategia === 'imvixa' ? '2' : '1'}</h2>
                     <div className="numero-baños">
                       <div>
-                        {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos)}
+                        {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos, estrategia === 'imvixa' ? curvaImvixa : curvaTradicional)}
                       </div>
                       <FontAwesomeIcon icon={faShower} size="sm" title='Número de baños'/>
                     </div>
