@@ -1,0 +1,163 @@
+Date : 2019-11-05 08:52:06
+Directory : c:\Users\aleja\Desktop\electron\ceres-imvixa
+Total : 99 files,  16736 codes, 87 comments, 2007 blanks, all 18830 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Log        |          1 |     10,324 |          0 |      1,553 |     11,877 |
+| JavaScript |         69 |      3,583 |         58 |        230 |      3,871 |
+| CSV        |          2 |      1,352 |          0 |          1 |      1,353 |
+| CSS        |         16 |      1,196 |          5 |        211 |      1,412 |
+| XML        |          2 |        137 |          1 |          1 |        139 |
+| JSON       |          7 |        112 |          0 |          4 |        116 |
+| HTML       |          1 |         23 |         23 |          1 |         47 |
+| Markdown   |          1 |          9 |          0 |          6 |         15 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                            | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                               |         99 |     16,736 |         87 |      2,007 |     18,830 |
+| src                                                                                             |         90 |      4,825 |         59 |        437 |      5,321 |
+| src\components                                                                                  |         64 |      3,307 |          9 |        353 |      3,669 |
+| public                                                                                          |          5 |      1,495 |         28 |         10 |      1,533 |
+| src\components\Reporte                                                                          |         25 |      1,125 |          8 |        136 |      1,269 |
+| src\components\Tratamientos                                                                     |         14 |      1,068 |          1 |        123 |      1,192 |
+| src\redux                                                                                       |         13 |        919 |          5 |         34 |        958 |
+| src\components\Produccion                                                                       |          7 |        478 |          0 |         30 |        508 |
+| src\redux\tratamientos                                                                          |          2 |        382 |          4 |          4 |        390 |
+| src\components\Tratamientos\SeleccionMedicamentos                                               |          7 |        335 |          1 |         44 |        380 |
+| src\helpers                                                                                     |          8 |        319 |          5 |         31 |        355 |
+| src\components\Tratamientos\ResumenComparacion                                                  |          4 |        269 |          0 |         26 |        295 |
+| src\redux\centro                                                                                |          5 |        246 |          0 |         14 |        260 |
+| src\components\Economico                                                                        |          3 |        217 |          0 |         18 |        235 |
+| src\redux\produccion                                                                            |          2 |        171 |          0 |          5 |        176 |
+| src\components\Reporte\GraficoNiveles                                                           |          3 |        150 |          0 |         20 |        170 |
+| src\components\Centro                                                                           |          3 |        139 |          0 |          8 |        147 |
+| src\assets                                                                                      |          2 |        137 |          1 |          1 |        139 |
+| src\components\Produccion\CalculadoraVolumen                                                    |          3 |        134 |          0 |         15 |        149 |
+| src\components\App                                                                              |          3 |        129 |          0 |         21 |        150 |
+| src\components\Reporte\ImpactoEconomico                                                         |          2 |        110 |          0 |          6 |        116 |
+| src\components\BarraLateral                                                                     |          3 |        104 |          0 |         12 |        116 |
+| src\components\Reporte\ImpactosLaborales                                                        |          2 |        102 |          0 |          8 |        110 |
+| src\components\Reporte\GraficoPTI                                                               |          3 |         85 |          0 |         15 |        100 |
+| src\redux\economico                                                                             |          2 |         83 |          0 |          5 |         88 |
+| src\components\Reporte\Anexos                                                                   |          2 |         73 |          0 |          2 |         75 |
+| src\components\Reporte\ImpactoProductivo                                                        |          2 |         51 |          0 |          4 |         55 |
+| src\components\Tratamientos\SeleccionMedicamentos\FilaNuevoMedicamento                          |          3 |         47 |          0 |          4 |         51 |
+| src\components\Reporte\ImpactoCertificacion                                                     |          2 |         39 |          0 |          2 |         41 |
+| src\components\Contenedor                                                                       |          3 |         32 |          0 |          2 |         34 |
+| src\components\Reporte\DatosSimulacion                                                          |          2 |         26 |          0 |          4 |         30 |
+| src\components\Reporte\EncabezadoReporte                                                        |          2 |         25 |          0 |          4 |         29 |
+| src\components\Reporte\ImpactoRegulacion                                                        |          2 |         18 |          0 |          2 |         20 |
+| src\components\Inicio                                                                           |          3 |         15 |          0 |          3 |         18 |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                        | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| README.md                                                                                       | Markdown   |          9 |          0 |          6 |         15 |
+| package.json                                                                                    | JSON       |         82 |          0 |          1 |         83 |
+| public\centros.csv                                                                              | CSV        |      1,348 |          0 |          1 |      1,349 |
+| public\electron.js                                                                              | JavaScript |         95 |          5 |          7 |        107 |
+| public\index.html                                                                               | HTML       |         23 |         23 |          1 |         47 |
+| public\manifest.json                                                                            | JSON       |         25 |          0 |          1 |         26 |
+| public\medicamentos.csv                                                                         | CSV        |          4 |          0 |          0 |          4 |
+| save.json                                                                                       | JSON       |          1 |          0 |          0 |          1 |
+| src\assets\asc-label-landscape.svg                                                              | XML        |        136 |          1 |          1 |        138 |
+| src\assets\elanco.svg                                                                           | XML        |          1 |          0 |          0 |          1 |
+| src\components\App\App.css                                                                      | CSS        |        104 |          0 |         18 |        122 |
+| src\components\App\App.js                                                                       | JavaScript |         24 |          0 |          3 |         27 |
+| src\components\App\index.js                                                                     | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\BarraLateral\BarraLateral.css                                                    | CSS        |         54 |          0 |          9 |         63 |
+| src\components\BarraLateral\BarraLateral.js                                                     | JavaScript |         49 |          0 |          3 |         52 |
+| src\components\BarraLateral\index.js                                                            | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Centro\Centro.css                                                                | CSS        |         13 |          0 |          3 |         16 |
+| src\components\Centro\Centro.js                                                                 | JavaScript |        125 |          0 |          5 |        130 |
+| src\components\Centro\index.js                                                                  | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Contenedor\Contenedor.css                                                        | CSS        |          7 |          0 |          0 |          7 |
+| src\components\Contenedor\Contenedor.js                                                         | JavaScript |         24 |          0 |          2 |         26 |
+| src\components\Contenedor\index.js                                                              | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Economico\Economico.css                                                          | CSS        |         50 |          0 |         10 |         60 |
+| src\components\Economico\Economico.js                                                           | JavaScript |        166 |          0 |          8 |        174 |
+| src\components\Economico\index.js                                                               | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Inicio\Inicio.css                                                                | CSS        |          0 |          0 |          1 |          1 |
+| src\components\Inicio\Inicio.js                                                                 | JavaScript |         14 |          0 |          2 |         16 |
+| src\components\Inicio\index.js                                                                  | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Produccion\CalculadoraVolumen\CalculadoraVolumen.css                             | CSS        |         50 |          0 |          8 |         58 |
+| src\components\Produccion\CalculadoraVolumen\CalculadoraVolumen.js                              | JavaScript |         83 |          0 |          7 |         90 |
+| src\components\Produccion\CalculadoraVolumen\index.js                                           | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Produccion\CampoNumerico.js                                                      | JavaScript |          4 |          0 |          2 |          6 |
+| src\components\Produccion\Produccion.css                                                        | CSS        |         33 |          0 |          4 |         37 |
+| src\components\Produccion\Produccion.js                                                         | JavaScript |        306 |          0 |          9 |        315 |
+| src\components\Produccion\index.js                                                              | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\Anexos\Anexos.js                                                         | JavaScript |         72 |          0 |          2 |         74 |
+| src\components\Reporte\Anexos\index.js                                                          | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\DatosSimulacion\DatosSimulacion.js                                       | JavaScript |         25 |          0 |          4 |         29 |
+| src\components\Reporte\DatosSimulacion\index.js                                                 | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\EncabezadoReporte\EncabezadoReporte.js                                   | JavaScript |         24 |          0 |          4 |         28 |
+| src\components\Reporte\EncabezadoReporte\index.js                                               | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\GraficoNiveles\GraficoNiveles.css                                        | CSS        |         93 |          0 |         15 |        108 |
+| src\components\Reporte\GraficoNiveles\GraficoNiveles.js                                         | JavaScript |         56 |          0 |          5 |         61 |
+| src\components\Reporte\GraficoNiveles\index.js                                                  | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\GraficoPTI\GraficoPTI.css                                                | CSS        |         57 |          0 |         11 |         68 |
+| src\components\Reporte\GraficoPTI\GraficoPTI.js                                                 | JavaScript |         27 |          0 |          4 |         31 |
+| src\components\Reporte\GraficoPTI\index.js                                                      | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\ImpactoCertificacion\ImpactoCertificacion.js                             | JavaScript |         38 |          0 |          2 |         40 |
+| src\components\Reporte\ImpactoCertificacion\index.js                                            | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\ImpactoEconomico\ImpactoEconomico.js                                     | JavaScript |        109 |          0 |          6 |        115 |
+| src\components\Reporte\ImpactoEconomico\index.js                                                | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\ImpactoProductivo\ImpactoProductivo.js                                   | JavaScript |         50 |          0 |          4 |         54 |
+| src\components\Reporte\ImpactoProductivo\index.js                                               | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\ImpactoRegulacion\ImpactoRegulacion.js                                   | JavaScript |         17 |          0 |          2 |         19 |
+| src\components\Reporte\ImpactoRegulacion\index.js                                               | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\ImpactosLaborales\ImpactosLaborales.js                                   | JavaScript |        101 |          0 |          8 |        109 |
+| src\components\Reporte\ImpactosLaborales\index.js                                               | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Reporte\Reporte.css                                                              | CSS        |        310 |          0 |         56 |        366 |
+| src\components\Reporte\Reporte.js                                                               | JavaScript |        135 |          8 |         13 |        156 |
+| src\components\Reporte\index.js                                                                 | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Tratamientos\ResumenComparacion\GraficoCrecimiento.js                            | JavaScript |        111 |          0 |          6 |        117 |
+| src\components\Tratamientos\ResumenComparacion\ResumenComparacion.css                           | CSS        |         82 |          0 |         15 |         97 |
+| src\components\Tratamientos\ResumenComparacion\ResumenComparacion.js                            | JavaScript |         75 |          0 |          5 |         80 |
+| src\components\Tratamientos\ResumenComparacion\index.js                                         | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Tratamientos\SeleccionMedicamentos\FilaMedicamento.js                            | JavaScript |         60 |          0 |          6 |         66 |
+| src\components\Tratamientos\SeleccionMedicamentos\FilaNuevoMedicamento\FilaNuevoMedicamento.css | CSS        |          3 |          0 |          0 |          3 |
+| src\components\Tratamientos\SeleccionMedicamentos\FilaNuevoMedicamento\FilaNuevoMedicamento.js  | JavaScript |         43 |          0 |          4 |         47 |
+| src\components\Tratamientos\SeleccionMedicamentos\FilaNuevoMedicamento\index.js                 | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Tratamientos\SeleccionMedicamentos\SeleccionMedicamentos.css                     | CSS        |        120 |          0 |         26 |        146 |
+| src\components\Tratamientos\SeleccionMedicamentos\SeleccionMedicamentos.js                      | JavaScript |        107 |          1 |          8 |        116 |
+| src\components\Tratamientos\SeleccionMedicamentos\index.js                                      | JavaScript |          1 |          0 |          0 |          1 |
+| src\components\Tratamientos\Tratamientos.css                                                    | CSS        |        178 |          0 |         34 |        212 |
+| src\components\Tratamientos\Tratamientos.js                                                     | JavaScript |        285 |          0 |         19 |        304 |
+| src\components\Tratamientos\index.js                                                            | JavaScript |          1 |          0 |          0 |          1 |
+| src\helpers\constantes.js                                                                       | JavaScript |          9 |          0 |          7 |         16 |
+| src\helpers\escalaComida.js                                                                     | JavaScript |         54 |          3 |          3 |         60 |
+| src\helpers\helpers.js                                                                          | JavaScript |        113 |          0 |         11 |        124 |
+| src\helpers\localStorage.js                                                                     | JavaScript |         18 |          1 |          1 |         20 |
+| src\helpers\modelo.js                                                                           | JavaScript |        106 |          1 |          8 |        115 |
+| src\helpers\modelos_crecimiento_macrozonas.json                                                 | JSON       |          1 |          0 |          0 |          1 |
+| src\helpers\reporteVariablesProductivas.js                                                      | JavaScript |         17 |          0 |          1 |         18 |
+| src\helpers\temperaturas.json                                                                   | JSON       |          1 |          0 |          0 |          1 |
+| src\index.css                                                                                   | CSS        |         42 |          5 |          1 |         48 |
+| src\index.js                                                                                    | JavaScript |          9 |          3 |          4 |         16 |
+| src\redux\centro\actions.js                                                                     | JavaScript |         33 |          0 |          1 |         34 |
+| src\redux\centro\barrios.js                                                                     | JavaScript |        139 |          0 |          8 |        147 |
+| src\redux\centro\datos_centros.json                                                             | JSON       |          1 |          0 |          1 |          2 |
+| src\redux\centro\datos_centros_resp.json                                                        | JSON       |          1 |          0 |          1 |          2 |
+| src\redux\centro\reducer.js                                                                     | JavaScript |         72 |          0 |          3 |         75 |
+| src\redux\economico\actions.js                                                                  | JavaScript |         23 |          0 |          2 |         25 |
+| src\redux\economico\reducer.js                                                                  | JavaScript |         60 |          0 |          3 |         63 |
+| src\redux\produccion\actions.js                                                                 | JavaScript |         73 |          0 |          2 |         75 |
+| src\redux\produccion\reducer.js                                                                 | JavaScript |         98 |          0 |          3 |        101 |
+| src\redux\reducers.js                                                                           | JavaScript |         10 |          0 |          1 |         11 |
+| src\redux\store.js                                                                              | JavaScript |         27 |          1 |          5 |         33 |
+| src\redux\tratamientos\actions.js                                                               | JavaScript |         33 |          0 |          1 |         34 |
+| src\redux\tratamientos\reducer.js                                                               | JavaScript |        349 |          4 |          3 |        356 |
+| src\serviceWorker.js                                                                            | JavaScript |         92 |         31 |         13 |        136 |
+| yarn-error.log                                                                                  | Log        |     10,324 |          0 |      1,553 |     11,877 |
+| Total                                                                                           |            |     16,736 |         87 |      2,007 |     18,830 |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
