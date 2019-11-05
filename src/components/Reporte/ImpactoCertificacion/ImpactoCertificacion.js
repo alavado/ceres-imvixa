@@ -25,7 +25,7 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
             <td>{redondear(ptiImvixa.suma)}</td>
             <td>{13.0}</td>
             <td>{redondear(ptiTradicional.suma - 13)}</td>
-            <td>{redondear(ptiImvixa.suma - 13)}</td>
+            <td>{ptiImvixa.suma - 13 <= 0 ? 'OK' : redondear(ptiImvixa.suma - 13)}</td>
           </tr>
         </tbody>
       </table>

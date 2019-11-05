@@ -52,7 +52,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
       <table className="tabla-reporte">
         <thead>
           <tr>
-            <th></th>
+            <th style={{ width: 280 }}></th>
             <th>Estrategia 1</th>
             <th>Estrategia 2</th>
             <th>Diferencia</th>
@@ -77,7 +77,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
       <table className="tabla-reporte">
         <thead>
           <tr>
-            <th>Producto</th>
+            <th style={{ width: 280 }}>Producto</th>
             <th>Estrategia 1</th>
             <th>Estrategia 2</th>
             <th>Diferencia</th>

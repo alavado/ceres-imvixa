@@ -1,0 +1,52 @@
+#tabla-impacto-productivo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0 16px;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo > h1 {
+  color: white;
+  padding: 8px 64px;
+  border-radius: 8px 8px 0 0;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo:first-child > h1 {
+  background: #5F7D8B;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo:nth-child(2) > h1 {
+  background: #EF7B10;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo:nth-child(3) > h1 {
+  background: #2A2E57;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo h1, #tabla-impacto-productivo .columna-impacto-productivo h2 {
+  border: none;
+  text-align: center;
+  margin: 0;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo h1 {
+  font-size: 1.2em;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo h2 {
+  margin-top: 32px;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+#tabla-impacto-productivo .columna-impacto-productivo p {
+  border: none;
+  text-align: center;
+  font-size: 1em;
+  margin-top: 8px;
+}
