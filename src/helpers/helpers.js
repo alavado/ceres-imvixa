@@ -22,7 +22,7 @@ export const calcularCostoBaños = (medicamentos, tratamientos, numeroDeJaulas, 
     const { idMedicamento } = tratamientos[key]
     const medicamento = medicamentos.find(m => m.id === idMedicamento)
     if (medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO) {
-      const costoProducto = (medicamento.costoUnitario / 1000) * medicamento.dosisBaño * Number(numeroDeJaulas) * Number(volumenJaula)
+      const costoProducto = medicamento.costoUnitario * medicamento.dosisBaño * Number(numeroDeJaulas) * Number(volumenJaula)
       const costoBaño = costoProducto + (Number(medicamento.costoOperacional) * Number(numeroDeJaulas))
       return suma + costoBaño
     }
