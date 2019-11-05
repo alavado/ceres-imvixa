@@ -59,7 +59,7 @@ const ImpactoEconomico = props => {
                   marginLeft: 16 + anchoMaximoLengueta - anchoLengueta
                 }}></div>
                 <div className="valor">
-                  {lengueta.tradicional > 0 && redondear(lengueta.tradicional, 2)}
+                  {lengueta.tradicional > 0 && redondear(lengueta.tradicional, 4)}
                 </div>
               </div>
             )
@@ -93,7 +93,7 @@ const ImpactoEconomico = props => {
                 width: anchoLengueta
               }}></div>
               <div className="valor">
-                {lengueta.imvixa > 0 && redondear(lengueta.imvixa, 2)}
+                {lengueta.imvixa > 0 && redondear(lengueta.imvixa, 4)}
               </div>
             </div>
           )

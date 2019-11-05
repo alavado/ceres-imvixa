@@ -43,7 +43,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                     <th>Nombre comercial</th>
                     <th>Principio activo</th>
                     <th>Costo unitario producto</th>
-                    <th>{formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'Días de administración' : 'Dosis por jaula'}</th>
+                    <th>{formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'Dosis por kg de peso' : 'Dosis por jaula'}</th>
                     <th>Costo operacional {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'por mezcla de alimento' : 'por baño'}</th>
                     <th>Mortalidad por jaula</th>
                   </tr>

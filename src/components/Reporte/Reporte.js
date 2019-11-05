@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoEmamectina, calcularCostoImvixa } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoEmamectina, calcularCostoImvixa } from '../../helpers/helpers'
 import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import { OBJETIVO_PESO } from "../../helpers/constantes";
@@ -49,6 +49,7 @@ const Reporte = ({ state }) => {
   const curvaMortalidadAcumuladaTradicional = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaTradicional.length, mortalidad)
   const curvaBiomasaPerdidaTradicional = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaTradicional, curvaImvixa, numeroSmolts, 30)
   const curvaBiomasaTradicional = obtenerCurvaBiomasa(curvaMortalidadAcumuladaTradicional, curvaTradicional, numeroSmolts, 30)
+  
   // Imvixa
   const pesoGanadoImvixa = curvaBiomasaImvixa.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
   const pesoMuertoImvixa = curvaBiomasaPerdidaImvixa.slice(-1)[0]
@@ -61,12 +62,13 @@ const Reporte = ({ state }) => {
   
   // estrategia Tradicional
   const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
-  const costoEmamectinaTradicional = calcularCostoEmamectina(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
-  const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional) / biomasaTradicional
+  const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional) / biomasaTradicional
+  const costoEmamectinaTradicional = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional) / biomasaTradicional
   // estrategia Imvixa
-  const costoEmamectinaImvixa = calcularCostoEmamectina(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
-  const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa) / biomasaImvixa
+  const costoEmamectinaImvixa = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa) / biomasaImvixa
+  const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa) / biomasaImvixa
   
+  console.log({costoImvixaTradicional});
   // economicos estrategia Imvixa
   const costoSmolts = numeroSmolts * costoSmolt
   const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000

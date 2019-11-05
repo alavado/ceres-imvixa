@@ -32,8 +32,7 @@ const initialState = {
       unidad: 'dosis',
       costoUnitario: 240,
       costoOperacional: 0,
-      dosisBaño: '',
-      cantidadPorJaula: 0,
+      dosis: 0.025, // 50 mc/kg al 0.2% (g/kg)
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
@@ -109,8 +108,7 @@ const initialState = {
       unidad: 'dosis',
       costoUnitario: 40000,
       costoOperacional: 0,
-      dosisBaño: '',
-      cantidadPorJaula: 0,
+      dosis: 0.0035, // 0.35 mg/kg al 10% 8 (g/kg)
       duracion: 34,
       mortalidad: 0,
       color: '#EF7B10',
@@ -148,8 +146,7 @@ const initialState = {
       unidad: 'dosis',
       costoUnitario: 240,
       costoOperacional: 0,
-      dosisBaño: '',
-      cantidadPorJaula: 0,
+      dosis: 0.025, // (g/kg)
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',

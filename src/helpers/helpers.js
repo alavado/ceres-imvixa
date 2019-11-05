@@ -29,32 +29,62 @@ export const calcularCostoBaños = (medicamentos, tratamientos, numeroDeJaulas, 
     return suma
   }, 0)
 }
-
-export const calcularCostoEmamectina = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+export const calcularCostoTratamientoOral = (principioActivo, medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada, curvaCrecimiento) => {
+  console.log({curvaCrecimiento});
   return Object.keys(tratamientos).reduce((suma, semana) => {
     const { idMedicamento } = tratamientos[semana]
-    const medicamento = medicamentos.find(m => m.id === idMedicamento)
-    if (medicamento.principioActivo === 'Emamectina') {
+    const m = medicamentos.find(m => m.id === idMedicamento)
+    if (m.principioActivo === principioActivo) {
+      const costoGramos = m.costoUnitario / 1000
       if (semana === '0'){
-        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+        const pesoAplicacion = tratamientos[semana].pesoDeAplicacion / 1000 
+        return suma + ( costoGramos * m.dosis * pesoAplicacion * numeroDeSmoltsInicial)
       }
       const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
-      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+      const diasSemana = [0,1,2,4,5,6,7].map(i => Number(semana) * 7 + i)
+      const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
+      const pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
+      return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual )
     }
     return suma
   }, 0)
 }
 
-export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada) => {
+export const calcularCostoEmamectina = (principioActivo, medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada, curvaCrecimiento) => {
   return Object.keys(tratamientos).reduce((suma, semana) => {
     const { idMedicamento } = tratamientos[semana]
-    const medicamento = medicamentos.find(m => m.id === idMedicamento)
-    if (medicamento.nombre === 'Imvixa') {
+    const m = medicamentos.find(m => m.id === idMedicamento)
+    if (m.principioActivo === principioActivo) {
+      const costoGramos = m.costoUnitario / 1000
       if (semana === '0'){
-        return suma + (medicamento.costoUnitario * numeroDeSmoltsInicial)
+        const pesoAplicacion = tratamientos[semana].pesoDeAplicacion / 1000 
+        return suma + (costoGramos * m.dosis * pesoAplicacion * numeroDeSmoltsInicial)
       }
       const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
-      return suma + (medicamento.costoUnitario * numeroDeSmoltsActual)
+      const diasSemana = [0,1,2,4,5,6,7].map(i => Number(semana) * 7 + i)
+      const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
+      const pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
+      return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual)
+    }
+    return suma
+  }, 0)
+}
+
+export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvaMortalidadAcumulada, curvaCrecimiento) => {
+  return Object.keys(tratamientos).reduce((suma, semana) => {
+    const { idMedicamento } = tratamientos[semana]
+    const m = medicamentos.find(m => m.id === idMedicamento)
+    if (m.nombre === 'Imvixa') {
+      const costoGramos = m.costoUnitario / 1000
+      if (semana === '0'){
+        const pesoAplicacion = tratamientos[semana].pesoDeAplicacion / 1000 
+        return suma + (costoGramos * m.dosis * pesoAplicacion * numeroDeSmoltsInicial)
+      }
+      const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[Number(semana)*4])
+      const diasSemana = [0,1,2,4,5,6,7].map(i => Number(semana) * 7 + i)
+      const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
+      const pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
+      return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual)
     }
     return suma
   }, 0)
