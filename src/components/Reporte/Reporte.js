@@ -21,12 +21,10 @@ const { ipcRenderer } = window.require('electron');
 const Reporte = ({ state }) => {
   const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR } = state.produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR, bFCR } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
-  const costoBañosImvixa = calcularCostoBaños(medicamentos, tratamientos['imvixa'], numeroJaulas, volumenJaula)
-  const costoBañosTradicional = calcularCostoBaños(medicamentos, tratamientos['tradicional'], numeroJaulas, volumenJaula)
 
   let curvaImvixa, curvaTradicional
 
@@ -49,26 +47,27 @@ const Reporte = ({ state }) => {
   const curvaMortalidadAcumuladaTradicional = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaTradicional.length, mortalidad)
   const curvaBiomasaPerdidaTradicional = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaTradicional, curvaImvixa, numeroSmolts, 30)
   const curvaBiomasaTradicional = obtenerCurvaBiomasa(curvaMortalidadAcumuladaTradicional, curvaTradicional, numeroSmolts, 30)
+  const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
   
   // Imvixa
   const pesoGanadoImvixa = curvaBiomasaImvixa.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
   const pesoMuertoImvixa = curvaBiomasaPerdidaImvixa.slice(-1)[0]
-  
   const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
   const biomasaImvixa = curvaBiomasaImvixa.slice(-1)[0]
   const biomasaTradicional = curvaBiomasaTradicional.slice(-1)[0]
-  const costoMarginalBañosImvixa = costoBañosImvixa / biomasaImvixa
-  const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
   
+  // Costo tratamientos
   // estrategia Tradicional
-  const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
-  const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional) / biomasaTradicional
-  const costoEmamectinaTradicional = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional) / biomasaTradicional
+  const costoBañosTradicional = calcularCostoBaños(medicamentos, tratamientos['tradicional'], numeroJaulas, volumenJaula)
+  const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
+  const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
+  const costoEmamectinaTradicional = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
   // estrategia Imvixa
-  const costoEmamectinaImvixa = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa) / biomasaImvixa
-  const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa) / biomasaImvixa
-  
-  console.log({costoImvixaTradicional});
+  const costoBañosImvixa = calcularCostoBaños(medicamentos, tratamientos['imvixa'], numeroJaulas, volumenJaula)
+  const costoMarginalBañosImvixa = costoBañosImvixa / biomasaImvixa
+  const costoEmamectinaImvixa = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
+  const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
+
   // economicos estrategia Imvixa
   const costoSmolts = numeroSmolts * costoSmolt
   const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000

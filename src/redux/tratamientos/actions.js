@@ -17,9 +17,9 @@ const tratamientosActions = {
     type: tratamientosActions.AGREGAR_MEDICAMENTO,
     payload: { nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula }
   }),
-  editarMedicamento: (id, propiedad, valor) => ({
+  editarMedicamento: (id, propiedad, valor, formaFarmaceutica) => ({
     type: tratamientosActions.EDITAR_MEDICAMENTO,
-    payload: { id, propiedad, valor }
+    payload: { id, propiedad, valor, formaFarmaceutica }
   }),
   marcarMedicamentosFueronSeleccionados: valor => ({
     type: tratamientosActions.MARCAR_MEDICAMENTOS_FUERON_SELECCIONADOS,
