@@ -59,7 +59,7 @@ const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta) => {
   return Math.round(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
 }
 
-const crecimientoSinComida = (macrozona, peso, uta) => -0.02 * peso//evaluarModeloDeltaCrecimiento(macrozona, peso, uta) / 14.0
+const crecimientoSinComida = (macrozona, peso, uta) => 0//evaluarModeloDeltaCrecimiento(macrozona, peso, uta) / 14.0
 
 export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tiposObjetivos, objetivoPeso, objetivoFecha, tratamientos) => {
   let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
