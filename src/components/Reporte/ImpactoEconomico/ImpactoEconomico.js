@@ -52,6 +52,7 @@ const ImpactoEconomico = props => {
           <h3>ESTRATEGIA 1</h3>
           {lenguetas.map((lengueta, i) => {
             const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.tradicional / totalTradicional) * anchoMaximoLenguetaColoreada
+            const round = i < 4 ? 3 : 3
             return (
               <div key={`lengueta-tradicional-${i}`}>
                 <div className="lengueta" style={{
@@ -59,7 +60,7 @@ const ImpactoEconomico = props => {
                   marginLeft: 16 + anchoMaximoLengueta - anchoLengueta
                 }}></div>
                 <div className="valor">
-                  {lengueta.tradicional > 0 && redondear(lengueta.tradicional, 4)}
+                  {lengueta.tradicional > 0 && redondear(lengueta.tradicional, round)}
                 </div>
               </div>
             )
@@ -87,13 +88,14 @@ const ImpactoEconomico = props => {
         <h3>ESTRATEGIA 2</h3>
         {lenguetas.map((lengueta, i) => {
           const anchoLengueta = (i < 4 ? 3: 1) * (lengueta.imvixa / totalImvixa) * anchoMaximoLenguetaColoreada
+          const round = i < 4 ? 3 : 3
           return (
             <div key={`lengueta-tradiconal-${i}`}>
               <div className="lengueta" style={{
                 width: anchoLengueta
               }}></div>
               <div className="valor">
-                {lengueta.imvixa > 0 && redondear(lengueta.imvixa, 4)}
+                {lengueta.imvixa > 0 && redondear(lengueta.imvixa, round)}
               </div>
             </div>
           )
