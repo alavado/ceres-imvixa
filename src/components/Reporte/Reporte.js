@@ -35,24 +35,26 @@ const Reporte = ({ state }) => {
   const numeroBañosImvixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos, curvaImvixa)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos, curvaTradicional)
 
-  // Curvas de Mortalidad y biomasa
+  // Curvas de Mortalidad y Biomasa
   // Imvixa
   const curvaMortalidadAcumuladaImvixa = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaImvixa.length, mortalidad)
+  const mortalidadTotalImvixa = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaImvixa, medicamentos, tratamientos['imvixa'])
   const curvaBiomasaPerdidaImvixa = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
   const curvaBiomasaImvixa = obtenerCurvaBiomasa(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
-  const biomasaImvixa = curvaBiomasaImvixa.slice(-1)[0]
+
   const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
 
   // Tradicional
   const curvaMortalidadAcumuladaTradicional = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaTradicional.length, mortalidad)
+  const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'])
   const curvaBiomasaPerdidaTradicional = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaTradicional, curvaImvixa, numeroSmolts, 30)
   const curvaBiomasaTradicional = obtenerCurvaBiomasa(curvaMortalidadAcumuladaTradicional, curvaTradicional, numeroSmolts, 30)
-  const biomasaTradicional = curvaBiomasaTradicional.slice(-1)[0]
+
   const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
   
-  // Imvixa
-  const pesoGanadoImvixa = curvaBiomasaImvixa.slice(-1)[0] - (numeroSmolts * pesoSmolt / 1000)
-  const pesoMuertoImvixa = curvaBiomasaPerdidaImvixa.slice(-1)[0]
+  // Biomasa total cosechada
+  const biomasaImvixa = numeroSmolts * (1 - mortalidadTotalImvixa / 100.0) * pesoFinalImvixa
+  const biomasaTradicional = numeroSmolts * (1 - mortalidadTotalTradicional / 100.0) * pesoFinalTradicional
   
   // Economicos
   // generales
@@ -80,7 +82,7 @@ const Reporte = ({ state }) => {
  // economicos estrategia Imvixa
   const costoAyunoImvixa = (costoProduccionDiario * numeroBañosImvixa * DIAS_AYUNO_BAÑO) /biomasaImvixa
   const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000
-  const cantidadAlimentoImvixa = deltaPesoImvixa * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
+  const cantidadAlimentoImvixa = deltaPesoImvixa * eFCR * numeroSmolts * (1 - mortalidadTotalImvixa / 100.0)
   const costoTotalAlimentoImvixa = costoAlimento * cantidadAlimentoImvixa
   const costoProduccionImvixa = costoTotalAlimentoImvixa  + costoSmolts + costoProduccionDiario * curvaImvixa.length
   const costoProduccionSinAyunoImvixa = costoProduccionImvixa / biomasaImvixa - costoAyunoImvixa
@@ -90,14 +92,12 @@ const Reporte = ({ state }) => {
   // economicos estrategia Tradicional
   const costoAyunoTradicional = (costoProduccionDiario * numeroBañosTradicional * DIAS_AYUNO_BAÑO) / biomasaTradicional
   const deltaPesoTradicional = pesoFinalTradicional - pesoSmolt / 1000
-  const cantidadAlimentoTradicional = deltaPesoTradicional * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
+  const cantidadAlimentoTradicional = deltaPesoTradicional * eFCR * numeroSmolts * (1 - mortalidadTotalTradicional / 100.0)
   const costoTotalAlimentoTradicional = costoAlimento * cantidadAlimentoTradicional
   const costoProduccionTradicional = costoTotalAlimentoTradicional  + costoSmolts + costoProduccionDiario * curvaTradicional.length
   const costoProduccionSinAyunoTradicional = costoProduccionTradicional / biomasaTradicional - costoAyunoTradicional
   
-  console.log({costoTotalAlimentoImvixa, costoTotalAlimentoTradicional, pesoFinalTradicional, pesoFinalImvixa, costoProduccionDiario, costoProduccionTradicional, costoProduccionImvixa, costoProduccionSinAyunoTradicional, costoProduccionSinAyunoImvixa});
-  const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'])
-  const mortalidadTotalImvixa = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaImvixa, medicamentos, tratamientos['imvixa'])
+  
 
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
