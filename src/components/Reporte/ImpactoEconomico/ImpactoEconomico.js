@@ -75,7 +75,7 @@ const ImpactoEconomico = props => {
           </div>
         </div>
         <div>
-          <h3>costo USD/kg ex-jaula</h3>
+          <h3>COSTO USD/KG EX-JAULA</h3>
           {lenguetas.map((lengueta, i) => (
             <div key={`lengueta-central-${i}`}>
               {lengueta.nombre}
