@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoEmamectina, calcularCostoImvixa } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa } from '../../helpers/helpers'
 import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
-import { OBJETIVO_PESO, DIAS_AYUNO_BAÑO } from "../../helpers/constantes";
+import { DIAS_AYUNO_BAÑO } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import EncabezadoReporte from './EncabezadoReporte/EncabezadoReporte';
