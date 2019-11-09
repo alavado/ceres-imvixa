@@ -99,7 +99,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
         diasAyunoRestante = DIAS_AYUNO_BAÑO
         tratamientosAplicados[`${Math.ceil(semana)}`] = 1
-        diaFinal += DIAS_AYUNO_BAÑO
+        //diaFinal += DIAS_AYUNO_BAÑO
       }
       if (diasAyunoRestante <= 0) {
         pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta) / 7.0

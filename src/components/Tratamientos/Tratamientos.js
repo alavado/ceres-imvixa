@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import './Tratamientos.css'
 import tratamientosActions from '../../redux/tratamientos/actions';
-import { dias, FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
+import { dias, FARMACO_APLICACION_ORAL } from '../../helpers/constantes'
 import ResumenComparacion from './ResumenComparacion/'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrash, faShower, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { OBJETIVO_PESO } from '../../helpers/constantes'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
 import { calcularNumeroDeBaños, obtenerBaños } from '../../helpers/helpers'
 import SeleccionMedicamentos from './SeleccionMedicamentos'
@@ -18,15 +17,8 @@ const Tratamientos = props => {
           marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo } = produccion
   
-  let curvaImvixa, curvaTradicional
-  if (objetivos.includes(OBJETIVO_PESO)) {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos))
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos))
-  }
-  else {
-    curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos))
-    curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos))
-  }
+  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos))
+  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos))
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: medicamentos[0].id,

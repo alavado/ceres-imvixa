@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
+import CuadrosEstrategias from './CuadrosEstrategias';
 
 const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
 
@@ -33,38 +34,11 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
             objetivo={objetivos.includes(OBJETIVO_FECHA) ? OBJETIVO_FECHA : OBJETIVO_PESO}
           />
         </div>
-        <div id="cuadros-estrategias">
-          <div id="fondo-estrategia-b">
-            <h1>Estrategia 1</h1>
-              <div className="resultados-estrategia">
-                {objetivos.includes(OBJETIVO_PESO) ?
-                  <>
-                    <h2>{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
-                    <p>meses para alcanzar el peso de cosecha</p>
-                  </> :
-                  <>
-                    <h2>{(Math.round(.1 * curvaTradicional[curvaTradicional.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
-                    <p>kg a la cosecha</p>
-                  </>
-                }
-              </div>
-          </div>
-          <div id="fondo-estrategia-a">
-            <h1>Estrategia 2</h1>
-              <div className="resultados-estrategia">
-                {objetivos.includes(OBJETIVO_PESO) ?
-                  <>
-                    <h2>{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
-                    <p>meses para alcanzar el peso de cosecha</p>
-                  </> :
-                  <>
-                    <h2>{(Math.round(.1 * curvaImvixa[curvaImvixa.length - 1]) / 100.0).toLocaleString(undefined, { minimumFractionDigits: 1})}</h2>
-                    <p>kg a la cosecha</p>
-                  </>
-                }
-              </div>
-          </div>
-        </div>
+        <CuadrosEstrategias
+          objetivos={objetivos}
+          curvaImvixa={curvaImvixa}
+          curvaTradicional={curvaTradicional}
+        />
       </div>
     </div>
   );

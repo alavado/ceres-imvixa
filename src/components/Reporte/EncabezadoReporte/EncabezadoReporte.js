@@ -16,7 +16,7 @@ const EncabezadoReporte = () => {
         <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
         <h1>REPORTE IMPACTO ELANCO</h1>
         <ul id="datos-empresa-reporte">
-          <li>Empesa: <span>{titular}</span></li>
+          <li>Empresa: <span>{titular}</span></li>
           <li>Centro: <span>{(nombreCentro !== '' ? `${nombreCentro} (código: ${codigoCentro})` : codigoCentro)}</span></li>
           <li>Fecha: <span>{obtenerFechaActualBonita()}</span></li>
         </ul>
