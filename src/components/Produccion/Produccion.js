@@ -162,8 +162,8 @@ const Produccion = props => {
                 labels: curvaBiomasa.map((v, i) => i + 1),
                 datasets: [
                   {
-                    label: 'Peso promedio',
-                    data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
+                    label: 'Peso inicio mes',
+                    data: curvaCrecimiento.filter((peso, i) => i % 30 === 0 || i === curvaCrecimiento.length - 1),
                     backgroundColor: '#E35205',
                     type: 'line',
                     yAxisID: 'EjeYPesoPromedio',
@@ -227,7 +227,7 @@ const Produccion = props => {
                       position: 'right',
                       scaleLabel: {
                         display: true,
-                        labelString: 'Peso promedio (kg)'
+                        labelString: 'Peso (kg)'
                       },
                       ticks: {
                         callback: function(v, i, vs) { return `${(v / 1000).toLocaleString(undefined, { minimumFractionDigits: 1})}` }

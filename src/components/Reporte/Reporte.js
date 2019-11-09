@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import './Reporte.css'
 import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa } from '../../helpers/helpers'
 import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
-import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
+import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada } from '../../helpers/modelo'
 import { DIAS_AYUNO_BAÑO } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -39,16 +39,12 @@ const Reporte = ({ state }) => {
   // Imvixa
   const curvaMortalidadAcumuladaImvixa = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaImvixa.length, mortalidad)
   const mortalidadTotalImvixa = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaImvixa, medicamentos, tratamientos['imvixa'], curvaImvixa.length)
-  const curvaBiomasaPerdidaImvixa = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
-  const curvaBiomasaImvixa = obtenerCurvaBiomasa(curvaMortalidadAcumuladaImvixa, curvaImvixa, numeroSmolts, 30)
 
   const pesoFinalImvixa = curvaImvixa.slice(-1)[0]/1000
 
   // Tradicional
   const curvaMortalidadAcumuladaTradicional = obtenerCurvaMortalidadAcumulada(modeloMortalidad, curvaTradicional.length, mortalidad)
   const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'], curvaTradicional.length)
-  const curvaBiomasaPerdidaTradicional = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumuladaTradicional, curvaImvixa, numeroSmolts, 30)
-  const curvaBiomasaTradicional = obtenerCurvaBiomasa(curvaMortalidadAcumuladaTradicional, curvaTradicional, numeroSmolts, 30)
 
   const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
   console.log({curvaImvixa, curvaTradicional,curvaMortalidadAcumuladaImvixa, curvaMortalidadAcumuladaTradicional });
