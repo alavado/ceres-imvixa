@@ -21,13 +21,13 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
                 <h2>{redondear(curvaTradicional.length / 30.0)}</h2>
                 <p>meses ciclo</p>
                 <h2>{redondear(biomasaTradicional / 1000, 0)}</h2>
-                <p>Ton</p>
+                <p>toneladas cosechadas</p>
               </> :
               <>
                 <h2>{redondear(curvaTradicional[curvaTradicional.length - 1] / 1000.0, 2)}</h2>
                 <p>kg a la cosecha</p>
                 <h2>{redondear(biomasaTradicional / 1000, 0)}</h2>
-                <p>Ton</p>
+                <p>toneladas cosechadas</p>
               </> // falta la biomasa cosechada en toneladas en cada cuadrito y la tercera columna el diferencial
             }
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import CampoNumerico from '../../Produccion/CampoNumerico';
-import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../../helpers/constantes';
+import { FARMACO_APLICACION_BAÑO } from '../../../helpers/constantes';
 import tratamientosActions from '../../../redux/tratamientos/actions';
 
 const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamentos}) => {

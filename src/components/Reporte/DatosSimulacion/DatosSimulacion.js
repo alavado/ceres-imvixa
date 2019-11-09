@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { redondear } from '../../../helpers/helpers';
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
 
 const DatosSimulacion = () => {
 
   const produccion = useSelector(state => state.produccion)
   const economico = useSelector(state => state.economico)
-  const { fechaInicio, pesoSmolt, numeroSmolts, mortalidad, mesesObjetivo, pesoObjetivo } = produccion
+  const { fechaInicio, pesoSmolt, numeroSmolts, mortalidad, mesesObjetivo, pesoObjetivo, objetivos } = produccion
   const { costoSmolt, costoAlimento } = economico
 
   return (
@@ -19,8 +20,8 @@ const DatosSimulacion = () => {
         <li>Mortalidad (sin tratamientos): <span>{redondear(mortalidad, 1)} %</span></li>
         <li>Costo smolt: <span>{redondear(costoSmolt, 2)} USD</span></li>
         <li>Costo por kilo de alimento: <span>{redondear(costoAlimento, 1)} USD</span></li>
-        <li>Objetivo de peso de cosecha: <span>{pesoObjetivo} g</span></li>
-        <li>Objetivo de tiempo de cosecha: <span>{mesesObjetivo} meses</span></li>
+        { objetivos.includes(OBJETIVO_PESO)? <li>Objetivo de peso de cosecha: <span>{pesoObjetivo} g</span></li> : '' }
+        { objetivos.includes(OBJETIVO_FECHA)? <li>Objetivo de tiempo de cosecha: <span>{mesesObjetivo} meses</span></li> : '' }
       </ul>
     </div>
   );

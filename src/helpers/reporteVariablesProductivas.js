@@ -1,4 +1,4 @@
-import { FARMACO_APLICACION_BAÑO, dias } from './constantes'
+import { dias } from './constantes'
 
 export const calcularMortalidadTotal = (mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumulada, medicamentos, tratamientos, largoCiclo) => {
   const numeroPecesMuertos = Object.keys(tratamientos).reduce((sum, semana) => {
