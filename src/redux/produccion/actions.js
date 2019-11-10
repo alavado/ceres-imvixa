@@ -6,7 +6,7 @@ const produccionActions = {
   FIJAR_MORTALIDAD: 'FIJAR_MORTALIDAD',
   FIJAR_OBJETIVO: 'FIJAR_OBJETIVO',
   FIJAR_PESO_OBJETIVO: 'FIJAR_PESO_OBJETIVO',
-  FIJAR_AJUSTE_CRECIMIENTO: 'FIJAR_AJUSTE_CRECIMIENTO',
+  FIJAR_FACTOR_CRECIMIENTO: 'FIJAR_FACTOR_CRECIMIENTO',
   FIJAR_BFCR: 'FIJAR_BFCR',
   FIJAR_EFCR: 'FIJAR_EFCR',
   FIJAR_COSTO_ALIMENTO: 'FIJAR_COSTO_ALIMENTO',
@@ -38,8 +38,8 @@ const produccionActions = {
     type: produccionActions.FIJAR_PESO_OBJETIVO,
     payload: g
   }),
-  fijarAjusteCrecimiento: tasa => ({
-    type: produccionActions.FIJAR_AJUSTE_CRECIMIENTO,
+  fijarFactorCrecimiento: tasa => ({
+    type: produccionActions.FIJAR_FACTOR_CRECIMIENTO,
     payload: tasa
   }),
   fijarBFCR: valor => ({

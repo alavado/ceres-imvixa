@@ -13,10 +13,10 @@ import CampoNumerico from './CampoNumerico'
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, factorCrecimiento } = produccion
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
 
-  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
   
   const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
@@ -107,13 +107,27 @@ const Produccion = props => {
               /> 
             </div>
           </div>
-          <label htmlFor="mortalidad">Mortalidad ciclo</label>
-          <CampoNumerico
-            id="mortalidad"
-            value={produccion.mortalidad}
-            suffix={' %'}
-            style={{width: 45}}
-            onValueChange={e => props.fijarMortalidad(e.floatValue)} />
+          <div style={{display: 'flex', alignItems: 'baseline'}}>
+            <div>
+              <label htmlFor="mortalidad">Mortalidad</label>
+              <CampoNumerico
+                id="mortalidad"
+                value={produccion.mortalidad}
+                suffix={' %'}
+                style={{width: 45, marginRight: 32}}
+                onValueChange={e => props.fijarMortalidad(e.floatValue)}
+              />
+            </div>
+            <div>
+              <label style={{ marginRight: 8 }} htmlFor="factor-crecimiento">Factor de crecimiento</label>
+              <CampoNumerico
+                id="factor-crecimiento"
+                value={produccion.factorCrecimiento}
+                style={{width: 45 }}
+                onValueChange={e => props.fijarFactorCrecimiento(e.floatValue)}
+              /> 
+            </div>
+          </div>
           <h1 style={{marginBottom: 12, paddingTop: 12, borderTop: '1px dotted lightgray'}}>Objetivo</h1>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
@@ -155,12 +169,6 @@ const Produccion = props => {
           <h1>Proyección</h1>
         </div>
         <div className="contenido-secundario-contenido">
-          {/* <div id="control-prueba">
-            <div className="control-ajuste-crecimiento">
-              <button>+</button>
-              <button>-</button>
-            </div>
-          </div> */}
           <div style={{width: '640px', height: '350px'}}>
             <Bar
               onClick={e => alert(document.getElementAtEvent(e))}
@@ -288,8 +296,8 @@ const mapDispatchToProps = dispatch => ({
   fijarPesoObjetivo: g => {
     dispatch(produccionActions.fijarPesoObjetivo(g))
   },
-  fijarAjusteCrecimiento: tasa => {
-    dispatch(produccionActions.fijarAjusteCrecimiento(Number(tasa)))
+  fijarFactorCrecimiento: tasa => {
+    dispatch(produccionActions.fijarFactorCrecimiento(Number(tasa)))
   },
   fijarBFCR: valor => {
     dispatch(produccionActions.fijarBFCR(Number(valor)))

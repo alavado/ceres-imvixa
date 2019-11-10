@@ -61,7 +61,7 @@ const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta) => {
 
 const crecimientoSinComida = (macrozona, peso, uta) => 0//evaluarModeloDeltaCrecimiento(macrozona, peso, uta) / 14.0
 
-export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tiposObjetivos, objetivoPeso, objetivoFecha, tratamientos) => {
+export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngreso, tiposObjetivos, objetivoPeso, objetivoFecha, tratamientos, factorCrecimiento) => {
   let fechaCiclo = moment(fechaInicio, 'YYYY-MM-DD')
   let curva = [pesoIngreso]
   let pesoActual = pesoIngreso
@@ -89,7 +89,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       diasAyunoRestante--
       curva.push(pesoActual)
     }
-    curva = curva.map(v => v * objetivoPeso / curva.slice(-1)[0])
+    return curva.map(v => v * objetivoPeso / curva.slice(-1)[0])
   }
   else {
     for (let dia = 2; dia < MAXIMOS_DIAS_CICLO && ((tiposObjetivos.includes(OBJETIVO_PESO) && pesoActual < objetivoPeso) || (tiposObjetivos.includes(OBJETIVO_FECHA) && dia < diaFinal)); dia++) {
@@ -111,5 +111,5 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       curva.push(pesoActual)
     }
   }
-  return curva
+  return curva.map(v => v * factorCrecimiento)
 }
