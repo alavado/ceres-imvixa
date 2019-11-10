@@ -3,14 +3,14 @@ import economicoActions from './actions'
 const initialState = {
   costoAlimento : 1.2,
   estructuraCostos: {
-    alimento: 47,
-    smolts: 13,
+    alimento: 57,
+    smolts: 17,
     personal: 3,
     operaciones: 14.2,
     depreciación: 1.4,
     sanidad: 4.4,
     seguros: 2,
-    otros: 5
+    otros: 2.4
   },
   valorKiloProducido : 7.6,
   costoSmolt: 2.15
@@ -29,7 +29,7 @@ const economicoReducer = (state = initialState, action) => {
       const { nombre, porcentaje } = action.payload
       let porcentaje_anterior = state.estructuraCostos[nombre]
       let delta_porcentaje = porcentaje_anterior - porcentaje
-      if (nombre === 'otros' || (delta_porcentaje < 0 && state.estructuraCostos.otros + delta_porcentaje < 0)) {
+      if (state.estructuraCostos.otros + delta_porcentaje < 0) {
         return state
       }
       return {

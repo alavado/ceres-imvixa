@@ -77,7 +77,7 @@ const Reporte = ({ state }) => {
   const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
 
  // economicos estrategia Imvixa
-  const costoAyunoImvixa = (costoProduccionDiario * numeroBañosImvixa * DIAS_AYUNO_BAÑO) /biomasaImvixa
+  const costoAyunoImvixa = (costoProduccionDiario * numeroBañosImvixa * DIAS_AYUNO_BAÑO) / biomasaImvixa
   const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000
   const cantidadAlimentoImvixa = deltaPesoImvixa * eFCR * numeroSmolts * (1 - mortalidadTotalImvixa / 100.0)
   const costoTotalAlimentoImvixa = costoAlimento * cantidadAlimentoImvixa
@@ -145,6 +145,11 @@ const Reporte = ({ state }) => {
         ptiTradicional={ptiTradicional}
         ptiImvixa={ptiImvixa}
         estructuraCostos={estructuraCostos}
+        costoSmolts={costoSmolts}
+        costoTotalAlimentoImvixa={costoTotalAlimentoImvixa}
+        costoTotalAlimentoTradicional={costoTotalAlimentoTradicional}
+        costoProduccionImvixa={costoProduccionImvixa}
+        costoProduccionTradicional={costoProduccionTradicional}
       />
     </div>
     <button onClick={imprimirPDF}>Imprimir PDF</button>

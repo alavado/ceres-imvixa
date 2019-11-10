@@ -70,7 +70,7 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
           </div>
         </div>
         <div className="columna-impacto-productivo">
-          <h1>Diferencia</h1>
+          <h1>Diferencia (E2 - E1)</h1>
           <div className="indicadores-impacto-productivo">
             {objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)?
               <>

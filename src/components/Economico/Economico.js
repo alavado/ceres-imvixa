@@ -28,12 +28,13 @@ const Economico = props => {
   const cantidadAlimento = deltaPeso * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
   const costoTotalAlimento = costoAlimento * cantidadAlimento
   const costoTotal = costoTotalAlimento / (estructuraCostos.alimento / 100)
+  const porcentajeSmolts = costoSmolts / costoTotal * 100
   const costoOtros = costoTotal * (1 - (estructuraCostos.alimento / 100)) - costoSmolts
 
   const costoProporcionalSmolt = Math.round(100 * costoSmolts / biomasaCosechada) / 100.0
-  const otrosCostos = Math.round(100 * costoOtros / biomasaCosechada) / 100.0
   const costoProporcionalAlimento = Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0
-  const costoProporcionalTotal = (costoProporcionalSmolt + otrosCostos + costoProporcionalAlimento).toLocaleString(undefined, { maximumFractionDigits: 2})
+  const otrosCostos = Math.round(100 * costoOtros / biomasaCosechada) / 100.0
+  const costoProporcionalTotal = (costoProporcionalSmolt + costoProporcionalAlimento + otrosCostos).toLocaleString(undefined, { maximumFractionDigits: 2})
 
   return (
     <>
@@ -74,22 +75,24 @@ const Economico = props => {
               <h6 id="titulo-tabla-estructura-costos">Estructura de costos</h6>
               <table id="tabla-estructura-costos">
                 <tbody>
-                  {Object.keys(estructuraCostos).map((elemento, i) => (
-                    <tr key={`costo-estructura-${i}`}>
-                      <td>{elemento}</td>
-                      <td>
-                        <div>
-                          <CampoNumerico
-                            style={{width: 78 }}
-                            suffix={' %'}
-                            disabled={elemento === 'otros'}
-                            value={estructuraCostos[elemento]}
-                            decimalScale={1}
-                            onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.floatValue)} />
-                        </div>
-                      </td>
-                    </tr> 
-                  ))}
+                  {Object.keys(estructuraCostos).map((elemento, i) => {
+                    return <>
+                      <tr key={`costo-estructura-${i}`}>
+                        <td>{elemento}</td>
+                        <td>
+                          <div>
+                            <CampoNumerico
+                              style={{width: 78 }}
+                              suffix={' %'}
+                              disabled={elemento === 'otros' || elemento === 'smolts'}
+                              value={elemento === 'smolts' ? porcentajeSmolts : estructuraCostos[elemento]}
+                              decimalScale={1}
+                              onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.floatValue)} />
+                          </div>
+                        </td>
+                      </tr>
+                    </>
+                  })}
                 </tbody>
               </table>
               <button onClick={() => setMostrarEstructura(false)}>Solo valor alimento</button>
@@ -163,7 +166,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fijarCostoAlimento: costo => {
-    console.log(costo);
     dispatch(economicoActions.fijarCostoAlimento(costo))
   },
   fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, Math.min(100, porcentaje))),
