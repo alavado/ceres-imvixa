@@ -17,7 +17,6 @@ const Produccion = props => {
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
 
   const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
-
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
   
   const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
@@ -46,13 +45,13 @@ const Produccion = props => {
             onChange={e => props.fijarFechaInicio(e.target.value)}
             style={{width: 130}}
           />
-          <label htmlFor="numero-smolts">N° de smolts al ingreso</label>
+          <label htmlFor="numero-smolts">N° de smolts</label>
           <CampoNumerico
             id="numero-smolts"
             style={{width: 78 }}
             value={produccion.numeroSmolts}
             onValueChange={e => props.fijarNumeroSmolts(e.floatValue)} />
-          <label htmlFor="peso-smolt">Peso de smolt al ingreso</label>
+          <label htmlFor="peso-smolt">Peso de smolt</label>
           <CampoNumerico
             id="peso-smolt"
             style={{width: 45 }}
@@ -156,8 +155,15 @@ const Produccion = props => {
           <h1>Proyección</h1>
         </div>
         <div className="contenido-secundario-contenido">
+          {/* <div id="control-prueba">
+            <div className="control-ajuste-crecimiento">
+              <button>+</button>
+              <button>-</button>
+            </div>
+          </div> */}
           <div style={{width: '640px', height: '350px'}}>
             <Bar
+              onClick={e => alert(document.getElementAtEvent(e))}
               data={{
                 labels: curvaBiomasa.map((v, i) => i + 1),
                 datasets: [

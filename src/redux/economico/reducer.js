@@ -10,7 +10,7 @@ const initialState = {
     depreciación: 1.4,
     sanidad: 4.4,
     seguros: 2,
-    otros: 2.4
+    otros: 1
   },
   valorKiloProducido : 7.6,
   costoSmolt: 2.15

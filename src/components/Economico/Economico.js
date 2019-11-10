@@ -14,13 +14,8 @@ const Economico = props => {
 
   const [mostrarEstructura, setMostrarEstructura] = useState(false)
 
-  let curvaCrecimiento
-  if (objetivos.includes(OBJETIVO_PESO)) {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
-  }
-  else {
-    curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
-  }
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [])
+
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)
   const costoSmolts = numeroSmolts * costoSmolt
@@ -35,6 +30,8 @@ const Economico = props => {
   const costoProporcionalAlimento = Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0
   const otrosCostos = Math.round(100 * costoOtros / biomasaCosechada) / 100.0
   const costoProporcionalTotal = (costoProporcionalSmolt + costoProporcionalAlimento + otrosCostos).toLocaleString(undefined, { maximumFractionDigits: 2})
+
+  console.log({cantidadAlimento}, {costoTotalAlimento}, {costoSmolts});
 
   return (
     <>
@@ -60,23 +57,21 @@ const Economico = props => {
             suffix={' USD'}
             value={costoAlimento}
             onValueChange={e => props.fijarCostoAlimento(e.floatValue)} />
-          {!mostrarEstructura ?
+            <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
+          <CampoNumerico
+            id="porcentaje-alimento"
+            style={{ width: 78 }}
+            suffix={' %'}
+            value={estructuraCostos.alimento}
+            onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
+          {!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>}
+          {mostrarEstructura &&
             <>
-              <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
-              <CampoNumerico
-                id="porcentaje-alimento"
-                style={{ width: 78 }}
-                suffix={' %'}
-                value={estructuraCostos.alimento}
-                onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
-              <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>
-            </> :
-            <>
-              <h6 id="titulo-tabla-estructura-costos">Estructura de costos</h6>
+              <h6 id="titulo-tabla-estructura-costos">Otros costos</h6>
               <table id="tabla-estructura-costos">
                 <tbody>
                   {Object.keys(estructuraCostos).map((elemento, i) => {
-                    return <>
+                    return elemento !== 'alimento' &&
                       <tr key={`costo-estructura-${i}`}>
                         <td>{elemento}</td>
                         <td>
@@ -91,7 +86,6 @@ const Economico = props => {
                           </div>
                         </td>
                       </tr>
-                    </>
                   })}
                 </tbody>
               </table>

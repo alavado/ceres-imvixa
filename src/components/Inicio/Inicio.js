@@ -1,4 +1,5 @@
 import React from 'react';
+import ImagenBienvenida from '../../assets/Fondo simulador IMVIXA solo.jpg'
 import './Inicio.css'
 
 const Inicio = () => {
@@ -8,6 +9,9 @@ const Inicio = () => {
         <div className="titulo-contenido">
           Acerca de
         </div>
+      </div>
+      <div id="bienvenida">
+        <img src={ImagenBienvenida} alt="bienvenida" />
       </div>
     </div>
   );
