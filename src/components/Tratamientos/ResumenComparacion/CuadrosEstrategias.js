@@ -8,9 +8,13 @@ const CuadrosEstrategias = ({ objetivos, curvaImvixa, curvaTradicional }) => {
   if (objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)) {
     contenidoEstrategiaTradicional = 
       <>
+        <p>El objetivo de peso se lcanza al los x meses</p>
+        <p>A los x meses, el peso alzanzado es de</p>
       </>
     contenidoEstrategiaImvixa = 
       <>
+      <p>El objetivo de peso se lcanza al los x meses</p>
+      <p>A los x meses, el peso alzanzado es de</p>
       </>
   }
   else if (objetivos.includes(OBJETIVO_PESO)) {
