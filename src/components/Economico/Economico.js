@@ -63,7 +63,7 @@ const Economico = props => {
             style={{ width: 78 }}
             suffix={' %'}
             value={estructuraCostos.alimento}
-            onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
+            onValueChange={e => props.fijarPorcentajeAlimentoEnEstructuraDeCostos(e.floatValue, porcentajeSmolts)} />
           {!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>}
           {mostrarEstructura &&
             <>
@@ -136,9 +136,9 @@ const Economico = props => {
                   {
                     data: Object.keys(estructuraCostos).map((elemento, i) => {
                       if (elemento === 'smolts'){
-                        return redondear(porcentajeSmolts, 1)
+                        return redondear(porcentajeSmolts)
                       }
-                      return redondear(estructuraCostos[elemento], 1)
+                      return redondear(estructuraCostos[elemento])
                     }),        
                     backgroundColor: ['#6AB96F', '#FB6E45', '#8D6E61', '#FFED56', '#29C0E7','#7D55C7', '#26A69A', '#EF426F'],
                   }
@@ -184,6 +184,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fijarCostoAlimento: costo => dispatch(economicoActions.fijarCostoAlimento(costo)),
+  fijarPorcentajeAlimentoEnEstructuraDeCostos: (porcentajeAlimento, porcentajeSmolts) => dispatch(economicoActions.fijarPorcentajeAlimentoEnEstructuraDeCostos(Math.min(100, porcentajeAlimento), porcentajeSmolts)),
   fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, Math.min(100, porcentaje))),
   fijarValorKiloProducido: valor => dispatch(economicoActions.fijarValorKiloProducido(valor)),
   fijarCostoSmolt: valor => dispatch(economicoActions.fijarCostoSmolt(valor))

@@ -143,7 +143,7 @@ export const obtenerFechaActualBonita = () => {
   return f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear();
 }
 
-export const redondear = (numero, cifrasSignificativas) => {
+export const redondear = (numero, cifrasSignificativas = 1) => {
   return (Math.round(numero * 10 ** cifrasSignificativas) / 10 ** cifrasSignificativas)
 }
 
