@@ -1,5 +1,6 @@
 const economicoActions = {
   FIJAR_COSTO_ALIMENTO: 'FIJAR_COSTO_ALIMENTO',
+  FIJAR_PORCENTAJE_ALIMENTO_EN_ESTRUCTURA_DE_COSTOS: 'FIJAR_PORCENTAJE_ALIMENTO_EN_ESTRUCTURA_DE_COSTOS',
   FIJAR_PORCENTAJE_EN_ESTRUCTURA_DE_COSTOS: 'FIJAR_PORCENTAJE_EN_ESTRUCTURA_DE_COSTOS',
   FIJAR_VALOR_KILO_PRODUCIDO: 'FIJAR_VALOR_KILO_PRODUCIDO',
   FIJAR_COSTO_SMOLT: 'FIJAR_COSTO_SMOLT',
@@ -7,6 +8,10 @@ const economicoActions = {
   fijarCostoAlimento: costo => ({
     type: economicoActions.FIJAR_COSTO_ALIMENTO,
     payload: { costo }
+  }),
+  fijarPorcentajeAlimentoEnEstructuraDeCostos: (porcentajeAlimento, porcentajeSmolts) => ({
+    type: economicoActions.FIJAR_PORCENTAJE_ALIMENTO_EN_ESTRUCTURA_DE_COSTOS,
+    payload: { porcentajeAlimento, porcentajeSmolts }
   }),
   fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => ({
     type: economicoActions.FIJAR_PORCENTAJE_EN_ESTRUCTURA_DE_COSTOS,

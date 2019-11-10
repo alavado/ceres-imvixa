@@ -5,6 +5,7 @@ import economicoActions  from '../../redux/economico/actions'
 import { Doughnut } from 'react-chartjs-2'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo';
 import CampoNumerico from '../Produccion/CampoNumerico'
+import { redondear } from '../../helpers/helpers';
 
 const Economico = props => {
   const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
@@ -62,7 +63,7 @@ const Economico = props => {
             style={{ width: 78 }}
             suffix={' %'}
             value={estructuraCostos.alimento}
-            onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
+            onValueChange={e => props.fijarPorcentajeAlimentoEnEstructuraDeCostos(e.floatValue, porcentajeSmolts)} />
           {!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>}
           {mostrarEstructura &&
             <>
@@ -115,6 +116,16 @@ const Economico = props => {
                 legend: {
                   position: 'bottom'
                 },
+                tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      console.log({tooltipItem});
+                      var label = data.datasets[0].data[tooltipItem.index] || '';
+                      label += ' USD'
+                      return label;
+                    },
+                  }
+                }
               }}
             />
             :
@@ -123,7 +134,12 @@ const Economico = props => {
                 labels: Object.keys(estructuraCostos).map((e, i) => e.charAt(0).toUpperCase() + e.slice(1)),
                 datasets: [
                   {
-                    data: Object.keys(estructuraCostos).map((elemento, i) => estructuraCostos[elemento]),        
+                    data: Object.keys(estructuraCostos).map((elemento, i) => {
+                      if (elemento === 'smolts'){
+                        return redondear(porcentajeSmolts)
+                      }
+                      return redondear(estructuraCostos[elemento])
+                    }),        
                     backgroundColor: ['#6AB96F', '#FB6E45', '#8D6E61', '#FFED56', '#29C0E7','#7D55C7', '#26A69A', '#EF426F'],
                   }
                 ]
@@ -131,12 +147,21 @@ const Economico = props => {
               options={{
                 legend: {
                   position: 'bottom'
+                },
+                tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      var label = data.datasets[0].data[tooltipItem.index] || '';
+                      label += ' %'
+                      return label;
+                    },
+                  }
                 }
               }}
             />
           }
           </div>
-          {!mostrarEstructura && <div className="cuadro-economicos">
+          <div className="cuadro-economicos">
             <div className="fondo-cuadro-economicos">
               <h1>Costo ex-jaula/kg producido</h1>
               <div className="resultados-estrategia">
@@ -144,7 +169,7 @@ const Economico = props => {
                 <p>estimado sin considerar tratamientos</p>
               </div>
             </div>
-          </div>}
+          </div>
         </div>
       </div>
     </>
@@ -158,9 +183,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fijarCostoAlimento: costo => {
-    dispatch(economicoActions.fijarCostoAlimento(costo))
-  },
+  fijarCostoAlimento: costo => dispatch(economicoActions.fijarCostoAlimento(costo)),
+  fijarPorcentajeAlimentoEnEstructuraDeCostos: (porcentajeAlimento, porcentajeSmolts) => dispatch(economicoActions.fijarPorcentajeAlimentoEnEstructuraDeCostos(Math.min(100, porcentajeAlimento), porcentajeSmolts)),
   fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, Math.min(100, porcentaje))),
   fijarValorKiloProducido: valor => dispatch(economicoActions.fijarValorKiloProducido(valor)),
   fijarCostoSmolt: valor => dispatch(economicoActions.fijarCostoSmolt(valor))
