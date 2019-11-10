@@ -193,7 +193,8 @@ const Produccion = props => {
               }}
               options={{
                 legend: {
-                  display: true
+                  display: false,
+                  fillStyle: '#E35205',
                 },
                 tooltips: {
                   callbacks: {
