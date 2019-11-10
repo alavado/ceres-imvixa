@@ -4,6 +4,7 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { redondearYAString, calcularCantidadDeProductosVertidos } from '../../../helpers/helpers';
 import { JORNADAS_POR_BAÑO_POR_JAULA } from '../../../helpers/constantes';
 import { useSelector } from 'react-redux'
+import './../Anexos/Anexos.css'
 
 const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa}) => {
 
@@ -73,6 +74,11 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
           </tr>
         </tbody>
       </table>
+      <div className="nota">
+      [3] Jornadas calculadas en base a valor promedio para XI Región de 12 jornadas laborales por Jaula. Considera  8 horas diarias para cada jornada laboral. 
+      <br/>
+      Fuente: CERES en base a datos de parámetros productivos 2015 – 2018 y Reporte Aquabench SM101.1018.
+      </div>
       <h3>3.2 Cantidad de productos vertidos al mar por ciclo</h3>
       <table className="tabla-reporte">
         <thead>
@@ -102,6 +108,9 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
           })}
         </tbody>
       </table>
+      <div className="nota">
+      Fuente: Cálculo simulador Ceres-Imvixa basado en dosis lt o kg por jaula confirmados por usuario
+      </div>
     </>
   );
 };
