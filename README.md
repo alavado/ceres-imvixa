@@ -1,1 +1,1 @@
-Aplicación de escritorio para Ceres.
+Aplicación de escritorio
