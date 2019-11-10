@@ -1,5 +1,5 @@
 import React from 'react';
-import { redondearString } from '../../../helpers/helpers';
+import { redondearYAString } from '../../../helpers/helpers';
 
 const ImpactoEconomico = props => {
 
@@ -60,7 +60,7 @@ const ImpactoEconomico = props => {
                   marginLeft: 16 + anchoMaximoLengueta - anchoLengueta
                 }}></div>
                 <div className="valor">
-                  {lengueta.tradicional > 0 && redondearString(lengueta.tradicional, round)}
+                  {lengueta.tradicional > 0 && redondearYAString(lengueta.tradicional, round)}
                 </div>
               </div>
             )
@@ -71,7 +71,7 @@ const ImpactoEconomico = props => {
                 marginLeft: 36
               }}></div>
             <div className="valor">
-              {redondearString(totalTradicional, 2)}
+              {redondearYAString(totalTradicional, 2)}
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ const ImpactoEconomico = props => {
                 width: anchoLengueta
               }}></div>
               <div className="valor">
-                {lengueta.imvixa > 0 && redondearString(lengueta.imvixa, round)}
+                {lengueta.imvixa > 0 && redondearYAString(lengueta.imvixa, round)}
               </div>
             </div>
           )
@@ -105,7 +105,7 @@ const ImpactoEconomico = props => {
             width: anchoMaximoLenguetaColoreada
             }}></div>
             <div className="valor">
-              {redondearString(totalImvixa, 2)}
+              {redondearYAString(totalImvixa, 2)}
             </div>
           </div>
         </div>

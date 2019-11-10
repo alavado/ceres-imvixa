@@ -10,13 +10,13 @@
   font-size: .8em;
   text-transform: capitalize;
   vertical-align: middle;
-  padding: 4px 10px;
+  padding: 3px 10px;
 }
 
 #tabla-estructura-costos input {
-  height: 11px;
+  height: 10px;
   font-size: .9em;
-  width: 38px;
+  width: 30px;
   margin: 0;
 }
 

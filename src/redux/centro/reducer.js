@@ -13,7 +13,6 @@ const centroReducer = (state = initialState, action) => {
   switch (action.type) {
     case centroActions.FIJAR_BARRIOS: {
       const centros = action.payload
-      console.log('centroReducer', state.barrios);
       return {
         ...state,
         barrios: obtenerBarrios(centros)

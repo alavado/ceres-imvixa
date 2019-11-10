@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { redondearString, calcularCantidadDeProductosVertidos } from '../../../helpers/helpers';
+import { redondearYAString, calcularCantidadDeProductosVertidos } from '../../../helpers/helpers';
 import { JORNADAS_POR_BAÑO_POR_JAULA } from '../../../helpers/constantes';
 import { useSelector } from 'react-redux'
 
@@ -15,12 +15,12 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
 
   const iconoImpactoLaboral = (diferencia) => {
-    let icono = redondearString(diferencia)
+    let icono = redondearYAString(diferencia)
     if (diferencia > 0){
-      icono = <><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} /> {redondearString(diferencia)}</>
+      icono = <><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'green'}} /> {redondearYAString(diferencia)}</>
     }
     if (diferencia < 0){
-      icono = <><FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />{redondearString(Math.abs(diferencia))}</>
+      icono = <><FontAwesomeIcon icon={faArrowUp} style={{marginRight: 4, color:'red'}} />{redondearYAString(Math.abs(diferencia))}</>
     }
     return icono
   }
@@ -95,9 +95,9 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
             }
             return (<tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
-              <td>{redondearString(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
-              <td>{redondearString(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
-              <td>{icono} {redondearString(Math.abs(diferencia))} {v.unidad}</td>
+              <td>{redondearYAString(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
+              <td>{redondearYAString(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
+              <td>{icono} {redondearYAString(Math.abs(diferencia))} {v.unidad}</td>
             </tr>)
           })}
         </tbody>

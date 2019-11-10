@@ -147,7 +147,7 @@ export const redondear = (numero, cifrasSignificativas = 1) => {
   return (Math.round(numero * 10 ** cifrasSignificativas) / 10 ** cifrasSignificativas)
 }
 
-export const redondearString = (numero, cifrasSignificativas = 1) => {
+export const redondearYAString = (numero, cifrasSignificativas = 1) => {
   return redondear(numero, cifrasSignificativas)
     .toLocaleString(undefined, { minimumFractionDigits: cifrasSignificativas, maximumFractionDigits: cifrasSignificativas})
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import './GraficoNiveles.css'
-import { redondearString } from './../../../helpers/helpers'
+import { redondearYAString } from './../../../helpers/helpers'
 
 const GraficoNiveles = ({mortalidades}) => {
 
@@ -48,10 +48,10 @@ const GraficoNiveles = ({mortalidades}) => {
             )})}
         </div>
         <div id="regulacion-imvixa" style={{marginTop: altoGrafico * (30 - mortalidades.imvixa) / 30}}>
-          <p><span></span>Mortalidad estrategia 2 ({redondearString(mortalidades.imvixa)}%)</p>
+          <p><span></span>Mortalidad estrategia 2 ({redondearYAString(mortalidades.imvixa)}%)</p>
         </div>
         <div id="regulacion-tradicional" style={{marginTop: altoGrafico * (30 - mortalidades.tradicional) / 30}}>
-          <p><span></span>Mortalidad estrategia 1 ({redondearString(mortalidades.tradicional)}%)</p>
+          <p><span></span>Mortalidad estrategia 1 ({redondearYAString(mortalidades.tradicional)}%)</p>
         </div>
       </div>
     </div>

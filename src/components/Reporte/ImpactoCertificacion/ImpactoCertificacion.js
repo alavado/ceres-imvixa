@@ -1,6 +1,6 @@
 import React from 'react';
 import GraficoPTI from '../GraficoPTI';
-import { redondearString } from '../../../helpers/helpers';
+import { redondearYAString } from '../../../helpers/helpers';
 
 const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
   return (
@@ -21,11 +21,11 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
         <tbody>
           <tr>
             <td>Indíce de tratamiento antiparasitario (PTI)</td>
-            <td>{redondearString(ptiTradicional.suma)}</td>
-            <td>{redondearString(ptiImvixa.suma)}</td>
+            <td>{redondearYAString(ptiTradicional.suma)}</td>
+            <td>{redondearYAString(ptiImvixa.suma)}</td>
             <td>{13.0}</td>
-            <td>{redondearString(ptiTradicional.suma - 13)}</td>
-            <td>{ptiImvixa.suma - 13 <= 0 ? 'OK' : redondearString(ptiImvixa.suma - 13)}</td>
+            <td>{redondearYAString(ptiTradicional.suma - 13)}</td>
+            <td>{ptiImvixa.suma - 13 <= 0 ? 'OK' : redondearYAString(ptiImvixa.suma - 13)}</td>
           </tr>
         </tbody>
       </table>

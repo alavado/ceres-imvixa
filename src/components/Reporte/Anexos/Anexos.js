@@ -1,5 +1,5 @@
 import React from 'react';
-import { redondearString } from '../../../helpers/helpers';
+import { redondearYAString } from '../../../helpers/helpers';
 import './Anexos.css'
 
 const Anexos = props => {
@@ -63,26 +63,26 @@ const Anexos = props => {
               <td>{elemento}</td>
               <td>
                 <div>
-                    {redondearString(estructuraCostosModificada[elemento][1], 0)} USD
+                    {redondearYAString(estructuraCostosModificada[elemento][1], 0)} USD
                 </div>
               </td>
               <td>
                 <div>
-                    {redondearString(estructuraCostosModificada[elemento][2], 0)} USD
+                    {redondearYAString(estructuraCostosModificada[elemento][2], 0)} USD
                 </div>
               </td>
               <td>
                 <div>
-                    {redondearString(estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} USD 
+                    {redondearYAString(estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} USD 
                 </div>
               </td>
             </tr> 
           ))}
           <tr>
             <td>Total</td>
-            <td>{redondearString(costoTotalTradicional, 0)} USD</td>
-            <td>{redondearString(costoTotalImvixa, 0)} USD</td>
-            <td>{redondearString(costoTotalImvixa - costoTotalTradicional, 0)} USD</td>
+            <td>{redondearYAString(costoTotalTradicional, 0)} USD</td>
+            <td>{redondearYAString(costoTotalImvixa, 0)} USD</td>
+            <td>{redondearYAString(costoTotalImvixa - costoTotalTradicional, 0)} USD</td>
           </tr>
         </tbody>
       </table>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import './Economico.css'
 import economicoActions  from '../../redux/economico/actions'
 import { Doughnut } from 'react-chartjs-2'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo';
 import CampoNumerico from '../Produccion/CampoNumerico'
-import { redondear } from '../../helpers/helpers';
+import { redondear, redondearYAString } from '../../helpers/helpers';
 
 const Economico = props => {
   const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
@@ -18,20 +18,23 @@ const Economico = props => {
 
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)
-  const costoSmolts = numeroSmolts * costoSmolt
   const deltaPeso = pesoFinal - pesoSmolt / 1000
+
   const cantidadAlimento = deltaPeso * eFCR * numeroSmolts * (1 - mortalidad / 100.0)
+  const costoSmolts = numeroSmolts * costoSmolt
   const costoTotalAlimento = costoAlimento * cantidadAlimento
   const costoTotal = costoTotalAlimento / (estructuraCostos.alimento / 100)
   const porcentajeSmolts = costoSmolts / costoTotal * 100
   const costoOtros = costoTotal * (1 - (estructuraCostos.alimento / 100)) - costoSmolts
 
+  useEffect(() => {
+    props.fijarPorcentajeEnEstructuraDeCostos('smolts', porcentajeSmolts)
+  }, [porcentajeSmolts])
+
   const costoProporcionalSmolt = Math.round(100 * costoSmolts / biomasaCosechada) / 100.0
   const costoProporcionalAlimento = Math.round(100 * costoTotalAlimento / biomasaCosechada) / 100.0
   const otrosCostos = Math.round(100 * costoOtros / biomasaCosechada) / 100.0
   const costoProporcionalTotal = (costoProporcionalSmolt + costoProporcionalAlimento + otrosCostos).toLocaleString(undefined, { maximumFractionDigits: 2})
-
-  console.log({cantidadAlimento}, {costoTotalAlimento}, {costoSmolts});
 
   return (
     <>
@@ -57,13 +60,25 @@ const Economico = props => {
             suffix={' USD'}
             value={costoAlimento}
             onValueChange={e => props.fijarCostoAlimento(e.floatValue)} />
-            <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
+          <label htmlFor="porcentaje-alimento">Costo alimento sobre costo ex-jaula</label>
           <CampoNumerico
             id="porcentaje-alimento"
             style={{ width: 78 }}
             suffix={' %'}
             value={estructuraCostos.alimento}
-            onValueChange={e => props.fijarPorcentajeAlimentoEnEstructuraDeCostos(e.floatValue, porcentajeSmolts)} />
+            onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos('alimento', e.floatValue)} />
+          {mostrarEstructura &&
+            <>
+              <label htmlFor="porcentaje-smolts">Smolts</label>
+              <CampoNumerico
+                id="porcentaje-smolts"
+                style={{ width: 78 }}
+                suffix={' %'}
+                disabled={true}
+                value={redondearYAString(estructuraCostos.smolts)}
+              />
+            </>
+          }
           {!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>}
           {mostrarEstructura &&
             <>
@@ -71,25 +86,25 @@ const Economico = props => {
               <table id="tabla-estructura-costos">
                 <tbody>
                   {Object.keys(estructuraCostos).map((elemento, i) => {
-                    return elemento !== 'alimento' &&
+                    return elemento !== 'alimento' && elemento !== 'smolts' &&
                       <tr key={`costo-estructura-${i}`}>
                         <td>{elemento}</td>
                         <td>
                           <div>
                             <CampoNumerico
-                              style={{width: 78 }}
+                              style={{ width: 78 }}
                               suffix={' %'}
-                              disabled={elemento === 'otros' || elemento === 'smolts'}
-                              value={elemento === 'smolts' ? porcentajeSmolts : estructuraCostos[elemento]}
+                              disabled={elemento === 'otros'}
+                              value={estructuraCostos[elemento]}
                               decimalScale={1}
-                              onValueChange={e => props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.floatValue)} />
+                              onValueChange={e => elemento !== 'otros' && props.fijarPorcentajeEnEstructuraDeCostos(elemento, e.floatValue)} />
                           </div>
                         </td>
                       </tr>
                   })}
                 </tbody>
               </table>
-              <button onClick={() => setMostrarEstructura(false)}>Solo valor alimento</button>
+              <button onClick={() => setMostrarEstructura(false)}>Solo alimento</button>
             </>
           }
           </div>
@@ -184,10 +199,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fijarCostoAlimento: costo => dispatch(economicoActions.fijarCostoAlimento(costo)),
-  fijarPorcentajeAlimentoEnEstructuraDeCostos: (porcentajeAlimento, porcentajeSmolts) => dispatch(economicoActions.fijarPorcentajeAlimentoEnEstructuraDeCostos(Math.min(100, porcentajeAlimento), porcentajeSmolts)),
-  fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, Math.min(100, porcentaje))),
+  fijarPorcentajeEnEstructuraDeCostos: (nombre, porcentaje) => dispatch(economicoActions.fijarPorcentajeEnEstructuraDeCostos(nombre, porcentaje)),
   fijarValorKiloProducido: valor => dispatch(economicoActions.fijarValorKiloProducido(valor)),
   fijarCostoSmolt: valor => dispatch(economicoActions.fijarCostoSmolt(valor))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Economico);
+export default connect(mapStateToProps, mapDispatchToProps)(Economico)
