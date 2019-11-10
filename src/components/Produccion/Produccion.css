@@ -35,11 +35,3 @@
   margin-left: 100px;
   outline: none;
 }
-
-#control-prueba {
-  position: absolute;
-}
-
-.control-ajuste-crecimiento {
-  cursor: pointer;
-}

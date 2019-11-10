@@ -6,7 +6,7 @@ const initialState = {
   numeroSmolts: 1E6,
   pesoSmolt: 170,
   mortalidad: 10,
-  ajusteCrecimiento: 1,
+  factorCrecimiento: 1,
   bFCR: 1.4,
   eFCR: 1.5,
   objetivos: [OBJETIVO_PESO],
@@ -48,10 +48,10 @@ const produccionReducer = (state = initialState, action) => {
         ...state,
         pesoObjetivo: action.payload
       }
-    case produccionActions.FIJAR_AJUSTE_CRECIMIENTO:
+    case produccionActions.FIJAR_FACTOR_CRECIMIENTO:
       return {
         ...state,
-        ajusteCrecimiento: action.payload
+        factorCrecimiento: action.payload
       }
     case produccionActions.FIJAR_BFCR:
       return {
