@@ -26,7 +26,10 @@ const economicoReducer = (state = initialState, action) => {
       }
     }
     case economicoActions.FIJAR_PORCENTAJE_EN_ESTRUCTURA_DE_COSTOS: {
-      const { nombre, porcentaje } = action.payload
+      let { nombre, porcentaje } = action.payload
+      if (porcentaje !== porcentaje){
+        porcentaje = 0
+      }
       let porcentaje_anterior = state.estructuraCostos[nombre]
       let delta_porcentaje = porcentaje_anterior - porcentaje
       if (state.estructuraCostos.otros + delta_porcentaje < 0) {

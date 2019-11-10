@@ -1,5 +1,5 @@
 import React from 'react';
-import { redondear } from '../../../helpers/helpers';
+import { redondearString } from '../../../helpers/helpers';
 import './Anexos.css'
 
 const Anexos = props => {
@@ -63,26 +63,26 @@ const Anexos = props => {
               <td>{elemento}</td>
               <td>
                 <div>
-                    {redondear(estructuraCostosModificada[elemento][1], 0)} USD
+                    {redondearString(estructuraCostosModificada[elemento][1], 0)} USD
                 </div>
               </td>
               <td>
                 <div>
-                    {redondear(estructuraCostosModificada[elemento][2], 0)} USD
+                    {redondearString(estructuraCostosModificada[elemento][2], 0)} USD
                 </div>
               </td>
               <td>
                 <div>
-                    {redondear(estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} USD 
+                    {redondearString(estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} USD 
                 </div>
               </td>
             </tr> 
           ))}
           <tr>
             <td>Total</td>
-            <td>{redondear(costoTotalTradicional, 0)} USD</td>
-            <td>{redondear(costoTotalImvixa, 0)} USD</td>
-            <td>{redondear(costoTotalImvixa - costoTotalTradicional, 0)} USD</td>
+            <td>{redondearString(costoTotalTradicional, 0)} USD</td>
+            <td>{redondearString(costoTotalImvixa, 0)} USD</td>
+            <td>{redondearString(costoTotalImvixa - costoTotalTradicional, 0)} USD</td>
           </tr>
         </tbody>
       </table>
