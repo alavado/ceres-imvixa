@@ -1,5 +1,16 @@
 #anexos p{
-  margin-left: 32px;
+  margin-left: 36px;
   margin-right: 32px;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
+}
+
+#referencias {
+  margin-left: 4px;
+  margin-right: 32px;
+}
+
+.nota{
+  margin-left: 36px;
+  margin-right: 32px;
+  font-size: 0.8em;
 }

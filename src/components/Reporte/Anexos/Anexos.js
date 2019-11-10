@@ -86,15 +86,16 @@ const Anexos = props => {
           </tr>
         </tbody>
       </table>
-      <p>
-        * El costo de los smolts y el costo por kg de alimento es entregado por el usuario. 
-        El costo total del alimento a nivel de centro se calcula estimando la cantidad de alimento necesaria para obtener el crecimiento que alcanzan los salmones. 
-        Para los otros ítems se utiliza un porcentaje de referencia sobre el total de costos.
-      </p>
-      <p>
-        ** Las diferencias en alimento se ven afectadas por el peso final de cada estrategia y el largo del ciclo. Las diferencias en el resto dependen del largo del ciclo productivo.
-      </p>
-
+      <div className="nota">
+        <p>
+          * El costo de los smolts y el costo por kg de alimento es entregado por el usuario. 
+          El costo total del alimento a nivel de centro se calcula estimando la cantidad de alimento necesaria para obtener el crecimiento que alcanzan los salmones. 
+          Para los otros ítems se utiliza un porcentaje de referencia sobre el total de costos.
+        </p>
+        <p>
+          ** Las diferencias en alimento se ven afectadas por el peso final de cada estrategia y el largo del ciclo. Las diferencias en el resto de los ítems dependen del largo del ciclo productivo.
+        </p>
+      </div>
       <h3>Detalle de estrategias antiparasitarias</h3>
       <div id="tratamientos-resumen">
         <div className="estrategia-resumen">
@@ -135,6 +136,23 @@ const Anexos = props => {
             </tbody>
           </table>
         </div>
+      </div>
+      <h3>Referencias</h3>
+      <div id="referencias">
+        <p>
+          Este informe fue generado con el simulador Ceres-Imvixa. El simulador ceres-imvixa permite al usuario ingresar los datos característicos de un centro para comparar el resultado de dos estrategias de tratamientos contra Cáligus.
+        </p>
+        <p>El simulador está compuesto por una función de crecimiento y calculadores de impacto de las estrategias de tratamientos.
+        <br/>Fuente pesos de cosecha y N° de baños: Reporte Aquabench SM101.1018 OCTUBRE 2018 (2015 a Jun 2018), CERES en base a datos de parámetros productivos 2015 – 2018;  Reporte Aquabench SM101.1018, y Memorias 2018 de 4 empresas productoras de salmón.
+        <br/>Fuente reglamentación: Reglamento N° 319 Subpesca.
+        <br/>Fuente certificación: Criterio de cálculo del PTI del ASC
+        </p>
+        <p>
+          La función de crecimiento es una regresión polinomial que utiliza el peso del smolt y las unidades térmicas acumuladas (UTA) para estimar el crecimiento diario del pez. 
+          La información de la macrozona y la fecha se utilizan para determinar las UTAs asociadas a cada día del ciclo.
+        </p><p>
+          El usuario puede modificar la función de crecimiento mediante el factor de crecimiento o fijando meses y peso objetivo.
+        </p>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import GraficoPTI from '../GraficoPTI';
 import { redondearYAString } from '../../../helpers/helpers';
+import './../Anexos/Anexos.css'
 
 const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
   return (
@@ -24,7 +25,7 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
             <td>{redondearYAString(ptiTradicional.suma)}</td>
             <td>{redondearYAString(ptiImvixa.suma)}</td>
             <td>{13.0}</td>
-            <td>{redondearYAString(ptiTradicional.suma - 13)}</td>
+            <td>{ptiTradicional.suma - 13 <= 0 ? 'OK' : redondearYAString(ptiTradicional.suma - 13)}</td>
             <td>{ptiImvixa.suma - 13 <= 0 ? 'OK' : redondearYAString(ptiImvixa.suma - 13)}</td>
           </tr>
         </tbody>
@@ -33,6 +34,9 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
         ptiImvixa={ptiImvixa.suma}
         ptiTradicional={ptiTradicional.suma}
       />
+      <div className="nota">
+        Fuente: Cálculo simulador Ceres-Imvixa según criterio de cálculo del PTI del ASC, basado en la estrategias de tratamientos indicadas por el usuario.
+      </div>
     </>
   );
 };

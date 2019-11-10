@@ -1,5 +1,6 @@
 import React from 'react';
 import { redondearYAString } from '../../../helpers/helpers';
+import './../Anexos/Anexos.css'
 
 const ImpactoEconomico = props => {
 
@@ -109,6 +110,10 @@ const ImpactoEconomico = props => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="nota">
+        <p>[1] Costo baños, Emamectina e Imvixa considera el costo del producto y el costo operacional de aplicarlo.</p>
+        <p>[2] Costo ayuno considera todos los costos promedio de producción de 1 día ciclo, excluye costos alimento y control de cáligus.</p> 
       </div>
     </>
   );

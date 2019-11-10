@@ -1,5 +1,6 @@
 import React from 'react';
 import GraficoNiveles from '../GraficoNiveles';
+import './../Anexos/Anexos.css'
 
 const ImpactoRegulacion = ({mortalidadTotalImvixa, mortalidadTotalTradicional}) => {
   return (
@@ -12,6 +13,10 @@ const ImpactoRegulacion = ({mortalidadTotalImvixa, mortalidadTotalTradicional}) 
           tradicional: mortalidadTotalTradicional
         }}
       />
+      <div className="nota">
+        Fuente: Reglamento N° 319 Subpesca.<br/>
+        Fuente mortalidad: Mortalidad estimada por usuario más mortalidad por tratamientos.
+      </div>
     </>
   );
 };
