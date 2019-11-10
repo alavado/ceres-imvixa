@@ -71,7 +71,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
   let uta = temperaturasMensuales[fechaCiclo.month() + 1] * 7
   let diaFinal = objetivoFecha * 30
   if (tiposObjetivos.includes(OBJETIVO_PESO) && tiposObjetivos.includes(OBJETIVO_FECHA)) {
-    for (let dia = 2; dia < MAXIMOS_DIAS_CICLO && dia < diaFinal; dia++) {
+    for (let dia = 2; dia <= MAXIMOS_DIAS_CICLO && dia <= diaFinal; dia++) {
       semana += 1 / 7.0
       fechaCiclo.add(1, 'days')
       uta += temperaturasMensuales[fechaCiclo.month() + 1]
@@ -92,7 +92,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
     return curva.map(v => v * objetivoPeso / curva.slice(-1)[0])
   }
   else {
-    for (let dia = 2; dia < MAXIMOS_DIAS_CICLO && ((tiposObjetivos.includes(OBJETIVO_PESO) && pesoActual < objetivoPeso) || (tiposObjetivos.includes(OBJETIVO_FECHA) && dia < diaFinal)); dia++) {
+    for (let dia = 2; dia <= MAXIMOS_DIAS_CICLO && ((tiposObjetivos.includes(OBJETIVO_PESO) && pesoActual < objetivoPeso) || (tiposObjetivos.includes(OBJETIVO_FECHA) && dia <= diaFinal)); dia++) {
       semana += 1 / 7.0
       fechaCiclo.add(1, 'days')
       uta += temperaturasMensuales[fechaCiclo.month() + 1]

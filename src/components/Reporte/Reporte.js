@@ -94,15 +94,13 @@ const Reporte = ({ state }) => {
   const costoProduccionTradicional = costoTotalAlimentoTradicional  + costoSmolts + costoProduccionDiario * curvaTradicional.length
   const costoProduccionSinAyunoTradicional = costoProduccionTradicional / biomasaTradicional - costoAyunoTradicional
   
-  
-
   const imprimirPDF = () => {
     ipcRenderer.send('imprimir')
   }
 
   return (
     <>
-    <button onClick={() => window.location.href="/tratamientos"}>
+    <button onClick={() => window.history.back()}>
       <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
       Calendarios de tratamientos
     </button>

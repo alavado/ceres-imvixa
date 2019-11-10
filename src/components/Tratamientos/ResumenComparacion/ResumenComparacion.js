@@ -10,7 +10,7 @@ import CuadrosEstrategias from './CuadrosEstrategias';
 
 const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
 
-  const { objetivos, pesoObjetivo } = produccion
+  const { objetivos, pesoObjetivo, mesesObjetivo } = produccion
 
   return (
     <div id="fondo-resumen">
@@ -38,6 +38,8 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
           objetivos={objetivos}
           curvaImvixa={curvaImvixa}
           curvaTradicional={curvaTradicional}
+          pesoObjetivo={pesoObjetivo}
+          mesesObjetivo={mesesObjetivo}
         />
       </div>
     </div>

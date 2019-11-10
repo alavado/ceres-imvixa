@@ -1,20 +1,21 @@
 import React from 'react';
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
+import { redondearYAString } from '../../../helpers/helpers';
 
-const CuadrosEstrategias = ({ objetivos, curvaImvixa, curvaTradicional }) => {
+const CuadrosEstrategias = ({ objetivos, curvaImvixa, curvaTradicional, pesoObjetivo, mesesObjetivo }) => {
 
   let contenidoEstrategiaTradicional, contenidoEstrategiaImvixa
 
   if (objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)) {
     contenidoEstrategiaTradicional = 
       <>
-        <p>El objetivo de peso se lcanza al los x meses</p>
-        <p>A los x meses, el peso alzanzado es de</p>
+        <p>{`Los ${redondearYAString(pesoObjetivo / 1000, 1)} kg se alcanzan a los ${(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})} meses`}</p>
+        <p>{`A los ${mesesObjetivo} meses, el peso alzanzado es de ${(Math.round(10 * curvaTradicional[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { minimumFractionDigits: 1})}`}</p>
       </>
     contenidoEstrategiaImvixa = 
       <>
-      <p>El objetivo de peso se lcanza al los x meses</p>
-      <p>A los x meses, el peso alzanzado es de</p>
+        <p>{`Los ${redondearYAString(pesoObjetivo / 1000, 1)} kg se alcanzan a los ${(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})} meses`}</p>
+        <p>{`A los ${mesesObjetivo} meses, el peso alzanzado es de ${(Math.round(10 * curvaImvixa[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { minimumFractionDigits: 1})}`}</p>
       </>
   }
   else if (objetivos.includes(OBJETIVO_PESO)) {

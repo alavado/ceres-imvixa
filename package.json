@@ -1,6 +1,6 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -71,10 +71,10 @@
     "publish": [
       {
         "provider": "github",
-        "private": true,
+        "private": false,
         "owner": "alavado",
-        "repo": "ceres-imvixa",
-        "token": "d64dd62e1179586fd8bb981b2e3122dca7a34b60"
+        "repo": "lufenuron",
+        "token": "54246e77393f7a0d3e919fb3602c145b246bd22e"
       }
     ]
   },
