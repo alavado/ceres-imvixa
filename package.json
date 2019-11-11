@@ -1,6 +1,6 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -72,6 +72,11 @@
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
+    "productName": "Simulador Ceres BCA",
+    "directories": {
+        "buildResources": "build",
+        "output": "dist"
+    },
     "win": {
       "publish": [
         {

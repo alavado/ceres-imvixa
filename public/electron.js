@@ -15,7 +15,7 @@ function createWindow() {
     width: 900,
     height: 680,
     show: false,
-    icon: path.join(__dirname, '../build/logo512.png'),
+    icon: 'logo512.png',
     webPreferences: {
       nodeIntegration: true,
     }
@@ -40,7 +40,7 @@ function createWindow() {
       })
   })
   mainWindow.on('closed', () => mainWindow = null);
-  //mainWindow.removeMenu()
+  mainWindow.removeMenu()
 }
 
 app.on('ready', () => {
@@ -70,7 +70,7 @@ function pdfSettings() {
 return option;
 }
 ipcMain.on('imprimir', (event, state) => {
-  mainWindow.webContents.printToPDF({}, function(err, data) {
+  mainWindow.webContents.printToPDF(pdfSettings(), function(err, data) {
     if (err) {
         //do whatever you want
         return;
