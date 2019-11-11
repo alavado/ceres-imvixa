@@ -11,7 +11,7 @@ const Inicio = () => {
         </div>
       </div>
       <div id="bienvenida">
-        <img src={ImagenBienvenida} alt="bienvenida" />
+        <img src={ImagenBienvenida} alt="Bienvenida" />
       </div>
     </div>
   );

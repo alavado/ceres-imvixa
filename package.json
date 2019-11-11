@@ -1,6 +1,6 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -66,16 +66,22 @@
     "email": "alejandro.lvd@gmail.com",
     "url": "https://compsci.cl"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/alavado/ceres-imvixa"
+  },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
-    "publish": [
-      {
-        "provider": "github",
-        "private": false,
-        "owner": "alavado",
-        "repo": "ceres-imvixa"
-      }
-    ]
+    "win": {
+      "publish": [
+        {
+          "provider": "github",
+          "private": false,
+          "owner": "alavado",
+          "repo": "ceres-imvixa"
+        }
+      ]
+    }
   },
   "description": "Simulación salmones"
 }
