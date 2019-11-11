@@ -12,25 +12,26 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 1366,
+    height: 768,
     show: false,
-    icon: 'logo512.png',
+    icon: `${path.join(__dirname, '../build/logo512.png')}`,
     webPreferences: {
       nodeIntegration: true,
     }
   });
   mainWindow.loadURL(isDev ?
-    'http://localhost:3000' :
-    `file://${path.join(__dirname, '../build/index.html')}`
+    'http://localhost:3000/' :
+    `file://${path.join(__dirname, '../build/index.html')}/`
   );
   if (isDev) {
     // Open the DevTools.
     //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
   }
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
+    mainWindow.maximize()
+    mainWindow.show()    
   })
   mainWindow.webContents.on('did-finish-load', () => {
     csv()
@@ -40,7 +41,7 @@ function createWindow() {
       })
   })
   mainWindow.on('closed', () => mainWindow = null);
-  mainWindow.removeMenu()
+  //mainWindow.removeMenu()
 }
 
 app.on('ready', () => {
