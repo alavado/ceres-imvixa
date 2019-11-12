@@ -35,7 +35,7 @@ function createWindow() {
   })
   mainWindow.webContents.on('did-finish-load', () => {
     csv()
-      .fromFile(path.join(__dirname, '.', 'centros.csv'))
+      .fromFile(isDev ? path.join(__dirname, '..', 'src', 'data', 'centros.csv') : path.join(__dirname, 'data', 'centros.csv'))
       .then(jsonObj => {
         mainWindow.webContents.send('leer-centros', jsonObj);
       })
@@ -93,6 +93,7 @@ autoUpdater.on('checking-for-update', () => {
 })
 autoUpdater.on('update-available', (info) => {
   console.log('update-available', info);
+  mainWindow.webContents.send('descargando-actualizacion');
 })
 autoUpdater.on('update-not-available', (info) => {
   console.log('update-not-available', info);

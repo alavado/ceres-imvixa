@@ -2,7 +2,7 @@ import centroActions from './actions'
 import obtenerBarrios from './barrios'
 
 const initialState = {
-  barrios: obtenerBarrios(),
+  barrios: [],//obtenerBarrios(),
   indiceBarrioSeleccionado: 0,
   titular: '',
   indiceCentroSeleccionado: 0,

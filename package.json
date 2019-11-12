@@ -1,6 +1,6 @@
 {
   "name": "ceres-imvixa",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -86,7 +86,16 @@
           "repo": "ceres-imvixa"
         }
       ]
-    }
+    },
+    "extraFiles": [
+      {
+        "from": "./src/data/",
+        "to": "data",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   },
   "description": "Simulación salmones"
 }

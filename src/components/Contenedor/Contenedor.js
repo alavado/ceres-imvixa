@@ -8,11 +8,13 @@ import Produccion from '../Produccion';
 import Tratamientos from '../Tratamientos';
 import SeleccionMedicamentos from '../Tratamientos/SeleccionMedicamentos';
 import Economico from '../Economico';
+import Actualizando from '../Actualizando';
 
 const Contenedor = () => {
   return (
     <div id="contenedor">
       <BarraLateral />
+      <Actualizando />
       <Route path="/" exact component={Inicio} />
       <Route path="/centro" exact component={Centro} />
       <Route path="/produccion" exact component={Produccion} />

@@ -1,0 +1,22 @@
+#contenedor-actualizando {
+  position: absolute;
+  background: #00843D;
+  color: white;
+  font-size: .8em;
+  padding: 8px;
+  border-radius: 2px;
+  margin: 8px;
+  animation: actualizando 1s ease-in-out infinite;
+}
+
+@keyframes actualizando {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
