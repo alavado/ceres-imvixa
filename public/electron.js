@@ -34,8 +34,9 @@ function createWindow() {
     mainWindow.show()    
   })
   mainWindow.webContents.on('did-finish-load', () => {
+    console.log(path.join(app.getAppPath(), '..', '..', 'data', 'centros.csv'));
     csv()
-      .fromFile(isDev ? path.join(__dirname, '..', 'src', 'data', 'centros.csv') : path.join(__dirname, 'data', 'centros.csv'))
+      .fromFile(isDev ? path.join(__dirname, '..', 'src', 'data', 'centros.csv') : path.join(app.getAppPath(), '..', '..', 'data', 'centros.csv'))
       .then(jsonObj => {
         mainWindow.webContents.send('leer-centros', jsonObj);
       })
