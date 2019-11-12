@@ -7,7 +7,7 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
   return (
     <>
       <h2>4. IMPACTOS DE CERTIFICACIÓN</h2>
-      <h3>4.1 Distancia entre óptimo ASC y posición REGULACIÓN</h3>
+      <h3>4.1 Distancia entre óptimo ASC y posición regulación</h3>
       <table className="tabla-reporte">
         <thead>
           <tr>

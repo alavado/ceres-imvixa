@@ -77,13 +77,13 @@ ipcMain.on('imprimir', (event, state) => {
       return;
     }
     try {
-      fs.writeFileSync(path.join(app.getPath('desktop'), 'Reporte-impacto-Elanco.pdf'), data);
+      fs.writeFileSync(path.join(app.getPath('desktop'), 'Reporte Simulador Ceres BCA.pdf'), data);
     }
     catch(err) {
       //unable to save pdf..
     }
     finally {
-      electron.shell.openItem(path.join(app.getPath('desktop'), 'Reporte-impacto-Elanco.pdf'));
+      electron.shell.openItem(path.join(app.getPath('desktop'), 'Reporte Simulador Ceres BCA.pdf'));
     }
    
 })})
