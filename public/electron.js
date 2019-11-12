@@ -15,7 +15,7 @@ function createWindow() {
     width: 1366,
     height: 768,
     show: false,
-    icon: `${path.join(__dirname, '../build/logo512.png')}`,
+    icon: `file://${path.join(__dirname, '../build/logo512.png')}`,
     webPreferences: {
       nodeIntegration: true,
     }
@@ -73,16 +73,17 @@ return option;
 ipcMain.on('imprimir', (event, state) => {
   mainWindow.webContents.printToPDF(pdfSettings(), function(err, data) {
     if (err) {
-        //do whatever you want
-        return;
+      //do whatever you want
+      return;
     }
-    try{
-        fs.writeFileSync(path.join(__dirname, './generated_pdf.pdf'), data);
-    }catch(err){
-        //unable to save pdf..
+    try {
+      fs.writeFileSync(path.join(app.getPath('desktop'), 'Reporte-impacto-Elanco.pdf'), data);
+    }
+    catch(err) {
+      //unable to save pdf..
     }
     finally {
-      electron.shell.openItem(path.join(__dirname, 'generated_pdf.pdf'));
+      electron.shell.openItem(path.join(app.getPath('desktop'), 'Reporte-impacto-Elanco.pdf'));
     }
    
 })})
