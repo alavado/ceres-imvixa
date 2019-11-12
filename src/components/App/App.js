@@ -1,6 +1,6 @@
 import React from 'react';
 import Contenedor from '../Contenedor';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 import './App.css'
 import { Provider } from 'react-redux'
 import { store } from '../../redux/store'
@@ -9,16 +9,14 @@ import Reporte from '../Reporte';
 const App = ()  => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route path="/reporte" exact component={Reporte} />
-          <Route exact path="">
-            <div id="fondo">
-              <Contenedor />
-            </div>
-          </Route>
+          <div id="fondo">
+            <Contenedor />
+          </div>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   );
 }
