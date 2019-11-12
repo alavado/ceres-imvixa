@@ -36,7 +36,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "release": "yarn react-build && electron-builder --publish=always",
-    "build": "yarn react-build && yarn electron-build"
+    "build": "yarn react-build && yarn electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"
