@@ -49,7 +49,8 @@ export const calcularCostoTratamientoOral = (principioActivo, medicamentos, trat
       const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
       const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
       pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
-      diferenciaPeso = curvaCrecimiento(numSemana * 7 + 6) - curvaCrecimiento[numSemana * 7 - 1]
+      const diaMaximoPeso = numSemana * 7 + 6 < curvaCrecimiento.length ? numSemana * 7 + 6 : curvaCrecimiento.length -1
+      diferenciaPeso = curvaCrecimiento[diaMaximoPeso] - curvaCrecimiento[numSemana * 7 - 1]
       cantidadComida = diferenciaPeso * numeroDeSmoltsActual / (1000000 * bFCR)
       return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
     }
@@ -77,7 +78,8 @@ export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsIn
       const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
       const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
       pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
-      diferenciaPeso = curvaCrecimiento(numSemana * 7 + 6) - curvaCrecimiento[numSemana * 7 - 1]
+      const diaMaximoPeso = numSemana * 7 + 6 < curvaCrecimiento.length ? numSemana * 7 + 6 : curvaCrecimiento.length -1
+      diferenciaPeso = curvaCrecimiento[diaMaximoPeso] - curvaCrecimiento[numSemana * 7 - 1]
       cantidadComida = diferenciaPeso * numeroDeSmoltsActual / (1000000 * bFCR)
       return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
     }
