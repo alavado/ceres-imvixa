@@ -8,6 +8,7 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
 
   const produccion = useSelector(state => state.produccion)
   const { objetivos } = produccion
+  const largoCurvaMasCorta = Math.min(curvaImvixa.length, curvaTradicional.length)
   
   return (
     <div id="impacto-productivo">
@@ -72,11 +73,11 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
         <div className="columna-impacto-productivo">
           <h1>Diferencia (E2 - E1)</h1>
           <div className="indicadores-impacto-productivo">
-            {objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)?
+            {objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA) ?
               <>
                 <h2>{redondearYAString(-curvaTradicional.length + curvaImvixa.length, 0)}</h2>
                 <p>días</p>
-                <h2>{redondearYAString(-curvaTradicional[curvaImvixa.length - 1] / 1000.0 + curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
+                <h2>{redondearYAString(-curvaTradicional[largoCurvaMasCorta - 1] / 1000.0 + curvaImvixa[largoCurvaMasCorta - 1] / 1000.0, 2)}</h2>
                 <p>kg a {redondearYAString(curvaImvixa.length / 30.0)} meses</p>
                 <h2>{redondearYAString(-biomasaTradicional / 1000 + biomasaImvixa / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>

@@ -9,13 +9,13 @@ const CuadrosEstrategias = ({ objetivos, curvaImvixa, curvaTradicional, pesoObje
   if (objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)) {
     contenidoEstrategiaTradicional = 
       <>
-        <p>{`Los ${redondearYAString(pesoObjetivo / 1000, 1)} kg se alcanzan a los ${(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})} meses`}</p>
-        <p>{`A los ${mesesObjetivo} meses, el peso alzanzado es de ${(Math.round(10 * curvaTradicional[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { minimumFractionDigits: 1})}`}</p>
+        <p>Los <span className="valor-importante">{redondearYAString(pesoObjetivo / 1000, 1)} kg</span> se alcanzan a los <span className="valor-importante">{(Math.round(10 * curvaTradicional.length / 30.0) / 10.0).toLocaleString(undefined, { maximumFractionDigits: 1})} meses</span></p>
+        <p>A los <span className="valor-importante">{mesesObjetivo}</span> meses, el peso alzanzado es de <span className="valor-importante">{(Math.round(10 * curvaTradicional[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { maximumFractionDigits: 1})} kg</span></p>
       </>
     contenidoEstrategiaImvixa = 
       <>
-        <p>{`Los ${redondearYAString(pesoObjetivo / 1000, 1)} kg se alcanzan a los ${(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { minimumFractionDigits: 1})} meses`}</p>
-        <p>{`A los ${mesesObjetivo} meses, el peso alzanzado es de ${(Math.round(10 * curvaImvixa[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { minimumFractionDigits: 1})}`}</p>
+        <p>Los <span className="valor-importante">{redondearYAString(pesoObjetivo / 1000, 1)} kg</span> se alcanzan a los <span className="valor-importante">{(Math.round(10 * curvaImvixa.length / 30.0) / 10.0).toLocaleString(undefined, { maximumFractionDigits: 1})} meses</span></p>
+        <p>A los <span className="valor-importante">{mesesObjetivo} meses</span>, el peso alzanzado es de <span className="valor-importante">{(Math.round(10 * curvaImvixa[mesesObjetivo * 30 - 1]) / 10000.0).toLocaleString(undefined, { maximumFractionDigits: 1})} kg</span></p>
       </>
   }
   else if (objetivos.includes(OBJETIVO_PESO)) {

@@ -92,6 +92,16 @@ div[id^="fondo-estrategia"] h1 {
 }
 
 .resultados-estrategia p {
-  width: 160px;
+  width: 180px;
   text-align: center;
+  line-height: 1.1;
+}
+
+.resultados-estrategia p:first-child {
+  margin-bottom: 16px;
+}
+
+.valor-importante {
+  font-weight: bold;
+  font-size: 1.1em;
 }

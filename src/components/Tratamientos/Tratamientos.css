@@ -174,7 +174,7 @@ div[id^="semanas-estrategia"] > div:hover {
 }
 
 #boton-volver-tratamientos {
-  margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 #boton-volver-tratamientos > svg {

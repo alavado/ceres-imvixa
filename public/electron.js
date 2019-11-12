@@ -15,7 +15,7 @@ function createWindow() {
     width: 1366,
     height: 768,
     show: false,
-    icon: `file://${path.join(__dirname, '../build/logo512.png')}`,
+    icon: path.join(__dirname, 'logo512.png'),
     webPreferences: {
       nodeIntegration: true,
     }
