@@ -74,7 +74,7 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
           <div className="indicadores-impacto-productivo">
             {objetivos.includes(OBJETIVO_PESO) && objetivos.includes(OBJETIVO_FECHA)?
               <>
-                <h2>{redondearYAString(7 * (-curvaTradicional.length / 30.0 + curvaImvixa.length / 30.0), 0)}</h2>
+                <h2>{redondearYAString(-curvaTradicional.length + curvaImvixa.length, 0)}</h2>
                 <p>días</p>
                 <h2>{redondearYAString(-curvaTradicional[curvaImvixa.length - 1] / 1000.0 + curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
                 <p>kg a {redondearYAString(curvaImvixa.length / 30.0)} meses</p>

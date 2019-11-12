@@ -100,10 +100,15 @@ const Reporte = ({ state }) => {
 
   return (
     <>
-    <button onClick={() => window.history.back()}>
-      <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
-      Calendarios de tratamientos
-    </button>
+    <div id="contenedor-acciones-reporte">
+      <div id="acciones-reporte">
+        <button id="boton-volver-del-reporte" onClick={() => window.history.back()}>
+          <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
+          Calendarios de tratamientos
+        </button>
+        <button onClick={imprimirPDF}>Imprimir PDF</button>
+      </div>
+    </div>
     <div id="reporte">
       <EncabezadoReporte />
       <DatosSimulacion />
@@ -150,7 +155,6 @@ const Reporte = ({ state }) => {
         costoProduccionTradicional={costoProduccionTradicional}
       />
     </div>
-    <button onClick={imprimirPDF}>Imprimir PDF</button>
     </>
   );
 };

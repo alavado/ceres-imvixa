@@ -1,0 +1,7 @@
+#impactos-laborales {
+  page-break-before: always;
+}
+
+#impactos-laborales > h3:not(:nth-child(2)) {
+  margin-top: 48px;
+}

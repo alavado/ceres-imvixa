@@ -1,4 +1,4 @@
-#anexos p{
+#anexos p {
   margin-left: 36px;
   margin-right: 32px;
   margin-bottom: 24px;
@@ -7,10 +7,21 @@
 #referencias {
   margin-left: 4px;
   margin-right: 32px;
+  page-break-before: always;
 }
 
-.nota{
-  margin-left: 36px;
+#referencias > p {
+  line-height: 1.5;
+}
+
+.nota {
+  margin-left: 42px;
+  margin-top: 16px;
   margin-right: 32px;
   font-size: 0.8em;
+  line-height: 1.5;
+}
+
+#referencias > p > span.fuente {
+  font-weight: bold;
 }

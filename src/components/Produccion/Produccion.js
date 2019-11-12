@@ -176,8 +176,8 @@ const Produccion = props => {
                 labels: curvaBiomasa.map((v, i) => i + 1),
                 datasets: [
                   {
-                    label: 'Peso inicio mes',
-                    data: curvaCrecimiento.filter((peso, i) => i % 30 === 0 || i === curvaCrecimiento.length - 1),
+                    label: 'Peso final',
+                    data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
                     backgroundColor: '#E35205',
                     type: 'line',
                     yAxisID: 'EjeYPesoPromedio',

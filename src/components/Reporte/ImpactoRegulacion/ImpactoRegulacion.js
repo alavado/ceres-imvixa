@@ -14,7 +14,7 @@ const ImpactoRegulacion = ({mortalidadTotalImvixa, mortalidadTotalTradicional}) 
         }}
       />
       <div className="nota">
-        Fuente: Reglamento N° 319 Subpesca.<br/>
+        Fuente restricción de siembra: Resolución Exenta N° 1503, del 13 de junio de 2013 de SUBPESCA.<br/>
         Fuente mortalidad: Mortalidad estimada por usuario más mortalidad por tratamientos.
       </div>
     </>

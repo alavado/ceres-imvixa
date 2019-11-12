@@ -2,10 +2,11 @@ import React from 'react';
 import GraficoPTI from '../GraficoPTI';
 import { redondearYAString } from '../../../helpers/helpers';
 import './../Anexos/Anexos.css'
+import './ImpactosCertificacion.css'
 
 const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
   return (
-    <>
+    <div id="impactos-certificacion">
       <h2>4. IMPACTOS DE CERTIFICACIÓN</h2>
       <h3>4.1 Distancia entre óptimo ASC y posición regulación</h3>
       <table className="tabla-reporte">
@@ -35,9 +36,9 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
         ptiTradicional={ptiTradicional.suma}
       />
       <div className="nota">
-        Fuente: Cálculo simulador Ceres-Imvixa según criterio de cálculo del PTI del ASC, basado en la estrategias de tratamientos indicadas por el usuario.
+        Fuente: Cálculo simulador CERES BCA - IMVIXA según criterio de cálculo del PTI del ASC, basado en la estrategias de tratamientos indicadas por el usuario.
       </div>
-    </>
+    </div>
   );
 };
 

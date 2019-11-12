@@ -2,6 +2,7 @@ import React from 'react';
 import logoElanco from '../../../assets/elanco.svg'
 import { useSelector } from 'react-redux'
 import { obtenerFechaActualBonita } from '../../../helpers/helpers';
+import './EncabezadoReporte.css'
 
 const EncabezadoReporte = () => {
 
@@ -13,8 +14,7 @@ const EncabezadoReporte = () => {
     <>
       <img src={logoElanco} alt="logo elanco" id="logo-elanco-reporte" />
       <div id="encabezado-reporte">
-        <h6>ESTRUCTURA E INSUMOS REPORTE DE SALIDA MODELO DE SIMULACIÓN IMVIXA</h6>
-        <h1>REPORTE IMPACTO ELANCO</h1>
+        <h1>REPORTE SIMULADOR CERES BCA - IMVIXA</h1>
         <ul id="datos-empresa-reporte">
           <li>Empresa: <span>{titular}</span></li>
           <li>Centro: <span>{(nombreCentro !== '' ? `${nombreCentro} (código: ${codigoCentro})` : codigoCentro)}</span></li>

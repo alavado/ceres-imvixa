@@ -5,6 +5,7 @@ import { redondearYAString, calcularCantidadDeProductosVertidos } from '../../..
 import { JORNADAS_POR_BAÑO_POR_JAULA } from '../../../helpers/constantes';
 import { useSelector } from 'react-redux'
 import './../Anexos/Anexos.css'
+import './ImpactosLaborales.css'
 
 const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa}) => {
 
@@ -47,7 +48,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
   }
 
   return (
-    <>
+    <div id="impactos-laborales">
       <h2>3. IMPACTOS LABORALES Y REPUTACIÓN DE MARCA</h2>
       <h3>3.1 Impactos laborales por ciclo</h3>
       <table className="tabla-reporte">
@@ -75,9 +76,9 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
         </tbody>
       </table>
       <div className="nota">
-      [3] Jornadas calculadas en base a valor promedio para XI Región de 12 jornadas laborales por Jaula. Considera  8 horas diarias para cada jornada laboral. 
+        [3] Jornadas calculadas a partir de valor promedio para XI Región de 2 jornadas laborales por jaula por baño. Considera 8 horas diarias por jornada laboral. 
       <br/>
-      Fuente: CERES en base a datos de parámetros productivos 2015 – 2018 y Reporte Aquabench SM101.1018.
+      Fuente: CERES BCA con base en datos de parámetros productivos 2015 – 2018 y Reporte Aquabench SM101.1018.
       </div>
       <h3>3.2 Cantidad de productos vertidos al mar por ciclo</h3>
       <table className="tabla-reporte">
@@ -109,9 +110,9 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
         </tbody>
       </table>
       <div className="nota">
-      Fuente: Cálculo simulador Ceres-Imvixa basado en dosis lt o kg por jaula confirmados por usuario
+      Fuente: Cálculo simulador Ceres BCA - IMVIXA basado en dosis lt o kg por jaula confirmados por usuario.
       </div>
-    </>
+    </div>
   );
 };
 

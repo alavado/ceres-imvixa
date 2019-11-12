@@ -72,7 +72,7 @@
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
-    "productName": "Simulador Ceres BCA",
+    "productName": "Simulador CERES BCA - IMVIXA",
     "directories": {
         "buildResources": "build",
         "output": "dist"

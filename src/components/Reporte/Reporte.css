@@ -364,3 +364,29 @@
 .estrategia-resumen .tabla-reporte td:last-child, .estrategia-resumen .tabla-reporte th:last-child {
   text-align: center;
 }
+
+#contenedor-acciones-reporte {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+#acciones-reporte {
+  width: calc(950px + 2 * 32px);
+  display: flex;
+}
+
+#acciones-reporte > button {
+  margin-right: 8px;
+}
+
+@media print {
+  #contenedor-acciones-reporte {
+    display: none;
+  }
+
+  #reporte {
+    border: none;
+    padding: 0;
+  }
+}
