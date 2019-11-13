@@ -24,7 +24,12 @@ const FilaNuevoMedicamento = props => {
       </td>
       <td>
         <CampoNumerico
-          onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, cantidadPorJaula: e.floatValue})}
+          onValueChange={e => {
+            if (formaFarmaceutica === FARMACO_APLICACION_BAÑO){
+              return setNuevoMedicamento({...nuevoMedicamento, cantidadPorJaula: e.floatValue})
+            }
+            return setNuevoMedicamento({...nuevoMedicamento, dosis: e.floatValue})
+            }}
           suffix={' kg'}
         />
       </td>

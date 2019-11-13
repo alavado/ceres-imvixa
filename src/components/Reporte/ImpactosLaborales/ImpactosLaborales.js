@@ -76,7 +76,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
         </tbody>
       </table>
       <div className="nota">
-        [3] Jornadas calculadas a partir de valor promedio para XI Región de 2 jornadas laborales por jaula por baño. Considera 8 horas diarias por jornada laboral. 
+        [3] Jornadas calculadas a partir de valor promedio para XI Región de 2 jornadas laborales equivalentes por jaula por baño. Considera 8 horas diarias por jornada laboral.
       <br/>
       Fuente: CERES BCA con base en datos de parámetros productivos 2015 – 2018 y Reporte Aquabench SM101.1018.
       </div>
