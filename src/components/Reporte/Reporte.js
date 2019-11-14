@@ -119,79 +119,79 @@ const Reporte = ({ state, fijarValorDolar }) => {
 
   return (
     <>
-    <div id="contenedor-acciones-reporte">
-      <div id="acciones-reporte">
-        <button id="boton-volver-del-reporte" onClick={() => window.history.back()}>
-          <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
-          Calendarios de tratamientos
-        </button>
-        <div id="contenedor-tipo-cambio">
-          <p>Tipo de cambio</p>
-          <div>
-            <input type="radio" id="dolar" name="tipo-cambio" value={TIPO_CAMBIO_DOLAR} checked={tipoCambio === TIPO_CAMBIO_DOLAR} onChange={fijarTipoCambio} />
-            <label for="dolar">Dólar estadounidense (USD)</label>
+      <div id="contenedor-acciones-reporte">
+        <div id="acciones-reporte">
+          <button id="boton-volver-del-reporte" onClick={() => window.history.back()}>
+            <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
+            Calendarios de tratamientos
+          </button>
+          <div id="contenedor-tipo-cambio">
+            <p>Tipo de cambio</p>
+            <div>
+              <input type="radio" id="dolar" name="tipo-cambio" value={TIPO_CAMBIO_DOLAR} checked={tipoCambio === TIPO_CAMBIO_DOLAR} onChange={fijarTipoCambio} />
+              <label for="dolar">Dólar estadounidense (USD)</label>
+            </div>
+            <div title={`Valor actualizado el ${obtenerFechaActualBonita(valorDolar.fecha)}`}>
+              <input type="radio" id="peso" name="tipo-cambio" value={TIPO_CAMBIO_PESO} checked={tipoCambio === TIPO_CAMBIO_PESO} onChange={fijarTipoCambio} />
+              <label for="peso">Peso chileno (1 USD = {valorDolar.valor} CLP)</label>
+            </div>
           </div>
-          <div title={`Valor actualizado el ${obtenerFechaActualBonita(valorDolar.fecha)}`}>
-            <input type="radio" id="peso" name="tipo-cambio" value={TIPO_CAMBIO_PESO} checked={tipoCambio === TIPO_CAMBIO_PESO} onChange={fijarTipoCambio} />
-            <label for="peso">Peso chileno (1 USD = {valorDolar.valor} CLP)</label>
-          </div>
+          <button onClick={imprimirPDF}>Imprimir PDF</button>
         </div>
-        <button onClick={imprimirPDF}>Imprimir PDF</button>
       </div>
-    </div>
-    <div id="reporte">
-      <EncabezadoReporte />
-      <DatosSimulacion
-        tipoCambio={tipoCambio}
-        valorDolar={valorDolar.valor}
-      />
-      <ImpactoProductivo
-        curvaImvixa={curvaImvixa}
-        curvaTradicional={curvaTradicional}
-        biomasaImvixa={biomasaImvixa}
-        biomasaTradicional={biomasaTradicional}
-      />
-      <ImpactoEconomico
-        costoMarginalBañosImvixa={costoMarginalBañosImvixa}
-        costoMarginalBañosTradicional={costoMarginalBañosTradicional}
-        costoAyunoImvixa={costoAyunoImvixa}
-        costoAyunoTradicional={costoAyunoTradicional}
-        costoEmamectinaImvixa={costoEmamectinaImvixa}
-        costoEmamectinaTradicional={costoEmamectinaTradicional}
-        costoImvixaImvixa={costoImvixaImvixa}
-        costoImvixaTradicional={costoImvixaTradicional}
-        costoProduccionSinAyunoImvixa={costoProduccionSinAyunoImvixa}
-        costoProduccionSinAyunoTradicional={costoProduccionSinAyunoTradicional}
-        tipoCambio={tipoCambio}
-        valorDolar={valorDolar.valor}
-      />
-      <ImpactosLaborales
-        numeroBañosTradicional={numeroBañosTradicional}
-        numeroBañosImvixa={numeroBañosImvixa}
-        curvaTradicional={curvaTradicional}
-        curvaImvixa={curvaImvixa}
-      />
-      <ImpactoCertificacion
-        ptiTradicional={ptiTradicional}
-        ptiImvixa={ptiImvixa}
-      />
-      <ImpactoRegulacion
-        mortalidadTotalTradicional={mortalidadTotalTradicional}
-        mortalidadTotalImvixa={mortalidadTotalImvixa}
-      />
-      <Anexos
-        ptiTradicional={ptiTradicional}
-        ptiImvixa={ptiImvixa}
-        estructuraCostos={estructuraCostos}
-        costoSmolts={costoSmolts}
-        costoTotalAlimentoImvixa={costoTotalAlimentoImvixa}
-        costoTotalAlimentoTradicional={costoTotalAlimentoTradicional}
-        costoProduccionImvixa={costoProduccionImvixa}
-        costoProduccionTradicional={costoProduccionTradicional}
-        tipoCambio={tipoCambio}
-        valorDolar={valorDolar.valor}
-      />
-    </div>
+      <div id="reporte">
+        <EncabezadoReporte />
+        <DatosSimulacion
+          tipoCambio={tipoCambio}
+          valorDolar={valorDolar.valor}
+        />
+        <ImpactoProductivo
+          curvaImvixa={curvaImvixa}
+          curvaTradicional={curvaTradicional}
+          biomasaImvixa={biomasaImvixa}
+          biomasaTradicional={biomasaTradicional}
+        />
+        <ImpactoEconomico
+          costoMarginalBañosImvixa={costoMarginalBañosImvixa}
+          costoMarginalBañosTradicional={costoMarginalBañosTradicional}
+          costoAyunoImvixa={costoAyunoImvixa}
+          costoAyunoTradicional={costoAyunoTradicional}
+          costoEmamectinaImvixa={costoEmamectinaImvixa}
+          costoEmamectinaTradicional={costoEmamectinaTradicional}
+          costoImvixaImvixa={costoImvixaImvixa}
+          costoImvixaTradicional={costoImvixaTradicional}
+          costoProduccionSinAyunoImvixa={costoProduccionSinAyunoImvixa}
+          costoProduccionSinAyunoTradicional={costoProduccionSinAyunoTradicional}
+          tipoCambio={tipoCambio}
+          valorDolar={valorDolar.valor}
+        />
+        <ImpactosLaborales
+          numeroBañosTradicional={numeroBañosTradicional}
+          numeroBañosImvixa={numeroBañosImvixa}
+          curvaTradicional={curvaTradicional}
+          curvaImvixa={curvaImvixa}
+        />
+        <ImpactoCertificacion
+          ptiTradicional={ptiTradicional}
+          ptiImvixa={ptiImvixa}
+        />
+        <ImpactoRegulacion
+          mortalidadTotalTradicional={mortalidadTotalTradicional}
+          mortalidadTotalImvixa={mortalidadTotalImvixa}
+        />
+        <Anexos
+          ptiTradicional={ptiTradicional}
+          ptiImvixa={ptiImvixa}
+          estructuraCostos={estructuraCostos}
+          costoSmolts={costoSmolts}
+          costoTotalAlimentoImvixa={costoTotalAlimentoImvixa}
+          costoTotalAlimentoTradicional={costoTotalAlimentoTradicional}
+          costoProduccionImvixa={costoProduccionImvixa}
+          costoProduccionTradicional={costoProduccionTradicional}
+          tipoCambio={tipoCambio}
+          valorDolar={valorDolar.valor}
+        />
+      </div>
     </>
   );
 };
