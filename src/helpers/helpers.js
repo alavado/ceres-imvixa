@@ -139,9 +139,13 @@ export const calcularCantidadDeProductosVertidos = (medicamentos, tratamientos) 
   return productosVertidos
 }
 
-export const obtenerFechaActualBonita = () => {
+export const obtenerFechaActualBonita = (fecha = null) => {
   const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-  const f = new Date();
+  let f = new Date()
+  if (fecha !== null) {
+    var dateParts = fecha.split('-')
+    f = new Date(+dateParts[0], dateParts[1] - 1, +dateParts[2]);
+  }
   return f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear();
 }
 
@@ -151,5 +155,5 @@ export const redondear = (numero, cifrasSignificativas = 1) => {
 
 export const redondearYAString = (numero, cifrasSignificativas = 1) => {
   return redondear(numero, cifrasSignificativas)
-    .toLocaleString(undefined, { minimumFractionDigits: cifrasSignificativas, maximumFractionDigits: cifrasSignificativas})
+    .toLocaleString('de-DE', { minimumFractionDigits: cifrasSignificativas, maximumFractionDigits: cifrasSignificativas})
 }

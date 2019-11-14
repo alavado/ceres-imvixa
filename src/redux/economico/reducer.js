@@ -13,7 +13,11 @@ const initialState = {
     otros: 2
   },
   valorKiloProducido : 7.6,
-  costoSmolt: 2.15
+  costoSmolt: 2.15,
+  valorDolar: {
+    valor: 794,
+    fecha: '2019-11-14'
+  }
 }
 
 const economicoReducer = (state = initialState, action) => {
@@ -49,6 +53,13 @@ const economicoReducer = (state = initialState, action) => {
       return {
         ...state,
         costoSmolt
+      }
+    }
+    case economicoActions.FIJAR_VALOR_DOLAR: {
+      const valorDolar = action.payload
+      return {
+        ...state,
+        valorDolar
       }
     }
     default:

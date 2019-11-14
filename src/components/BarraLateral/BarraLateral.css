@@ -57,7 +57,21 @@
 
 #logo-elanco {
   width: 148px;
-  margin-left: 26px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   margin-top: 10px;
+}
+
+#logo-ceres {
+  width: 64px;
+  margin-bottom: 16px;
+}
+
+#contenedor-logo img, #contenedor-logo a {
+  -webkit-user-drag: none;
+}
+
+#contenedor-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

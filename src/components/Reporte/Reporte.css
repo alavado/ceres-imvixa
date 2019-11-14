@@ -171,7 +171,7 @@
 }
 
 #comparacion > div:nth-child(1) > div > div.valor {
-  margin-right: 16px;
+  margin-right: 4px;
 }
 
 #comparacion > div:nth-child(3) > div > div.lengueta {
@@ -180,7 +180,7 @@
 }
 
 #comparacion > div:nth-child(3) > div > div.valor {
-  margin-left: 16px;
+  margin-left: 4px;
 }
 
 #comparacion > div:nth-child(1) > div:last-child,
@@ -374,10 +374,12 @@
 #acciones-reporte {
   width: calc(950px + 2 * 32px);
   display: flex;
+  justify-content: space-between;
 }
 
 #acciones-reporte > button {
   margin-right: 8px;
+  height: 36px;
 }
 
 @media print {
@@ -389,4 +391,15 @@
     border: none;
     padding: 0;
   }
+}
+
+#contenedor-tipo-cambio {
+  font-size: .8em;
+  font-family: 'FiraSans';
+  line-height: 1.5;
+  width: 300px;
+}
+
+#contenedor-tipo-cambio input, #contenedor-tipo-cambio label {
+  cursor: pointer;
 }

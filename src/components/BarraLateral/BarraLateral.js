@@ -4,6 +4,7 @@ import './BarraLateral.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFish, faWarehouse, faSyringe, faChartBar } from '@fortawesome/free-solid-svg-icons'
 import logoElanco from '../../assets/elanco.svg'
+import logoCeres from '../../assets/logo_ceres.png'
 
 const BarraLateral = () => {
   console.log(window.location.href);
@@ -42,7 +43,10 @@ const BarraLateral = () => {
       </div>
       <div id="contenedor-logo">
         <Link to="/">
-          <img src={logoElanco} alt="logo elanco" id="logo-elanco" />
+          <img src={logoElanco} alt="logo elanco" id="logo-elanco" onDragEnter={() => false} />
+        </Link>
+        <Link to="/">
+          <img src={logoCeres} alt="logo ceres" id="logo-ceres" onDrag={() => false} />
         </Link>
       </div>
     </div>

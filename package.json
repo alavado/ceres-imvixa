@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "csvtojson": "^2.0.10",
     "electron-is-dev": "^1.1.0",
@@ -67,15 +68,15 @@
     "url": "https://compsci.cl"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/alavado/ceres-imvixa"
+    "type": "git",
+    "url": "https://github.com/alavado/ceres-imvixa"
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
     "productName": "Simulador CERES BCA - IMVIXA",
     "directories": {
-        "buildResources": "build",
-        "output": "dist"
+      "buildResources": "build",
+      "output": "dist"
     },
     "win": {
       "publish": [

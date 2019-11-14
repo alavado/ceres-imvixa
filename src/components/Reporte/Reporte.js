@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa, obtenerFechaActualBonita } from '../../helpers/helpers'
 import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada } from '../../helpers/modelo'
-import { DIAS_AYUNO_BAÑO } from "../../helpers/constantes";
+import { DIAS_AYUNO_BAÑO, TIPO_CAMBIO_DOLAR, TIPO_CAMBIO_PESO } from "../../helpers/constantes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import EncabezadoReporte from './EncabezadoReporte/EncabezadoReporte';
@@ -15,14 +15,20 @@ import ImpactosLaborales from './ImpactosLaborales';
 import ImpactoCertificacion from './ImpactoCertificacion';
 import ImpactoRegulacion from './ImpactoRegulacion';
 import Anexos from './Anexos';
+import axios from 'axios'
+import economicoActions from '../../redux/economico/actions';
 
 const { ipcRenderer } = window.require('electron');
 
-const Reporte = ({ state }) => {
-  const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
+const Reporte = ({ state, fijarValorDolar }) => {
+  const { estructuraCostos, costoSmolt, costoAlimento, valorDolar: vd } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR, bFCR, factorCrecimiento } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
+
+  const [tipoCambio, setTipoCambio] = useState(TIPO_CAMBIO_DOLAR)
+  const [valorDolar, setValorDolar] = useState(vd)
+
   // PTI
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
@@ -98,6 +104,19 @@ const Reporte = ({ state }) => {
     ipcRenderer.send('imprimir')
   }
 
+  const fijarTipoCambio = e => {
+    setTipoCambio(e.target.value)
+  }
+
+  useEffect(() => {
+    axios.get('https://api.desarrolladores.datos.gob.cl/indicadores-financieros/v1/dolar/hoy.json/?auth_key=0bf39224810cdf0ba301dea8b446fb0cdf1a3ead')
+      .then(res => {
+        const valorDolarActual = res.data.dolar
+        setValorDolar(valorDolarActual)
+        fijarValorDolar(valorDolarActual)
+      })
+  })
+
   return (
     <>
     <div id="contenedor-acciones-reporte">
@@ -106,12 +125,26 @@ const Reporte = ({ state }) => {
           <FontAwesomeIcon icon={faChevronLeft} size="sm" style={{marginRight: 8}} />
           Calendarios de tratamientos
         </button>
+        <div id="contenedor-tipo-cambio">
+          <p>Tipo de cambio</p>
+          <div>
+            <input type="radio" id="dolar" name="tipo-cambio" value={TIPO_CAMBIO_DOLAR} checked={tipoCambio === TIPO_CAMBIO_DOLAR} onChange={fijarTipoCambio} />
+            <label for="dolar">Dólar estadounidense (USD)</label>
+          </div>
+          <div title={`Valor actualizado el ${obtenerFechaActualBonita(valorDolar.fecha)}`}>
+            <input type="radio" id="peso" name="tipo-cambio" value={TIPO_CAMBIO_PESO} checked={tipoCambio === TIPO_CAMBIO_PESO} onChange={fijarTipoCambio} />
+            <label for="peso">Peso chileno (1 USD = {valorDolar.valor} CLP)</label>
+          </div>
+        </div>
         <button onClick={imprimirPDF}>Imprimir PDF</button>
       </div>
     </div>
     <div id="reporte">
       <EncabezadoReporte />
-      <DatosSimulacion />
+      <DatosSimulacion
+        tipoCambio={tipoCambio}
+        valorDolar={valorDolar}
+      />
       <ImpactoProductivo
         curvaImvixa={curvaImvixa}
         curvaTradicional={curvaTradicional}
@@ -129,6 +162,8 @@ const Reporte = ({ state }) => {
         costoImvixaTradicional={costoImvixaTradicional}
         costoProduccionSinAyunoImvixa={costoProduccionSinAyunoImvixa}
         costoProduccionSinAyunoTradicional={costoProduccionSinAyunoTradicional}
+        tipoCambio={tipoCambio}
+        valorDolar={valorDolar}
       />
       <ImpactosLaborales
         numeroBañosTradicional={numeroBañosTradicional}
@@ -153,6 +188,8 @@ const Reporte = ({ state }) => {
         costoTotalAlimentoTradicional={costoTotalAlimentoTradicional}
         costoProduccionImvixa={costoProduccionImvixa}
         costoProduccionTradicional={costoProduccionTradicional}
+        tipoCambio={tipoCambio}
+        valorDolar={valorDolar}
       />
     </div>
     </>
@@ -163,4 +200,8 @@ const mapStateToProps = state => ({
   state
 })
 
-export default connect(mapStateToProps)(Reporte);
+const mapDispatchToProps = dispatch => ({
+  fijarValorDolar: valor => dispatch(economicoActions.fijarValorDolar(valor))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reporte);

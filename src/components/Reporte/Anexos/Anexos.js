@@ -1,14 +1,21 @@
 import React from 'react';
 import { redondearYAString } from '../../../helpers/helpers';
 import './Anexos.css'
+import { TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_PESO } from '../../../helpers/constantes';
 
 const Anexos = props => {
   const {estructuraCostos, ptiTradicional, ptiImvixa, costoSmolts,
     costoTotalAlimentoImvixa, costoTotalAlimentoTradicional,
-    costoProduccionImvixa, costoProduccionTradicional
+    costoProduccionImvixa, costoProduccionTradicional,
+    tipoCambio, valorDolar
     } = props
   const costoTotalImvixa = costoSmolts + costoTotalAlimentoImvixa + costoProduccionImvixa
   const costoTotalTradicional = costoSmolts + costoTotalAlimentoTradicional + costoProduccionTradicional
+
+
+  const usarDolares = tipoCambio === TIPO_CAMBIO_DOLAR
+  const sufijoTipoCambio = usarDolares ? SUFIJO_TIPO_CAMBIO_DOLAR : SUFIJO_TIPO_CAMBIO_PESO
+  const multiplicadorCambio = usarDolares ? 1 : valorDolar
 
   const estructuraCostosModificada = {
     'Alimento' : {
@@ -63,26 +70,26 @@ const Anexos = props => {
               <td>{elemento}</td>
               <td>
                 <div>
-                    {redondearYAString(estructuraCostosModificada[elemento][1], 0)} USD
+                    {redondearYAString(multiplicadorCambio * estructuraCostosModificada[elemento][1], 0)} {sufijoTipoCambio}
                 </div>
               </td>
               <td>
                 <div>
-                    {redondearYAString(estructuraCostosModificada[elemento][2], 0)} USD
+                    {redondearYAString(multiplicadorCambio * estructuraCostosModificada[elemento][2], 0)} {sufijoTipoCambio}
                 </div>
               </td>
               <td>
                 <div>
-                    {redondearYAString(estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} USD 
+                    {redondearYAString(multiplicadorCambio * estructuraCostosModificada[elemento][2] - estructuraCostosModificada[elemento][1], 0)} {sufijoTipoCambio} 
                 </div>
               </td>
             </tr> 
           ))}
           <tr>
             <td>Total</td>
-            <td>{redondearYAString(costoTotalTradicional, 0)} USD</td>
-            <td>{redondearYAString(costoTotalImvixa, 0)} USD</td>
-            <td>{redondearYAString(costoTotalImvixa - costoTotalTradicional, 0)} USD</td>
+            <td>{redondearYAString(multiplicadorCambio * costoTotalTradicional, 0)} {sufijoTipoCambio}</td>
+            <td>{redondearYAString(multiplicadorCambio * costoTotalImvixa, 0)} {sufijoTipoCambio}</td>
+            <td>{redondearYAString(multiplicadorCambio * costoTotalImvixa - costoTotalTradicional, 0)} {sufijoTipoCambio}</td>
           </tr>
         </tbody>
       </table>

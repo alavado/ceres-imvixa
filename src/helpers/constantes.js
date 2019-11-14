@@ -13,3 +13,8 @@ export const JORNADAS_POR_BAÑO_POR_JAULA = 2
 export const COSTO_OPERACIONAL_BAÑO = 1666.7
 
 export const DIAS_AYUNO_BAÑO = 3
+
+export const TIPO_CAMBIO_DOLAR = 'TIPO_CAMBIO_DOLAR'
+export const TIPO_CAMBIO_PESO = 'TIPO_CAMBIO_PESO'
+export const SUFIJO_TIPO_CAMBIO_DOLAR = 'USD'
+export const SUFIJO_TIPO_CAMBIO_PESO = 'CLP'
