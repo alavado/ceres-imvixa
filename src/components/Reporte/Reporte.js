@@ -143,7 +143,7 @@ const Reporte = ({ state, fijarValorDolar }) => {
       <EncabezadoReporte />
       <DatosSimulacion
         tipoCambio={tipoCambio}
-        valorDolar={valorDolar}
+        valorDolar={valorDolar.valor}
       />
       <ImpactoProductivo
         curvaImvixa={curvaImvixa}
@@ -163,7 +163,7 @@ const Reporte = ({ state, fijarValorDolar }) => {
         costoProduccionSinAyunoImvixa={costoProduccionSinAyunoImvixa}
         costoProduccionSinAyunoTradicional={costoProduccionSinAyunoTradicional}
         tipoCambio={tipoCambio}
-        valorDolar={valorDolar}
+        valorDolar={valorDolar.valor}
       />
       <ImpactosLaborales
         numeroBañosTradicional={numeroBañosTradicional}
@@ -189,7 +189,7 @@ const Reporte = ({ state, fijarValorDolar }) => {
         costoProduccionImvixa={costoProduccionImvixa}
         costoProduccionTradicional={costoProduccionTradicional}
         tipoCambio={tipoCambio}
-        valorDolar={valorDolar}
+        valorDolar={valorDolar.valor}
       />
     </div>
     </>
