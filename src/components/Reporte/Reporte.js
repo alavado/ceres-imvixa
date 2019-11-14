@@ -21,13 +21,13 @@ import economicoActions from '../../redux/economico/actions';
 const { ipcRenderer } = window.require('electron');
 
 const Reporte = ({ state, fijarValorDolar }) => {
-  const { estructuraCostos, costoSmolt, costoAlimento, valorDolar: vd } = state.economico
+  const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR, bFCR, factorCrecimiento } = state.produccion
   const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
 
   const [tipoCambio, setTipoCambio] = useState(TIPO_CAMBIO_DOLAR)
-  const [valorDolar, setValorDolar] = useState(vd)
+  const [valorDolar, setValorDolar] = useState(state.economico.valorDolar || { valor: 795, fecha: '2019-11-14' })
 
   // PTI
   const ptiImvixa = calcularPTI(medicamentos, tratamientos['imvixa'])
