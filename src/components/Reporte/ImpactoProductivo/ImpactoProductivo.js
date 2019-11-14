@@ -78,7 +78,7 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
                 <h2>{redondearYAString(-curvaTradicional.length + curvaImvixa.length, 0)}</h2>
                 <p>días</p>
                 <h2>{redondearYAString(-curvaTradicional[largoCurvaMasCorta - 1] / 1000.0 + curvaImvixa[largoCurvaMasCorta - 1] / 1000.0, 2)}</h2>
-                <p>kg a {redondearYAString(curvaImvixa.length / 30.0)} meses</p>
+                <p>kg a {redondearYAString(largoCurvaMasCorta / 30.0)} meses</p>
                 <h2>{redondearYAString(-biomasaTradicional / 1000 + biomasaImvixa / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>
               </> :
