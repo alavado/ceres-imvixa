@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import './ResumenComparacion.css'
 import GraficoCrecimiento from './GraficoCrecimiento'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faPrint as IconoReporte } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
 import CuadrosEstrategias from './CuadrosEstrategias';
@@ -20,7 +20,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
           <Link to="/reporte">
             <FontAwesomeIcon
               color="white"
-              icon={faFile}
+              icon={IconoReporte}
             />
           </Link>
         </div>
