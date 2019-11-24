@@ -1,4 +1,4 @@
-yarn run v1.17.3
+yarn run v1.19.1
 $ yarn react-build && electron-builder --publish=always
 $ react-scripts build
 Creating an optimized production build...
@@ -7,17 +7,20 @@ Compiled with warnings.
 ./src/components/Economico/Economico.js
   Line 32:6:  React Hook useEffect has a missing dependency: 'props'. Either include it or remove the dependency array. However, 'props' will change when *any* prop changes, so the preferred fix is to destructure the 'props' object outside of the useEffect call and refer to those specific props inside useEffect  react-hooks/exhaustive-deps
 
+./src/components/Reporte/EncabezadoReporte/EncabezadoReporte.js
+  Line 3:8:  'logoCeres' is defined but never used  no-unused-vars
+
 ./src/helpers/helpers.js
-  Line 91:56:  Expected dot to be on same line as property  dot-location
+  Line 93:56:  Expected dot to be on same line as property  dot-location
 
 Search for the keywords to learn more about each warning.
 To ignore, add // eslint-disable-next-line to the line before.
 
 File sizes after gzip:
 
-  190.75 KB  build\static\js\2.e468945c.chunk.js
-  51.1 KB    build\static\js\main.a77341fa.chunk.js
-  4.64 KB    build\static\css\main.2648c2ea.chunk.css
+  194.97 KB  build\static\js\2.b2ab960a.chunk.js
+  29.41 KB   build\static\js\main.820f37ce.chunk.js
+  4.96 KB    build\static\css\main.9cad1421.chunk.css
   779 B      build\static\js\runtime~main.6c53be36.js
 
 The project was built assuming it is hosted at ./.
@@ -34,10 +37,10 @@ Find out more about deployment here:
   • loaded parent configuration  preset=react-cra
   • packaging       platform=win32 arch=x64 electron=6.1.4 appOutDir=dist\win-unpacked
   • default Electron icon is used  reason=application icon is not set
-  • building        target=nsis file=dist\ceres-imvixa Setup 0.1.13.exe archs=x64 oneClick=true perMachine=false
-  • building block map  blockMapFile=dist\ceres-imvixa Setup 0.1.13.exe.blockmap
-  • publishing      publisher=Github (owner: alavado, project: ceres-imvixa, version: 0.1.13)
-  • uploading       file=ceres-imvixa-Setup-0.1.13.exe.blockmap provider=GitHub
-  • uploading       file=ceres-imvixa-Setup-0.1.13.exe provider=GitHub
-  • creating GitHub release  reason=release doesn't exist tag=v0.1.13 version=0.1.13
-Done in 166.79s.
+  • building        target=nsis file=dist\Simulador CERES BCA - IMVIXA Setup 1.0.3.exe archs=x64 oneClick=true perMachine=false
+  • building block map  blockMapFile=dist\Simulador CERES BCA - IMVIXA Setup 1.0.3.exe.blockmap
+  • publishing      publisher=Github (owner: alavado, project: ceres-imvixa, version: 1.0.3)
+  • uploading       file=Simulador-CERES-BCA---IMVIXA-Setup-1.0.3.exe.blockmap provider=GitHub
+  • uploading       file=Simulador-CERES-BCA---IMVIXA-Setup-1.0.3.exe provider=GitHub
+  • creating GitHub release  reason=release doesn't exist tag=v1.0.3 version=1.0.3
+Done in 184.56s.

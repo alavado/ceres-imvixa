@@ -36,14 +36,14 @@ export const calcularCostoTratamientoOral = (principioActivo, medicamentos, trat
     const { idMedicamento } = tratamientos[semana]
     const m = medicamentos.find(m => m.id === idMedicamento)
     if (m.principioActivo === principioActivo) { 
-      const costoGramos = m.costoUnitario / 1000 
+      const costoMiligramos = m.costoUnitario / 1000000 
       let pesoPromedio, diferenciaPeso, cantidadComida
       if (semana === '0'){
         const bFCRInicial = tratamientos[semana].pesoDeAplicacion < 100 ? 1.001 : (bFCR + 1) / 2
         pesoPromedio = tratamientos[semana].pesoDeAplicacion / 1000
         diferenciaPeso = pesoPromedio * 0.2 
         cantidadComida = diferenciaPeso * numeroDeSmoltsInicial / (1000 * bFCRInicial)
-        return suma + ( costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsInicial) + cantidadComida * m.costoOperacional
+        return suma + ( costoMiligramos * m.dosis * pesoPromedio * numeroDeSmoltsInicial) + cantidadComida * m.costoOperacional
       }
       const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[numSemana * 4])
       const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
@@ -52,7 +52,7 @@ export const calcularCostoTratamientoOral = (principioActivo, medicamentos, trat
       const diaMaximoPeso = numSemana * 7 + 6 < curvaCrecimiento.length ? numSemana * 7 + 6 : curvaCrecimiento.length -1
       diferenciaPeso = curvaCrecimiento[diaMaximoPeso] - curvaCrecimiento[numSemana * 7 - 1]
       cantidadComida = diferenciaPeso * numeroDeSmoltsActual / (1000000 * bFCR)
-      return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
+      return suma + (costoMiligramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
     }
     return suma
   }, 0)
@@ -65,14 +65,14 @@ export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsIn
     const m = medicamentos.find(m => m.id === idMedicamento)
     if (m.nombre === 'Imvixa') {
       let pesoPromedio, diferenciaPeso, cantidadComida
-      const costoGramos = m.costoUnitario / 1000
+      const costoMiligramos = m.costoUnitario / 1000000
       if (semana === '0'){
         const bFCRInicial = tratamientos[semana].pesoDeAplicacion < 100 ? 1.001 : (bFCR + 1) / 2
         pesoPromedio = tratamientos[semana].pesoDeAplicacion / 1000
         diferenciaPeso = pesoPromedio * 0.2 
         cantidadComida = diferenciaPeso * numeroDeSmoltsInicial / (1000 * bFCRInicial)
         console.log(cantidadComida);
-        return suma + ( costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsInicial) + cantidadComida * m.costoOperacional
+        return suma + ( costoMiligramos * m.dosis * pesoPromedio * numeroDeSmoltsInicial) + cantidadComida * m.costoOperacional
       }
       const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[numSemana * 4])
       const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
@@ -81,7 +81,7 @@ export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsIn
       const diaMaximoPeso = numSemana * 7 + 6 < curvaCrecimiento.length ? numSemana * 7 + 6 : curvaCrecimiento.length -1
       diferenciaPeso = curvaCrecimiento[diaMaximoPeso] - curvaCrecimiento[numSemana * 7 - 1]
       cantidadComida = diferenciaPeso * numeroDeSmoltsActual / (1000000 * bFCR)
-      return suma + (costoGramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
+      return suma + (costoMiligramos * m.dosis * pesoPromedio * numeroDeSmoltsActual) + cantidadComida * m.costoOperacional
     }
     return suma
   }, 0)

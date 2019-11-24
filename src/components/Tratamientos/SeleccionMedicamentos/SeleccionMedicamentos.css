@@ -59,13 +59,16 @@
 }
 
 .tabla-medicamentos td input[type="text"] {
-  width: 40px;
   font-size: 1em;
   margin: 0;
   padding: 0 4px;
   margin-right: 4px;
   width: 96px;
   box-sizing: border-box;
+}
+
+.tabla-medicamentos td:nth-child(4) input[type="text"] {
+  width: 120px;
 }
 
 .tabla-medicamentos td span {
@@ -81,7 +84,7 @@
 }
 
 .tabla-medicamentos td:nth-child(4) {
-  width: 150px;
+  width: 200px;
 }
 
 .tabla-medicamentos td:nth-child(5) {
