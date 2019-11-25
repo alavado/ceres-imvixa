@@ -28,14 +28,14 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
               </> :
               objetivos.includes(OBJETIVO_PESO) ?
               <>
-                <h2>{redondearYAString(curvaImvixa.length / 30.0)}</h2>
-                <p>meses ciclo</p>
-                <h2>{redondearYAString(biomasaImvixa / 1000, 0)}</h2>
+                <h2>{redondearYAString(curvaTradicional.length / 30.0)}</h2>
+                <p>meses para alcanzar los {redondearYAString(produccion.pesoObjetivo / 1000, 1)} kg</p>
+                <h2>{redondearYAString(biomasaTradicional / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>
               </> :
               <>
                 <h2>{redondearYAString(curvaTradicional[curvaTradicional.length - 1] / 1000.0, 2)}</h2>
-                <p>kg a la cosecha</p>
+                <p>kg a los {produccion.mesesObjetivo} meses</p>
                 <h2>{redondearYAString(biomasaTradicional / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>
               </> // falta la biomasa cosechada en toneladas en cada cuadrito y la tercera columna el diferencial
@@ -57,13 +57,13 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
               objetivos.includes(OBJETIVO_PESO) ?
               <>
                 <h2>{redondearYAString(curvaImvixa.length / 30.0)}</h2>
-                <p>meses ciclo</p>
+                <p>meses para alcanzar los {redondearYAString(produccion.pesoObjetivo / 1000, 1)} kg</p>
                 <h2>{redondearYAString(biomasaImvixa / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>
               </> :
               <>
                 <h2>{redondearYAString(curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
-                <p>kg a la cosecha</p>
+                <p>kg a los {produccion.mesesObjetivo} meses</p>
                 <h2>{redondearYAString(biomasaImvixa / 1000, 0)}</h2>
                 <p>toneladas cosechadas</p>
               </>
@@ -80,20 +80,20 @@ const ImpactoProductivo = ({curvaImvixa, curvaTradicional, biomasaImvixa, biomas
                 <h2>{redondearYAString(-curvaTradicional[largoCurvaMasCorta - 1] / 1000.0 + curvaImvixa[largoCurvaMasCorta - 1] / 1000.0, 2)}</h2>
                 <p>kg a {redondearYAString(largoCurvaMasCorta / 30.0)} meses</p>
                 <h2>{redondearYAString(-biomasaTradicional / 1000 + biomasaImvixa / 1000, 0)}</h2>
-                <p>toneladas cosechadas</p>
+                <p>toneladas</p>
               </> :
               objetivos.includes(OBJETIVO_PESO) ?
               <>
-                <h2>{redondearYAString(-curvaTradicional.length / 30.0 + curvaImvixa.length / 30.0)}</h2>
-                <p>meses</p>
+                <h2>{redondearYAString(-curvaTradicional.length + curvaImvixa.length, 0)}</h2>
+                <p>días</p>
                 <h2>{redondearYAString(-biomasaTradicional / 1000 + biomasaImvixa / 1000, 0)}</h2>
-                <p>toneladas cosechadas</p>
+                <p>toneladas</p>
               </> :
               <>
                 <h2>{redondearYAString(-curvaTradicional[curvaImvixa.length - 1] / 1000.0 + curvaImvixa[curvaImvixa.length - 1] / 1000.0, 2)}</h2>
                 <p>kg</p>
                 <h2>{redondearYAString(-biomasaTradicional / 1000 + biomasaImvixa / 1000, 0)}</h2>
-                <p>toneladas cosechadas</p>
+                <p>toneladas</p>
               </>
             }
           </div>

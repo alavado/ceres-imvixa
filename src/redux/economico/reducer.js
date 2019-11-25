@@ -15,8 +15,8 @@ const initialState = {
   valorKiloProducido : 7.6,
   costoSmolt: 2.15,
   valorDolar: {
-    valor: 794,
-    fecha: '2019-11-14'
+    valor: 789,
+    fecha: '2019-11-25'
   }
 }
 

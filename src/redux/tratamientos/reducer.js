@@ -127,7 +127,7 @@ const initialState = {
       costoUnitario: 700,  // no hay que buscarlo qele qe aksd
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 20,
-      cantidadPorJaula: 72,
+      cantidadPorJaula: 10,
       duracion: 16,
       mortalidad: 0.06,
       color: '#000066',

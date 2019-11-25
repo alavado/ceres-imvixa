@@ -24,7 +24,7 @@ const DatosSimulacion = ({tipoCambio, valorDolar}) => {
         <li>Mortalidad (sin tratamientos): <span>{redondearYAString(mortalidad, 1)} %</span></li>
         <li>Costo smolt: <span>{redondearYAString(multiplicadorCambio * costoSmolt, usarDolares ? 2 : 0)} {sufijoTipoCambio} </span></li>
         <li>Costo por kilo de alimento: <span>{redondearYAString(multiplicadorCambio * costoAlimento, usarDolares ? 2 : 0)} {sufijoTipoCambio}</span></li>
-        { objetivos.includes(OBJETIVO_PESO)? <li>Objetivo de peso de cosecha: <span>{pesoObjetivo} g</span></li> : '' }
+        { objetivos.includes(OBJETIVO_PESO)? <li>Objetivo de peso de cosecha: <span>{redondearYAString(pesoObjetivo / 1000, 1)} kg</span></li> : '' }
         { objetivos.includes(OBJETIVO_FECHA)? <li>Objetivo de tiempo de cosecha: <span>{mesesObjetivo} meses</span></li> : '' }
       </ul>
     </div>
