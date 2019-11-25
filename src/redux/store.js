@@ -12,8 +12,6 @@ const store = createStore(
 
 var ipcRenderer = window.require('electron').ipcRenderer;
 ipcRenderer.on('leer-centros', function (event, centros) {
-  console.log('leer centros');
-  console.log(event, centros);
   const centrosFormateados = centros.map(centro => ({
     codigo: Number(centro.cod_centro),
     titular: centro.titular,
