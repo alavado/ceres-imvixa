@@ -1,6 +1,5 @@
 import React from 'react';
 import logoElanco from '../../../assets/elanco.svg'
-import logoCeres from '../../../assets/logo_ceres.png'
 import { useSelector } from 'react-redux'
 import { obtenerFechaActualBonita } from '../../../helpers/helpers';
 import './EncabezadoReporte.css'

@@ -53,12 +53,10 @@ const Reporte = ({ state, fijarValorDolar }) => {
   const mortalidadTotalTradicional = calcularMortalidadTotal(mortalidad, numeroSmolts, numeroJaulas, curvaMortalidadAcumuladaTradicional, medicamentos, tratamientos['tradicional'], curvaTradicional.length)
 
   const pesoFinalTradicional = curvaTradicional.slice(-1)[0]/1000
-  console.log({curvaImvixa, curvaTradicional,curvaMortalidadAcumuladaImvixa, curvaMortalidadAcumuladaTradicional });
   
   // Biomasa total cosechada
   const biomasaImvixa = numeroSmolts * (1 - mortalidadTotalImvixa / 100.0) * pesoFinalImvixa
   const biomasaTradicional = numeroSmolts * (1 - mortalidadTotalTradicional / 100.0) * pesoFinalTradicional
-  console.log({mortalidadTotalImvixa,mortalidadTotalTradicional, pesoFinalImvixa,pesoFinalTradicional, biomasaImvixa, biomasaTradicional});
   // Economicos
   // generales
   const costoSmolts = numeroSmolts * costoSmolt
@@ -109,13 +107,16 @@ const Reporte = ({ state, fijarValorDolar }) => {
   }
 
   useEffect(() => {
-    axios.get('https://api.desarrolladores.datos.gob.cl/indicadores-financieros/v1/dolar/hoy.json/?auth_key=0bf39224810cdf0ba301dea8b446fb0cdf1a3ead')
+    axios.get('https://mindicador.cl/api')
       .then(res => {
         const valorDolarActual = res.data.dolar
-        setValorDolar(valorDolarActual)
+        setValorDolar({
+          valor: valorDolarActual.valor,
+          fecha: valorDolarActual.fecha.substring(0, 10)
+        })
         fijarValorDolar(valorDolarActual)
       })
-  })
+  }, [])
 
   return (
     <>
