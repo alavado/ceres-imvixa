@@ -8,7 +8,7 @@ const initialState = {
     personal: 3,
     operaciones: 14.2,
     depreciación: 1.4,
-    sanidad: 4.4,
+    salud: 4.4,
     seguros: 2,
     otros: 2
   },
