@@ -27,6 +27,7 @@ const Produccion = props => {
   const pesoMuerto = curvaBiomasaPerdida.slice(-1)[0]
   const cantidadAlimento = (pesoGanado + pesoMuerto) * bFCR
   const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
+
   return (
     <>
       <div className="contenido">
@@ -125,6 +126,7 @@ const Produccion = props => {
                 value={produccion.factorCrecimiento}
                 style={{width: 45 }}
                 onValueChange={e => props.fijarFactorCrecimiento(e.floatValue)}
+                disabled={produccion.objetivos.includes(OBJETIVO_PESO) && produccion.objetivos.includes(OBJETIVO_FECHA)}
               /> 
             </div>
           </div>
