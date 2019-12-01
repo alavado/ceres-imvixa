@@ -5,11 +5,11 @@ import throttle from 'lodash.throttle'
 import centroActions from './centro/actions.js'
 
 const persistedState = loadState()
-const store = createStore(combineReducers(reducers))
-// const store = createStore(
-//   combineReducers(reducers),
-//   persistedState
-// )
+// const store = createStore(combineReducers(reducers))
+const store = createStore(
+  combineReducers(reducers),
+  persistedState
+)
 
 var ipcRenderer = window.require('electron').ipcRenderer;
 ipcRenderer.on('leer-centros', function (event, centros) {

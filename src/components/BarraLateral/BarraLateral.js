@@ -46,10 +46,10 @@ const BarraLateral = () => {
         <Link to="/">
           <img src={logoElanco} alt="logo elanco" id="logo-elanco" onDragEnter={() => false} />
         </Link>
-        <Link to="/">
-          <img src={logoCeres} alt="logo ceres" id="logo-ceres" onDrag={() => false} />
-        </Link>
-        <div id="version">Versión {version}</div>
+        <div id="version">
+          Desarrollado por CERES BCA<br/>
+          Versión {version}
+        </div>
       </div>
     </div>
   );
