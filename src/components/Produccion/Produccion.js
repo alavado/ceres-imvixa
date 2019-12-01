@@ -123,7 +123,7 @@ const Produccion = props => {
               <label style={{ marginRight: 8 }} htmlFor="factor-crecimiento">Factor de crecimiento</label>
               <CampoNumerico
                 id="factor-crecimiento"
-                value={produccion.factorCrecimiento}
+                value={produccion.objetivos.includes(OBJETIVO_PESO) && produccion.objetivos.includes(OBJETIVO_FECHA) ? 1 : produccion.factorCrecimiento}
                 style={{width: 45 }}
                 onValueChange={e => props.fijarFactorCrecimiento(e.floatValue)}
                 disabled={produccion.objetivos.includes(OBJETIVO_PESO) && produccion.objetivos.includes(OBJETIVO_FECHA)}
