@@ -351,6 +351,16 @@ const tratamientosReducer = (state = initialState, action) => {
         ]
       }
     }
+    case tratamientosActions.ELIMINAR_TODOS_LOS_TRATAMIENTOS: {
+      const estrategia = action.payload
+      return {
+        ...state,
+        tratamientos: {
+          ...state.tratamientos,
+          [estrategia] : {}
+        },
+      }
+    }
   }
 }
 

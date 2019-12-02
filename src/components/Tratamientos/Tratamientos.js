@@ -16,6 +16,10 @@ const Tratamientos = props => {
   const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
           marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, factorCrecimiento } = produccion
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState({
+    mostrar: false,
+    estrategia: ''
+  })
   
   const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento)
   const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento)
@@ -167,11 +171,20 @@ const Tratamientos = props => {
                 >
                   <div className="contenedor-header-calendario">
                     <h2>Semanas estrategia {estrategia === 'imvixa' ? '2' : '1'}</h2>
-                    <div className="numero-baños">
-                      <div>
-                        {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos, estrategia === 'imvixa' ? curvaImvixa : curvaTradicional)}
+                    <div className="contenedor-header-iconos">
+                      <div className="numero-baños">
+                        <div>
+                          {calcularNumeroDeBaños(estrategia, medicamentos, tratamientos, estrategia === 'imvixa' ? curvaImvixa : curvaTradicional)}
+                        </div>
+                        <FontAwesomeIcon icon={faShower} size="sm" title='Número de baños'/>
                       </div>
-                      <FontAwesomeIcon icon={faShower} size="sm" title='Número de baños'/>
+                      <button
+                        className="boton-eliminar-tratamientos"
+                        onClick={() => setMostrarConfirmacion({mostrar: true, estrategia})}
+                        title="Eliminar tratamientos"
+                      >
+                        <FontAwesomeIcon icon={faTrash} size="sm" />
+                      </button>
                     </div>
                   </div>
                   <div id={`semanas-estrategia-${estrategia}`}>
@@ -261,10 +274,26 @@ const Tratamientos = props => {
               </div>
             </div>
           </div>
-          <button id="boton-volver-tratamientos" onClick={() => marcarMedicamentosFueronSeleccionados(false)}>
-            <FontAwesomeIcon icon={faChevronLeft} size="sm" />
-            Selección de medicamentos
-          </button>
+          <div id="contenedor-acciones-tratamientos">
+            <button
+              id="boton-volver-tratamientos"
+              onClick={() => marcarMedicamentosFueronSeleccionados(false)}
+            >
+              <FontAwesomeIcon icon={faChevronLeft} size="sm" />
+              Selección de medicamentos
+            </button>
+          </div>
+          {mostrarConfirmacion.mostrar && 
+          <div className="modal-eliminar-tratamientos" >
+            <h3>¿Está seguro que desea eliminar los tratamientos?</h3>
+            <div className="modal-eliminar-botones">
+              <button onClick={() => {
+                props.eliminarTodosLosTratamientos(mostrarConfirmacion.estrategia)
+                setMostrarConfirmacion({mostrar: false, estrategia: ''})
+              }}>Sí</button>
+              <button onClick={() => setMostrarConfirmacion({mostrar: false, estrategia: ''})}>No</button>
+            </div>
+          </div>}
         </div>
       </div>
       <ResumenComparacion
@@ -290,7 +319,8 @@ const mapDispatchToProps = dispatch => ({
   },
   eliminarTratamiento: (estrategia, semana) => dispatch(tratamientosActions.eliminarTratamiento(estrategia, semana)),
   marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor)),
-  replicarEstrategia: (base, objetivo, semanas) => dispatch(tratamientosActions.replicarEstrategia(base, objetivo, semanas))
+  replicarEstrategia: (base, objetivo, semanas) => dispatch(tratamientosActions.replicarEstrategia(base, objetivo, semanas)),
+  eliminarTodosLosTratamientos: (estrategia) => dispatch(tratamientosActions.eliminarTodosLosTratamientos(estrategia))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tratamientos);
