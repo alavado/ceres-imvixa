@@ -78,7 +78,7 @@ const ImpactoEconomico = props => {
                 marginLeft: 36
               }}></div>
             <div className="valor">
-              {redondearYAString(multiplicadorCambio * totalTradicional, usarDolares ? 2 : 0)}
+              {redondearYAString(multiplicadorCambio * totalTradicional, usarDolares ? 3 : 0)}
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ const ImpactoEconomico = props => {
             width: anchoMaximoLenguetaColoreada
             }}></div>
             <div className="valor">
-              {redondearYAString(multiplicadorCambio * totalImvixa, usarDolares ? 2 : 0)}
+              {redondearYAString(multiplicadorCambio * totalImvixa, usarDolares ? 3 : 0)}
             </div>
           </div>
         </div>
