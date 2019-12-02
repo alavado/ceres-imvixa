@@ -9,6 +9,7 @@ import CalculadoraVolumen from './CalculadoraVolumen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 import CampoNumerico from './CampoNumerico'
+import { red } from 'ansi-colors';
 
 const Produccion = props => {
 
@@ -140,13 +141,21 @@ const Produccion = props => {
               onChange={e => props.fijarObjetivo(OBJETIVO_PESO, e.target.checked)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="peso-objetivo">Peso cosecha:</label>
-            <CampoNumerico
-              id="peso-smolt"
-              value={produccion.pesoObjetivo}
-              suffix={' g'}
-              style={{width: 60}}
-              onClick={() => props.fijarObjetivo(OBJETIVO_PESO, true)}
-              onValueChange={e => props.fijarPesoObjetivo(e.floatValue)} />
+            {produccion.objetivos.includes(OBJETIVO_PESO) ? 
+              <CampoNumerico
+                id="peso-smolt"
+                value={produccion.pesoObjetivo}
+                suffix={' g'}
+                style={{width: 60}}
+                onClick={() => props.fijarObjetivo(OBJETIVO_PESO, true)}
+                onValueChange={e => props.fijarPesoObjetivo(e.floatValue)} /> :
+              <input
+                disabled={true}
+                value={'-'}
+                style={{width: 60}}
+              />
+            }
+            
           </div>
           <div style={{display: 'flex', alignItems: 'baseline'}}>
             <input
@@ -157,12 +166,19 @@ const Produccion = props => {
               onChange={e => props.fijarObjetivo(OBJETIVO_FECHA, e.target.checked)}
             />
             <label style={{ fontSize: '.9em', marginRight: 8 }} htmlFor="fecha-objetivo">Meses ciclo:</label>
-            <CampoNumerico
-              id="fecha-objetivo"
-              value={mesesObjetivo}
+            {produccion.objetivos.includes(OBJETIVO_FECHA) ? 
+              <CampoNumerico
+                id="fecha-objetivo"
+                value={mesesObjetivo}
+                style={{width: 45}}
+                onClick={() => props.fijarObjetivo(OBJETIVO_FECHA, true)}
+                onValueChange={e => props.fijarMesesObjetivo(e.floatValue)} /> : 
+              <input
+              disabled={true}
+              value={'-'}
               style={{width: 45}}
-              onClick={() => props.fijarObjetivo(OBJETIVO_FECHA, true)}
-              onValueChange={e => props.fijarMesesObjetivo(e.floatValue)} />
+              />
+            }
           </div>
         </div>
       </div>
