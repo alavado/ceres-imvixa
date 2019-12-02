@@ -36,7 +36,7 @@ const initialState = {
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
-      activo: true,
+      activo: false,
       aplicaciones: 1,
       factorFarmaco: 4,
       factorMetodo: 0.8
