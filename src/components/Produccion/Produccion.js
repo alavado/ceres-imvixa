@@ -171,7 +171,7 @@ const Produccion = props => {
           <h1>Proyección</h1>
         </div>
         <div className="contenido-secundario-contenido">
-          <div style={{width: '640px', height: '350px'}}>
+          <div style={{width: '640px', height: '320px'}}>
             <Bar
               onClick={e => alert(document.getElementAtEvent(e))}
               data={{

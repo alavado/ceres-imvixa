@@ -115,7 +115,7 @@ const Economico = props => {
           <h1>Distribución de costos ex jaula por kilo producido</h1>
         </div>
         <div className="contenido-secundario-contenido">
-          <div style={{width: '640px', height: '350px'}}>
+          <div style={{width: '640px', height: '320px'}}>
           {!mostrarEstructura ?
             <Doughnut
               data={{

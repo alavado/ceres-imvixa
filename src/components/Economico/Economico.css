@@ -38,9 +38,9 @@
 .fondo-cuadro-economicos {
   width: 304px;
   border-radius: 4px;
-  margin-top: 16px;
   background-color: #F5F5F5;
   margin-right: 16px;
+  margin-top: 42px;
 }
 
 .fondo-cuadro-economicos:last-child {
