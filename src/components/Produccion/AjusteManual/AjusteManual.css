@@ -1,0 +1,39 @@
+#contenedor-ajuste-manual {
+  padding-right: 32px;
+}
+
+#contenedor-ajuste-manual h2 {
+  font-size: .9em;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.input-ajuste {
+  display: flex;
+  align-items: baseline;
+  border: 1px solid #ECEFF1;
+}
+
+.input-ajuste:nth-child(even) {
+  background-color: white;
+}
+
+.input-ajuste:nth-child(odd) {
+  background-color: #ECEFF1;
+}
+
+#contenedor-ajuste-manual label {
+  height: 10px;
+  font-size: .75em;
+  flex: 1;
+  padding-left: 8px;
+}
+
+#contenedor-ajuste-manual input {
+  height: 10px;
+  font-size: .75em;
+  width: 50px;
+  margin: 0;
+  padding: 7px 4px;
+  border-radius: 0;
+}

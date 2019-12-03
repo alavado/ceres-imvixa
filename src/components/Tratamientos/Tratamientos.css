@@ -226,6 +226,7 @@ div[id^="semanas-estrategia"] > div:hover {
   margin-left: 8px;
   display: flex;
   flex-direction: column;
+  outline: none;
 }
 
 .boton-eliminar-tratamientos:hover {

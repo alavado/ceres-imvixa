@@ -14,14 +14,15 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
 
   return (
     <div id="fondo-resumen">
-      <div id="barra-superior-resumen">
+      <div className="titulo-contenido-secundario">
         <h1>Comparación de estrategias</h1>
-        <div id="icono-imprimir-reporte">
+        <div className="icono-accion-secundaria">
           <Link to="/reporte">
-            <FontAwesomeIcon
-              color="white"
-              icon={IconoReporte}
-            />
+            <span>Imprimir reporte</span>
+              <FontAwesomeIcon
+                color="white"
+                icon={IconoReporte}
+              />
           </Link>
         </div>
       </div>

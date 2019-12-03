@@ -5,27 +5,6 @@
   transition: all .5s ease-in-out;
 }
 
-#barra-superior-resumen {
-  height: 50px;
-  width: 100%;
-  background-color: #003E65;
-  display: flex;
-  align-items: center;
-  color: white;
-  justify-content: space-between;
-}
-
-#barra-superior-resumen h1 {
-  margin-left: 24px;
-  font-size: 1em;
-  font-weight: bold;
-}
-
-#icono-imprimir-reporte {
-  margin-right: 24px;
-  cursor: pointer;
-}
-
 #contenido-resumen {
   display: flex;
   flex-direction: column;

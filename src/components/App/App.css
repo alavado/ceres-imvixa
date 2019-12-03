@@ -87,10 +87,11 @@ a {
 .titulo-contenido-secundario {
   height: 50px;
   width: 100%;
+  background-color: #003E65;
   display: flex;
   align-items: center;
-  background-color: #003E65;
   color: white;
+  justify-content: space-between;
 }
 
 .titulo-contenido-secundario h1 {
@@ -128,4 +129,22 @@ button {
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 8px;
+}
+
+.icono-accion-secundaria {
+  margin-right: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.icono-accion-secundaria a {
+  display: flex;
+  align-items: center;
+}
+
+.icono-accion-secundaria a span, .icono-accion-secundaria span {
+  font-size: .75em;
+  margin-right: 8px;
+  color: white;
 }

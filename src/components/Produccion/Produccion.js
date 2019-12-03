@@ -7,15 +7,16 @@ import './Produccion.css'
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
 import CalculadoraVolumen from './CalculadoraVolumen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator } from '@fortawesome/free-solid-svg-icons';
+import { faCalculator, faChartBar as IconoAjusteCurva } from '@fortawesome/free-solid-svg-icons';
 import CampoNumerico from './CampoNumerico'
-import { red } from 'ansi-colors';
+import AjusteManual from './AjusteManual';
 
 const Produccion = props => {
 
   const { produccion, macrozona } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, factorCrecimiento } = produccion
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
+  const [mostrandoAjusteManual, setMostrandoAjusteManual] = useState(false)
 
   const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
@@ -37,6 +38,12 @@ const Produccion = props => {
             Parámetros productivos
           </div>
         </div>
+        {mostrandoAjusteManual ?
+        <div className="contenido-contenido">
+          <AjusteManual
+            curvaCrecimiento={curvaCrecimiento}
+          />
+        </div> :
         <div className="contenido-contenido">
           <label htmlFor="fecha-inicio">Inicio ciclo</label>
           <input
@@ -180,11 +187,18 @@ const Produccion = props => {
               />
             }
           </div>
-        </div>
+        </div>}
       </div>
       <div className="contenido-secundario">
         <div className="titulo-contenido-secundario">
           <h1>Proyección</h1>
+          <div className="icono-accion-secundaria" onClick={() => setMostrandoAjusteManual(!mostrandoAjusteManual)}>
+            <span>Ajuste manual</span>
+            <FontAwesomeIcon
+              color="white"
+              icon={IconoAjusteCurva}
+            />
+          </div>
         </div>
         <div className="contenido-secundario-contenido">
           <div style={{width: '640px', height: '320px'}}>
