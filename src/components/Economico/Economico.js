@@ -10,11 +10,11 @@ import { redondear, redondearYAString } from '../../helpers/helpers';
 const Economico = props => {
   const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
   const { macrozona, produccion } = props
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR, factorCrecimiento } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR, factorCrecimiento, ajustesPesos } = produccion
 
   const [mostrarEstructura, setMostrarEstructura] = useState(false)
 
-  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos)
 
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)

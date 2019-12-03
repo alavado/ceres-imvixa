@@ -14,11 +14,11 @@ import AjusteManual from './AjusteManual';
 const Produccion = props => {
 
   const { produccion, macrozona } = props
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, factorCrecimiento } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, factorCrecimiento, ajustesPesos } = produccion
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
   const [mostrandoAjusteManual, setMostrandoAjusteManual] = useState(false)
 
-  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos)
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
   
   const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
@@ -41,7 +41,8 @@ const Produccion = props => {
         {mostrandoAjusteManual ?
         <div className="contenido-contenido">
           <AjusteManual
-            curvaCrecimiento={curvaCrecimiento}
+            setMostrandoAjusteManual={setMostrandoAjusteManual}
+            curvaCrecimiento={obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)}
           />
         </div> :
         <div className="contenido-contenido">
@@ -209,7 +210,7 @@ const Produccion = props => {
                 datasets: [
                   {
                     label: 'Peso final',
-                    data: curvaCrecimiento.filter((peso, i) => (i + 1) % 30 === 0 || i === curvaCrecimiento.length - 1),
+                    data: curvaCrecimiento.filter((peso, i) => i > 0 && i % 30 === 0 || i === curvaCrecimiento.length - 1),
                     backgroundColor: '#E35205',
                     type: 'line',
                     yAxisID: 'EjeYPesoPromedio',

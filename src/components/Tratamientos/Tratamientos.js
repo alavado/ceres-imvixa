@@ -15,14 +15,14 @@ const Tratamientos = props => {
 
   const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
           marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
-  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, factorCrecimiento } = produccion
+  const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, factorCrecimiento, ajustesPesos } = produccion
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState({
     mostrar: false,
     estrategia: ''
   })
   
-  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento)
-  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento)
+  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos)
+  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos)
 
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: medicamentos[0].id,

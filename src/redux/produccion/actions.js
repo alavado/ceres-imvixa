@@ -13,6 +13,8 @@ const produccionActions = {
   FIJAR_MESES_OBJETIVO: 'FIJAR_MESES_OBJETIVO',
   FIJAR_NUMERO_JAULAS: 'FIJAR_NUMERO_JAULAS',
   FIJAR_VOLUMEN_JAULA: 'FIJAR_VOLUMEN_JAULA',
+  FIJAR_PESOS_BASE: 'FIJAR_PESOS_BASE',
+  FIJAR_AJUSTE: 'FIJAR_AJUSTE',
 
   fijarFechaInicio: fecha => ({
     type: produccionActions.FIJAR_FECHA_INICIO,
@@ -69,6 +71,14 @@ const produccionActions = {
   fijarVolumenJaula: numero => ({
     type: produccionActions.FIJAR_VOLUMEN_JAULA,
     payload: numero
+  }),
+  fijarPesosBase: pesos => ({
+    type: produccionActions.FIJAR_PESOS_BASE,
+    payload: pesos
+  }),
+  fijarAjuste: (mes, peso) => ({
+    type: produccionActions.FIJAR_AJUSTE,
+    payload: {mes, peso}
   })
 }
 

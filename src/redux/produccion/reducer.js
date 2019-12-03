@@ -13,7 +13,9 @@ const initialState = {
   pesoObjetivo: 5000,
   mesesObjetivo: 14,
   numeroJaulas: 20,
-  volumenJaula: 1800
+  volumenJaula: 1800,
+  pesosBase: [],
+  ajustesPesos: new Array(30).fill(0)
 }
 
 const produccionReducer = (state = initialState, action) => {
@@ -93,6 +95,19 @@ const produccionReducer = (state = initialState, action) => {
           ...state,
           volumenJaula: action.payload
         }
+    case produccionActions.FIJAR_PESOS_BASE:
+      return {
+        ...state,
+        pesosBase: action.payload
+      }
+    case produccionActions.FIJAR_AJUSTE:
+      const { mes, peso } = action.payload
+      const ajustes = state.ajustesPesos
+      ajustes[mes] = peso
+      return {
+        ...state,
+        ajustesPesos: ajustes
+      }
     default:
       return state
   }
