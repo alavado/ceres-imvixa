@@ -4,12 +4,14 @@ import { saveState, loadState } from '../helpers/localStorage.js'
 import throttle from 'lodash.throttle'
 import centroActions from './centro/actions.js'
 
-const persistedState = loadState()
-// const store = createStore(combineReducers(reducers))
-const store = createStore(
-  combineReducers(reducers),
-  persistedState
-)
+// para release, descomentar linea 9 y comentar de la 10 a la 14
+
+const store = createStore(combineReducers(reducers))
+// const persistedState = loadState()
+// const store = createStore(
+//   combineReducers(reducers),
+//   persistedState
+// )
 
 var ipcRenderer = window.require('electron').ipcRenderer;
 ipcRenderer.on('leer-centros', function (event, centros) {
