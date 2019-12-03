@@ -54,3 +54,17 @@
   justify-content: space-between;
   width: 150px;
 }
+
+#contenedor-acciones-ajuste {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#boton-volver-ajuste {
+  margin-top: 16px;
+}
+
+#boton-volver-ajuste > svg {
+  margin-right: 8px;
+}

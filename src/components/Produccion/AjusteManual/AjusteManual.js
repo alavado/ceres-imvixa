@@ -36,9 +36,9 @@ const AjusteManual = props => {
           />
         </div>
       ))}
-      <div id="contenedor-acciones-tratamientos">
+      <div id="contenedor-acciones-ajuste">
         <button
-          id="boton-volver-tratamientos"
+          id="boton-volver-ajuste"
           onClick={() => props.setMostrandoAjusteManual(false)}
         >
           <FontAwesomeIcon icon={faChevronLeft} size="sm" />
