@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../../helpers/constantes';
 import CuadrosEstrategias from './CuadrosEstrategias';
 
-const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvixa, curvaTradicional}) => {
+const ResumenComparacion = ({produccion, curvaImvixa, curvaTradicional}) => {
 
   const { objetivos, pesoObjetivo, mesesObjetivo } = produccion
 
@@ -48,10 +48,7 @@ const ResumenComparacion = ({state, produccion, tratamientos, modelo, curvaImvix
 };
 
 const mapStateToProps = state => ({
-  state,
-  produccion: state.produccion,
-  modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloCrecimiento,
-  tratamientos: state.tratamientos.tratamientos
+  produccion: state.produccion
 })
 
 export default connect(mapStateToProps)(ResumenComparacion);

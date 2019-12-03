@@ -1,5 +1,6 @@
 #contenedor-ajuste-manual {
   padding-right: 32px;
+  width: 100%;
 }
 
 #contenedor-ajuste-manual h2 {
@@ -30,10 +31,26 @@
 }
 
 #contenedor-ajuste-manual input {
-  height: 10px;
+  height: 9px;
   font-size: .75em;
   width: 50px;
   margin: 0;
   padding: 7px 4px;
   border-radius: 0;
+}
+
+#header-ajuste-manual {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#header-ajuste-manual > button {
+  margin: 0;
+  margin-left: 16px;
+  font-size: .7em;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
 }

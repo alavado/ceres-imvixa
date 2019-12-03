@@ -27,6 +27,4 @@ store.subscribe(throttle(() => {
   saveState(store.getState())
 }, 1000))
 
-//let store = createStore(combineReducers(reducers))
-
 export { store };

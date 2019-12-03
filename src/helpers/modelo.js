@@ -114,12 +114,16 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
   curva = curva.map(v => v * factorCrecimiento)
   if (ajustesPesos.length > 0) {
     for (let mes = 0; mes * 30 < curva.length; mes++) {
-      const base = mes > 0 ? ajustesPesos[mes - 1] : pesoIngreso
+      const base = mes > 0 ? ajustesPesos[mes - 1] : 0
       const delta = (ajustesPesos[mes] - base) / 30
       for (let dia = 30 * mes; dia < 30 * (mes + 1); dia++) {
-        curva[dia] += base + delta * (dia - 30 * mes)
+        if (dia >= curva.length) {
+          break
+        }
+        curva[dia] += (mes > 0 ? base : 0) + delta * (dia - 30 * mes)
       }
     }
   }
+  console.log({curva})
   return curva
 }

@@ -4,7 +4,7 @@ import './AjusteManual.css'
 import { connect } from 'react-redux'
 import produccionActions from '../../../redux/produccion/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faUndo } from '@fortawesome/free-solid-svg-icons'
 
 const AjusteManual = props => {
 
@@ -16,7 +16,13 @@ const AjusteManual = props => {
 
   return (
     <div id="contenedor-ajuste-manual">
-      <h2>Ajuste manual de curva de crecimiento</h2>
+      <div id="header-ajuste-manual">
+        <h2>Ajuste manual de curva de crecimiento</h2>
+        <button title="Restablecer ajuste automático" onClick={() => props.restablecerAjustes()}>
+          <FontAwesomeIcon icon={faUndo} size="sm" />
+          Restablecer
+        </button>
+      </div>
       {pesosBase.map((v, i) => (
         <div className="input-ajuste" key={`ajuste-${i}`}>
           <label htmlFor={`input-ajuste-${i}`}>Peso al final del mes {i + 1}</label> 
@@ -25,6 +31,7 @@ const AjusteManual = props => {
             value={v + props.ajustes[i]}
             suffix={' g'}
             decimalScale={0}
+            style={Math.abs(props.ajustes[i]) > 0.5 ? {backgroundColor: '#9BE198', fontWeight: 'bold'} : null}
             onValueChange={e => props.fijarAjuste(i, v, e.floatValue)}
           />
         </div>
@@ -52,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fijarAjuste: (mes, pesoBase, nuevoPeso) => {
     dispatch(produccionActions.fijarAjuste(mes, nuevoPeso - pesoBase))
+  },
+  restablecerAjustes: () => {
+    dispatch(produccionActions.restablecerAjustes())
   },
 })
 

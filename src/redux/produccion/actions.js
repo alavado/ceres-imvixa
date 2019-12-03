@@ -15,6 +15,7 @@ const produccionActions = {
   FIJAR_VOLUMEN_JAULA: 'FIJAR_VOLUMEN_JAULA',
   FIJAR_PESOS_BASE: 'FIJAR_PESOS_BASE',
   FIJAR_AJUSTE: 'FIJAR_AJUSTE',
+  RESTABLECER_AJUSTES: 'RESTABLECER_AJUSTES',
 
   fijarFechaInicio: fecha => ({
     type: produccionActions.FIJAR_FECHA_INICIO,
@@ -79,6 +80,9 @@ const produccionActions = {
   fijarAjuste: (mes, peso) => ({
     type: produccionActions.FIJAR_AJUSTE,
     payload: {mes, peso}
+  }),
+  restablecerAjustes: () => ({
+    type: produccionActions.RESTABLECER_AJUSTES
   })
 }
 

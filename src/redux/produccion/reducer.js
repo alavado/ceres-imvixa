@@ -108,6 +108,11 @@ const produccionReducer = (state = initialState, action) => {
         ...state,
         ajustesPesos: ajustes
       }
+    case produccionActions.RESTABLECER_AJUSTES:
+      return {
+        ...state,
+        ajustesPesos: new Array(30).fill(0)
+      }
     default:
       return state
   }
