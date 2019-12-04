@@ -67,34 +67,40 @@
   box-sizing: border-box;
 }
 
-.tabla-medicamentos td:nth-child(4) input[type="text"] {
-  width: 120px;
-}
-
 .tabla-medicamentos td span {
   display: inline;
 }
+.tabla-medicamentos td:nth-child(1) {
+  width: 10px;
+}
 
 .tabla-medicamentos td:nth-child(2) {
-  width: 220px;
+  width: 150px;
 }
 
 .tabla-medicamentos td:nth-child(3) {
-  width: 220px;
+  width: 150px;
 }
 
 .tabla-medicamentos td:nth-child(4) {
-  width: 200px;
+  width: 120px;
 }
 
 .tabla-medicamentos td:nth-child(5) {
-  width: 150px;
+  width: 160px;
 }
 
 .tabla-medicamentos td:nth-child(6) {
-  width: 150px;
+  width: 120px;
 }
 
+.tabla-medicamentos td:nth-child(7) {
+  width: 160px;
+}
+
+.tabla-medicamentos td:nth-child(8) {
+  width: 120px;
+}
 #contenedor-fondo-lista-medicamentos {
   display: flex;
   justify-content: flex-start;

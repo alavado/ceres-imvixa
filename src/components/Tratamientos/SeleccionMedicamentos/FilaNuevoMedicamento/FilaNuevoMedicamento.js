@@ -6,6 +6,7 @@ import { FARMACO_APLICACION_BAÑO } from '../../../../helpers/constantes';
 const FilaNuevoMedicamento = props => {
 
   const {nuevoMedicamento, setNuevoMedicamento, formaFarmaceutica} = props
+  const esBaño = formaFarmaceutica === FARMACO_APLICACION_BAÑO
 
   return (
     <tr id="fila-nuevo-medicamento">
@@ -14,14 +15,23 @@ const FilaNuevoMedicamento = props => {
         <input type="text" onChange={e => setNuevoMedicamento({...nuevoMedicamento, nombre: e.target.value})} />
       </td>
       <td>
-        <input type="text" onChange={e => setNuevoMedicamento({...nuevoMedicamento, principioActivo: e.target.value})} />
-      </td>
-      <td>
         <CampoNumerico
           onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, costoUnitario: e.floatValue})}
           suffix={formaFarmaceutica === FARMACO_APLICACION_BAÑO ? ' USD/lt' : ' USD/kg'}
         />
       </td>
+      <td>
+        <input type="text" onChange={e => setNuevoMedicamento({...nuevoMedicamento, principioActivo: e.target.value})} />
+      </td>
+      { esBaño ?
+        '':
+        <td>
+          <CampoNumerico
+            suffix={' %'}
+            onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, presentacion: e.floatValue})}
+          />
+        </td>
+      }
       <td>
         <CampoNumerico
           onValueChange={e => {
@@ -30,13 +40,13 @@ const FilaNuevoMedicamento = props => {
             }
             return setNuevoMedicamento({...nuevoMedicamento, dosis: e.floatValue})
             }}
-          suffix={' kg'}
+          suffix={esBaño ? ' lt' : ' mg/kg'}
         />
       </td>
       <td>
         <CampoNumerico
           onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, costoOperacional: e.floatValue})}
-          suffix={' USD'}
+          suffix={esBaño ? ' USD' : ' USD/ton'}
         />
       </td>
       <td>

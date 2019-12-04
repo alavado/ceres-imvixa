@@ -20,7 +20,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1, // cuantas veces seguidas se repite el tratamiento
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 50
     },
     {
       id: 2,
@@ -39,7 +40,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 4,
-      factorMetodo: 0.8
+      factorMetodo: 0.8,
+      presentacion: 0.2
     },
     {
       id: 3,
@@ -58,7 +60,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 1000
     },
     {
       id: 4,
@@ -77,7 +80,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 0,
-      factorMetodo: 0.2
+      factorMetodo: 0.2,
+      presentacion: 50
     },
     {
       id: 5,
@@ -96,7 +100,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 4,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 5
     },
     {
       id: 6,
@@ -108,7 +113,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 8000,
       costoOperacional: 0,
-      dosis: 3.5, // 0.35 mg/kg al 10% 8 (g/kg)
+      dosis: 35, // mg/kg
       duracion: 34,
       mortalidad: 0,
       color: '#EF7B10',
@@ -116,6 +121,7 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 4,
       factorMetodo: 0.8,
+      presentacion: 10
     },
     {
       id: 7,
@@ -134,7 +140,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 10000
     },
     {
       id: 8,
@@ -143,7 +150,7 @@ const initialState = {
       formaFarmaceutica: FARMACO_APLICACION_ORAL,
       diasDeAdministracion: 1,
       principioActivo: 'Emamectina',
-      unidad: '12',
+      unidad: 'kg',
       costoUnitario: 180,
       costoOperacional: 0,
       dosis: 500, // (mg/kg)
@@ -153,7 +160,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 4,
-      factorMetodo: 0.8
+      factorMetodo: 0.8,
+      presentacion: 0.2
     },
     {
       id: 9,
@@ -172,7 +180,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 1
     },
     {
       id: 10,
@@ -191,7 +200,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 50
     },
     {
       id: 11,
@@ -210,7 +220,8 @@ const initialState = {
       activo: false,
       aplicaciones: 1,
       factorFarmaco: 6,
-      factorMetodo: 1
+      factorMetodo: 1,
+      presentacion: 50
     }
   ],
   tratamientos: {
