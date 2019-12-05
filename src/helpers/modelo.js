@@ -70,6 +70,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
   let tratamientosAplicados = {}
   let uta = temperaturasMensuales[fechaCiclo.month() + 1] * 7
   let diaFinal = objetivoFecha * 30
+  const DIAS_AYUNO_BAÑO_ALPHA_FLUX = 4
   if (tiposObjetivos.includes(OBJETIVO_PESO) && tiposObjetivos.includes(OBJETIVO_FECHA)) {
     for (let dia = 2; dia <= MAXIMOS_DIAS_CICLO && dia <= diaFinal; dia++) {
       semana += 1 / 7.0
@@ -78,7 +79,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
         diasAyunoRestante = 3
         tratamientosAplicados[`${Math.ceil(semana)}`] = 1
-        diaFinal += DIAS_AYUNO_BAÑO
+        diaFinal += tratamientos[`${Math.ceil(semana)}`].idMedicamento === 7 ? DIAS_AYUNO_BAÑO_ALPHA_FLUX : DIAS_AYUNO_BAÑO
       }
       if (diasAyunoRestante <= 0) {
         pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta) / 7.0
@@ -97,7 +98,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       fechaCiclo.add(1, 'days')
       uta += temperaturasMensuales[fechaCiclo.month() + 1]
       if (`${Math.ceil(semana)}` in tratamientos && !(`${Math.ceil(semana)}` in tratamientosAplicados)) {
-        diasAyunoRestante = DIAS_AYUNO_BAÑO
+        diasAyunoRestante = tratamientos[`${Math.ceil(semana)}`].idMedicamento === 7 ? DIAS_AYUNO_BAÑO_ALPHA_FLUX : DIAS_AYUNO_BAÑO
         tratamientosAplicados[`${Math.ceil(semana)}`] = 1
         //diaFinal += DIAS_AYUNO_BAÑO
       }

@@ -114,7 +114,7 @@ const initialState = {
       costoUnitario: 8000,
       costoOperacional: 0,
       dosis: 35, // mg/kg
-      duracion: 34,
+      duracion: 28,
       mortalidad: 0,
       color: '#EF7B10',
       activo: true,
@@ -135,7 +135,7 @@ const initialState = {
       dosisBaño: 20,
       cantidadPorJaula: 10,
       duracion: 16,
-      mortalidad: 0.06,
+      mortalidad: 0.12,
       color: '#000066',
       activo: false,
       aplicaciones: 1,
@@ -286,18 +286,18 @@ const tratamientosReducer = (state = initialState, action) => {
     case tratamientosActions.EDITAR_MEDICAMENTO: {
       const { id, propiedad, valor } = action.payload
       const esBaño = state.medicamentos.find(m => m.id === id).formaFarmaceutica === FARMACO_APLICACION_BAÑO
-      if (propiedad === 'costoOperacional') {
-        return {
-          ...state,
-          medicamentos: state.medicamentos.map(m => esBaño && (m.formaFarmaceutica === FARMACO_APLICACION_BAÑO) ? {
-            ...m,
-            costoOperacional: valor
-          } : m.id !== id ? m : {
-            ...m,
-            costoOperacional: valor
-          })
-        }
-      }
+      // if (propiedad === 'costoOperacional') {
+      //   return {
+      //     ...state,
+      //     medicamentos: state.medicamentos.map(m => esBaño && (m.formaFarmaceutica === FARMACO_APLICACION_BAÑO) ? {
+      //       ...m,
+      //       costoOperacional: valor
+      //     } : m.id !== id ? m : {
+      //       ...m,
+      //       costoOperacional: valor
+      //     })
+      //   }
+      // }
       return {
         ...state,
         medicamentos: [...state.medicamentos.filter(m => m.id !== id),

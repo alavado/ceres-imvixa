@@ -4,7 +4,7 @@ import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes'
 const initialState = {
   fechaInicio: `${new Date().toISOString().slice(0,10)}`,
   numeroSmolts: 1E6,
-  pesoSmolt: 170,
+  pesoSmolt: 150,
   mortalidad: 10,
   factorCrecimiento: 1,
   bFCR: 1.4,
