@@ -194,7 +194,7 @@ const Produccion = props => {
         <div className="titulo-contenido-secundario">
           <h1>Proyección</h1>
           <div className="icono-accion-secundaria" onClick={() => setMostrandoAjusteManual(!mostrandoAjusteManual)}>
-            <span>Ajuste manual</span>
+            <span>AJUSTE MANUAL PESO MENSUAL PECES</span>
             <FontAwesomeIcon
               color="white"
               icon={IconoAjusteCurva}

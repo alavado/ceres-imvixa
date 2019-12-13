@@ -132,10 +132,18 @@ button {
 }
 
 .icono-accion-secundaria {
-  margin-right: 24px;
+  margin-right: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  background-color: #0078BF;
+  padding: 8px 16px;
+  border-radius: 16px;
+  transition: background-color .25s ease-in-out;
+}
+
+.icono-accion-secundaria:hover {
+  background-color: rgb(34, 133, 190);
 }
 
 .icono-accion-secundaria a {

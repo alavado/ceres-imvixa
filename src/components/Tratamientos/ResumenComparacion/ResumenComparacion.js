@@ -18,7 +18,7 @@ const ResumenComparacion = ({produccion, curvaImvixa, curvaTradicional}) => {
         <h1>Comparación de estrategias</h1>
         <div className="icono-accion-secundaria">
           <Link to="/reporte">
-            <span>Imprimir reporte</span>
+            <span>IMPRIMIR REPORTE</span>
               <FontAwesomeIcon
                 color="white"
                 icon={IconoReporte}
