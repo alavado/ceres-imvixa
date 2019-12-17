@@ -44,8 +44,8 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                     <th>Costo unitario producto comercial</th>
                     <th>Principio activo</th>
                     {formaFarmaceutica === FARMACO_APLICACION_ORAL && <th>Presentación (% principio activo)</th>}
-                    {formaFarmaceutica === FARMACO_APLICACION_BAÑO && <th>Volumen de jaula en m&sup3;</th>}
-                    <th>{formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'Dosis producto comercial total por kg de peso' : <>Dosis producto comercial por m&sup3; de jaula</>}</th>
+                    {formaFarmaceutica === FARMACO_APLICACION_BAÑO && <th>Volumen de agua para baño</th>}
+                    <th>{formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'Dosis producto comercial total por kg de peso' : 'Dosis producto comercial'}</th>
                     <th>Costo operacional {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'por mezcla de alimento' : 'por baño'}</th>
                     <th>Mortalidad por jaula</th>
                   </tr>

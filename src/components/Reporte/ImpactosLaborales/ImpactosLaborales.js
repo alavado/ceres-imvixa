@@ -10,7 +10,7 @@ import './ImpactosLaborales.css'
 const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa}) => {
 
   const produccion = useSelector(state => state.produccion)
-  const { numeroJaulas } = produccion
+  const { numeroJaulas, volumenJaula } = produccion
   const tratamientosSt = useSelector(state => state.tratamientos)
   const { medicamentos, tratamientos } = tratamientosSt
 
@@ -91,7 +91,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
           </tr>
         </thead>
         <tbody>
-          {calcularCantidadDeProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa)).map((v, i) => {
+          {calcularCantidadDeProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa), volumenJaula).map((v, i) => {
             let icono = ''
             const diferencia = v.tradicional * numeroJaulas - v.imvixa * numeroJaulas
             if (diferencia > 0) {
@@ -100,6 +100,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
             else if (diferencia < 0) {
               icono = <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: 4, color: 'red' }} />
             }
+            console.log({trad: v.tradicional})
             return (<tr key={`vertidos-${i}`}>
               <td>{v.principioActivo}</td>
               <td>{redondearYAString(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
