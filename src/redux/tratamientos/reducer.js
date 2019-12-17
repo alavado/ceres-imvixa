@@ -14,7 +14,7 @@ const initialState = {
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.002,
       unidadDosis: 'mg/m3',
-      cantidadPorJaula: 0.72,
+      cantidadPorJaula: 200,
       duracion: 4,
       mortalidad: 0.06,
       color: '#EF5350',
@@ -34,7 +34,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 180,
       costoOperacional: 0,
-      dosis: 0.05, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
+      dosis: 0.5, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
       unidadDosis: 'mg/kg',
       duracion: 8,
       mortalidad: 0,
@@ -55,8 +55,8 @@ const initialState = {
       costoUnitario: 960,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.0003,
-      unidadDosis: 'mg/m3',
-      cantidadPorJaula: 1.08,
+      unidadDosis: 'ml/m3',
+      cantidadPorJaula: 0.3,
       duracion: 3,
       mortalidad: 0.06,
       color: '#6D4C41',
@@ -77,7 +77,7 @@ const initialState = {
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 1250,
       unidadDosis: 'mg/lt',
-      cantidadPorJaula: 1350,
+      cantidadPorJaula: 750,
       duracion: 4,
       mortalidad: 0.06,
       color: '#1E88E5',
@@ -117,7 +117,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 8000,
       costoOperacional: 0,
-      dosis: 35, // mg/kg
+      dosis: 350, // mg/kg
       unidadDosis: 'mg/kg',
       duracion: 28,
       mortalidad: 0,
@@ -138,7 +138,7 @@ const initialState = {
       costoUnitario: 700,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 20,
-      unidadDosis: 'mg/lt',
+      unidadDosis: 'ml/lt',
       cantidadPorJaula: 10,
       duracion: 16,
       mortalidad: 0.12,
@@ -149,27 +149,27 @@ const initialState = {
       factorMetodo: 1,
       presentacion: 10000
     },
-    {
-      id: 8,
-      nombre: 'Emamectina 0,2%',
-      empresa: 'Intervet Chile Ltda.',
-      formaFarmaceutica: FARMACO_APLICACION_ORAL,
-      diasDeAdministracion: 1,
-      principioActivo: 'Emamectina',
-      unidad: 'kg',
-      costoUnitario: 180,
-      costoOperacional: 0,
-      dosis: 0.05, // (mg/kg)
-      unidadDosis: 'mg/kg',
-      duracion: 8,
-      mortalidad: 0,
-      color: '#BA68C8',
-      activo: false,
-      aplicaciones: 1,
-      factorFarmaco: 4,
-      factorMetodo: 0.8,
-      presentacion: 0.2
-    },
+    // {
+    //   id: 8,
+    //   nombre: 'Emamectina 0,2%',
+    //   empresa: 'Intervet Chile Ltda.',
+    //   formaFarmaceutica: FARMACO_APLICACION_ORAL,
+    //   diasDeAdministracion: 1,
+    //   principioActivo: 'Emamectina',
+    //   unidad: 'kg',
+    //   costoUnitario: 180,
+    //   costoOperacional: 0,
+    //   dosis: 0.05, // (mg/kg)
+    //   unidadDosis: 'mg/kg',
+    //   duracion: 8,
+    //   mortalidad: 0,
+    //   color: '#BA68C8',
+    //   activo: false,
+    //   aplicaciones: 1,
+    //   factorFarmaco: 4,
+    //   factorMetodo: 0.8,
+    //   presentacion: 0.2
+    // },
     {
       id: 9,
       nombre: 'Deltafav',
@@ -180,8 +180,8 @@ const initialState = {
       costoUnitario: 500,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.0003,
-      unidadDosis: 'mg/m3',
-      cantidadPorJaula: 1.08,
+      unidadDosis: 'ml/m3',
+      cantidadPorJaula: 0.3,
       duracion: 3,
       mortalidad: 0.06,
       color: '#6D4C41',
@@ -202,7 +202,7 @@ const initialState = {
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.0002,
       unidadDosis: 'mg/m3',
-      cantidadPorJaula: 0.72,
+      cantidadPorJaula: 200,
       duracion: 4,
       mortalidad: 0.06,
       color: '#EF5350',
@@ -223,7 +223,7 @@ const initialState = {
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       dosisBaño: 0.0002,
       unidadDosis: 'mg/m3',
-      cantidadPorJaula: 0.72,
+      cantidadPorJaula: 200,
       duracion: 4,
       mortalidad: 0.06,
       color: '#EF5350',
@@ -295,19 +295,6 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     case tratamientosActions.EDITAR_MEDICAMENTO: {
       const { id, propiedad, valor } = action.payload
-      const esBaño = state.medicamentos.find(m => m.id === id).formaFarmaceutica === FARMACO_APLICACION_BAÑO
-      // if (propiedad === 'costoOperacional') {
-      //   return {
-      //     ...state,
-      //     medicamentos: state.medicamentos.map(m => esBaño && (m.formaFarmaceutica === FARMACO_APLICACION_BAÑO) ? {
-      //       ...m,
-      //       costoOperacional: valor
-      //     } : m.id !== id ? m : {
-      //       ...m,
-      //       costoOperacional: valor
-      //     })
-      //   }
-      // }
       return {
         ...state,
         medicamentos: [...state.medicamentos.filter(m => m.id !== id),

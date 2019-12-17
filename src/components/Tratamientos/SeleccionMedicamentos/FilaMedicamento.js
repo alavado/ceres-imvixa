@@ -4,7 +4,7 @@ import CampoNumerico from '../../Produccion/CampoNumerico';
 import { FARMACO_APLICACION_BAÑO } from '../../../helpers/constantes';
 import tratamientosActions from '../../../redux/tratamientos/actions';
 
-const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamentos}) => {
+const FilaMedicamento = ({id, volumenJaulaOriginal, activarMedicamento, editarMedicamento, medicamentos}) => {
 
   const m = medicamentos.find(m => m.id === id)
   const esBaño = m.formaFarmaceutica === FARMACO_APLICACION_BAÑO
@@ -31,13 +31,21 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
         />
       }</td>
       <td>{m.principioActivo}</td>
-      { esBaño ?
-        '':
+      {!esBaño &&
         <td>{m.activo &&
           <CampoNumerico
             value={m.presentacion}
             suffix={' %'}
             onValueChange={e => editarMedicamento(id, 'presentacion', e.floatValue)}
+          />}
+        </td>
+      }
+      { esBaño &&
+        <td>{m.activo &&
+          <CampoNumerico
+            value={m.volumen || volumenJaulaOriginal}
+            suffix={' m3'}
+            onValueChange={e => editarMedicamento(id, 'volumen', e.floatValue)}
           />
         }</td>
       }
@@ -48,15 +56,6 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
           onValueChange={e => editarMedicamento(id, esBaño ? 'cantidadPorJaula' : 'dosis', e.floatValue)}
         />
       }</td>
-      { esBaño &&
-        <td>{m.activo &&
-          <CampoNumerico
-            value={13500}
-            suffix={' m3'}
-            onValueChange={e => true}
-          />
-        }</td>
-      }
       <td>{m.activo &&
         <CampoNumerico
           value={m.costoOperacional}
@@ -77,6 +76,7 @@ const FilaMedicamento = ({id, activarMedicamento, editarMedicamento, medicamento
 
 const mapStateToProps = state => ({
   medicamentos: state.tratamientos.medicamentos,
+  volumenJaulaOriginal: state.produccion.volumenJaula
 })
 
 const mapDispatchToProps = dispatch => ({
