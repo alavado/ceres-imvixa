@@ -13,7 +13,7 @@ const initialState = {
   pesoObjetivo: 5000,
   mesesObjetivo: 14,
   numeroJaulas: 20,
-  volumenJaula: 1800,
+  volumenJaula: 13500,
   pesosBase: [],
   ajustesPesos: new Array(30).fill(0)
 }

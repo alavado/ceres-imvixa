@@ -34,6 +34,7 @@ const initialState = {
       costoUnitario: 180,
       costoOperacional: 0,
       dosis: 0.05, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
+      unidadDosis: 'mg/kg',
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
@@ -114,6 +115,7 @@ const initialState = {
       costoUnitario: 8000,
       costoOperacional: 0,
       dosis: 35, // mg/kg
+      unidadDosis: 'mg/kg',
       duracion: 28,
       mortalidad: 0,
       color: '#EF7B10',
@@ -154,6 +156,7 @@ const initialState = {
       costoUnitario: 180,
       costoOperacional: 0,
       dosis: 0.05, // (mg/kg)
+      unidadDosis: 'mg/kg',
       duracion: 8,
       mortalidad: 0,
       color: '#BA68C8',
