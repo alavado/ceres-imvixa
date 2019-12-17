@@ -43,7 +43,7 @@ const FilaMedicamento = ({id, volumenJaulaOriginal, activarMedicamento, editarMe
       { esBaño &&
         <td>{m.activo &&
           <CampoNumerico
-            value={m.volumen || volumenJaulaOriginal}
+            value={m.volumen === undefined ? volumenJaulaOriginal : m.volumen}
             suffix={' m3'}
             onValueChange={e => editarMedicamento(id, 'volumen', e.floatValue)}
           />
