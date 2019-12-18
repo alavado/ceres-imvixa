@@ -256,7 +256,7 @@ const Tratamientos = props => {
                     <button id="boton-agregar-tratamiento" onClick={agregarTratamiento}>Aplicar</button>
                     <input
                       id="numero-aplicaciones"
-                      type="number" min="1" max="2" step="1"
+                      type="number" min="1" max="5" step="1"
                       value={nuevoTratamiento.aplicaciones}
                       onChange={e => setNuevoTratamiento({...nuevoTratamiento, aplicaciones: Number(e.target.value)})}
                     />

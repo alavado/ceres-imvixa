@@ -34,7 +34,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 180,
       costoOperacional: 0,
-      dosis: 0.5, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
+      dosis: 175, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
       unidadDosis: 'mg/kg',
       duracion: 8,
       mortalidad: 0,
