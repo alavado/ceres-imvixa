@@ -38,7 +38,7 @@ const Anexos = props => {
       1 : costoTotalTradicional * estructuraCostos['depreciación'] / 100,
       2 : costoTotalImvixa * estructuraCostos['depreciación'] / 100
     },
-    'Salud' : {
+    'Sanidad' : {
       1 : costoTotalTradicional * estructuraCostos['salud'] / 100,
       2 : costoTotalImvixa * estructuraCostos['salud'] / 100
     },

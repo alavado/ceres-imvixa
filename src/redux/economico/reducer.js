@@ -3,14 +3,14 @@ import economicoActions from './actions'
 const initialState = {
   costoAlimento : 1.4,
   estructuraCostos: {
-    alimento: 57,
-    smolts: 16,
-    personal: 3,
-    operaciones: 8.6,
+    alimento: 63,
+    smolts: 13.6,
+    personal: 1,
+    operaciones: 15,
     depreciación: 1.4,
-    salud: 10.0,
+    salud: 4.0,
     seguros: 2,
-    otros: 2
+    otros: 0
   },
   valorKiloProducido : 7.6,
   costoSmolt: 2.15,

@@ -79,7 +79,8 @@ const Economico = props => {
               />
             </>
           }
-          {!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>}
+          {//!mostrarEstructura && <button onClick={() => setMostrarEstructura(true)}>Estructura completa</button>
+          }
           {mostrarEstructura &&
             <>
               <h6 id="titulo-tabla-estructura-costos">Otros costos</h6>
