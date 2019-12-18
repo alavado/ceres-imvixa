@@ -8,7 +8,7 @@ import { faChevronLeft, faUndo } from '@fortawesome/free-solid-svg-icons'
 
 const AjusteManual = props => {
 
-  const pesosBase = props.curvaCrecimiento.filter((v, i) => i > 0 && i % 30 === 0)
+  const pesosBase = props.curvaCrecimiento.filter((v, i) => i > 0 && (i % 30 === 0 || i === props.curvaCrecimiento.length - 1))
 
   useEffect(() => {
     props.fijarPesosBase(pesosBase)
