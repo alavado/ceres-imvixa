@@ -23,15 +23,18 @@ const FilaNuevoMedicamento = props => {
       <td>
         <input type="text" onChange={e => setNuevoMedicamento({...nuevoMedicamento, principioActivo: e.target.value})} />
       </td>
-      { esBaño ?
-        '':
-        <td>
+      <td>
+        { esBaño ?
+          <CampoNumerico
+            onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, volumen: e.floatValue})}
+            suffix={' m3'}
+          /> :
           <CampoNumerico
             suffix={' %'}
             onValueChange={e => setNuevoMedicamento({...nuevoMedicamento, presentacion: e.floatValue})}
           />
-        </td>
-      }
+        }
+      </td>
       <td>
         <CampoNumerico
           onValueChange={e => {

@@ -14,9 +14,9 @@ const tratamientosActions = {
     type: tratamientosActions.ELIMINAR_TRATAMIENTO,
     payload: { estrategia, semana }
   }),
-  agregarMedicamento: (nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula) => ({
+  agregarMedicamento: medicamento => ({
     type: tratamientosActions.AGREGAR_MEDICAMENTO,
-    payload: { nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula }
+    payload: medicamento
   }),
   editarMedicamento: (id, propiedad, valor, formaFarmaceutica) => ({
     type: tratamientosActions.EDITAR_MEDICAMENTO,

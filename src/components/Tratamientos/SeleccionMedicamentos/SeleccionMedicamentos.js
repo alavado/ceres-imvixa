@@ -107,11 +107,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   activarMedicamento: (id, valor) => dispatch(tratamientosActions.editarMedicamento(id, 'activo', valor)),
   marcarMedicamentosFueronSeleccionados: valor => dispatch(tratamientosActions.marcarMedicamentosFueronSeleccionados(valor)),
-  agregarMedicamento: medicamento => {
-    const { nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula } = medicamento
-    console.log(medicamento);
-    dispatch(tratamientosActions.agregarMedicamento(nombre, formaFarmaceutica, principioActivo, costoUnitario, costoOperacional, cantidadPorJaula))
-  }
+  agregarMedicamento: medicamento => dispatch(tratamientosActions.agregarMedicamento(medicamento))
 })
 
 // certificacion parametro disp a pagar
