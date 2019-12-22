@@ -241,9 +241,10 @@
 #anexos {
   page-break-before: always;
 }
+
 .tabla-reporte {
   margin: 18px auto;
-  width: 70%;
+  width: 80%;
   text-align: center;
 }
 

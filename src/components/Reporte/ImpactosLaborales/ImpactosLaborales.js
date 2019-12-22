@@ -101,7 +101,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
               icono = <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: 4, color: 'red' }} />
             }
             console.log({trad: v.tradicional})
-            return (<tr key={`vertidos-${i}`}>
+            return (<tr key={`vertidos-${i}`} className="fila-vertidos">
               <td>{v.principioActivo}</td>
               <td>{redondearYAString(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
               <td>{redondearYAString(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>

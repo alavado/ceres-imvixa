@@ -125,6 +125,5 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
       }
     }
   }
-  console.log({curva})
-  return curva
+  return curva.filter(v => !tiposObjetivos.includes(OBJETIVO_PESO) || (tiposObjetivos.includes(OBJETIVO_PESO) && v < objetivoPeso))
 }
