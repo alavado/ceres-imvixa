@@ -316,17 +316,27 @@ const tratamientosReducer = (state = initialState, action) => {
       return state
     case tratamientosActions.REPLICAR_ESTRATEGIA: {
       const { base, objetivo, semanas } = action.payload
-      const duracionComidaBase = state.medicamentos.find(m => m.id === state.tratamientos[base][0].idMedicamento).duracion
+      const semanaPrimerBaño = Object.keys(state.tratamientos[base]).find(semana => {
+        const idMedicamento = state.tratamientos[base][semana].idMedicamento
+        const medicamento = state.medicamentos.find(({ id }) => id === idMedicamento)
+        return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
+      })
+      const duracionTratamientoBase = Number(semanaPrimerBaño)
       const duracionComidaObjetivo = state.medicamentos.find(m => m.id === state.tratamientos[objetivo][0].idMedicamento).duracion
+      const semanasTratamientosOralesObjetivo = Object.keys(state.tratamientos[objetivo]).filter(semana => {
+        const idMedicamento = state.tratamientos[objetivo][semana].idMedicamento
+        const medicamento = state.medicamentos.find(({ id }) => id === idMedicamento)
+        return medicamento.formaFarmaceutica === FARMACO_APLICACION_ORAL
+      })
       return {
         ...state,
         tratamientos: {
           ...state.tratamientos,
           [objetivo]: {
-            0: state.tratamientos[objetivo][0],
-            ...Object.keys(state.tratamientos[base])
-              .filter(semana => Number(semana) > 0 && (Number(semana) + duracionComidaObjetivo - duracionComidaBase) <= semanas)
-              .reduce((obj, semana) => ({...obj, [Number(semana) + duracionComidaObjetivo - duracionComidaBase]: state.tratamientos[base][semana]}), {})
+            ...semanasTratamientosOralesObjetivo.reduce((obj, semana) => ({...obj, [semana]: state.tratamientos[objetivo][semana]}), {}),
+            ...Object.keys(state.tratamientos[base]) 
+              .filter(semana => Number(semana) >= duracionTratamientoBase && (Number(semana) + duracionComidaObjetivo - duracionTratamientoBase) <= semanas)
+              .reduce((obj, semana) => ({...obj, [Number(semana) + duracionComidaObjetivo - duracionTratamientoBase]: state.tratamientos[base][semana]}), {})
           }
         }
       }
