@@ -268,7 +268,7 @@ const Tratamientos = props => {
                     </button>
                   }
                 </div>
-                {nuevoTratamiento.semana === medicamentoImvixa.duracion && nuevoTratamiento.estrategia === 'imvixa' &&
+                {nuevoTratamiento.estrategia === 'imvixa' &&
                   <button id="boton-agregar-tratamiento" onClick={replicarEstrategiaTradicional}>Replicar estr. tradicional</button>
                 }
               </div>

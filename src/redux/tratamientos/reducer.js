@@ -322,7 +322,7 @@ const tratamientosReducer = (state = initialState, action) => {
         return medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO
       })
       const duracionTratamientoBase = Number(semanaPrimerBaño)
-      const duracionComidaObjetivo = state.medicamentos.find(m => m.id === state.tratamientos[objetivo][0].idMedicamento).duracion
+      const duracionComidaObjetivo = (state.tratamientos[objetivo][0] && state.medicamentos.find(m => m.id === state.tratamientos[objetivo][0].idMedicamento).duracion) || 1
       const semanasTratamientosOralesObjetivo = Object.keys(state.tratamientos[objetivo]).filter(semana => {
         const idMedicamento = state.tratamientos[objetivo][semana].idMedicamento
         const medicamento = state.medicamentos.find(({ id }) => id === idMedicamento)

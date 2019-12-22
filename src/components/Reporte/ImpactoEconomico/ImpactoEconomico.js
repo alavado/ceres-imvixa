@@ -98,7 +98,7 @@ const ImpactoEconomico = props => {
           const round = usarDolares ? (i < 4 ? 3 : 3) : 0
           return (
             <div key={`lengueta-tradiconal-${i}`}>
-              <div className="lengueta" style={{
+              <div className="lengueta imvixa" style={{
                 width: anchoLengueta
               }}></div>
               <div className="valor">
@@ -108,7 +108,7 @@ const ImpactoEconomico = props => {
           )
         })}
         <div>
-          <div className="lengueta" style={{
+          <div className="lengueta imvixa-grande" style={{
             width: anchoMaximoLenguetaColoreada
             }}></div>
             <div className="valor">
