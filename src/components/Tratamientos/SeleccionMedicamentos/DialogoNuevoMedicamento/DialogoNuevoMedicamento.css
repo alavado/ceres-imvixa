@@ -56,3 +56,23 @@
 .dialogo-oculto {
   opacity: 0;
 }
+
+.input-con-unidades {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.input-con-unidades .label-radio {
+  font-size: .8em;
+}
+
+.contenedor-radios {
+  display: flex;
+  flex-direction: row;
+}
+
+.contenedor-radios input {
+  min-width: 20px;
+  cursor: pointer;
+}

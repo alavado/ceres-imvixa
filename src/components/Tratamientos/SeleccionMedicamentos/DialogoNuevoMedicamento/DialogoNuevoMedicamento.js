@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './DialogoNuevoMedicamento.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tratamientosActions from '../../../../redux/tratamientos/actions'
 import CampoNumerico from '../../../Produccion/CampoNumerico'
 import { COSTO_OPERACIONAL_BAÑO, FARMACO_APLICACION_BAÑO } from '../../../../helpers/constantes'
@@ -91,6 +91,9 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
 }
 
 const CamposBano = ({ medicamento, setMedicamento }) => {
+
+  const volumenJaula = useSelector(state => state.produccion.volumenJaula)
+
   return (
     <div>
       <h2>Nuevo medicamento de aplicación externa</h2>
@@ -99,23 +102,27 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
       />
+      <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
       <div className="input-con-unidades">
-        <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
         <CampoNumerico
           id="nuevo-medicamento-costo"
           onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
         />
-        <input
-          type="radio"
-          name="unidades-costo"
-          defaultChecked={true}
-          onChange={e => setMedicamento({ ...medicamento, unidad: 'lt', unidadDosis: 'ml/m3' })}
-        />USD/lt
-        <input
-          type="radio"
-          name="unidades-costo"
-          onChange={e => setMedicamento({ ...medicamento, unidad: 'kg', unidadDosis: 'mg/m3' })}
-        />USD/kg
+        <div className="contenedor-radios">
+          <input
+            type="radio"
+            name="unidades-costo"
+            id="unidades-costo-lt"
+            defaultChecked={true}
+            onChange={e => setMedicamento({ ...medicamento, unidad: 'lt', unidadDosis: 'ml/m3' })}
+          /><label for="unidades-costo-lt" className="label-radio">USD/lt</label>
+          <input
+            type="radio"
+            name="unidades-costo"
+            id="unidades-costo-kg"
+            onChange={e => setMedicamento({ ...medicamento, unidad: 'kg', unidadDosis: 'mg/m3' })}
+          /><label for="unidades-costo-kg" className="label-radio">USD/kg</label>
+        </div>
       </div>
       <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
       <input
@@ -125,11 +132,14 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
       <label htmlFor="nuevo-medicamento-volumen">Volumen de agua por baño</label>
       <CampoNumerico
         id="nuevo-medicamento-volumen"
+        defaultValue={volumenJaula}
+        suffix=" m3"
         onValueChange={e => setMedicamento({ ...medicamento, volumen: e.floatValue })}
       />
       <label htmlFor="nuevo-medicamento-dosis">Cantidad por jaula</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
+        suffix={` ${medicamento.unidadDosis}`}
         onValueChange={e => setMedicamento({ ...medicamento, cantidadPorJaula: e.floatValue })}
       />
     </div>
