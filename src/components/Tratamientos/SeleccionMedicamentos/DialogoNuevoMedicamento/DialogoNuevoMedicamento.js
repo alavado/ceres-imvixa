@@ -14,7 +14,7 @@ const DialogoNuevoMedicamento = props => {
     principioActivo: 'Deltametrina',
     unidad: 'lt',
     costoUnitario: 500,
-    costoOperacional: 0,
+    costoOperacional: COSTO_OPERACIONAL_BAÑO,
     dosisBaño: 0.0003,
     unidadDosis: 'ml/m3',
     cantidadPorJaula: 0.3,
@@ -29,34 +29,75 @@ const DialogoNuevoMedicamento = props => {
   return (
     <div>
       <button onClick={props.ocultar}>X</button>
+      {props.formaFarmaceutica === FARMACO_APLICACION_BAÑO ?
+        <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
+        <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
+      }
+      <button onClick={agregarMedicamento}>Agregar</button>
+    </div>
+  )
+}
+
+const CamposOral = ({ medicamento, setMedicamento }) => {
+  return (
+    <div>
       <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
       <input
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
-      />
-      <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
-      <input
-        id="nuevo-medicamento-principio"
-        onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
       />
       <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
       <CampoNumerico
         id="nuevo-medicamento-costo"
         onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
       />
+      <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
+      <input
+        id="nuevo-medicamento-principio"
+        onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
+      />
+      <label htmlFor="nuevo-medicamento-dosis">Presentación</label>
+      <CampoNumerico
+        id="nuevo-medicamento-dosis"
+        onValueChange={e => setMedicamento({ ...medicamento, presentacion: e.floatValue })}
+      />
       <label htmlFor="nuevo-medicamento-dosis">Dosis</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
-        onValueChange={e => {
-          if (props.formaFarmaceutica === FARMACO_APLICACION_BAÑO) {
-            setMedicamento({ ...medicamento, cantidadPorJaula: e.floatValue })
-          }
-          else {
-            setMedicamento({ ...medicamento, dosis: e.floatValue })
-          }
-        }}
+        onValueChange={e => setMedicamento({ ...medicamento, dosis: e.floatValue })}
       />
-      <button onClick={agregarMedicamento}>Agregar</button>
+    </div>
+  )
+}
+
+const CamposBano = ({ medicamento, setMedicamento }) => {
+  return (
+    <div>
+      <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
+      <input
+        id="nuevo-medicamento-nombre"
+        onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
+      />
+      <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
+      <CampoNumerico
+        id="nuevo-medicamento-costo"
+        onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
+      />
+      <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
+      <input
+        id="nuevo-medicamento-principio"
+        onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
+      />
+      <label htmlFor="nuevo-medicamento-volumen">Volumen de agua por baño</label>
+      <CampoNumerico
+        id="nuevo-medicamento-volumen"
+        onValueChange={e => setMedicamento({ ...medicamento, volumen: e.floatValue })}
+      />
+      <label htmlFor="nuevo-medicamento-dosis">Cantidad por jaula</label>
+      <CampoNumerico
+        id="nuevo-medicamento-dosis"
+        onValueChange={e => setMedicamento({ ...medicamento, cantidadPorJaula: e.floatValue })}
+      />
     </div>
   )
 }

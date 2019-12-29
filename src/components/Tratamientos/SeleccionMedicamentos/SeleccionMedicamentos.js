@@ -44,7 +44,16 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
       <div id="contenedor-ajustes">
         {[FARMACO_APLICACION_ORAL, FARMACO_APLICACION_BAÑO].map(formaFarmaceutica => (
           <React.Fragment key={`tipo-${formaFarmaceutica}`}>
-            <h1>Medicamentos de aplicación {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
+            <div className="titulo-tabla-medicamentos">
+              <h1>Medicamentos de aplicación {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
+              <div className="contenedor-boton-agregar-medicamento">
+                {/* <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} /> */}
+                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => {
+                  setMostrarDialogoNuevoMedicamento(true)
+                  setFormaFarmaceuticaNuevomedicamento(formaFarmaceutica)
+                }} />
+              </div>
+            </div>
             <div>
               <table className="tabla-medicamentos">
                 <thead>
@@ -77,22 +86,6 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                   }
                 </tbody>
               </table>
-              {!agregandoMedicamento[formaFarmaceutica] ?
-                <div className="contenedor-boton-agregar-medicamento">
-                  {/* <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} /> */}
-                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => {
-                    setMostrarDialogoNuevoMedicamento(true)
-                    setFormaFarmaceuticaNuevomedicamento(formaFarmaceutica)
-                  }} />
-                </div> :
-                <div className="botones-nuevo-medicamento">
-                  <button onClick={() => {
-                    agregarMedicamento({...nuevoMedicamento, formaFarmaceutica})
-                    activarAgregarMedicamento(formaFarmaceutica, false)}
-                  }>Agregar</button>
-                  {/* <button onClick={() => activarAgregarMedicamento(formaFarmaceutica, false)}>Cancelar</button> */}
-                </div>
-              }
             </div>
           </React.Fragment>
         ))}

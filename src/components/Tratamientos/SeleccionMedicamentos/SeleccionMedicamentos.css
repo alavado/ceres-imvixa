@@ -153,3 +153,10 @@
   color: gray;
   border: 1px solid gray;
 }
+
+.titulo-tabla-medicamentos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: red;
+}
