@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './DialogoNuevoMedicamento.css'
 import { useDispatch } from 'react-redux'
 import tratamientosActions from '../../../../redux/tratamientos/actions'
@@ -19,13 +19,13 @@ const DialogoNuevoMedicamento = props => {
     unidadDosis: 'ml/m3',
     cantidadPorJaula: 0.3,
     mortalidad: 0.06,
+    activo: true,
     color: '#6D4C41'
   })
 
-  const agregarMedicamento = () => {
-    dispatch(tratamientosActions.agregarMedicamento(medicamento))
-    props.ocultar()
-  }
+  useEffect(() => {
+    setMedicamento({...medicamento, formaFarmaceutica: props.formaFarmaceutica})
+  }, [props.formaFarmaceutica])
 
   return (
     <div
@@ -44,7 +44,11 @@ const DialogoNuevoMedicamento = props => {
           <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
           <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
         }
-        <button onClick={agregarMedicamento}>Agregar</button>
+        <button onClick={() => {
+          console.log(medicamento)
+          dispatch(tratamientosActions.agregarMedicamento(medicamento))
+          props.ocultar()
+        }}>Agregar</button>
       </div>
     </div>
   )
@@ -64,17 +68,18 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-costo"
         onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
       />
-      <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
+      <label htmlFor="nuevo-medicamento-principio">Nombre principio activo</label>
       <input
         id="nuevo-medicamento-principio"
         onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
       />
-      <label htmlFor="nuevo-medicamento-dosis">Presentación</label>
+      <label htmlFor="nuevo-medicamento-dosis">Presentación (% principio activo)</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
+        suffix=" %"
         onValueChange={e => setMedicamento({ ...medicamento, presentacion: e.floatValue })}
       />
-      <label htmlFor="nuevo-medicamento-dosis">Dosis</label>
+      <label htmlFor="nuevo-medicamento-dosis">Dosis producto comercial por kg de peso</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
         onValueChange={e => setMedicamento({ ...medicamento, dosis: e.floatValue })}

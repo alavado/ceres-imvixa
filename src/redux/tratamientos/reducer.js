@@ -343,6 +343,7 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     case tratamientosActions.AGREGAR_MEDICAMENTO: {
       const medicamento = action.payload
+      console.log('AGREGAR', {medicamento})
       return {
         ...state,
         medicamentos: [
