@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import produccionActions from '../../redux/produccion/actions'
 import { obtenerCurvaMortalidadAcumulada, obtenerCurvaCrecimientoPorPeso, obtenerCurvaBiomasa, obtenerCurvaBiomasaPerdida } from '../../helpers/modelo'
 import { Bar } from 'react-chartjs-2'
 import './Produccion.css'
-import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes';
-import CalculadoraVolumen from './CalculadoraVolumen';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator, faChartBar as IconoAjusteCurva } from '@fortawesome/free-solid-svg-icons';
+import { OBJETIVO_PESO, OBJETIVO_FECHA } from '../../helpers/constantes'
+import CalculadoraVolumen from './CalculadoraVolumen'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalculator, faChartBar as IconoAjusteCurva } from '@fortawesome/free-solid-svg-icons'
 import CampoNumerico from './CampoNumerico'
-import AjusteManual from './AjusteManual';
+import AjusteManual from './AjusteManual'
 
 const Produccion = props => {
 
@@ -206,41 +206,45 @@ const Produccion = props => {
             <Bar
               onClick={e => alert(document.getElementAtEvent(e))}
               data={{
-                labels: curvaBiomasa.map((v, i) => i + 1),
+                labels: curvaBiomasa.map((v, i) => i < curvaBiomasa.length - 1 ? i + 1 : (curvaCrecimiento.length / 30).toLocaleString('de-DE', {maximumFractionDigits: 1})),
                 datasets: [
                   {
                     label: 'Peso final',
                     data: curvaCrecimiento.filter((peso, i) => i > 0 && i % 30 === 0 || i === curvaCrecimiento.length - 1),
-                    backgroundColor: '#E35205',
+                    backgroundColor: '#C77967',
                     type: 'line',
                     yAxisID: 'EjeYPesoPromedio',
                     fill: false
                   },
                   {
-                    label: 'Biomasa total',
-                    data: curvaBiomasa,
-                    backgroundColor: '#6AB96F',
+                    label: 'Biomasa final mes',
+                    data: curvaBiomasa.slice(0, -1),
+                    backgroundColor: '#67C7A4',
                     yAxisID: 'EjeYBiomasa'
+                  },
+                  {
+                    label: 'Biomasa cosechada',
+                    data: [...Array.from(Array(curvaBiomasa.length - 1)).map(x => 0), ...curvaBiomasa.slice(-1)],
+                    backgroundColor: '#2BAE66'
                   }
                 ]
               }}
               options={{
                 legend: {
-                  display: false,
-                  fillStyle: '#E35205',
+                  display: false
                 },
                 tooltips: {
                   callbacks: {
                     label: function(tooltipItem, data) {
-                      var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                      var label = data.datasets[tooltipItem.datasetIndex].label || ''
                       if (label === 'Biomasa total') {
-                        label += ': ' +  tooltipItem.yLabel.toLocaleString(undefined, { maximumFractionDigits: 0});
+                        label += ': ' +  tooltipItem.yLabel.toLocaleString(undefined, { maximumFractionDigits: 0})
                       }
                       else {
-                        label += ': ' +  (tooltipItem.yLabel / 1000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        label += ': ' +  (tooltipItem.yLabel / 1000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2})
                       }
                       label += ' kg'
-                      return label;
+                      return label
                     },
                     title: () => ''
                   }
@@ -301,8 +305,8 @@ const Produccion = props => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => ({
   produccion: state.produccion,
@@ -340,7 +344,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))
   },
   fijarObjetivo: (objetivo, valor) => {
-    console.log({valor});
+    console.log({valor})
     dispatch(produccionActions.fijarObjetivo(objetivo, valor))
   },
   fijarMesesObjetivo: meses => {
@@ -354,4 +358,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Produccion);
+export default connect(mapStateToProps, mapDispatchToProps)(Produccion)
