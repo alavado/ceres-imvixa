@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle as iconoAgregar } from '@fortawesome/free-solid-svg-icons';
 import FilaMedicamento from './FilaMedicamento';
 import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
+import DialogoNuevoMedicamento from './DialogoNuevoMedicamento';
 
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados, agregarMedicamento}) => {
 
@@ -14,6 +15,8 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
     [FARMACO_APLICACION_ORAL]: false,
     [FARMACO_APLICACION_BAÑO]: false
   })
+
+  const [mostrarDialogoNuevoMedicamento, setMostrarDialogoNuevoMedicamento] = useState(false)
 
   const [nuevoMedicamento, setNuevoMedicamento] = useState({})
 
@@ -26,6 +29,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
 
   return (
     <div className="contenido">
+      {mostrarDialogoNuevoMedicamento && <DialogoNuevoMedicamento />}
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
           Selección de medicamentos
@@ -69,14 +73,15 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
               </table>
               {!agregandoMedicamento[formaFarmaceutica] ?
                 <div className="contenedor-boton-agregar-medicamento">
-                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} />
+                  {/* <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} /> */}
+                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => setMostrarDialogoNuevoMedicamento(true)} />
                 </div> :
                 <div className="botones-nuevo-medicamento">
                   <button onClick={() => {
                     agregarMedicamento({...nuevoMedicamento, formaFarmaceutica})
                     activarAgregarMedicamento(formaFarmaceutica, false)}
                   }>Agregar</button>
-                  <button onClick={() => activarAgregarMedicamento(formaFarmaceutica, false)}>Cancelar</button>
+                  {/* <button onClick={() => activarAgregarMedicamento(formaFarmaceutica, false)}>Cancelar</button> */}
                 </div>
               }
             </div>
