@@ -17,6 +17,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
   })
 
   const [mostrarDialogoNuevoMedicamento, setMostrarDialogoNuevoMedicamento] = useState(false)
+  const [formaFarmaceuticaNuevomedicamento, setFormaFarmaceuticaNuevomedicamento] = useState(FARMACO_APLICACION_BAÑO)
 
   const [nuevoMedicamento, setNuevoMedicamento] = useState({})
 
@@ -29,7 +30,12 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
 
   return (
     <div className="contenido">
-      {mostrarDialogoNuevoMedicamento && <DialogoNuevoMedicamento />}
+      {mostrarDialogoNuevoMedicamento &&
+        <DialogoNuevoMedicamento
+          ocultar={() => setMostrarDialogoNuevoMedicamento(false)}
+          formaFarmaceutica={formaFarmaceuticaNuevomedicamento}
+        />
+      }
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
           Selección de medicamentos
@@ -74,7 +80,10 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
               {!agregandoMedicamento[formaFarmaceutica] ?
                 <div className="contenedor-boton-agregar-medicamento">
                   {/* <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} /> */}
-                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => setMostrarDialogoNuevoMedicamento(true)} />
+                  <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => {
+                    setMostrarDialogoNuevoMedicamento(true)
+                    setFormaFarmaceuticaNuevomedicamento(formaFarmaceutica)
+                  }} />
                 </div> :
                 <div className="botones-nuevo-medicamento">
                   <button onClick={() => {
