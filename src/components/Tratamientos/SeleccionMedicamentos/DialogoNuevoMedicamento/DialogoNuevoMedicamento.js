@@ -99,11 +99,24 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
       />
-      <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
-      <CampoNumerico
-        id="nuevo-medicamento-costo"
-        onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
-      />
+      <div className="input-con-unidades">
+        <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
+        <CampoNumerico
+          id="nuevo-medicamento-costo"
+          onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
+        />
+        <input
+          type="radio"
+          name="unidades-costo"
+          defaultChecked={true}
+          onChange={e => setMedicamento({ ...medicamento, unidad: 'lt', unidadDosis: 'ml/m3' })}
+        />USD/lt
+        <input
+          type="radio"
+          name="unidades-costo"
+          onChange={e => setMedicamento({ ...medicamento, unidad: 'kg', unidadDosis: 'mg/m3' })}
+        />USD/kg
+      </div>
       <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
       <input
         id="nuevo-medicamento-principio"
