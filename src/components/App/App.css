@@ -131,7 +131,7 @@ button {
   margin-top: 8px;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, button:focus {
   outline: none;
 }
 

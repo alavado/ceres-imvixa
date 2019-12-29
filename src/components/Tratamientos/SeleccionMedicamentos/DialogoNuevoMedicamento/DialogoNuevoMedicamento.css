@@ -28,7 +28,6 @@
 .dialogo h2 {
   margin-bottom: 24px;
   font-size: 0.9em;
-  text-align: center;
   font-weight: bold;
 }
 
@@ -75,4 +74,18 @@
 .contenedor-radios input {
   min-width: 20px;
   cursor: pointer;
+}
+
+.dialogo .boton-cerrar-dialogo {
+  background-color: transparent;
+  color: black;
+  margin: 0;
+  padding: 0;
+  margin-left: 32px;
+}
+
+.dialogo .dialogo-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import tratamientosActions from '../../../../redux/tratamientos/actions'
 import CampoNumerico from '../../../Produccion/CampoNumerico'
 import { COSTO_OPERACIONAL_BAÑO, FARMACO_APLICACION_BAÑO } from '../../../../helpers/constantes'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const DialogoNuevoMedicamento = props => {
 
@@ -26,6 +28,8 @@ const DialogoNuevoMedicamento = props => {
   useEffect(() => {
     setMedicamento({...medicamento, formaFarmaceutica: props.formaFarmaceutica})
   }, [props.formaFarmaceutica])
+  
+  const esBaño = props.formaFarmaceutica === FARMACO_APLICACION_BAÑO
 
   return (
     <div
@@ -40,12 +44,17 @@ const DialogoNuevoMedicamento = props => {
         className={props.mostrar ? 'dialogo' : 'dialogo-oculto'}
         onClick={e => e.stopPropagation()}
       >
-        {props.formaFarmaceutica === FARMACO_APLICACION_BAÑO ?
+        <div className="dialogo-encabezado"> 
+          <h2>Nuevo medicamento de aplicación {esBaño ? 'externa' : 'oral'}</h2>
+          <button className="boton-cerrar-dialogo" onClick={props.ocultar}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
+        {esBaño ?
           <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
           <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
         }
         <button onClick={() => {
-          console.log(medicamento)
           dispatch(tratamientosActions.agregarMedicamento(medicamento))
           props.ocultar()
         }}>Agregar</button>
@@ -57,7 +66,6 @@ const DialogoNuevoMedicamento = props => {
 const CamposOral = ({ medicamento, setMedicamento }) => {
   return (
     <div>
-      <h2>Nuevo medicamento de aplicación oral</h2>
       <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
       <input
         id="nuevo-medicamento-nombre"
@@ -96,7 +104,6 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
 
   return (
     <div>
-      <h2>Nuevo medicamento de aplicación externa</h2>
       <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
       <input
         id="nuevo-medicamento-nombre"
