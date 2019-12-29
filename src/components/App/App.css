@@ -131,6 +131,10 @@ button {
   margin-top: 8px;
 }
 
+input:focus, select:focus {
+  outline: none;
+}
+
 .icono-accion-secundaria {
   margin-right: 12px;
   cursor: pointer;

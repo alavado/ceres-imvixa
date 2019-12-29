@@ -24,16 +24,28 @@ const DialogoNuevoMedicamento = props => {
 
   const agregarMedicamento = () => {
     dispatch(tratamientosActions.agregarMedicamento(medicamento))
+    props.ocultar()
   }
 
   return (
-    <div>
-      <button onClick={props.ocultar}>X</button>
-      {props.formaFarmaceutica === FARMACO_APLICACION_BAÑO ?
-        <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
-        <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
-      }
-      <button onClick={agregarMedicamento}>Agregar</button>
+    <div
+      className="fondo-oscuro" 
+      style={{
+        opacity: props.mostrar ? 1 : 0,
+        pointerEvents: props.mostrar ? 'all' : 'none'
+      }}
+      onClick={props.ocultar}
+    >
+      <div
+        className={props.mostrar ? 'dialogo' : 'dialogo-oculto'}
+        onClick={e => e.stopPropagation()}
+      >
+        {props.formaFarmaceutica === FARMACO_APLICACION_BAÑO ?
+          <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
+          <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
+        }
+        <button onClick={agregarMedicamento}>Agregar</button>
+      </div>
     </div>
   )
 }
@@ -41,6 +53,7 @@ const DialogoNuevoMedicamento = props => {
 const CamposOral = ({ medicamento, setMedicamento }) => {
   return (
     <div>
+      <h2>Nuevo medicamento de aplicación oral</h2>
       <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
       <input
         id="nuevo-medicamento-nombre"
@@ -73,6 +86,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
 const CamposBano = ({ medicamento, setMedicamento }) => {
   return (
     <div>
+      <h2>Nuevo medicamento de aplicación externa</h2>
       <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
       <input
         id="nuevo-medicamento-nombre"

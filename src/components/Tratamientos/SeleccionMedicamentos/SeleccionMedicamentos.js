@@ -30,12 +30,11 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
 
   return (
     <div className="contenido">
-      {mostrarDialogoNuevoMedicamento &&
-        <DialogoNuevoMedicamento
-          ocultar={() => setMostrarDialogoNuevoMedicamento(false)}
-          formaFarmaceutica={formaFarmaceuticaNuevomedicamento}
-        />
-      }
+      <DialogoNuevoMedicamento
+        ocultar={() => setMostrarDialogoNuevoMedicamento(false)}
+        formaFarmaceutica={formaFarmaceuticaNuevomedicamento}
+        mostrar={mostrarDialogoNuevoMedicamento}
+      />
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
           Selección de medicamentos
@@ -49,8 +48,8 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
               <div
                 className="contenedor-agregar-medicamento"
                 onClick={() => {
-                  setMostrarDialogoNuevoMedicamento(true)
                   setFormaFarmaceuticaNuevomedicamento(formaFarmaceutica)
+                  setMostrarDialogoNuevoMedicamento(true)
                 }}
               >
                 <FontAwesomeIcon icon={iconoAgregar}/>

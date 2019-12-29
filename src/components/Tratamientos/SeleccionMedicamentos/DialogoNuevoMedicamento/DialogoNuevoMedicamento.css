@@ -1,0 +1,52 @@
+.fondo-oscuro {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: calc(100vw - 200px - 32px);
+  min-width: calc(1260px - 200px - 32px);
+  height: calc(100vh - 32px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  opacity: 0;
+  transition: all .25s ease-in-out;
+  pointer-events: none;
+}
+
+.dialogo {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  max-width: 320px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
+  animation: aparecer .25s ease-in-out forwards;
+}
+
+.dialogo h2 {
+  margin-bottom: 32px;
+}
+
+@keyframes aparecer {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.dialogo label {
+  font-size: .8em;
+}
+
+.dialogo input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.dialogo-oculto {
+  opacity: 0;
+}
