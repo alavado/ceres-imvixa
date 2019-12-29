@@ -131,6 +131,11 @@ button {
   margin-top: 8px;
 }
 
+button:disabled {
+  background-color: gray;
+  color: lightgray;
+}
+
 input:focus, select:focus, button:focus {
   outline: none;
 }

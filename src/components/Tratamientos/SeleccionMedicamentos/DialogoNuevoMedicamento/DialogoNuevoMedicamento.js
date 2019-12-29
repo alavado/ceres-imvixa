@@ -7,26 +7,31 @@ import { COSTO_OPERACIONAL_BAÑO, FARMACO_APLICACION_BAÑO } from '../../../../h
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
+const medicamentoInicial = {
+  nombre: '',
+  formaFarmaceutica: FARMACO_APLICACION_BAÑO,
+  principioActivo: '',
+  unidad: 'lt',
+  costoUnitario: 0,
+  costoOperacional: COSTO_OPERACIONAL_BAÑO,
+  dosisBaño: 0.0003,
+  unidadDosis: 'ml/m3',
+  cantidadPorJaula: 0,
+  mortalidad: 0.06,
+  activo: true,
+  color: '#6D4C41'
+}
+
 const DialogoNuevoMedicamento = props => {
 
   const dispatch = useDispatch()
-  const [medicamento, setMedicamento] = useState({
-    nombre: 'Deltafav',
-    formaFarmaceutica: props.formaFarmaceutica,
-    principioActivo: 'Deltametrina',
-    unidad: 'lt',
-    costoUnitario: 500,
-    costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    dosisBaño: 0.0003,
-    unidadDosis: 'ml/m3',
-    cantidadPorJaula: 0.3,
-    mortalidad: 0.06,
-    activo: true,
-    color: '#6D4C41'
-  })
+  const [medicamento, setMedicamento] = useState(medicamentoInicial)
 
   useEffect(() => {
-    setMedicamento({...medicamento, formaFarmaceutica: props.formaFarmaceutica})
+    setMedicamento({
+      ...medicamentoInicial,
+      formaFarmaceutica: props.formaFarmaceutica
+    })
   }, [props.formaFarmaceutica])
   
   const esBaño = props.formaFarmaceutica === FARMACO_APLICACION_BAÑO
@@ -54,10 +59,13 @@ const DialogoNuevoMedicamento = props => {
           <CamposBano medicamento={medicamento} setMedicamento={setMedicamento} /> :
           <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
         }
-        <button onClick={() => {
-          dispatch(tratamientosActions.agregarMedicamento(medicamento))
-          props.ocultar()
-        }}>Agregar</button>
+        <button
+          disabled={medicamento.nombre === '' || medicamento.costoUnitario === 0 || medicamento.principioActivo === ''}
+          onClick={() => {
+            dispatch(tratamientosActions.agregarMedicamento(medicamento))
+            props.ocultar()
+          }}
+        >Agregar</button>
       </div>
     </div>
   )
@@ -143,7 +151,7 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
         suffix=" m3"
         onValueChange={e => setMedicamento({ ...medicamento, volumen: e.floatValue })}
       />
-      <label htmlFor="nuevo-medicamento-dosis">Cantidad por jaula</label>
+      <label htmlFor="nuevo-medicamento-dosis">Dosis producto comercial</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
         suffix={` ${medicamento.unidadDosis}`}
