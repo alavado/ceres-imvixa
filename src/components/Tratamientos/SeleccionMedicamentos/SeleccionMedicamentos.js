@@ -46,12 +46,15 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
           <React.Fragment key={`tipo-${formaFarmaceutica}`}>
             <div className="titulo-tabla-medicamentos">
               <h1>Medicamentos de aplicación {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</h1>
-              <div className="contenedor-boton-agregar-medicamento">
-                {/* <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => activarAgregarMedicamento(formaFarmaceutica, true)} /> */}
-                <FontAwesomeIcon icon={iconoAgregar} size="sm" onClick={() => {
+              <div
+                className="contenedor-agregar-medicamento"
+                onClick={() => {
                   setMostrarDialogoNuevoMedicamento(true)
                   setFormaFarmaceuticaNuevomedicamento(formaFarmaceutica)
-                }} />
+                }}
+              >
+                <FontAwesomeIcon icon={iconoAgregar}/>
+                <span>Agregar medicamento</span>
               </div>
             </div>
             <div>

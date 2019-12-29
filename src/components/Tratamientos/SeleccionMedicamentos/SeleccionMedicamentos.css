@@ -14,16 +14,13 @@
   flex-direction: column;
 }
 
-#contenedor-ajustes h1 {
-  font-size: .85em;
-}
-
 .tabla-medicamentos {
   margin-top: 8px;
   text-align: left;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
   max-width: 80vw;
   flex: 1;
+  margin-bottom: 16px;
 }
 
 .tabla-medicamentos th {
@@ -154,9 +151,24 @@
   border: 1px solid gray;
 }
 
-.titulo-tabla-medicamentos {
+#contenedor-ajustes .titulo-tabla-medicamentos {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: red;
+}
+
+#contenedor-ajustes .titulo-tabla-medicamentos svg {
+  color: hsl(202, 100%, 43%);
+}
+
+#contenedor-ajustes .titulo-tabla-medicamentos .contenedor-agregar-medicamento {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#contenedor-ajustes .titulo-tabla-medicamentos .contenedor-agregar-medicamento span {
+  text-transform: uppercase;
+  font-size: .7em;
+  margin-left: 4px;
 }
