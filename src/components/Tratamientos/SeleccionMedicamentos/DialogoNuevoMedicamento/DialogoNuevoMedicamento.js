@@ -66,6 +66,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
       <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
       <CampoNumerico
         id="nuevo-medicamento-costo"
+        suffix=" USD/kg"
         onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
       />
       <label htmlFor="nuevo-medicamento-principio">Nombre principio activo</label>
@@ -82,6 +83,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
       <label htmlFor="nuevo-medicamento-dosis">Dosis producto comercial por kg de peso</label>
       <CampoNumerico
         id="nuevo-medicamento-dosis"
+        suffix=" mg/kg"
         onValueChange={e => setMedicamento({ ...medicamento, dosis: e.floatValue })}
       />
     </div>

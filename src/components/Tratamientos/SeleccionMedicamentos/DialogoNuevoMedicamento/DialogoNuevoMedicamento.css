@@ -19,14 +19,14 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
-  max-width: 320px;
+  max-width: 260px;
   border-radius: 4px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
   animation: aparecer .25s ease-in-out forwards;
 }
 
 .dialogo h2 {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 @keyframes aparecer {
@@ -46,6 +46,8 @@
   width: 100%;
   margin-top: 2px;
   margin-bottom: 12px;
+  padding: 8px;
+  box-sizing: border-box;
 }
 
 .dialogo-oculto {
