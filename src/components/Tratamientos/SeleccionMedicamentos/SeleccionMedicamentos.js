@@ -54,7 +54,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                 }}
               >
                 <FontAwesomeIcon icon={iconoAgregar}/>
-                <span>Agregar medicamento</span>
+                <span>Agregar medicamento<br />de aplicación {formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'oral' : 'externa'}</span>
               </div>
             </div>
             <div>

@@ -169,6 +169,13 @@
 
 #contenedor-ajustes .titulo-tabla-medicamentos .contenedor-agregar-medicamento span {
   text-transform: uppercase;
-  font-size: .7em;
+  font-size: .6em;
+  line-height: 1.15;
   margin-left: 4px;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color .25s ease-in-out;
+}
+
+#contenedor-ajustes .titulo-tabla-medicamentos .contenedor-agregar-medicamento:hover span {
+  color: rgba(0, 0, 0, 0.95)
 }
