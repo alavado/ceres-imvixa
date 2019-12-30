@@ -54,7 +54,7 @@ const Anexos = props => {
   return (
     <div id="anexos">
       <h2>Anexos</h2>
-      <h3>Estructura costos ex-jaula por centro</h3>
+      {/* <h3>Estructura costos ex-jaula por centro</h3>
       <table id="reporte-estructura-costos">
         <thead>
           <tr>
@@ -102,7 +102,7 @@ const Anexos = props => {
         <p>
           [5] Las diferencias en alimento se ven afectadas por el peso final de cada estrategia y el largo del ciclo. Las diferencias en el resto de los ítems dependen del largo del ciclo productivo.
         </p>
-      </div>
+      </div> */}
       <h3>Detalle de estrategias antiparasitarias</h3>
       <div id="tratamientos-resumen">
         <div className="estrategia-resumen">
