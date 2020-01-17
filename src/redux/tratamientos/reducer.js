@@ -11,8 +11,7 @@ const initialState = {
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 620,
-      costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 0.002,
+      costoOperacional: COSTO_OPERACIONAL_BAÑO,    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200,
       duracion: 4,
@@ -54,7 +53,7 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 960,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 0.0003,
+    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 0.3,
       duracion: 3,
@@ -75,7 +74,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 1.5,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 1250,
+    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 800000,
       duracion: 4,
@@ -96,7 +95,7 @@ const initialState = {
     //   unidad: 'lt',
     //   costoUnitario: 1000,
     //   costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    //   dosisBaño: 0.000375,
+    //  
     //   cantidadPorJaula: 1.35,
     //   duracion: 3,
     //   mortalidad: 0.06,
@@ -137,7 +136,7 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 700,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 20,
+    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 20,
       duracion: 16,
@@ -179,7 +178,7 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 500,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 0.0003,
+    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 0.3,
       duracion: 3,
@@ -200,7 +199,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 560,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 0.0002,
+    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200,
       duracion: 4,
@@ -221,7 +220,7 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 650,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-      dosisBaño: 0.0002,
+    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200,
       duracion: 4,
@@ -353,7 +352,7 @@ const tratamientosReducer = (state = initialState, action) => {
             empresa: '',
             unidad: medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? 'lt' : 'kg',
             unidadDosis: medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? 'mg/m3' : 'mg/kg',
-            dosisBaño: 1250,
+          
             duracion: 4,
             color: '#1E88E5',
             activo: false,

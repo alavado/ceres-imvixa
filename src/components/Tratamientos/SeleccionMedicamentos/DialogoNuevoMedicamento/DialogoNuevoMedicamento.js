@@ -3,19 +3,18 @@ import './DialogoNuevoMedicamento.css'
 import { useDispatch, useSelector } from 'react-redux'
 import tratamientosActions from '../../../../redux/tratamientos/actions'
 import CampoNumerico from '../../../Produccion/CampoNumerico'
-import { COSTO_OPERACIONAL_BAÑO, FARMACO_APLICACION_BAÑO } from '../../../../helpers/constantes'
+import { COSTO_OPERACIONAL_BAÑO, FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL } from '../../../../helpers/constantes'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const medicamentoInicial = {
   nombre: '',
-  formaFarmaceutica: FARMACO_APLICACION_BAÑO,
+  formaFarmaceutica: FARMACO_APLICACION_ORAL,
   principioActivo: '',
-  unidad: 'lt',
+  unidad: 'kg',
   costoUnitario: 0,
-  costoOperacional: COSTO_OPERACIONAL_BAÑO,
-  dosisBaño: 0.0003,
-  unidadDosis: 'ml/m3',
+  costoOperacional: 0,
+  unidadDosis: 'mg/kg',
   cantidadPorJaula: 0,
   mortalidad: 0.06,
   activo: true,
@@ -26,15 +25,19 @@ const DialogoNuevoMedicamento = props => {
 
   const dispatch = useDispatch()
   const [medicamento, setMedicamento] = useState(medicamentoInicial)
+  const esBaño = props.formaFarmaceutica === FARMACO_APLICACION_BAÑO
 
   useEffect(() => {
     setMedicamento({
       ...medicamentoInicial,
-      formaFarmaceutica: props.formaFarmaceutica
+      formaFarmaceutica: props.formaFarmaceutica,
+      costoOperacional: esBaño ? COSTO_OPERACIONAL_BAÑO : 0,
+      unidad: esBaño ? 'lt' : 'kg',
+      unidadDosis: esBaño ? 'ml/m3' : 'mg/kg'
     })
   }, [props.formaFarmaceutica])
   
-  const esBaño = props.formaFarmaceutica === FARMACO_APLICACION_BAÑO
+  
 
   return (
     <div
