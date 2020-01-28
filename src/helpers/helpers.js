@@ -1,4 +1,4 @@
-import { FARMACO_APLICACION_BAÑO} from './constantes'
+import { FARMACO_APLICACION_BAÑO, FARMACO_APLICACION_ORAL} from './constantes'
 
 export const calcularNumeroDeBaños = (estrategia, medicamentos, tratamientos, curvaCrecimiento) => {
   return Object.keys(tratamientos[estrategia]).filter(key => {
@@ -124,43 +124,88 @@ export const calcularPTI = (medicamentos, tratamientos) => {
   return pti
 }
 
-export const calcularCantidadDeProductosVertidos = (medicamentos, tratamientos, volumenJaula) => {
+export const calcularProductosVertidosOrales = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvas) => {
+  const { curvaMortalidadAcumulada, curvaCrecimiento } = curvas
+  const semanas = Object.keys(tratamientos)
+  .filter(semana => semana !== '0')
+  return semanas.reduce((productosVertidos, semana) => {
+    const numSemana = Number(semana)
+    const { idMedicamento } = tratamientos[semana]
+    const m = medicamentos.find(m => m.id === idMedicamento)
+    if (m.formaFarmaceutica !== FARMACO_APLICACION_ORAL) {
+      return productosVertidos
+    }
+    const dosisPractica = m.dosis 
+    const numeroDeSmoltsActual = numeroDeSmoltsInicial * (1-curvaMortalidadAcumulada[numSemana * 4])
+    const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
+    const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
+    const pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
+    return productosVertidos.concat([{
+      principioActivo : m.principioActivo,
+      cantidad: dosisPractica * pesoPromedio * numeroDeSmoltsActual
+    }])}, [])
+}
+
+export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volumenJaula, numeroDeJaulas) => {
+  return aplicaciones.reduce((productosVertidos, idMedicamento) => {
+    const medicamento = medicamentos.find(m => m.id === idMedicamento)
+    if (medicamento.formaFarmaceutica !== FARMACO_APLICACION_BAÑO) {
+      return productosVertidos
+    }
+    let volumenEnM3 = volumenJaula
+    if (medicamento.volumen !== undefined) {
+      volumenEnM3 = medicamento.volumen
+    }
+    let dosisPorM3 = medicamento.cantidadPorJaula
+    const [numeradorDosis, denominadorDosis] = medicamento.unidadDosis.split('/')
+    if (denominadorDosis === 'lt') {
+      dosisPorM3 *= 1000
+    }
+    if (numeradorDosis === 'mg') {
+      dosisPorM3 /= 1E6
+    }
+    else if (numeradorDosis === 'ml') {
+      dosisPorM3 /= 1000
+    }
+    const cantidadPorJaula = dosisPorM3 * volumenEnM3
+    return productosVertidos.concat([{
+      principioActivo : medicamento.principioActivo,
+      cantidad: cantidadPorJaula * numeroDeJaulas
+    }])
+  }, [])
+}
+
+export const calcularProductosVertidos = (medicamentos, tratamientos, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas) => {
+  const aplicaciones = Object.keys(tratamientos)
+  .map(semana => tratamientos[semana].idMedicamento)
+  return calcularProductosVertidosOrales(medicamentos, tratamientos, numeroDeSmoltsInicial, curvas)
+  .concat(calcularProductosVertidosBaños(aplicaciones, medicamentos, volumenJaula, numeroDeJaulas))
+}
+
+export const agruparProductosVertidos = (medicamentos, tratamientos, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas) => {
   const principiosActivos = [...new Set(medicamentos.filter(m => m.formaFarmaceutica === FARMACO_APLICACION_BAÑO).map(m => m.principioActivo))]
   const estrategias = Object.keys(tratamientos)
-  const productosVertidos = principiosActivos
+  const productosVertidos = {
+    tradicional : calcularProductosVertidos(medicamentos, tratamientos.tradicional, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas.tradicional),
+    imvixa : calcularProductosVertidos(medicamentos, tratamientos.imvixa, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas.imvixa)
+  } 
+  return principiosActivos
     .map(principioActivo => {
       const medicamento = medicamentos.find(m => m.principioActivo === principioActivo)
-      let volumenEnM3 = volumenJaula
-      if (medicamento.volumen !== undefined) {
-        volumenEnM3 = medicamento.volumen
-      }
-      let dosisPorM3 = medicamento.cantidadPorJaula
-      const [numeradorDosis, denominadorDosis] = medicamento.unidadDosis.split('/')
-      if (denominadorDosis === 'lt') {
-        dosisPorM3 *= 1000
-      }
-      if (numeradorDosis === 'mg') {
-        dosisPorM3 /= 1E6
-      }
-      else if (numeradorDosis === 'ml') {
-        dosisPorM3 /= 1000
-      }
-      const cantidadPorJaula = dosisPorM3 * volumenEnM3
-      console.log({nombre: medicamento.nombre, cantidadPorJaula})
       return {
         principioActivo,
         unidad: medicamento.unidad,
         ...estrategias.reduce((obj, estrategia) => {
-          const semanas = Object.keys(tratamientos[estrategia])
           return {
             ...obj,
-            [estrategia]: semanas.filter(k => medicamentos.find(m => m.id === tratamientos[estrategia][k].idMedicamento).principioActivo === principioActivo).length * cantidadPorJaula
+            [estrategia]: productosVertidos[estrategia]
+            .filter(m => m.principioActivo === principioActivo)
+            .reduce((p, v)=> p + v.cantidad, 0)
           }
         }, {})}
     })
     .filter(p => estrategias.reduce((v, e) => v || p[e] > 0, false))
     .sort((p1, p2) => p1.principioActivo > p2.principioActivo ? 1 : -1)
-  return productosVertidos
 }
 
 export const obtenerFechaActualBonita = (fecha = null) => {

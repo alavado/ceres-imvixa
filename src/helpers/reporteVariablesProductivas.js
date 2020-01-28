@@ -14,7 +14,6 @@ export const calcularMortalidadTotal = (mortalidad, numeroSmolts, numeroJaulas, 
     if (medicamento.mortalidad >= 1){
       return sum + medicamento.mortalidad * numeroJaulas
     }
-    console.log(diaDeAplicacion);
     const numeroPecesAlDia = numeroSmolts * (1 - curvaMortalidadAcumulada[diaDeAplicacion]) - sum
     return sum + numeroPecesAlDia * medicamento.mortalidad
   }, 0)

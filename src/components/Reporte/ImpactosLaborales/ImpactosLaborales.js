@@ -1,21 +1,29 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { redondearYAString, calcularCantidadDeProductosVertidos } from '../../../helpers/helpers';
+import { redondearYAString, agruparProductosVertidos } from '../../../helpers/helpers';
 import { JORNADAS_POR_BAÑO_POR_JAULA } from '../../../helpers/constantes';
 import { useSelector } from 'react-redux'
 import './../Anexos/Anexos.css'
 import './ImpactosLaborales.css'
 
-const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa}) => {
-
+const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa, curvaMortalidadAcumuladaTradicional, curvaMortalidadAcumuladaImvixa}) => {
   const produccion = useSelector(state => state.produccion)
-  const { numeroJaulas, volumenJaula } = produccion
+  const { numeroJaulas, volumenJaula, numeroSmolts } = produccion
   const tratamientosSt = useSelector(state => state.tratamientos)
   const { medicamentos, tratamientos } = tratamientosSt
 
   const jornadasPorBaño = JORNADAS_POR_BAÑO_POR_JAULA * numeroJaulas
-
+  const curvas = {
+    tradicional : {
+      curvaMortalidadAcumulada : curvaMortalidadAcumuladaTradicional,
+      curvaCrecimiento: curvaTradicional
+    },
+    imvixa : {
+      curvaMortalidadAcumulada : curvaMortalidadAcumuladaImvixa,
+      curvaCrecimiento: curvaImvixa
+    }
+  }
   const iconoImpactoLaboral = (diferencia) => {
     let icono = redondearYAString(diferencia)
     if (diferencia > 0){
@@ -91,20 +99,19 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
           </tr>
         </thead>
         <tbody>
-          {calcularCantidadDeProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa), volumenJaula).map((v, i) => {
+          {agruparProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa), volumenJaula, numeroJaulas, numeroSmolts, curvas).map((v, i) => {
             let icono = ''
-            const diferencia = v.tradicional * numeroJaulas - v.imvixa * numeroJaulas
+            const diferencia = v.tradicional - v.imvixa
             if (diferencia > 0) {
               icono = <FontAwesomeIcon icon={faArrowDown} style={{ marginRight: 4, color: 'green' }} />
             }
             else if (diferencia < 0) {
               icono = <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: 4, color: 'red' }} />
             }
-            console.log({trad: v.tradicional})
             return (<tr key={`vertidos-${i}`} className="fila-vertidos">
               <td>{v.principioActivo}</td>
-              <td>{redondearYAString(v.tradicional * numeroJaulas)} {v.unidad}/centro</td>
-              <td>{redondearYAString(v.imvixa * numeroJaulas)} {v.unidad}/centro</td>
+              <td>{redondearYAString(v.tradicional)} {v.unidad}/centro</td>
+              <td>{redondearYAString(v.imvixa)} {v.unidad}/centro</td>
               <td>{icono} {redondearYAString(Math.abs(diferencia))} {v.unidad}</td>
             </tr>)
           })}

@@ -171,6 +171,8 @@ const Reporte = ({ state, fijarValorDolar }) => {
           numeroBañosImvixa={numeroBañosImvixa}
           curvaTradicional={curvaTradicional}
           curvaImvixa={curvaImvixa}
+          curvaMortalidadAcumuladaTradicional={curvaMortalidadAcumuladaTradicional}
+          curvaMortalidadAcumuladaImvixa={curvaMortalidadAcumuladaImvixa}
         />
         <ImpactoCertificacion
           ptiTradicional={ptiTradicional}

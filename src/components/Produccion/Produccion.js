@@ -344,7 +344,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(produccionActions.fijarCostoAlimento(Number(usd)))
   },
   fijarObjetivo: (objetivo, valor) => {
-    console.log({valor})
     dispatch(produccionActions.fijarObjetivo(objetivo, valor))
   },
   fijarMesesObjetivo: meses => {

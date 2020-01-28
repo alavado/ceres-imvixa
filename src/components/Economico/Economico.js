@@ -135,7 +135,6 @@ const Economico = props => {
                 tooltips: {
                   callbacks: {
                     label: function(tooltipItem, data) {
-                      console.log({tooltipItem});
                       var label = data.datasets[0].data[tooltipItem.index] || '';
                       label += ' USD'
                       return label;

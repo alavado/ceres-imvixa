@@ -77,12 +77,10 @@ const CalculadoraVolumen = ({mostrar, fijarVolumenJaulaCilindrica, fijarVolumenJ
 const mapDispatchToProps = dispatch => ({
   fijarVolumenJaulaCilindrica: (diametro, profundidad) => {
     const volumen = Math.floor(profundidad * Math.PI * (diametro / 2) ** 2)
-    console.log(volumen);
     dispatch(produccionActions.fijarVolumenJaula(volumen))
   },
   fijarVolumenJaulaRectangular: (ancho, largo, profundidad) => {
     const volumen = Math.floor(ancho * largo * profundidad)
-    console.log(volumen);
     dispatch(produccionActions.fijarVolumenJaula(volumen))
   }
 })
