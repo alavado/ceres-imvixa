@@ -169,7 +169,7 @@ export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volu
     }
     const cantidadPorJaula = dosisPorM3 * volumenEnM3
     return productosVertidos.concat([{
-      principioActivo : medicamento.principioActivo,
+      principioActivo: medicamento.principioActivo,
       cantidad: cantidadPorJaula * numeroDeJaulas
     }])
   }, [])
