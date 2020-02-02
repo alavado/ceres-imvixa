@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import './Reporte.css'
-import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa, obtenerFechaActualBonita } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, calcularCostoBaños, calcularPTI, calcularCostoTratamientoOral, calcularCostoImvixa, calcularCostoTratamientosOrales, obtenerFechaActualBonita } from '../../helpers/helpers'
 import { calcularMortalidadTotal } from '../../helpers/reporteVariablesProductivas'
 import { obtenerCurvaCrecimientoPorPeso, obtenerCurvaMortalidadAcumulada } from '../../helpers/modelo'
 import { DIAS_AYUNO_BAÑO, TIPO_CAMBIO_DOLAR, TIPO_CAMBIO_PESO } from "../../helpers/constantes";
@@ -74,11 +74,13 @@ const Reporte = ({ state, fijarValorDolar }) => {
   const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
   const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
   const costoEmamectinaTradicional = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
+  const costoOralesTradicional = calcularCostoTratamientosOrales(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
   // estrategia Imvixa
   const costoBañosImvixa = calcularCostoBaños(medicamentos, tratamientos['imvixa'], numeroJaulas, volumenJaula)
   const costoMarginalBañosImvixa = costoBañosImvixa / biomasaImvixa
   const costoEmamectinaImvixa = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
   const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
+  const costoOralesImvixa = calcularCostoTratamientosOrales(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
 
  // economicos estrategia Imvixa
   const costoAyunoImvixa = (costoProduccionDiario * numeroBañosImvixa * DIAS_AYUNO_BAÑO) / biomasaImvixa
@@ -161,6 +163,8 @@ const Reporte = ({ state, fijarValorDolar }) => {
           costoEmamectinaTradicional={costoEmamectinaTradicional}
           costoImvixaImvixa={costoImvixaImvixa}
           costoImvixaTradicional={costoImvixaTradicional}
+          costoOralesTradicional={costoOralesTradicional}
+          costoOralesImvixa={costoOralesImvixa}
           costoProduccionSinAyunoImvixa={costoProduccionSinAyunoImvixa}
           costoProduccionSinAyunoTradicional={costoProduccionSinAyunoTradicional}
           tipoCambio={tipoCambio}

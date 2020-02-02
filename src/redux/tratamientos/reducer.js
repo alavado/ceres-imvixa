@@ -114,7 +114,7 @@ const initialState = {
       diasDeAdministracion: 1,
       principioActivo: 'Lufenurón',
       unidad: 'kg',
-      costoUnitario: 8000,
+      costoUnitario: 9000,
       costoOperacional: 0,
       dosis: 350, // mg/kg
       unidadDosis: 'mg/kg',

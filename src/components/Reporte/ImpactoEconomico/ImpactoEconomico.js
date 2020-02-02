@@ -10,6 +10,7 @@ const ImpactoEconomico = props => {
       costoAyunoImvixa, costoAyunoTradicional,
       costoEmamectinaImvixa, costoEmamectinaTradicional,
       costoImvixaImvixa, costoImvixaTradicional,
+      costoOralesImvixa, costoOralesTradicional,
       costoProduccionSinAyunoImvixa, costoProduccionSinAyunoTradicional,
       valorDolar, tipoCambio
     } = props
@@ -48,8 +49,8 @@ const ImpactoEconomico = props => {
 
   const anchoMaximoLengueta = 120
   const anchoMaximoLenguetaColoreada = 100
-  const totalImvixa = lenguetas.reduce((sum, x) => x.imvixa + sum, 0)
-  const totalTradicional = lenguetas.reduce((sum, x) => x.tradicional + sum, 0)
+  const totalImvixa = lenguetas.reduce((sum, x) => x.imvixa + sum, 0) + costoOralesImvixa - costoEmamectinaImvixa - costoImvixaImvixa
+  const totalTradicional = lenguetas.reduce((sum, x) => x.tradicional + sum, 0) + costoOralesTradicional - costoEmamectinaTradicional - costoImvixaTradicional
 
   return (
     <>

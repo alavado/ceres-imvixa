@@ -7,7 +7,7 @@ import ResumenComparacion from './ResumenComparacion/'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrash, faShower, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { obtenerCurvaCrecimientoPorPeso } from '../../helpers/modelo'
-import { calcularNumeroDeBaños, obtenerBaños } from '../../helpers/helpers'
+import { calcularNumeroDeBaños, obtenerBaños, redondear } from '../../helpers/helpers'
 import SeleccionMedicamentos from './SeleccionMedicamentos'
 import CampoNumerico from '../Produccion/CampoNumerico'
 
@@ -24,11 +24,21 @@ const Tratamientos = props => {
   const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos)
   const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos)
 
+  const estimarPesoDeAplicacion = pesoSmolt => {
+    const curvaSinTratamientos = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, {}, factorCrecimiento, ajustesPesos)
+    if (curvaSinTratamientos.length > 2){
+      const crecimientoDiario = curvaSinTratamientos[1] - curvaSinTratamientos[0]
+      const crecimientoSemanal = crecimientoDiario * 7
+      return redondear(pesoSmolt - crecimientoSemanal)
+    }
+    return pesoSmolt - 20
+  }
+
   const [nuevoTratamiento, setNuevoTratamiento] = useState({
     idMedicamento: medicamentos[0].id,
     estrategia: 'tradicional',
     semana: 1,
-    pesoDeAplicacion: Math.max(pesoSmolt - 20, 40),
+    pesoDeAplicacion: Math.max(estimarPesoDeAplicacion(pesoSmolt), 1),
     dia: 'Lunes',
     duracion: medicamentos[0].duracion,
     aplicaciones: 1
