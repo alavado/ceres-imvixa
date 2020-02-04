@@ -2,6 +2,25 @@
   margin-top: 34px;
 }
 
-#encabezado-reporte{
+#encabezado-reporte {
   max-width: 65vw;
+}
+
+#encabezado-reporte h1 {
+  max-width: 500px;
+  font-size: 1.5em;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+#encabezado-reporte .nombre-en-reporte {
+  margin-bottom: 8px;
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#encabezado-reporte .nombre-en-reporte > span {
+  font-size: 1.2em;
+  letter-spacing: 1px;
 }

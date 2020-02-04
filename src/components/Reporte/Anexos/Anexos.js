@@ -146,13 +146,15 @@ const Anexos = props => {
       </div>
       <div id="referencias">
         <h2>Referencias</h2>
-        <p>Este informe fue generado con el simulador CERES BCA - IMVIXA. El simulador CERES BCA - IMVIXA permite al usuario ingresar los datos característicos de un centro para comparar el resultado de dos estrategias de tratamientos contra Cáligus.</p>
+        <p>Este informe fue generado con el Simulador VisiOn - Elanco. Esta herramienta es un Modelo de Simulación de Impacto de
+Imvixa que permite al usuario ingresar los datos característicos de un centro para comparar el resultado de dos estrategias de tratamientos contra Cáligus.</p>
         <p>El simulador está compuesto por una función de crecimiento y calculadores de impacto de las estrategias de tratamientos.</p>
         <p>La función de crecimiento es una regresión polinomial que utiliza el peso del smolt y las unidades térmicas acumuladas (UTA) para estimar el crecimiento diario del pez. La información de la macrozona y la fecha se utilizan para determinar las UTAs asociadas a cada día del ciclo. El usuario puede modificar la función de crecimiento mediante el factor de crecimiento o fijando meses y peso objetivo.</p>
         
         <p><span className="fuente">Fuente pesos de cosecha y N° de baños</span>: Reporte Aquabench SM101.1018 OCTUBRE 2018 (2015 a Jun 2018); CERES BCA con base en datos de parámetros productivos 2015 – 2018; Memorias 2018 de 4 empresas productoras de salmón.</p>
         <p><span className="fuente">Fuente restricción de siembra</span>: Resolución Exenta N° 1503, del 13 de junio de 2013 de SUBPESCA.</p>
         <p><span className="fuente">Fuente certificación</span>: Criterio de cálculo del PTI del ASC.</p>
+        <p><span className="fuente">El Simulador VisiOn – Elanco fue desarrollado por Ceres BCA para Elanco Aqua en Chile.</span></p>
       </div>
     </div>
   );
