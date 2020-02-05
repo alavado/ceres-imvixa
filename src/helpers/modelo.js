@@ -70,7 +70,7 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
   let tratamientosAplicados = {}
   let uta = temperaturasMensuales[fechaCiclo.month() + 1] * 7
   let diaFinal = objetivoFecha * 30
-  const DIAS_AYUNO_BAÑO_ALPHA_FLUX = 4
+  const DIAS_AYUNO_BAÑO_ALPHA_FLUX = 3
   if (tiposObjetivos.includes(OBJETIVO_PESO) && tiposObjetivos.includes(OBJETIVO_FECHA)) {
     for (let dia = 2; dia <= MAXIMOS_DIAS_CICLO && dia <= diaFinal; dia++) {
       semana += 1 / 7.0
