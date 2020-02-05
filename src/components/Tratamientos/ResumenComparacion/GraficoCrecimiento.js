@@ -105,7 +105,7 @@ const GraficoCrecimiento = ({curvaTradicional, curvaImvixa, pesoObjetivo, objeti
   }
   
   return (
-    <div style={{marginTop: 12, width: '640px', height: '350px'}}>
+    <div style={{marginTop: 12, width: 640, height: 360}}>
       <Line
         data={data}
         options={options}
