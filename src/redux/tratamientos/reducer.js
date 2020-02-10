@@ -355,9 +355,8 @@ const tratamientosReducer = (state = initialState, action) => {
             empresa: '',
             unidad: medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? 'lt' : 'kg',
             unidadDosis: medicamento.formaFarmaceutica === FARMACO_APLICACION_BAÑO ? 'mg/m3' : 'mg/kg',
-          
             duracion: 4,
-            color: '#1E88E5',
+            color: '#b1006a',
             activo: false,
             aplicaciones: 1,
             factorFarmaco: 0,

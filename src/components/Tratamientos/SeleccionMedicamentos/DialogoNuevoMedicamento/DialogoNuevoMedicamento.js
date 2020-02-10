@@ -18,7 +18,7 @@ const medicamentoInicial = {
   cantidadPorJaula: 0,
   mortalidad: 0.06,
   activo: true,
-  color: '#6D4C41',
+  color: '#b1006a',
   esImvixa: false
 }
 
@@ -113,7 +113,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
           id="nuevo-medicamento-es-imvixa"
           type="checkbox"
           name="objetivo"
-          onChange={e => setMedicamento({ ...medicamento, esImvixa: e.target.checked})}
+          onChange={e => setMedicamento({ ...medicamento, esImvixa: e.target.checked, color: '#EF7B10'})}
         />
       </div>
     </div>
