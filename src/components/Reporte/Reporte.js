@@ -73,15 +73,14 @@ const Reporte = ({ state, fijarValorDolar }) => {
   const costoBañosTradicional = calcularCostoBaños(medicamentos, tratamientos['tradicional'], numeroJaulas, volumenJaula)
   const costoMarginalBañosTradicional = costoBañosTradicional / biomasaTradicional
   const costoImvixaTradicional = calcularCostoImvixa(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
-  const costoEmamectinaTradicional = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
   const costoOralesTradicional = calcularCostoTratamientosOrales(medicamentos, tratamientos['tradicional'], numeroSmolts, curvaMortalidadAcumuladaTradicional, curvaTradicional, bFCR) / biomasaTradicional
+  const costoOtrosTradicional = costoOralesTradicional - costoImvixaTradicional
   // estrategia Imvixa
   const costoBañosImvixa = calcularCostoBaños(medicamentos, tratamientos['imvixa'], numeroJaulas, volumenJaula)
   const costoMarginalBañosImvixa = costoBañosImvixa / biomasaImvixa
-  const costoEmamectinaImvixa = calcularCostoTratamientoOral('Emamectina', medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
   const costoImvixaImvixa = calcularCostoImvixa(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
   const costoOralesImvixa = calcularCostoTratamientosOrales(medicamentos, tratamientos['imvixa'], numeroSmolts, curvaMortalidadAcumuladaImvixa, curvaImvixa, bFCR) / biomasaImvixa
-
+  const costoOtrosImvixa = costoOralesImvixa - costoImvixaImvixa
  // economicos estrategia Imvixa
   const costoAyunoImvixa = (costoProduccionDiario * numeroBañosImvixa * DIAS_AYUNO_BAÑO) / biomasaImvixa
   const deltaPesoImvixa = pesoFinalImvixa - pesoSmolt / 1000
@@ -159,8 +158,8 @@ const Reporte = ({ state, fijarValorDolar }) => {
           costoMarginalBañosTradicional={costoMarginalBañosTradicional}
           costoAyunoImvixa={costoAyunoImvixa}
           costoAyunoTradicional={costoAyunoTradicional}
-          costoEmamectinaImvixa={costoEmamectinaImvixa}
-          costoEmamectinaTradicional={costoEmamectinaTradicional}
+          costoOtrosImvixa={costoOtrosImvixa}
+          costoOtrosTradicional={costoOtrosTradicional}
           costoImvixaImvixa={costoImvixaImvixa}
           costoImvixaTradicional={costoImvixaTradicional}
           costoOralesTradicional={costoOralesTradicional}
