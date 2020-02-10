@@ -187,16 +187,12 @@ export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volu
     if (denominadorDosis === 'lt') {
       dosisPorM3 *= 1000
     }
-    if (numeradorDosis === 'mg') {
-      dosisPorM3 /= 1E6
-    }
-    else if (numeradorDosis === 'ml') {
-      dosisPorM3 /= 1000
-    }
-    const cantidadPorJaula = dosisPorM3 * volumenEnM3
+    const cantidadPorJaula = dosisPorM3 * volumenEnM3 
+    const cantidadPorCentro = cantidadPorJaula * numeroDeJaulas // mg o ml de producto / centro
+    const cantidadPrincipioActivo = cantidadPorCentro * medicamento.presentacion / 100 
     return productosVertidos.concat([{
       principioActivo: medicamento.principioActivo,
-      cantidad: cantidadPorJaula * numeroDeJaulas
+      cantidad: cantidadPrincipioActivo
     }])
   }, [])
 }
@@ -220,7 +216,7 @@ export const agruparProductosVertidos = (medicamentos, tratamientos, volumenJaul
       const medicamento = medicamentos.find(m => m.principioActivo === principioActivo)
       return {
         principioActivo,
-        unidad: medicamento.unidad,
+        unidad: medicamento.unidadDosis.slice(0,2),
         ...estrategias.reduce((obj, estrategia) => {
           return {
             ...obj,

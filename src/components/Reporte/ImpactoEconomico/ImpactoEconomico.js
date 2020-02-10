@@ -31,7 +31,7 @@ const ImpactoEconomico = props => {
       tradicional: costoAyunoTradicional
     },
     {
-      nombre: 'Emamectina',
+      nombre: 'Otros orales',
       imvixa: costoEmamectinaImvixa,
       tradicional: costoEmamectinaTradicional
     },

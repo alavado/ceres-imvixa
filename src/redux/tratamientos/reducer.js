@@ -21,7 +21,8 @@ const initialState = {
       aplicaciones: 1, // cuantas veces seguidas se repite el tratamiento
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 50
+      presentacion: 50,
+      esImvixa: false
     },
     {
       id: 2,
@@ -42,7 +43,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 4,
       factorMetodo: 0.8,
-      presentacion: 0.2
+      presentacion: 0.2,
+      esImvixa: false
     },
     {
       id: 3,
@@ -53,7 +55,6 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 960,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 0.3,
       duracion: 3,
@@ -63,7 +64,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 1000
+      presentacion: 1000,
+      esImvixa: false
     },
     {
       id: 4,
@@ -74,7 +76,6 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 1.5,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 800000,
       duracion: 4,
@@ -84,7 +85,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 0,
       factorMetodo: 0.2,
-      presentacion: 50
+      presentacion: 50,
+      esImvixa: false
     },
     // {
     //   id: 5,
@@ -125,7 +127,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 4,
       factorMetodo: 0.8,
-      presentacion: 10
+      presentacion: 10,
+      esImvixa: true
     },
     {
       id: 7,
@@ -136,7 +139,6 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 700,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 20,
       duracion: 16,
@@ -146,7 +148,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 10000
+      presentacion: 10000,
+      esImvixa: false
     },
     // {
     //   id: 8,
@@ -178,7 +181,6 @@ const initialState = {
       unidad: 'lt',
       costoUnitario: 500,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 0.3,
       duracion: 3,
@@ -188,7 +190,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 1
+      presentacion: 1,
+      esImvixa: false
     },
     {
       id: 10,
@@ -199,7 +202,6 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 560,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200,
       duracion: 4,
@@ -209,7 +211,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 50
+      presentacion: 50,
+      esImvixa: false
     },
     {
       id: 11,
@@ -220,7 +223,6 @@ const initialState = {
       unidad: 'kg',
       costoUnitario: 650,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
-    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200,
       duracion: 4,
@@ -230,7 +232,8 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 50
+      presentacion: 50,
+      esImvixa: false
     }
   ],
   tratamientos: {

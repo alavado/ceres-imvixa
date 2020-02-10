@@ -118,7 +118,7 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
         </tbody>
       </table>
       <div className="nota">
-      Fuente: Cálculo simulador Ceres BCA - IMVIXA basado en dosis lt o kg por jaula confirmados por usuario.
+      Fuente: Cálculo simulador Ceres BCA - IMVIXA basado en dosis de principio activo por tratamientos confirmados por usuario.
       </div>
     </div>
   );
