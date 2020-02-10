@@ -7,7 +7,10 @@ import { useSelector } from 'react-redux'
 import './../Anexos/Anexos.css'
 import './ImpactosLaborales.css'
 
-const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, curvaImvixa, curvaMortalidadAcumuladaTradicional, curvaMortalidadAcumuladaImvixa}) => {
+const ImpactosLaborales = props => {
+  const {numeroBañosTradicional, numeroBañosImvixa, curvaTradicional, 
+    curvaImvixa, curvaMortalidadAcumuladaTradicional, 
+    curvaMortalidadAcumuladaImvixa, biomasaTradicional, biomasaImvixa} = props
   const produccion = useSelector(state => state.produccion)
   const { numeroJaulas, volumenJaula, numeroSmolts } = produccion
   const tratamientosSt = useSelector(state => state.tratamientos)
@@ -119,6 +122,38 @@ const ImpactosLaborales = ({numeroBañosTradicional, numeroBañosImvixa, curvaTr
       </table>
       <div className="nota">
       Fuente: Cálculo simulador Ceres BCA - IMVIXA basado en dosis de principio activo por tratamientos confirmados por usuario.
+      </div>
+      <h3>3.3 Índice de uso de antiparasitario por producto* (g de principio activo por tonelada)</h3>
+      <table className="tabla-reporte">
+        <thead>
+          <tr>
+            <th style={{ width: 280 }}>Producto</th>
+            <th>Estrategia 1</th>
+            <th>Estrategia 2</th>
+            <th>Diferencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {agruparProductosVertidos(medicamentos, obtenerTratamientosEnCiclos(tratamientos, curvaTradicional, curvaImvixa), volumenJaula, numeroJaulas, numeroSmolts, curvas).map((v, i) => {
+            let icono = ''
+            const diferencia = (v.tradicional / biomasaTradicional - v.imvixa / biomasaImvixa) * 1000 // a Toneladas
+            if (diferencia > 0) {
+              icono = <FontAwesomeIcon icon={faArrowDown} style={{ marginRight: 4, color: 'green' }} />
+            }
+            else if (diferencia < 0) {
+              icono = <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: 4, color: 'red' }} />
+            }
+            return (<tr key={`vertidos-${i}`} className="fila-vertidos">
+              <td>{v.principioActivo}</td>
+              <td>{redondearYAString(v.tradicional * 1000 / biomasaTradicional)} {v.unidad}/Ton</td>
+              <td>{redondearYAString(v.imvixa * 1000 / biomasaImvixa)} {v.unidad}/Ton</td>
+              <td>{icono} {redondearYAString(Math.abs(diferencia))} {v.unidad}</td>
+            </tr>)
+          })}
+        </tbody>
+      </table>
+      <div className="nota">
+      * Calculado como la cantidad de principio activo usado (en gramos) por tonelada de pescado producido
       </div>
     </div>
   );
