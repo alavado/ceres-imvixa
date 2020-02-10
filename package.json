@@ -73,7 +73,7 @@
   },
   "build": {
     "appId": "cl.compsci.ceres.imvixa",
-    "productName": "Simulador CERES BCA - IMVIXA",
+    "productName": "Simulador VisiOn - Elanco",
     "directories": {
       "buildResources": "build",
       "output": "dist"
@@ -98,5 +98,5 @@
       }
     ]
   },
-  "description": "Simulación salmones"
+  "description": "Simulador VisiOn"
 }

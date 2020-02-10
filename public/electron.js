@@ -84,7 +84,7 @@ ipcMain.on('imprimir', (event, state) => {
       //unable to save pdf..
     }
     finally {
-      electron.shell.openItem(path.join(app.getPath('desktop'), 'Reporte Simulador Ceres BCA.pdf'));
+      electron.shell.openItem(path.join(app.getPath('desktop'), 'Reporte Simulador VisiOn - Elanco.pdf'));
     }
    
 })})
