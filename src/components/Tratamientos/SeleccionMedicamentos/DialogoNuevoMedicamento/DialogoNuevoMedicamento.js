@@ -18,7 +18,8 @@ const medicamentoInicial = {
   cantidadPorJaula: 0,
   mortalidad: 0.06,
   activo: true,
-  color: '#6D4C41'
+  color: '#6D4C41',
+  esImvixa: false
 }
 
 const DialogoNuevoMedicamento = props => {
@@ -93,9 +94,9 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-principio"
         onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
       />
-      <label htmlFor="nuevo-medicamento-dosis">Presentación (% principio activo)</label>
+      <label htmlFor="nuevo-medicamento-presentacion">Presentación (% principio activo)</label>
       <CampoNumerico
-        id="nuevo-medicamento-dosis"
+        id="nuevo-medicamento-presentacion"
         suffix=" %"
         onValueChange={e => setMedicamento({ ...medicamento, presentacion: e.floatValue })}
       />
@@ -105,6 +106,16 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
         suffix=" mg/kg"
         onValueChange={e => setMedicamento({ ...medicamento, dosis: e.floatValue })}
       />
+      <div style={{display:'flex', alignItems: 'center', whiteSpace: 'nowrap', marginBottom: '10px'}}>
+        <label htmlFor="nuevo-medicamento-es-imvixa">Asociado a Imvixa</label>
+        <input
+          style={{margin:'-100px'}}
+          id="nuevo-medicamento-es-imvixa"
+          type="checkbox"
+          name="objetivo"
+          onChange={e => setMedicamento({ ...medicamento, esImvixa: e.target.checked})}
+        />
+      </div>
     </div>
   )
 }
@@ -133,13 +144,13 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
             id="unidades-costo-lt"
             defaultChecked={true}
             onChange={e => setMedicamento({ ...medicamento, unidad: 'lt', unidadDosis: 'ml/m3' })}
-          /><label for="unidades-costo-lt" className="label-radio">USD/lt</label>
+          /><label htmlFor="unidades-costo-lt" className="label-radio">USD/lt</label>
           <input
             type="radio"
             name="unidades-costo"
             id="unidades-costo-kg"
             onChange={e => setMedicamento({ ...medicamento, unidad: 'kg', unidadDosis: 'mg/m3' })}
-          /><label for="unidades-costo-kg" className="label-radio">USD/kg</label>
+          /><label htmlFor="unidades-costo-kg" className="label-radio">USD/kg</label>
         </div>
       </div>
       <label htmlFor="nuevo-medicamento-principio">Principio activo</label>

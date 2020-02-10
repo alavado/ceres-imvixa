@@ -1,9 +1,9 @@
 .fondo-oscuro {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
-  width: calc(100vw - 200px - 32px);
-  min-width: calc(1260px - 200px - 32px);
-  height: calc(100vh - 32px);
+  width: calc(100vw - 200px);
+  min-width: calc(1260px - 200px);
+  height: 100vh;
   z-index: 1000;
   display: flex;
   justify-content: center;

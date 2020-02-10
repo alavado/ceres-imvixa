@@ -98,7 +98,7 @@ export const calcularCostoImvixa = (medicamentos, tratamientos, numeroDeSmoltsIn
     const numSemana = Number(semana)
     const { idMedicamento } = tratamientos[semana]
     const m = medicamentos.find(m => m.id === idMedicamento)
-    if (m.nombre === 'Imvixa') {
+    if (m.esImvixa) {
       let pesoPromedio, diferenciaPeso, cantidadComida
       const costoMiligramos = m.costoUnitario / 1000000
       if (semana === '0'){
