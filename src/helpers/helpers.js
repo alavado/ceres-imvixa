@@ -188,7 +188,7 @@ export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volu
       dosisPorM3 *= 1000
     }
     const cantidadPorJaula = dosisPorM3 * volumenEnM3 
-    const cantidadPorCentro = cantidadPorJaula * numeroDeJaulas // mg o ml de producto / centro
+    const cantidadPorCentro = cantidadPorJaula * numeroDeJaulas / 1000 // mg o ml de producto / centro
     const cantidadPrincipioActivo = cantidadPorCentro * medicamento.presentacion / 100 
     return productosVertidos.concat([{
       principioActivo: medicamento.principioActivo,

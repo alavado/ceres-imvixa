@@ -78,7 +78,7 @@ ipcMain.on('imprimir', (event, state) => {
       return;
     }
     try {
-      fs.writeFileSync(path.join(app.getPath('desktop'), 'Reporte Simulador Ceres BCA.pdf'), data);
+      fs.writeFileSync(path.join(app.getPath('desktop'), 'Reporte Simulador VisiOn - Elanco.pdf'), data);
     }
     catch(err) {
       //unable to save pdf..

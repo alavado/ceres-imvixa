@@ -113,15 +113,15 @@ const ImpactosLaborales = props => {
             }
             return (<tr key={`vertidos-${i}`} className="fila-vertidos">
               <td>{v.principioActivo}</td>
-              <td>{redondearYAString(v.tradicional)} {v.unidad}/centro</td>
-              <td>{redondearYAString(v.imvixa)} {v.unidad}/centro</td>
-              <td>{icono} {redondearYAString(Math.abs(diferencia))} {v.unidad}</td>
+              <td>{redondearYAString(v.tradicional / 1000)} Kg/centro</td>
+              <td>{redondearYAString(v.imvixa / 1000)} Kg/centro</td>
+              <td>{icono} {redondearYAString(Math.abs(diferencia / 1000))} Kg</td>
             </tr>)
           })}
         </tbody>
       </table>
       <div className="nota">
-      Fuente: Cálculo simulador Ceres BCA - IMVIXA basado en dosis de principio activo por tratamientos confirmados por usuario.
+      Fuente: Cálculo basado en dosis de principio activo por tratamientos confirmados por usuario.
       </div>
       <h3>3.3 Índice de uso de antiparasitario por producto* (g de principio activo por tonelada)</h3>
       <table className="tabla-reporte">
@@ -145,9 +145,9 @@ const ImpactosLaborales = props => {
             }
             return (<tr key={`vertidos-${i}`} className="fila-vertidos">
               <td>{v.principioActivo}</td>
-              <td>{redondearYAString(v.tradicional * 1000 / biomasaTradicional)} {v.unidad}/Ton</td>
-              <td>{redondearYAString(v.imvixa * 1000 / biomasaImvixa)} {v.unidad}/Ton</td>
-              <td>{icono} {redondearYAString(Math.abs(diferencia))} {v.unidad}</td>
+              <td>{redondearYAString(v.tradicional * 1000 / biomasaTradicional)} g/Ton</td>
+              <td>{redondearYAString(v.imvixa * 1000 / biomasaImvixa)} g/Ton</td>
+              <td>{icono} {redondearYAString(Math.abs(diferencia))} g</td>
             </tr>)
           })}
         </tbody>

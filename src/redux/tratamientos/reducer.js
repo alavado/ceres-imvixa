@@ -13,7 +13,7 @@ const initialState = {
       costoUnitario: 620,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,    
       unidadDosis: 'mg/m3',
-      cantidadPorJaula: 200,
+      cantidadPorJaula: 200, // dosis producto mg por m3
       duracion: 4,
       mortalidad: 0.06,
       color: '#EF5350',
@@ -21,7 +21,7 @@ const initialState = {
       aplicaciones: 1, // cuantas veces seguidas se repite el tratamiento
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 50,
+      presentacion: 50, // porcentaje de g por litro o kg
       esImvixa: false
     },
     {
@@ -64,7 +64,7 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 1000,
+      presentacion: 1,
       esImvixa: false
     },
     {
@@ -148,7 +148,7 @@ const initialState = {
       aplicaciones: 1,
       factorFarmaco: 6,
       factorMetodo: 1,
-      presentacion: 10000,
+      presentacion: 10,
       esImvixa: false
     },
     // {

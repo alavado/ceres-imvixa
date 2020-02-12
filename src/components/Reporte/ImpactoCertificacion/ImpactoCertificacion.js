@@ -36,7 +36,7 @@ const ImpactoCertificacion = ({ptiTradicional, ptiImvixa}) => {
         ptiTradicional={ptiTradicional.suma}
       />
       <div className="nota">
-        Fuente: Cálculo simulador CERES BCA - IMVIXA según criterio de cálculo del PTI del ASC, basado en la estrategias de tratamientos indicadas por el usuario.
+        Fuente: Cálculo Simulador VisiOn según criterio de cálculo del PTI del ASC, basado en la estrategias de tratamientos indicadas por el usuario.
       </div>
     </div>
   );
