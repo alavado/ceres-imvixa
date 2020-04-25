@@ -1,0 +1,80 @@
+#grafico-wnmt {
+  margin: 32px auto;
+  margin-top: 152px;
+}
+
+#contenedor-marcadores-wnmt {
+  display: flex;
+  flex-direction: row;
+  margin-left: 120px;
+}
+
+#barra-wnmt {
+  display: flex;
+  height: 24px;
+  background: rgba(255,255,255,1);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 39%,rgb(124, 218, 211) 40%, rgb(124, 218, 211) 79%,  rgba(18,180,170,1) 80%, rgba(18,180,170,1) 100%);
+  border: 1px solid rgba(13, 139, 131, 0.548);
+  margin-left: 120px;
+}
+
+#barra-wnmt-labels {
+  display: flex;
+  color: rgb(69, 94, 105);
+  text-shadow: -1px 0 #54c5be, 0 -1px #54c5be;
+  font-weight: 'bold'
+}
+
+.barra-wnmt-label {
+  margin-top: 10px;
+  width: 120px;
+}
+
+div[id^="indicador-wnmt"] {
+  position: absolute;
+  font-size: .8em;
+  color: white;
+  width: 100px;
+  text-align: center;
+  border-left: 2px solid #5F7D8B;
+}
+
+#indicador-wnmt-tradicional {
+  margin-top: -64px;
+}
+
+#indicador-wnmt-imvixa {
+  margin-top: -120px;
+}
+
+div[id^="indicador-wnmt"] > p {
+  padding: 8px 4px;
+  border-radius: 0 4px 4px 0;
+  line-height: 1.2em;
+}
+
+div[id^="indicador-wnmt"] > span {
+  display: block;
+  height: 32px;
+  background-color: transparent;
+}
+
+#indicador-wnmt-imvixa > span {
+  height: 88px;
+}
+
+#indicador-wnmt-imvixa > p {
+  background: #EF7B10;
+}
+
+#indicador-wnmt-tradicional > p {
+  background: #5F7D8B;
+}
+
+#logo-asc > img {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  margin-left: 8px;
+  margin-top: -16px;
+}

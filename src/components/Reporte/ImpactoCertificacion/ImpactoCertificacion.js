@@ -1,11 +1,22 @@
 import React from 'react';
-import GraficoPTI from '../GraficoPTI';
+import GraficoWNMT from '../GraficoWNMT';
 import { redondearYAString } from '../../../helpers/helpers';
 import './../Anexos/Anexos.css'
 import './ImpactosCertificacion.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
+const filaTablaCertificacion = (nombre, numeroBaños) => {
+  return (
+  <tr>
+    <td>{nombre}</td>
+    <td>{numeroBaños}</td>
+    <td>{numeroBaños <= 3 ? 'Global Level' : numeroBaños <= 9 ? 'Entry Level' : <FontAwesomeIcon icon={faTimesCircle} size="lg" style={{marginRight: 4, color:'#B22222'}}/>}</td>
+    <td>{numeroBaños <= 9 ?  <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> :  <div><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} /> {numeroBaños - 9} baños</div>}</td>
+    <td>{numeroBaños <= 3 ? <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> : <div><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} /> {numeroBaños - 3} baños</div>}</td>
+  </tr>
+  )
+}
 const ImpactoCertificacion = ({numeroBañosTradicional, numeroBañosImvixa}) => {
   return (
     <div id="impactos-certificacion">
@@ -22,28 +33,16 @@ const ImpactoCertificacion = ({numeroBañosTradicional, numeroBañosImvixa}) => 
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Estrategia 1</td>
-            <td>{numeroBañosTradicional}</td>
-            <td>{numeroBañosTradicional <= 3 ? 'Global Level' : numeroBañosTradicional <= 9 ? 'Entry Level' : <FontAwesomeIcon icon={faTimesCircle} size="lg" style={{marginRight: 4, color:'#B22222'}}/>}</td>
-            <td>{numeroBañosTradicional <= 9 ?  <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> : numeroBañosTradicional - 9}</td>
-            <td>{numeroBañosTradicional <= 3 ? <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> : numeroBañosTradicional - 3}</td>
-          </tr>
-          <tr>
-            <td>Estrategia 2</td>
-            <td>{numeroBañosImvixa}</td>
-            <td>{numeroBañosImvixa <= 3 ? 'Global Level' :numeroBañosImvixa <= 9 ? 'Entry Level' :  <FontAwesomeIcon icon={faTimesCircle} size="lg" style={{marginRight: 4, color:'#B22222'}}/>}</td>
-            <td>{numeroBañosImvixa <= 9 ? <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> : numeroBañosImvixa - 9}</td>
-            <td>{numeroBañosImvixa <= 3 ? <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}} /> : numeroBañosImvixa- 3}</td>
-          </tr>
+          {filaTablaCertificacion('Estrategia 1', numeroBañosTradicional)}
+          {filaTablaCertificacion('Estrategia 2', numeroBañosImvixa)}
         </tbody>
       </table>
-      <GraficoPTI
-        ptiImvixa={numeroBañosImvixa}
-        ptiTradicional={numeroBañosTradicional}
+      <GraficoWNMT
+        numeroBañosImvixa={numeroBañosImvixa}
+        numeroBañosTradicional={numeroBañosTradicional}
       />
       <div className="nota">
-        Fuente: Cálculo Simulador VisiOn basado en la estrategias de tratamientos indicadas por el usuario, según criterio de cálculo del WNMT del ASC. <br/>ASC Salmon Standard Version 1.3.
+        Fuente: Cálculo Simulador VisiOn basado en las estrategias de tratamientos indicadas por el usuario, según criterio de cálculo del WNMT del ASC. <br/>ASC Salmon Standard Version 1.3.
       </div>
     </div>
   );
