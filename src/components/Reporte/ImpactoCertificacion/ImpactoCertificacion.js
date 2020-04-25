@@ -27,7 +27,7 @@ const ImpactoCertificacion = ({numeroBañosTradicional, numeroBañosImvixa}) => 
           <tr>
             <th></th>
             <th>WNMT</th>
-            <th>Certificación ASC</th>
+            <th>ASC Level</th>
             <th>Reducción de baños para llegar a Entry Level</th>
             <th>Reducción de baños para llegar a Global Level</th>
           </tr>
