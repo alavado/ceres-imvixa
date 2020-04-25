@@ -180,8 +180,8 @@ const Reporte = ({ state, fijarValorDolar }) => {
           biomasaImvixa={biomasaImvixa}
         />
         <ImpactoCertificacion
-          ptiTradicional={ptiTradicional}
-          ptiImvixa={ptiImvixa}
+          numeroBañosTradicional={numeroBañosTradicional}
+          numeroBañosImvixa={numeroBañosImvixa}
         />
         <ImpactoRegulacion
           mortalidadTotalTradicional={mortalidadTotalTradicional}

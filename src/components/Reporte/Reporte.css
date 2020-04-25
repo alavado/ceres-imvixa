@@ -284,7 +284,7 @@
 }
 
 .tabla-reporte tr:nth-child(even) {
-  background: #ECEFF1;
+  background: rgb(244, 242, 244);
 }
 
 #cuadros-reporte-estrategias {

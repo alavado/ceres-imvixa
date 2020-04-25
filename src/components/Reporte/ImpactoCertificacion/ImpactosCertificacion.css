@@ -1,3 +1,38 @@
 #impactos-certificacion {
   page-break-before: always;
 }
+
+
+.tabla-reporte-certificacion {
+  margin: 18px auto;
+  width: 80%;
+  text-align: center;
+}
+
+.tabla-reporte-certificacion th {
+  font-size: 1.0em;
+  font-weight: bold;
+  color: #2A2E57;
+  background: #ECEFF1;
+  vertical-align: middle;
+  padding: 6px 10px;
+  border-bottom: 2px solid #2A2E57;
+}
+
+.tabla-reporte-certificacion td {
+  font-size: 1.0em;
+  vertical-align: middle;
+  padding: 6px 10px;
+}
+
+.tabla-reporte-certificacion td:first-child, .tabla-reporte-certificacion th:first-child {
+  width: 100px;
+}
+
+.tabla-reporte-certificacion td:nth-child(3), .tabla-reporte-certificacion th:nth-child(3) {
+  width: 130px;
+}
+
+.tabla-reporte-certificacion tr:nth-child(even) {
+  background: rgb(244, 242, 244);
+}
