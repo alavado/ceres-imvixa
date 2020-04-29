@@ -7,14 +7,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 const filaTablaCertificacion = (nombre, numeroBaños) => {
+  
   return (
-  <tr>
-    <td>{nombre}</td>
-    <td>{numeroBaños}</td>
-    <td>{numeroBaños <= 3 ? 'Global Level' : numeroBaños <= 9 ? 'Entry Level' : <FontAwesomeIcon icon={faTimesCircle} size="lg" style={{marginRight: 4, color:'#B22222'}}/>}</td>
-    <td>{numeroBaños <= 9 ?  <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> :  <div><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} /> {numeroBaños - 9} baños</div>}</td>
-    <td>{numeroBaños <= 3 ? <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> : <div><FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} /> {numeroBaños - 3} baños</div>}</td>
-  </tr>
+    <tr>
+      <td>{nombre}</td>
+      <td>{numeroBaños}</td>
+      <td>{numeroBaños <= 3 ? 'Global Level' : numeroBaños <= 9 ? 'Entry Level' : <FontAwesomeIcon icon={faTimesCircle} size="lg" style={{marginRight: 4, color:'#B22222'}}/>}</td>
+      <td>
+        {numeroBaños <= 9 ?
+          <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> :
+          <div>
+            <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} />
+            {numeroBaños - 9} baño{numeroBaños - 9 !== 1 && 's'}
+          </div>
+        }
+      </td>
+      <td>
+        {numeroBaños <= 3 ?
+          <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{marginRight: 4, color:'green'}}/> :
+          <div>
+            <FontAwesomeIcon icon={faArrowDown} style={{marginRight: 4, color:'#B22222'}} />
+            {numeroBaños - 3} baño{numeroBaños - 3 !== 1 && 's'}
+          </div>
+        }
+      </td>
+    </tr>
   )
 }
 const ImpactoCertificacion = ({numeroBañosTradicional, numeroBañosImvixa}) => {
