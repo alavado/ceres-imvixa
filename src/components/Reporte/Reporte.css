@@ -5,6 +5,7 @@
   margin: 16px auto;
   border: 1px solid gray;
   padding: 32px;
+  position: relative;
 }
 
 #logo-elanco-reporte {
@@ -408,8 +409,29 @@
   font-family: 'FiraSans';
   line-height: 1.5;
   width: 300px;
+  text-align: right;
 }
 
 #contenedor-tipo-cambio input, #contenedor-tipo-cambio label {
   cursor: pointer;
+}
+
+.Reporte__texto_copyright{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  background-color: #0078BF;
+  color: white;
+  width: 100%;
+  height: 25px;
+  position: fixed;
+  bottom: 0px;
+  font-family: 'FiraSans';
+  font-size: 0.75em;
+}
+
+.texto_copyright > p {
+  text-align: right;
 }

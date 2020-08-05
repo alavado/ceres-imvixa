@@ -138,7 +138,7 @@ const Reporte = ({ state, fijarValorDolar }) => {
               <label for="peso">Peso chileno (1 USD = {valorDolar.valor} CLP)</label>
             </div>
           </div>
-          <button onClick={imprimirPDF}>Imprimir PDF</button>
+          {/* <button onClick={imprimirPDF}>Imprimir PDF</button> */}
         </div>
       </div>
       <div id="reporte">
@@ -200,6 +200,14 @@ const Reporte = ({ state, fijarValorDolar }) => {
           valorDolar={valorDolar.valor}
         />
       </div>
+      <div className="Reporte__texto_copyright">
+          <p>
+            Imvixa, Elanco y el logo de la barra diagonal son marcas registradas de Elanco o sus afiliadas.
+          </p>
+          <p>
+            ©2020 Elanco   PM-CL-20-00XX
+          </p>
+      </div> 
     </>
   );
 };
