@@ -30,7 +30,6 @@ const FilaMedicamento = ({id, volumenJaulaOriginal, activarMedicamento, editarMe
           onValueChange={e => editarMedicamento(id, 'costoUnitario', e.floatValue)}
         />
       }</td>
-      <td>{m.principioActivo}</td>
       {!esBaño &&
         <td>{m.activo && m.presentacion + ' %'}</td>
       }

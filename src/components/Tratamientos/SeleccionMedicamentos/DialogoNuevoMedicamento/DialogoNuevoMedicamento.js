@@ -64,7 +64,7 @@ const DialogoNuevoMedicamento = props => {
           <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
         }
         <button
-          disabled={medicamento.nombre === '' || medicamento.costoUnitario === 0 || medicamento.principioActivo === ''}
+          disabled={medicamento.nombre === '' || medicamento.costoUnitario === 0}
           onClick={() => {
             dispatch(tratamientosActions.agregarMedicamento(medicamento))
             props.ocultar()
@@ -78,7 +78,7 @@ const DialogoNuevoMedicamento = props => {
 const CamposOral = ({ medicamento, setMedicamento }) => {
   return (
     <div>
-      <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
+      <label htmlFor="nuevo-medicamento-nombre">Nombre / Principio Activo</label>
       <input
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
@@ -88,11 +88,6 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-costo"
         suffix=" USD/kg"
         onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
-      />
-      <label htmlFor="nuevo-medicamento-principio">Nombre principio activo</label>
-      <input
-        id="nuevo-medicamento-principio"
-        onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
       />
       <label htmlFor="nuevo-medicamento-presentacion">Presentación (% principio activo)</label>
       <CampoNumerico
@@ -126,7 +121,7 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
 
   return (
     <div>
-      <label htmlFor="nuevo-medicamento-nombre">Nombre comercial</label>
+      <label htmlFor="nuevo-medicamento-nombre">Nombre / Principio Activo</label>
       <input
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
@@ -153,11 +148,6 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
           /><label htmlFor="unidades-costo-kg" className="label-radio">USD/kg</label>
         </div>
       </div>
-      <label htmlFor="nuevo-medicamento-principio">Principio activo</label>
-      <input
-        id="nuevo-medicamento-principio"
-        onChange={e => setMedicamento({ ...medicamento, principioActivo: e.target.value })}
-      />
       <label htmlFor="nuevo-medicamento-volumen">Volumen de agua por baño</label>
       <CampoNumerico
         id="nuevo-medicamento-volumen"
