@@ -4,7 +4,9 @@ export const loadState = () => {
     if (serializedState === null) {
       return undefined;
     }
-    return JSON.parse(serializedState);
+    const state = JSON.parse(serializedState)
+    delete state.popups
+    return state;
   } catch (err) {
     return undefined;
   }

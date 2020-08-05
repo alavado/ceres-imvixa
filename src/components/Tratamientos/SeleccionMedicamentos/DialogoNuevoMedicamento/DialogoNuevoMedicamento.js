@@ -13,6 +13,8 @@ const medicamentoInicial = {
   principioActivo: '',
   unidad: 'kg',
   costoUnitario: 0,
+  costoUnitarioInf: 0,
+  costoUnitarioSup: 0,
   costoOperacional: 0,
   unidadDosis: 'mg/kg',
   cantidadPorJaula: 0,
@@ -64,7 +66,7 @@ const DialogoNuevoMedicamento = props => {
           <CamposOral medicamento={medicamento} setMedicamento={setMedicamento} />
         }
         <button
-          disabled={medicamento.nombre === '' || medicamento.costoUnitario === 0}
+          disabled={medicamento.nombre === '' || medicamento.costoUnitarioInf === 0 || medicamento.costoUnitarioSup === 0}
           onClick={() => {
             dispatch(tratamientosActions.agregarMedicamento(medicamento))
             props.ocultar()
@@ -83,11 +85,17 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
       />
-      <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
+      <label htmlFor="nuevo-medicamento-costo-inf">Costo unitario - Rango inferior</label>
       <CampoNumerico
-        id="nuevo-medicamento-costo"
+        id="nuevo-medicamento-costo-inf"
         suffix=" USD/kg"
-        onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
+        onValueChange={e => setMedicamento({ ...medicamento, costoUnitarioInf: e.floatValue })}
+      />
+      <label htmlFor="nuevo-medicamento-costo-sup">Costo unitario - Rango superior</label>
+      <CampoNumerico
+        id="nuevo-medicamento-costo-sup"
+        suffix=" USD/kg"
+        onValueChange={e => setMedicamento({ ...medicamento, costoUnitarioSup: e.floatValue })}
       />
       <label htmlFor="nuevo-medicamento-presentacion">Presentación (% principio activo)</label>
       <CampoNumerico
@@ -126,11 +134,11 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
         id="nuevo-medicamento-nombre"
         onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
       />
-      <label htmlFor="nuevo-medicamento-costo">Costo unitario</label>
+      <label htmlFor="nuevo-medicamento-costo-inf">Costo unitario - Rango Inferior</label>
       <div className="input-con-unidades">
         <CampoNumerico
-          id="nuevo-medicamento-costo"
-          onValueChange={e => setMedicamento({ ...medicamento, costoUnitario: e.floatValue })}
+          id="nuevo-medicamento-costo-inf"
+          onValueChange={e => setMedicamento({ ...medicamento, costoUnitarioInf: e.floatValue })}
         />
         <div className="contenedor-radios">
           <input
@@ -147,6 +155,13 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
             onChange={e => setMedicamento({ ...medicamento, unidad: 'kg', unidadDosis: 'mg/m3' })}
           /><label htmlFor="unidades-costo-kg" className="label-radio">USD/kg</label>
         </div>
+      </div>
+      <label htmlFor="nuevo-medicamento-costo-sup">Costo unitario - Rango Superior</label>
+      <div className="input-con-unidades">
+        <CampoNumerico
+          id="nuevo-medicamento-costo-sup"
+          onValueChange={e => setMedicamento({ ...medicamento, costoUnitarioSup: e.floatValue })}
+        />
       </div>
       <label htmlFor="nuevo-medicamento-volumen">Volumen de agua por baño</label>
       <CampoNumerico

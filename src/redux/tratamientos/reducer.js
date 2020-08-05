@@ -12,6 +12,8 @@ const initialState = {
       principioActivo: 'Azametifos',
       unidad: 'kg',
       costoUnitario: 620,
+      costoUnitarioInf: 620,
+      costoUnitarioSup: 620,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,    
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 200, // dosis producto mg por m3
@@ -35,6 +37,8 @@ const initialState = {
       principioActivo: 'Emamectina',
       unidad: 'kg',
       costoUnitario: 180,
+      costoUnitarioInf: 180,
+      costoUnitarioSup: 180,
       costoOperacional: 0,
       dosis: 175, // dosis practica (mg/kg). dosis real: 50 microgramos/kg al 0.2% 
       unidadDosis: 'mg/kg',
@@ -57,6 +61,8 @@ const initialState = {
       principioActivo: 'Deltametrina',
       unidad: 'lt',
       costoUnitario: 960,
+      costoUnitarioInf: 960,
+      costoUnitarioSup: 960,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 0.3,
@@ -79,6 +85,8 @@ const initialState = {
       principioActivo: 'Peróxido de hidrógeno',
       unidad: 'kg',
       costoUnitario: 1.5,
+      costoUnitarioInf: 1.5,
+      costoUnitarioSup: 1.5,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       unidadDosis: 'mg/m3',
       cantidadPorJaula: 800000,
@@ -121,6 +129,8 @@ const initialState = {
       principioActivo: 'Lufenurón',
       unidad: 'kg',
       costoUnitario: 9000,
+      costoUnitarioInf: 9000,
+      costoUnitarioSup: 9000,
       costoOperacional: 0,
       dosis: 350, // mg/kg
       unidadDosis: 'mg/kg',
@@ -143,6 +153,8 @@ const initialState = {
       principioActivo: 'Hexaflumurón',
       unidad: 'lt',
       costoUnitario: 700,
+      costoUnitarioInf: 700,
+      costoUnitarioSup: 700,
       costoOperacional: COSTO_OPERACIONAL_BAÑO,
       unidadDosis: 'ml/m3',
       cantidadPorJaula: 20,
@@ -302,6 +314,32 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     case tratamientosActions.EDITAR_MEDICAMENTO: {
       const { id, propiedad, valor } = action.payload
+      console.log(propiedad)
+      const medicamento = state.medicamentos.find(m => m.id === id)
+      if (propiedad === 'costoUnitarioInf') {
+        return {
+          ...state,
+          medicamentos: [...state.medicamentos.filter(m => m.id !== id),
+            {
+              ...medicamento,
+              costoUnitarioInf: valor,
+              costoUnitario: (valor + medicamento['costoUnitarioSup']) / 2,
+            }
+          ]
+        }
+      }
+      if (propiedad === 'costoUnitarioSup') {
+        return {
+          ...state,
+          medicamentos: [...state.medicamentos.filter(m => m.id !== id),
+            {
+              ...medicamento,
+              costoUnitarioSup: valor,
+              costoUnitario: (medicamento['costoUnitarioInf'] + valor) / 2,
+            }
+          ]
+        }
+      }
       return {
         ...state,
         medicamentos: [...state.medicamentos.filter(m => m.id !== id),
@@ -366,6 +404,7 @@ const tratamientosReducer = (state = initialState, action) => {
             aplicaciones: 1,
             factorFarmaco: 0,
             factorMetodo: 0,
+            costoUnitario: (medicamento.costoUnitarioInf + medicamento.costoUnitarioSup) / 2,
             ...medicamento
           }
         ]

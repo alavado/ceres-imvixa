@@ -1,0 +1,34 @@
+#DialogoDisclaimer__fondo {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: calc(100vw - 200px);
+  min-width: calc(1260px - 200px);
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  opacity: 1;
+  transition: all .25s ease-in-out;
+}
+
+.DialogoDisclaimer__mensaje {
+  background-color: hsl(202, 100%, 43%);
+  color: white;
+  padding: 2em;
+  text-align: center;
+  max-width: 24em;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.DialogoDisclaimer__mensaje p:first-child {
+  margin-bottom: 20px;
+}
+
+.DialogoDisclaimer__boton {
+  margin-top: 1em;
+  font-size: 1.3em;
+}

@@ -8,6 +8,7 @@ import { faPlusCircle as iconoAgregar } from '@fortawesome/free-solid-svg-icons'
 import FilaMedicamento from './FilaMedicamento';
 import FilaNuevoMedicamento from './FilaNuevoMedicamento/';
 import DialogoNuevoMedicamento from './DialogoNuevoMedicamento';
+import DialogoDisclaimer from './DialogoDisclaimer';
 
 const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicamentosFueronSeleccionados, agregarMedicamento}) => {
 
@@ -28,12 +29,18 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
     })
   }
 
+  const [mostrarDialogoDisclaimer, setMostrarDialogoDisclaimer] = useState(true)
+
   return (
     <div className="contenido">
       <DialogoNuevoMedicamento
         ocultar={() => setMostrarDialogoNuevoMedicamento(false)}
         formaFarmaceutica={formaFarmaceuticaNuevomedicamento}
         mostrar={mostrarDialogoNuevoMedicamento}
+      />
+      <DialogoDisclaimer
+        ocultar={() => setMostrarDialogoDisclaimer(true)}
+        mostrar={mostrarDialogoDisclaimer}
       />
       <div className="barra-superior-contenido">
         <div className="titulo-contenido">
@@ -62,7 +69,8 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                   <tr>
                     <th>Usar</th>
                     <th>Nombre / Principio Activo</th>
-                    <th>Costo unitario producto comercial</th>
+                    <th>Costo unitario producto comercial <br/>Rango Inferior</th>
+                    <th>Costo unitario producto comercial <br/>Rango Superior</th>
                     {formaFarmaceutica === FARMACO_APLICACION_ORAL && <th>Presentación (% principio activo)</th>}
                     {formaFarmaceutica === FARMACO_APLICACION_BAÑO && <th>Volumen de agua para baño</th>}
                     <th>{formaFarmaceutica === FARMACO_APLICACION_ORAL ? 'Dosis producto comercial total por kg de peso' : 'Dosis producto comercial'}</th>
