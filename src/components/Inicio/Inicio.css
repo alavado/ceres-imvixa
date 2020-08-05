@@ -9,3 +9,14 @@
   display: flex;
   justify-content: center;
 }
+
+.texto_copyright {
+  height: 50px;
+  position: absolute;
+  bottom: 50px;
+  color: #0078BF;
+}
+
+.texto_copyright > p {
+  text-align: right;
+}

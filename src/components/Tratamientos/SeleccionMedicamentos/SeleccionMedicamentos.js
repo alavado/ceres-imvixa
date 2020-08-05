@@ -61,7 +61,7 @@ const SeleccionMedicamentos = ({medicamentos, activarMedicamento, marcarMedicame
                 <thead>
                   <tr>
                     <th>Usar</th>
-                    <th>Nombre comercial</th>
+                    <th>Nombre / Principio Activo</th>
                     <th>Costo unitario producto comercial</th>
                     <th>Principio activo</th>
                     {formaFarmaceutica === FARMACO_APLICACION_ORAL && <th>Presentación (% principio activo)</th>}

@@ -9,10 +9,12 @@ import Tratamientos from '../Tratamientos';
 import SeleccionMedicamentos from '../Tratamientos/SeleccionMedicamentos';
 import Economico from '../Economico';
 import Actualizando from '../Actualizando';
+import Disclaimer from '../DisclaimerInicial';
 
 const Contenedor = () => {
   return (
     <div id="contenedor">
+      <Disclaimer/>
       <BarraLateral />
       <Actualizando />
       <Route path="/" exact component={Inicio} />
