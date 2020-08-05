@@ -1,14 +1,17 @@
 import React from 'react'
 import './DisclaimerInicial.css'
+import { connect } from 'react-redux'
+import popupsActions from '../../redux/popups/actions'
 
-const DisclaimerInicial = () => {
+const DisclaimerInicial = props => {
 
   const esconderDisclaimer = () => {
     var disclaimer = document.getElementById('DisclaimerInicial')
     disclaimer.style.display = 'none'
   }
 
-  return (
+  return props.aceptaUsarSoftware ? '' :
+  (
     <div id="DisclaimerInicial">
       <div className="DisclaimerInicial__formulario">
         <div className="DisclaimerInicial__mensaje">
@@ -20,7 +23,7 @@ const DisclaimerInicial = () => {
           </p>
         </div>
         <div className="DisclaimerInicial__botones">
-          <button className="DisclaimerInicial__botones_continuar" onClick={() => esconderDisclaimer()}>
+          <button className="DisclaimerInicial__botones_continuar" onClick={() => props.aceptarUsarSoftware()}>
             Continuar
           </button>
           <button className="DisclaimerInicial__botones_cancelar" onClick={() => window.close()}>
@@ -32,4 +35,12 @@ const DisclaimerInicial = () => {
   )
 }
 
-export default DisclaimerInicial
+const mapStateToProps = state => ({
+  aceptaUsarSoftware: state.popups.aceptaUsarSoftware,
+})
+
+const mapDispatchToProps = dispatch => ({
+  aceptarUsarSoftware: () => dispatch(popupsActions.aceptarUsoSoftware()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisclaimerInicial);

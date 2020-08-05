@@ -5,8 +5,15 @@ export const loadState = () => {
       return undefined;
     }
     const state = JSON.parse(serializedState)
+    
     delete state.popups
-    return state;
+    return {
+      ...state,
+      popups: {
+        aceptaUsarSoftware: false,
+        aceptaIngresarDatos: false
+      }
+    };
   } catch (err) {
     return undefined;
   }

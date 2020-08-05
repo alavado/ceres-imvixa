@@ -1,15 +1,14 @@
 import React from 'react'
 import './DialogoDisclaimer.css';
+import { connect } from 'react-redux'
+import popupsActions from '../../../../redux/popups/actions'
+
 const DialogoDisclaimer = props => {
 
-  const esconderDisclaimer = () => {
-    var disclaimer = document.getElementById('DialogoDisclaimer__fondo')
-    disclaimer.style.display = 'none'
-  }
-
-  return (
+  return props.aceptaIngresarDatos ? '' :
+  (
     <div
-      id="DialogoDisclaimer__fondo" 
+      id="DialogoDisclaimer__fondo"
     >
       <div
         className="DialogoDisclaimer__mensaje"
@@ -24,7 +23,7 @@ const DialogoDisclaimer = props => {
       </div> 
       <button
         className="DialogoDisclaimer__boton" 
-        onClick={esconderDisclaimer}
+        onClick={e => props.aceptarIngresarDatos()}
       >
         Aceptar
       </button>
@@ -32,4 +31,12 @@ const DialogoDisclaimer = props => {
   )
 }
 
-export default DialogoDisclaimer
+const mapStateToProps = state => ({
+  aceptaIngresarDatos: state.popups.aceptaIngresarDatos,
+})
+
+const mapDispatchToProps = dispatch => ({
+  aceptarIngresarDatos: () => dispatch(popupsActions.aceptarIngresarDatos()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DialogoDisclaimer);
