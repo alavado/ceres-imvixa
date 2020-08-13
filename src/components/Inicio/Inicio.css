@@ -8,13 +8,15 @@
   max-width: calc(100vw - 200px);
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .texto_copyright {
-  height: 50px;
-  position: absolute;
-  bottom: 50px;
+  position: fixed;
+  bottom: .5em;
+  right: .5em;
   color: #0078BF;
+  font-size: .9rem;
 }
 
 .texto_copyright > p {

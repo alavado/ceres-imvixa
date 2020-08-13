@@ -17,7 +17,7 @@ const Inicio = () => {
             Imvixa, Elanco y el logo de la barra diagonal son marcas registradas de Elanco o sus afiliadas.
           </p>
           <p>
-            ©2020 Elanco   PM-CL-20-00XX
+            ©2020 Elanco PM-CL-20-0056
           </p>
         </div> 
       </div>

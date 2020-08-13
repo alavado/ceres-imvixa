@@ -314,7 +314,6 @@ const tratamientosReducer = (state = initialState, action) => {
     }
     case tratamientosActions.EDITAR_MEDICAMENTO: {
       const { id, propiedad, valor } = action.payload
-      console.log(propiedad)
       const medicamento = state.medicamentos.find(m => m.id === id)
       if (propiedad === 'costoUnitarioInf') {
         return {
