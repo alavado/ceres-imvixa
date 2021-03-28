@@ -6,27 +6,27 @@ const GraficoNiveles = ({mortalidades}) => {
 
   const nivelesBioseguridad = [
     {
-      nombre: 'Baja 2',
+      nombre: 'Bioseguridad Baja 2',
       porcentaje: 25,
       penalizacion: 60
     },
     {
-      nombre: 'Baja 1',
+      nombre: 'Bioseguridad Baja 1',
       porcentaje: 20,
       penalizacion: 40
     },
     {
-      nombre: 'Media',
+      nombre: 'Bioseguridad Media',
       porcentaje: 14,
       penalizacion: 20
     },
     {
-      nombre: 'Media alta',
+      nombre: 'Bioseguridad Media alta',
       porcentaje: 10,
       penalizacion: 10
     },
     {
-      nombre: 'Alta',
+      nombre: 'Bioseguridad Alta',
       porcentaje: 0,
       penalizacion: 0
     },

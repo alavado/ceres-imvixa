@@ -5,10 +5,10 @@ import popupsActions from '../../redux/popups/actions'
 
 const DisclaimerInicial = props => {
 
-  const esconderDisclaimer = () => {
-    var disclaimer = document.getElementById('DisclaimerInicial')
-    disclaimer.style.display = 'none'
-  }
+  // const esconderDisclaimer = () => {
+  //   var disclaimer = document.getElementById('DisclaimerInicial')
+  //   disclaimer.style.display = 'none'
+  // }
 
   return props.aceptaUsarSoftware ? '' :
   (
@@ -16,7 +16,7 @@ const DisclaimerInicial = props => {
       <div className="DisclaimerInicial__formulario">
         <div className="DisclaimerInicial__mensaje">
           <p>
-            Al iniciar sesión, confirmo que entiendo que éste no es un dispositivo médico y que sus resultados en ningún caso reemplazan la prescripción médica veterinaria. 
+            Al iniciar sesión, confirmo que entiendo que este no es un dispositivo médico y que sus resultados en ningún caso reemplazan la prescripción médica veterinaria. 
           </p>
           <p>
             Esta herramienta de simulación utiliza los datos que usted voluntariamente decida incorporar. Elanco no archiva ni guarda información alguna que haya sido incluida por usted o respecto de las simulaciones que usted desee realizar junto al representante de ventas o técnico de Elanco.

@@ -178,3 +178,15 @@
 #contenedor-ajustes .titulo-tabla-medicamentos .contenedor-agregar-medicamento:hover span {
   color: rgba(0, 0, 0, 0.95)
 }
+
+.tabla-medicamentos-rangos {
+  display: flex;
+}
+
+.tabla-medicamentos-rangos > div {
+  flex: 1;
+}
+
+.tabla-medicamentos-rangos > div:last-child {
+  margin-left: 32px;
+}
