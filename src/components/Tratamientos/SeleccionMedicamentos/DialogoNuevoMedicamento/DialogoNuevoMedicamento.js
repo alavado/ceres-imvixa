@@ -12,7 +12,6 @@ const medicamentoInicial = {
   formaFarmaceutica: FARMACO_APLICACION_ORAL,
   principioActivo: '',
   unidad: 'kg',
-  costoUnitario: 0,
   costoUnitarioInf: 0,
   costoUnitarioSup: 0,
   costoOperacional: 0,
@@ -83,7 +82,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
       <label htmlFor="nuevo-medicamento-nombre">Nombre / Principio Activo</label>
       <input
         id="nuevo-medicamento-nombre"
-        onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
+        onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value, principioActivo: e.target.value })}
       />
       <label htmlFor="nuevo-medicamento-costo-inf">Costo unitario - Rango inferior</label>
       <CampoNumerico
@@ -116,7 +115,7 @@ const CamposOral = ({ medicamento, setMedicamento }) => {
           id="nuevo-medicamento-es-imvixa"
           type="checkbox"
           name="objetivo"
-          onChange={e => setMedicamento({ ...medicamento, esImvixa: e.target.checked, color: '#EF7B10'})}
+          onChange={e => setMedicamento({ ...medicamento, esImvixa: e.target.checked, color: e.target.checked ? '#EF7B10' : '#b1006a' })}
         />
       </div>
     </div>
@@ -132,7 +131,7 @@ const CamposBano = ({ medicamento, setMedicamento }) => {
       <label htmlFor="nuevo-medicamento-nombre">Nombre / Principio Activo</label>
       <input
         id="nuevo-medicamento-nombre"
-        onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value })}
+        onChange={e => setMedicamento({ ...medicamento, nombre: e.target.value, principioActivo: e.target.value })}
       />
       <label htmlFor="nuevo-medicamento-costo-inf">Costo unitario - Rango Inferior</label>
       <div className="input-con-unidades">
