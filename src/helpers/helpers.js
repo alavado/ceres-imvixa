@@ -149,7 +149,7 @@ export const calcularPTI = (medicamentos, tratamientos) => {
     }},{suma: 0, trataciones: []})
   return pti
 }
-
+// Devuelve la cantidad de productos vertidos baños en mg
 export const calcularProductosVertidosOrales = (medicamentos, tratamientos, numeroDeSmoltsInicial, curvas) => {
   const { curvaMortalidadAcumulada, curvaCrecimiento } = curvas
   const semanas = Object.keys(tratamientos)
@@ -166,12 +166,14 @@ export const calcularProductosVertidosOrales = (medicamentos, tratamientos, nume
     const diasSemana = [0,1,2,4,5,6].map(i => numSemana * 7 + i)
     const pesosSemana = curvaCrecimiento.filter((v, i) => diasSemana.includes(i))
     const pesoPromedio = pesosSemana.reduce((prev, current) => current += prev, 0) / (pesosSemana.length * 1000)
+    // vertidos orales
     return productosVertidos.concat([{
       principioActivo : m.principioActivo,
       cantidad: dosisPractica * pesoPromedio * numeroDeSmoltsActual
     }])}, [])
 }
 
+// Devuelve la cantidad de productos vertidos baños en gramos
 export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volumenJaula, numeroDeJaulas) => {
   return aplicaciones.reduce((productosVertidos, idMedicamento) => {
     const medicamento = medicamentos.find(m => m.id === idMedicamento)
@@ -182,20 +184,28 @@ export const calcularProductosVertidosBaños = (aplicaciones, medicamentos, volu
     if (medicamento.volumen !== undefined) {
       volumenEnM3 = medicamento.volumen
     }
-    let dosisPorM3 = medicamento.cantidadPorJaula
+    let dosisPorM3 = medicamento.cantidadPorJaula // en (mg o ml)
     const [numeradorDosis, denominadorDosis] = medicamento.unidadDosis.split('/')
     if (denominadorDosis === 'lt') {
-      dosisPorM3 *= 1000
+      dosisPorM3 *= 1000  // m3 -> no hay cambio, si es lt -> *1000
     }
-    const cantidadPorJaula = dosisPorM3 * volumenEnM3 
-    const cantidadPorCentro = cantidadPorJaula * numeroDeJaulas / 1000 // mg o ml de producto / centro
-    const cantidadPrincipioActivo = cantidadPorCentro * medicamento.presentacion / 100 
+    const factorGramos = numeradorDosis === 'ml' ? 1 : 1000 // si ml -> ml, si mg -> g 
+    const gPorJaula = (dosisPorM3 * volumenEnM3) / factorGramos  // ml o g
+    const gPorCentro = gPorJaula * numeroDeJaulas 
+    const cantidadPrincipioActivo = gPorCentro * ( medicamento.presentacion / 100 )// presentacion en porcentaje
     return productosVertidos.concat([{
       principioActivo: medicamento.principioActivo,
       cantidad: cantidadPrincipioActivo
     }])
   }, [])
 }
+
+// const factorM3 = medicamento.unidadDosis.slice(-2) === 'lt' ? 1000 : 1
+// const factorKg = medicamento.unidadDosis.slice(0, 2) === 'ml' ? 1000 : 1000000
+// const dosisKgPorM3 = factorM3 * medicamento.cantidadPorJaula / factorKg // / 1000 para pasar de mg a kg
+// const costoProducto = medicamento.costoUnitario * volumen * dosisKgPorM3
+// const costoBaño = (costoProducto + Number(medicamento.costoOperacional)) * Number(numeroDeJaulas)
+// return suma + costoBaño
 
 export const calcularProductosVertidos = (medicamentos, tratamientos, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas) => {
   const aplicaciones = Object.keys(tratamientos)
@@ -204,6 +214,7 @@ export const calcularProductosVertidos = (medicamentos, tratamientos, volumenJau
   .concat(calcularProductosVertidosBaños(aplicaciones, medicamentos, volumenJaula, numeroDeJaulas))
 }
 
+// agrupa los productos utilizados y filtra aquellos vertidos (FARMACO_APLICACION_BAÑO)
 export const agruparProductosVertidos = (medicamentos, tratamientos, volumenJaula, numeroDeJaulas, numeroDeSmoltsInicial, curvas) => {
   const principiosActivos = [...new Set(medicamentos.filter(m => m.formaFarmaceutica === FARMACO_APLICACION_BAÑO).map(m => m.principioActivo))]
   const estrategias = Object.keys(tratamientos)

@@ -145,8 +145,8 @@ const ImpactosLaborales = props => {
             }
             return (<tr key={`vertidos-${i}`} className="fila-vertidos">
               <td>{v.principioActivo}</td>
-              <td>{redondearYAString(v.tradicional * 1000 / biomasaTradicional)} g/Ton</td>
-              <td>{redondearYAString(v.imvixa * 1000 / biomasaImvixa)} g/Ton</td>
+              <td>{redondearYAString(v.tradicional * ( 1000 / biomasaTradicional ))} g/Ton</td>
+              <td>{redondearYAString(v.imvixa * ( 1000 / biomasaImvixa))} g/Ton</td>
               <td>{icono} {redondearYAString(Math.abs(diferencia))} g</td>
             </tr>)
           })}
