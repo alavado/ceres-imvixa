@@ -6,6 +6,7 @@ import './Centro.css'
 
 const Centro = props => {
   
+  const macrozonas = [...new Set(props.barrios.map(b => parseInt(b.macrozona)))].sort((a, b) => a - b)
   return (
     <>
       <div className="contenido">
@@ -22,7 +23,7 @@ const Centro = props => {
               defaultValue={props.barrio.macrozona}
               onChange={e => props.fijarMacrozona(e.target.value)}
             >
-              {[...new Set(props.barrios.map(b => b.macrozona))].sort().map((macrozona, i) => (
+              {macrozonas.map((macrozona, i) => (
                 <option
                   key={`option-macrozona-${i}`}
                   value={macrozona}

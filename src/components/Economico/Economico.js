@@ -9,12 +9,12 @@ import { redondear, redondearYAString } from '../../helpers/helpers';
 
 const Economico = props => {
   const { costoAlimento, costoSmolt, estructuraCostos } = props.economico
-  const { macrozona, produccion } = props
+  const { macrozona, produccion, barrio } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, mortalidad, numeroSmolts, eFCR, factorCrecimiento, ajustesPesos } = produccion
 
   const [mostrarEstructura, setMostrarEstructura] = useState(false)
 
-  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos)
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos, barrio)
 
   const pesoFinal = curvaCrecimiento[curvaCrecimiento.length - 1] / 1000
   const biomasaCosechada = numeroSmolts * pesoFinal * (1 - mortalidad / 100.0)
@@ -194,7 +194,8 @@ const Economico = props => {
 const mapStateToProps = state => ({
   economico: state.economico,
   produccion: state.produccion,
-  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona,
+  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado].nombre
 })
 
 const mapDispatchToProps = dispatch => ({

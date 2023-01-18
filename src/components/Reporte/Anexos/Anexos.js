@@ -1,56 +1,57 @@
 import React from 'react';
-import { redondearYAString } from '../../../helpers/helpers';
 import './Anexos.css'
-import { TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_PESO } from '../../../helpers/constantes';
+// import { TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_DOLAR, SUFIJO_TIPO_CAMBIO_PESO } from '../../../helpers/constantes';
 
 const Anexos = props => {
-  const {estructuraCostos, ptiTradicional, ptiImvixa, costoSmolts,
-    costoTotalAlimentoImvixa, costoTotalAlimentoTradicional,
-    costoProduccionImvixa, costoProduccionTradicional,
-    tipoCambio, valorDolar
+  const {
+    ptiTradicional, ptiImvixa,
+    // estructuraCostos, costoSmolts,
+    // costoTotalAlimentoImvixa, costoTotalAlimentoTradicional,
+    // costoProduccionImvixa, costoProduccionTradicional,
+    // tipoCambio, valorDolar
     } = props
-  const costoTotalImvixa = costoSmolts + costoTotalAlimentoImvixa + costoProduccionImvixa
-  const costoTotalTradicional = costoSmolts + costoTotalAlimentoTradicional + costoProduccionTradicional
+  // const costoTotalImvixa = costoSmolts + costoTotalAlimentoImvixa + costoProduccionImvixa
+  // const costoTotalTradicional = costoSmolts + costoTotalAlimentoTradicional + costoProduccionTradicional
 
 
-  const usarDolares = tipoCambio === TIPO_CAMBIO_DOLAR
-  const sufijoTipoCambio = usarDolares ? SUFIJO_TIPO_CAMBIO_DOLAR : SUFIJO_TIPO_CAMBIO_PESO
-  const multiplicadorCambio = usarDolares ? 1 : valorDolar
+  // const usarDolares = tipoCambio === TIPO_CAMBIO_DOLAR
+  // const sufijoTipoCambio = usarDolares ? SUFIJO_TIPO_CAMBIO_DOLAR : SUFIJO_TIPO_CAMBIO_PESO
+  // const multiplicadorCambio = usarDolares ? 1 : valorDolar
 
-  const estructuraCostosModificada = {
-    'Alimento' : {
-      1 : costoTotalAlimentoTradicional,
-      2 : costoTotalAlimentoImvixa
-    },
-    'Smolts' : {
-      1 : costoSmolts,
-      2 : costoSmolts
-    },
-    'Personal' : {
-      1 : costoTotalTradicional * estructuraCostos['personal'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['personal'] / 100
-    },
-    'Operaciones' : {
-      1 : costoTotalTradicional * estructuraCostos['operaciones'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['operaciones'] / 100
-    },
-    'Depreciación' : {
-      1 : costoTotalTradicional * estructuraCostos['depreciación'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['depreciación'] / 100
-    },
-    'Sanidad' : {
-      1 : costoTotalTradicional * estructuraCostos['salud'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['salud'] / 100
-    },
-    'Seguros' : {
-      1 : costoTotalTradicional * estructuraCostos['seguros'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['seguros'] / 100
-    },
-    'Otros' : {
-      1 : costoTotalTradicional * estructuraCostos['otros'] / 100,
-      2 : costoTotalImvixa * estructuraCostos['otros'] / 100
-    }
-  }
+  // const estructuraCostosModificada = {
+  //   'Alimento' : {
+  //     1 : costoTotalAlimentoTradicional,
+  //     2 : costoTotalAlimentoImvixa
+  //   },
+  //   'Smolts' : {
+  //     1 : costoSmolts,
+  //     2 : costoSmolts
+  //   },
+  //   'Personal' : {
+  //     1 : costoTotalTradicional * estructuraCostos['personal'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['personal'] / 100
+  //   },
+  //   'Operaciones' : {
+  //     1 : costoTotalTradicional * estructuraCostos['operaciones'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['operaciones'] / 100
+  //   },
+  //   'Depreciación' : {
+  //     1 : costoTotalTradicional * estructuraCostos['depreciación'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['depreciación'] / 100
+  //   },
+  //   'Sanidad' : {
+  //     1 : costoTotalTradicional * estructuraCostos['salud'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['salud'] / 100
+  //   },
+  //   'Seguros' : {
+  //     1 : costoTotalTradicional * estructuraCostos['seguros'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['seguros'] / 100
+  //   },
+  //   'Otros' : {
+  //     1 : costoTotalTradicional * estructuraCostos['otros'] / 100,
+  //     2 : costoTotalImvixa * estructuraCostos['otros'] / 100
+  //   }
+  // }
   return (
     <div id="anexos">
       <h2>Anexos</h2>

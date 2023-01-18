@@ -13,12 +13,12 @@ import AjusteManual from './AjusteManual'
 
 const Produccion = props => {
 
-  const { produccion, macrozona } = props
+  const { produccion, macrozona, barrio } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, bFCR, numeroSmolts, numeroJaulas, factorCrecimiento, ajustesPesos } = produccion
   const [mostrandoCalculadoraVolumen, setMostrandoCalculadoraVolumen] = useState(false)
   const [mostrandoAjusteManual, setMostrandoAjusteManual] = useState(false)
 
-  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos)
+  const curvaCrecimiento = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos, barrio)
   const curvaMortalidadAcumulada = obtenerCurvaMortalidadAcumulada(props.modeloMortalidad, curvaCrecimiento.length, produccion.mortalidad)
   
   const curvaBiomasaPerdida = obtenerCurvaBiomasaPerdida(curvaMortalidadAcumulada, curvaCrecimiento, numeroSmolts, 30)
@@ -29,7 +29,6 @@ const Produccion = props => {
   const pesoMuerto = curvaBiomasaPerdida.slice(-1)[0]
   const cantidadAlimento = (pesoGanado + pesoMuerto) * bFCR
   const eFCRCalculado = Math.round(cantidadAlimento / pesoGanado * 100) / 100
-
   return (
     <>
       <div className="contenido">
@@ -42,7 +41,7 @@ const Produccion = props => {
         <div className="contenido-contenido">
           <AjusteManual
             setMostrandoAjusteManual={setMostrandoAjusteManual}
-            curvaCrecimiento={obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento)}
+            curvaCrecimiento={obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, [], barrio)}
           />
         </div> :
         <div className="contenido-contenido">
@@ -312,7 +311,8 @@ const mapStateToProps = state => ({
   produccion: state.produccion,
   modelo: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modelosCrecimientoMacrozona,
   modeloMortalidad: state.centro.barrios[state.centro.indiceBarrioSeleccionado].modeloMortalidad,
-  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona
+  macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona,
+  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado].nombre
 })
 
 const mapDispatchToProps = dispatch => ({

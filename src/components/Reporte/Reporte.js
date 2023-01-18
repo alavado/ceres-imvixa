@@ -24,7 +24,7 @@ const Reporte = ({ state, fijarValorDolar }) => {
   const { estructuraCostos, costoSmolt, costoAlimento } = state.economico
   const { medicamentos, tratamientos } = state.tratamientos
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, numeroSmolts, numeroJaulas, volumenJaula, mortalidad, eFCR, bFCR, factorCrecimiento, ajustesPesos } = state.produccion
-  const { macrozona, modeloMortalidad } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
+  const { macrozona, modeloMortalidad, nombre: barrio } = state.centro.barrios[state.centro.indiceBarrioSeleccionado]
 
   const [tipoCambio, setTipoCambio] = useState(TIPO_CAMBIO_DOLAR)
   const [valorDolar, setValorDolar] = useState(state.economico.valorDolar || { valor: 795, fecha: '2019-11-14' })
@@ -34,9 +34,9 @@ const Reporte = ({ state, fijarValorDolar }) => {
   const ptiTradicional = calcularPTI(medicamentos, tratamientos['tradicional'])
 
   // Curvas de crecimiento
-  const curvaSinTratamientos = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos)
-  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos)
-  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos)
+  const curvaSinTratamientos = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, [], factorCrecimiento, ajustesPesos, barrio)
+  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos, barrio)
+  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos, barrio)
 
   const numeroBañosImvixa = calcularNumeroDeBaños('imvixa', medicamentos, tratamientos, curvaImvixa)
   const numeroBañosTradicional = calcularNumeroDeBaños('tradicional', medicamentos, tratamientos, curvaTradicional)

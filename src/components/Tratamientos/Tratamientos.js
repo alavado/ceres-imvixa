@@ -13,7 +13,7 @@ import CampoNumerico from '../Produccion/CampoNumerico'
 
 const Tratamientos = props => {
 
-  const { tratamientos, medicamentos, produccion, macrozona, medicamentosFueronSeleccionados, 
+  const { tratamientos, medicamentos, produccion, macrozona, barrio, medicamentosFueronSeleccionados, 
           marcarMedicamentosFueronSeleccionados, replicarEstrategia } = props
   const { objetivos, mesesObjetivo, pesoSmolt, fechaInicio, pesoObjetivo, factorCrecimiento, ajustesPesos } = produccion
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState({
@@ -21,11 +21,11 @@ const Tratamientos = props => {
     estrategia: ''
   })
   
-  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos)
-  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos)
+  const curvaImvixa = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.imvixa, medicamentos), factorCrecimiento, ajustesPesos, barrio)
+  const curvaTradicional = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, obtenerBaños(tratamientos.tradicional, medicamentos), factorCrecimiento, ajustesPesos, barrio)
 
   const estimarPesoDeAplicacion = pesoSmolt => {
-    const curvaSinTratamientos = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, {}, factorCrecimiento, ajustesPesos)
+    const curvaSinTratamientos = obtenerCurvaCrecimientoPorPeso(macrozona, fechaInicio, pesoSmolt, objetivos, pesoObjetivo, mesesObjetivo, {}, factorCrecimiento, ajustesPesos, barrio)
     if (curvaSinTratamientos.length > 2){
       const crecimientoDiario = curvaSinTratamientos[1] - curvaSinTratamientos[0]
       const crecimientoSemanal = crecimientoDiario * 7
@@ -319,7 +319,8 @@ const mapStateToProps = state => ({
   medicamentos: state.tratamientos.medicamentos,
   produccion: state.produccion,
   macrozona: state.centro.barrios[state.centro.indiceBarrioSeleccionado].macrozona,
-  medicamentosFueronSeleccionados: state.tratamientos.medicamentosFueronSeleccionados
+  medicamentosFueronSeleccionados: state.tratamientos.medicamentosFueronSeleccionados,
+  barrio: state.centro.barrios[state.centro.indiceBarrioSeleccionado].nombre
 })
 
 const mapDispatchToProps = dispatch => ({
