@@ -54,8 +54,11 @@ const get_SGR = (peso, temp) => {
   // Quitar unidades a peso y convertir a integer
   peso = parseInt(peso / 10) * 10
   // Si es mayor que 6500 usar 6500
-  if (peso > 6500) {
-    peso = 6500
+  if (peso > 5000) {
+    peso = 5000
+  }
+  if (peso < 50) {
+    peso = 50
   }
   const filaPeso = tablaSGR[peso.toString()]
   // Reviso por cada categoría de temperatura cual es la celda que corresponde
@@ -73,21 +76,20 @@ const evaluarModeloDeltaCrecimiento = (macrozona, peso, uta, mes_actual, barrio)
   if (macrozona === '1' || macrozona === '2') {
     macrozona = '3'
   }
-  // Si no es magallanes uso el modelo estimado en la primera versión
-  if (macrozona !== '9' && macrozona !== '10') {
-    const modelo = modelosCrecimientoPorMacrozona[macrozona]
-    const x = peso, y = uta
-    const vars = [1, x, y, x*x, x*y, y*y]
-    return Math.round(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
-  } else {
-    // Si es magallanes uso la formula SGR
-    const indice_mes = mes_actual - 1
-    const temp = temperaturasMensualesMagallanes[barrio][indice_mes]
-    const sgr = get_SGR(peso, temp)
-    // elevado a 7 porque es crecimiento semanal
-    const peso_f = peso * (Math.pow(sgr/100 + 1, 7))
-    return Math.round(peso_f - peso)
-  }
+  const modelo = modelosCrecimientoPorMacrozona[macrozona]
+  const x = peso, y = uta
+  const vars = [1, x, y, x*x, x*y, y*y]
+  return Math.round(modelo.coefs.reduce((sum, v, i) => sum + vars[i] * v, 0) + modelo.intercepto)
+}
+
+
+const evaluarModeloDeltaCrecimientoDiarioSGR = (peso, mes_actual, barrio) => {
+  const indice_mes = mes_actual - 1
+  const temp = temperaturasMensualesMagallanes[barrio][indice_mes]
+  const sgr = get_SGR(peso, temp)
+  // elevado a 1 porque es crecimiento diario
+  const peso_f = peso * (Math.pow(sgr / 100 + 1, 1))
+  return Math.round(peso_f - peso)
 }
 
 const crecimientoSinComida = (macrozona, peso, uta) => -0.0025 * peso//evaluarModeloDeltaCrecimiento(macrozona, peso, uta) / 14.0
@@ -115,7 +117,13 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
         diaFinal += tratamientos[`${Math.ceil(semana)}`].idMedicamento === 7 ? DIAS_AYUNO_BAÑO_ALPHA_FLUX : DIAS_AYUNO_BAÑO
       }
       if (diasAyunoRestante <= 0) {
-        pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta, mes_actual, barrio) / 7.0
+        if (macrozona !== '9' && macrozona !== '10') {
+          // Si no es magallanes uso el modelo estimado en la primera versión
+          pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta, mes_actual, barrio) / 7.0
+        } else {
+          // Si es magallanes uso la formula SGR
+          pesoActual += evaluarModeloDeltaCrecimientoDiarioSGR(pesoActual, mes_actual, barrio)
+        }
       }
       else {
         pesoActual += crecimientoSinComida(macrozona, pesoActual, uta)
@@ -137,7 +145,13 @@ export const obtenerCurvaCrecimientoPorPeso = (macrozona, fechaInicio, pesoIngre
         //diaFinal += DIAS_AYUNO_BAÑO
       }
       if (diasAyunoRestante <= 0) {
-        pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta, mes_actual, barrio) / 7.0
+        if (macrozona !== '9' && macrozona !== '10') {
+          // Si no es magallanes uso el modelo estimado en la primera versión
+          pesoActual += evaluarModeloDeltaCrecimiento(macrozona, pesoActual, uta, mes_actual, barrio) / 7.0
+        } else {
+          // Si es magallanes uso la formula SGR
+          pesoActual += evaluarModeloDeltaCrecimientoDiarioSGR(pesoActual, mes_actual, barrio)
+        }
       }
       else {
         pesoActual += crecimientoSinComida(macrozona, pesoActual, uta)

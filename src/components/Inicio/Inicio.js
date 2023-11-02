@@ -1,5 +1,5 @@
 import React from 'react';
-import ImagenBienvenida from '../../assets/Fondo simulador IMVIXA_3296x1742_1.jpg'
+import ImagenBienvenida from '../../assets/Fondo simulador IMVIXA_oct22.jpg'
 import './Inicio.css'
 
 const Inicio = () => {
@@ -12,14 +12,6 @@ const Inicio = () => {
       </div>
       <div id="bienvenida">
         <img src={ImagenBienvenida} alt="Bienvenida" />
-        <div className="texto_copyright">
-          <p>
-            Imvixa, Elanco y el logo de la barra diagonal son marcas registradas de Elanco o sus afiliadas.
-          </p>
-          <p>
-            ©2020 Elanco PM-CL-20-0056
-          </p>
-        </div> 
       </div>
     </div>
   );
